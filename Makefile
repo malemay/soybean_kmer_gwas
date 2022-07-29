@@ -25,9 +25,23 @@ SUPFIGURES := figures/stem_termination_all_manhattan.png \
 	figures/hilum_color_rbr_manhattan.png \
 	figures/maturity_group_manhattan.png \
 	figures/corrected_dry_weight_manhattan.png \
-	figures/fc_w_signal.png \
 	figures/pca_t_signal.png \
-	figures/sda_dt1_signal.png
+	figures/fc_w_signal.png \
+	figures/sda_dt1_signal.png \
+	figures/hca_t_signal.png \
+	figures/pfa_pa1_signal.png \
+	figures/pfne_pa1_signal.png \
+	figures/pbcng_td_signal.png \
+	figures/oil_gm15_signal.png \
+	figures/pd_ps_signal.png \
+	figures/scla_b_signal.png \
+	figures/sclni_b_signal.png \
+	figures/sclds_b_signal.png \
+	figures/pdca_l1_signal.png \
+	figures/pdcbb_l1_signal.png \
+	figures/scca_i_signal.png \
+	figures/sccgy_g_signal.png \
+	figures/hcbb_r_signal.png
 
 figures/%_manhattan.png: figures/manhattan_plot.R \
 	figures/ggplots/platypus_%_manhattan.rds \

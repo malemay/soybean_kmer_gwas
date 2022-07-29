@@ -31,13 +31,10 @@ kmer_results <- readRDS(paste0("gwas/kmers/", trait, "/katcher_results/", trait,
 # Extracting the signal at the location of the gene
 kmer_signals <- extract_signals(kmer_results,
 				threshold = as.numeric(readLines(paste0("gwas/kmers/", trait, "/kmers/threshold_5per"))),
-				distance = 10^4)
+				distance = 10^5)
 
 # The next steps depend on whether there is a known gene model associated with the phenotype
-if(!is.na(gene_v1)) {
-
-	# Looking up the name of the gene in version 4
-	gene_v4 <- lookup_v1_to_v4[gene_v1]
+if(!is.na(gene_v1) && !is.na(gene_v4 <- lookup_v1_to_v4[gene_v1])) {
 
 	# Getting the one signal associated with this gene
 	signal <- subsetByOverlaps(kmer_signals, genes[gene_v4])

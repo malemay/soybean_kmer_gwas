@@ -3,4 +3,16 @@ pca_t,pubescence_color_all,T,glyma06g21920
 fc_w,flower_color,W,glyma13g04210
 sda_dt1,stem_termination_all,Dt1,glyma19g37890
 hca_t,hilum_color_all,T,glyma06g21920
-pfa_pa1,pubscence_form_all,Pa1,NA
+pfa_pa1,pubescence_form_all,Pa1,NA
+pfne_pa1,pubescence_form_noerect,Pa1,NA
+pbcng_td,pubescence_color_nogray,Td,NA
+oil_gm15,oil,NA,NA
+pd_ps,pubescence_density,Ps,NA
+scla_b,seed_coat_luster_all,B,NA
+sclni_b,seed_coat_luster_nointermediate,B,NA
+sclds_b,seed_coat_luster_dullshiny,B,NA
+pdca_l1,pod_color_all,L1,glyma19g27460
+pdcbb_l1,pod_color_blbr,L1,glyma19g27460
+scca_i,seed_coat_color_all,I,NA
+sccgy_g,seed_coat_color_greenyellow,G,NA
+hcbb_r,hilum_color_blackbrown,R,glyma09g36983
