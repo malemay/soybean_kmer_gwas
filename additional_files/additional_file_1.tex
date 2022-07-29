@@ -1,0 +1,148 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc} % declare encoding as utf8
+\usepackage{graphicx} % to enable \includegraphics
+\usepackage{flafter} % to make sure floats appear after their position in text
+\usepackage{pdflscape} % allow some pages to be in landscape orientation
+\usepackage{layout} % for debugging purposes, looking at page layout
+\usepackage[margin=1in]{geometry} % leaves more space for text body
+\usepackage[hidelinks]{hyperref} % hyperlinks from list of figures/tables
+\usepackage[labelfont=bf]{caption} % format captions and make links go to figure instead of caption
+\usepackage{csvsimple} % read and display csv files as tables
+\usepackage{booktabs} % prettier tables
+\usepackage{threeparttable} % easy addition of footnotes below tables
+\usepackage{textcomp} % makes the \textdegree command available
+\usepackage{tocloft} % formatting the lists of tables and figures
+\usepackage{xcolor} % enable text coloring
+\usepackage{calc} % makes \widthof available to set the width of the last column
+\usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
+\usepackage{longtable} % allow tables to span more than one page
+\usepackage{threeparttablex} % threeparttable for longtable
+\usepackage{capt-of} % put caption on next page
+
+% Formatting the table of contents/subsection
+\renewcommand{\contentsname}{Supplemental methods}
+
+% Formatting the list of tables
+\renewcommand{\listtablename}{Supplemental tables} % Write "Supplemental tables" instead of "List of tables"
+\renewcommand\cfttabpresnum{Table } % Write "Table" before table number in list of tables
+\setlength{\cfttabnumwidth}{6em} % Spacing before captions
+\setlength{\cftbeforefigskip}{1ex} % Vertical spacing between entries
+
+% Formatting the list of figures
+\renewcommand{\listfigurename}{Supplemental figures} % Write "Supplemental figures" instead of "List of figures"
+\renewcommand\cftfigpresnum{Figure } % Write "Figure" before fig number in list of figures
+\setlength{\cftfignumwidth}{6em} % Spacing before captions
+\setlength{\cftbeforetabskip}{1ex} % Vertical spacing between entries
+
+\graphicspath{ {../figures/} } % tell Latex to look for figures in figures/
+
+% Format figure and table numbers to follow S1, S2, ...
+\renewcommand\thefigure{S\arabic{figure}} 
+\renewcommand\thetable{S\arabic{table}} 
+
+% Defining new environments as I will always want the figures centered
+\newenvironment{cfigure}
+	{\begin{figure} \centering}
+	{\end{figure}}
+
+\newenvironment{lsfigure}
+	{\begin{landscape} \begin{figure} \centering}
+	{\end{figure} \end{landscape}}
+
+\setcounter{totalnumber}{1} % Allow a maximum of one float (table/figure) per page
+
+\setlength{\parskip}{2ex}
+
+% Defining a command for manhattan plot figures
+\newcommand{\manhattanplot}[1]{
+\begin{cfigure}
+	\caption[Figure caption]{Figure caption}
+	\includegraphics[width = 6in]{#1_manhattan}
+	\label{#1_manhattan}
+\end{cfigure}
+
+\clearpage}
+
+\newcommand{\signalplot}[1]{
+\begin{cfigure}
+	\caption[Figure caption]{Figure caption}
+	\includegraphics[width = 6in]{#1_signal}
+	\label{#1_signal}
+\end{cfigure}
+
+\clearpage}
+
+
+% Information for the title page
+\title{Supplemental data to ``ARTICLE TITLE''}
+\author{Marc-André Lemay \and François Belzile}
+\date{}
+
+% END OF PREAMBLE
+
+\begin{document}
+
+\maketitle \thispagestyle{empty}
+
+\tableofcontents
+
+\vspace{4ex}
+
+\listoftables
+
+\thispagestyle{empty}
+%\clearpage
+
+\vspace{4ex}
+
+\listoffigures
+
+%\thispagestyle{empty}
+
+\clearpage
+
+% \caption[Number of SVs per Oxford Nanopore sample]{{{{
+
+%\begin{table}
+%	\caption[Number of SVs per Oxford Nanopore sample]{}
+%	\label{table_s1}
+%
+%	\begin{threeparttable}\small
+%			   \begin{tablenotes}
+%			   \end{tablenotes}
+%	\end{threeparttable}
+%
+%\end{table}
+%\clearpage%}}}
+
+% Manhattan plots of all traits
+\manhattanplot{stem_termination_all}
+\manhattanplot{stem_termination_sn}
+\manhattanplot{pubescence_color_all}
+\manhattanplot{pubescence_color_nogray}
+\manhattanplot{protein}
+\manhattanplot{pubescence_form_all}
+\manhattanplot{pubescence_form_noerect}
+\manhattanplot{oil}
+\manhattanplot{pubescence_density}
+\manhattanplot{seed_coat_luster_all}
+\manhattanplot{seed_coat_luster_nointermediate}
+\manhattanplot{seed_coat_luster_dullshiny}
+\manhattanplot{pod_color_all}
+\manhattanplot{pod_color_blbr}
+\manhattanplot{flower_color}
+\manhattanplot{seed_coat_color_all}
+\manhattanplot{seed_coat_color_greenyellow}
+\manhattanplot{hilum_color_all}
+\manhattanplot{hilum_color_blackbrown}
+\manhattanplot{hilum_color_rbr}
+\manhattanplot{maturity_group}
+\manhattanplot{corrected_dry_weight}
+
+\signalplot{pca_t}
+\signalplot{fc_w}
+\signalplot{sda_dt1}
+
+
+\end{document}

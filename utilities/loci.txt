@@ -1,0 +1,6 @@
+id,trait,locus,gene_v1
+pca_t,pubescence_color_all,T,glyma06g21920
+fc_w,flower_color,W,glyma13g04210
+sda_dt1,stem_termination_all,Dt1,glyma19g37890
+hca_t,hilum_color_all,T,glyma06g21920
+pfa_pa1,pubscence_form_all,Pa1,NA
