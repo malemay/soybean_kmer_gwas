@@ -5,6 +5,7 @@
 *fasta.fai
 *fastq.gz
 gwas
+gwas_results/
 *lof
 *log
 *lot

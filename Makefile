@@ -30,16 +30,38 @@ SUPFIGURES := figures/stem_termination_all_manhattan.png \
 	figures/sda_dt1_signal.png
 
 figures/%_manhattan.png: figures/manhattan_plot.R \
-	gwas/platypus/%/GAPIT.MLM.*.GWAS.Results.csv \
-	gwas/platypus/%/*_threshold_5per.txt \
-	gwas/vg_gwas/%/GAPIT.MLM.*.GWAS.Results.csv \
-	gwas/vg_gwas/%/*_threshold_5per.txt \
-	gwas/paragraph/%/GAPIT.MLM.*.GWAS.Results.csv \
-	gwas/paragraph/%/*_threshold_5per.txt \
-	gwas/kmers/%/katcher_results/*_kmer_positions.rds \
-	gwas/kmers/%/kmers/threshold_5per \
-	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	figures/ggplots/platypus_%_manhattan.rds \
+	figures/ggplots/vg_%_manhattan.rds \
+	figures/ggplots/paragraph_%_manhattan.rds \
+	figures/ggplots/kmers_%_manhattan.rds
 	$(RSCRIPT) figures/manhattan_plot.R $*
+
+.PRECIOUS: figures/ggplots/platypus_%_manhattan.rds figures/ggplots/vg_%_manhattan.rds \
+	figures/ggplots/paragraph_%_manhattan.rds figures/ggplots/kmers_%_manhattan.rds
+
+figures/ggplots/platypus_%_manhattan.rds: figures/manhattan_subplot.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	gwas_results/platypus/%_gwas.csv \
+	gwas_results/platypus/%_threshold_5per.txt
+	$(RSCRIPT) figures/manhattan_subplot.R $* platypus
+
+figures/ggplots/vg_%_manhattan.rds: figures/manhattan_subplot.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	gwas_results/vg/%_gwas.csv \
+	gwas_results/vg/%_threshold_5per.txt
+	$(RSCRIPT) figures/manhattan_subplot.R $* vg
+
+figures/ggplots/paragraph_%_manhattan.rds: figures/manhattan_subplot.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	gwas_results/paragraph/%_gwas.csv \
+	gwas_results/paragraph/%_threshold_5per.txt
+	$(RSCRIPT) figures/manhattan_subplot.R $* paragraph
+
+figures/ggplots/kmers_%_manhattan.rds: figures/manhattan_subplot.R \
+	gwas_results/kmers/%_kmer_positions.rds \
+	gwas_results/kmers/%_threshold_5per \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	$(RSCRIPT) figures/manhattan_subplot.R $* kmers
 
 # Compiling the Supplemental Data file from the .tex file
 $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(SUPFIGURES)
