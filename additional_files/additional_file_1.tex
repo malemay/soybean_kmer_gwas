@@ -57,8 +57,8 @@
 % Defining a command for manhattan plot figures
 \newcommand{\manhattanplot}[1]{
 \begin{cfigure}
-	\caption[Figure caption]{Figure caption}
 	\includegraphics[width = 6in]{#1_manhattan}
+	\caption[Figure caption]{Figure caption}
 	\label{#1_manhattan}
 \end{cfigure}
 
@@ -66,9 +66,18 @@
 
 \newcommand{\signalplot}[1]{
 \begin{cfigure}
-	\caption[Figure caption]{Figure caption}
 	\includegraphics[width = 6in]{#1_signal}
+	\caption[Figure caption]{Figure caption}
 	\label{#1_signal}
+\end{cfigure}
+
+\clearpage}
+
+\newcommand{\geneplot}[1]{
+\begin{cfigure}
+	\includegraphics[width = 6in]{#1_gene}
+	\caption[Figure caption]{Figure caption}
+	\label{#1_gene}
 \end{cfigure}
 
 \clearpage}
@@ -119,9 +128,11 @@
 % Manhattan plots of all traits
 \manhattanplot{stem_termination_all}
 \signalplot{sda_dt1}
+\geneplot{sda_dt1}
 \manhattanplot{stem_termination_sn}
 \manhattanplot{pubescence_color_all}
 \signalplot{pca_t}
+\geneplot{pca_t}
 \manhattanplot{pubescence_color_nogray}
 \signalplot{pbcng_td}
 \manhattanplot{protein}
@@ -145,14 +156,17 @@
 \signalplot{pdcbb_l1}
 \manhattanplot{flower_color}
 \signalplot{fc_w}
+\geneplot{fc_w}
 \manhattanplot{seed_coat_color_all}
 \signalplot{scca_i}
 \manhattanplot{seed_coat_color_greenyellow}
 \signalplot{sccgy_g}
 \manhattanplot{hilum_color_all}
 \signalplot{hca_t}
+\geneplot{hca_t}
 \manhattanplot{hilum_color_blackbrown}
 \signalplot{hcbb_r}
+\geneplot{hcbb_r}
 \manhattanplot{hilum_color_rbr}
 \manhattanplot{maturity_group}
 \manhattanplot{corrected_dry_weight}

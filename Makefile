@@ -41,8 +41,29 @@ SUPFIGURES := figures/stem_termination_all_manhattan.png \
 	figures/pdcbb_l1_signal.png \
 	figures/scca_i_signal.png \
 	figures/sccgy_g_signal.png \
-	figures/hcbb_r_signal.png
+	figures/hcbb_r_signal.png \
+	figures/pca_t_gene.png \
+	figures/fc_w_gene.png \
+	figures/sda_dt1_gene.png \
+	figures/hca_t_gene.png \
+	figures/hcbb_r_gene.png #\
+	figures/pdca_l1_gene.png \
+	figures/pdcbb_l1_gene.png \
 
+all: $(SDIR)/additional_file_1.pdf
+
+.PRECIOUS: figures/ggplots/platypus_%_manhattan.rds figures/ggplots/vg_%_manhattan.rds \
+	figures/ggplots/paragraph_%_manhattan.rds figures/ggplots/kmers_%_manhattan.rds \
+	figures/ggplots/platypus_%_signal.rds figures/ggplots/vg_%_signal.rds \
+	figures/ggplots/paragraph_%_signal.rds figures/ggplots/kmers_%_signal.rds \
+	figures/ggplots/platypus_%_gene.rds figures/ggplots/vg_%_gene.rds \
+	figures/ggplots/paragraph_%_gene.rds figures/ggplots/kmers_%_gene.rds
+
+# Compiling the Supplemental Data file from the .tex file
+$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(SUPFIGURES)
+	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex
+
+# This block assembles the four manhattan subplots for a given trait
 figures/%_manhattan.png: figures/manhattan_plot.R \
 	figures/ggplots/platypus_%_manhattan.rds \
 	figures/ggplots/vg_%_manhattan.rds \
@@ -50,9 +71,7 @@ figures/%_manhattan.png: figures/manhattan_plot.R \
 	figures/ggplots/kmers_%_manhattan.rds
 	$(RSCRIPT) figures/manhattan_plot.R $*
 
-.PRECIOUS: figures/ggplots/platypus_%_manhattan.rds figures/ggplots/vg_%_manhattan.rds \
-	figures/ggplots/paragraph_%_manhattan.rds figures/ggplots/kmers_%_manhattan.rds
-
+# The next four blocks pertain to the sub-manhattan plots of each SV genotyping approach
 figures/ggplots/platypus_%_manhattan.rds: figures/manhattan_subplot.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	gwas_results/platypus/%_gwas.csv \
@@ -77,17 +96,125 @@ figures/ggplots/kmers_%_manhattan.rds: figures/manhattan_subplot.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	$(RSCRIPT) figures/manhattan_subplot.R $* kmers
 
-# Compiling the Supplemental Data file from the .tex file
-$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(SUPFIGURES)
-	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex
-
+# This block assembles the four signal subplots for a given locus
 figures/%_signal.png: figures/signal_plot.R \
+	figures/ggplots/platypus_%_signal.rds \
+	figures/ggplots/vg_%_signal.rds \
+	figures/ggplots/paragraph_%_signal.rds \
+	figures/ggplots/kmers_%_signal.rds
+	$(RSCRIPT) figures/signal_plot.R $*
+
+# The next four blocks prepare the sub-plots of the signal plots for each SV genotyping approach
+figures/ggplots/platypus_%_signal.rds: figures/signal_subplot.R \
 	utilities/loci.txt \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	refgenome/lookup_v1_to_v4.rds \
 	refgenome/gmax_v4_genes.rds \
 	refgenome/gmax_v4_transcripts.rds \
 	refgenome/gmax_v4_exons.rds \
-	refgenome/gmax_v4_cds.rds
-	$(RSCRIPT) figures/signal_plot.R $*
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/platypus/%_gwas.csv \
+	gwas_results/platypus/%_threshold_5per.txt
+	$(RSCRIPT) figures/signal_subplot.R $* platypus
+
+figures/ggplots/vg_%_signal.rds: figures/signal_subplot.R \
+	utilities/loci.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/gmax_v4_transcripts.rds \
+	refgenome/gmax_v4_exons.rds \
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/vg/%_gwas.csv \
+	gwas_results/vg/%_threshold_5per.txt
+	$(RSCRIPT) figures/signal_subplot.R $* vg
+
+figures/ggplots/paragraph_%_signal.rds: figures/signal_subplot.R \
+	utilities/loci.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/gmax_v4_transcripts.rds \
+	refgenome/gmax_v4_exons.rds \
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/paragraph/%_gwas.csv \
+	gwas_results/paragraph/%_threshold_5per.txt
+	$(RSCRIPT) figures/signal_subplot.R $* paragraph
+
+figures/ggplots/kmers_%_signal.rds: figures/signal_subplot.R \
+	utilities/loci.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/gmax_v4_transcripts.rds \
+	refgenome/gmax_v4_exons.rds \
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/kmers/%_kmer_positions.rds \
+	gwas_results/kmers/%_threshold_5per
+	$(RSCRIPT) figures/signal_subplot.R $* kmers
+
+
+
+
+# This block assembles the four gene subplots for a given locus
+figures/%_gene.png: figures/gene_plot.R \
+	figures/ggplots/platypus_%_gene.rds \
+	figures/ggplots/vg_%_gene.rds \
+	figures/ggplots/paragraph_%_gene.rds \
+	figures/ggplots/kmers_%_gene.rds
+	$(RSCRIPT) figures/gene_plot.R $*
+
+# The next four blocks prepare the sub-plots of the gene plots for each SV genotyping approach
+figures/ggplots/platypus_%_gene.rds: figures/gene_subplot.R \
+	utilities/loci.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/gmax_v4_transcripts.rds \
+	refgenome/gmax_v4_exons.rds \
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/platypus/%_gwas.csv \
+	gwas_results/platypus/%_threshold_5per.txt
+	$(RSCRIPT) figures/gene_subplot.R $* platypus
+
+figures/ggplots/vg_%_gene.rds: figures/gene_subplot.R \
+	utilities/loci.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/gmax_v4_transcripts.rds \
+	refgenome/gmax_v4_exons.rds \
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/vg/%_gwas.csv \
+	gwas_results/vg/%_threshold_5per.txt
+	$(RSCRIPT) figures/gene_subplot.R $* vg
+
+figures/ggplots/paragraph_%_gene.rds: figures/gene_subplot.R \
+	utilities/loci.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/gmax_v4_transcripts.rds \
+	refgenome/gmax_v4_exons.rds \
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/paragraph/%_gwas.csv \
+	gwas_results/paragraph/%_threshold_5per.txt
+	$(RSCRIPT) figures/gene_subplot.R $* paragraph
+
+figures/ggplots/kmers_%_gene.rds: figures/gene_subplot.R \
+	utilities/loci.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/gmax_v4_transcripts.rds \
+	refgenome/gmax_v4_exons.rds \
+	refgenome/gmax_v4_cds.rds \
+	gwas_results/kmers/%_kmer_positions.rds \
+	gwas_results/kmers/%_threshold_5per
+	$(RSCRIPT) figures/gene_subplot.R $* kmers
+
+
+
+
+
 

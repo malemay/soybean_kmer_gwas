@@ -44,5 +44,5 @@ if(program == "kmers") {
 }
 
 # Outputting to an rds file; actual plotting will be done in a different script
-saveRDS(gwas_plot, file = paste0("figures/ggplots/", program, "_", trait, "_manhattan.rds"))
+saveRDS(gwas_plot, file = paste0("figures/ggplots/", program, "_", trait, "_manhattan.rds"), compress = FALSE)
 
