@@ -1,7 +1,7 @@
 # Loading the required packages
-library(ggplot2)
-library(gwastools)
-library(GenomicRanges)
+suppressMessages(library(grid))
+suppressMessages(library(gwastools))
+suppressMessages(library(GenomicRanges))
 
 
 # Reading in the command line arguments; the first one is the trait, the second is the genotyping program
@@ -19,11 +19,10 @@ chromosomes <- paste0("Gm", ifelse(1:20 < 10, "0", ""), 1:20)
 if(program == "kmers") {
 	gwas_results <- readRDS(paste0("gwas_results/kmers/", trait, "_kmer_positions.rds"))
 
-	gwas_plot <- manhattan_plot(formatted_data = gwas_results,
-				    gwas_type = "kmer",
-				    threshold = as.numeric(readLines(paste0("gwas_results/kmers/", trait, "_threshold_5per")))) +
-	ggplot2::ggtitle(paste0("kmer-", trait)) +
-	theme(text = element_text(size = 8))
+	gwas_plot <- manhattanGrob(gwas_results,
+				   threshold = as.numeric(readLines(paste0("gwas_results/kmers/", trait, "_threshold_5per"))),
+				   numeric_chrom = TRUE,
+				   margins = c(5.1, 3.1, 0.1, 0.1))
 
 } else if(program %in% c("platypus", "paragraph", "vg")) {
 	# Loading the results from the CSV file and formatting them as a GRanges object
@@ -33,12 +32,10 @@ if(program == "kmers") {
 					  pattern = "^Gm[0-9]{2}$")
 
 	# Plotting the results using the gwastools::manhattan_plot function
-	gwas_plot <- manhattan_plot(gwas_results,
-				    gwas_type = "gapit",
-				    threshold = -log10(as.numeric(readLines(paste0("gwas_results/", program, "/",
-										   trait, "_threshold_5per.txt"))))) +
-	ggplot2::ggtitle(paste0(program, "-", trait)) +
-	theme(text = element_text(size = 8))
+	gwas_plot <- manhattanGrob(gwas_results,
+				   threshold = -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt")))),
+				   numeric_chrom = TRUE,
+				   margins = c(5.1, 3.1, 0.1, 0.1))
 } else {
 	stop("Unrecognized program option")
 }

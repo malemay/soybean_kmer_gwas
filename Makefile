@@ -1,4 +1,4 @@
-RSCRIPT := ~/.local/bin/Rscript
+RSCRIPT := ~/.local/bin/Rscript --quiet
 PDFLATEX := ~/.local/texlive/2022/bin/x86_64-linux/pdflatex
 
 SDIR := additional_files

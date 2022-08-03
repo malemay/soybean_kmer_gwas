@@ -1,10 +1,11 @@
 # Loading the required packages
-library(grid)
-library(ggplot2)
-library(gwastools)
+suppressMessages(library(grid))
+suppressMessages(library(gwastools))
 
 # Reading the trait being analyzed from the command line
 trait <- commandArgs(trailingOnly = TRUE)[1]
+
+programs <- c("platypus", "vg", "paragraph", "kmers")
 
 # Outputting to a PNG file
 png(paste0("figures/", trait, "_manhattan.png"), width = 9, height = 10, units = "in", res = 300)
@@ -21,10 +22,12 @@ grid.newpage()
 pushViewport(viewport(layout = grid.layout(nrow = 4)))
 
 # Reading and printing each of the subplots in turn in their viewport row
-print(readRDS(paste0("figures/ggplots/platypus_", trait, "_manhattan.rds")), vp = viewport(layout.pos.row = 1))
-print(readRDS(paste0("figures/ggplots/vg_", trait, "_manhattan.rds")), vp = viewport(layout.pos.row = 2))
-print(readRDS(paste0("figures/ggplots/paragraph_", trait, "_manhattan.rds")), vp = viewport(layout.pos.row = 3))
-print(readRDS(paste0("figures/ggplots/kmers_", trait, "_manhattan.rds")), vp = viewport(layout.pos.row = 4))
+for(i in 1:4){
+	pushViewport(viewport(layout.pos.row = i))
+	grid.draw(readRDS(paste0("figures/ggplots/", programs[i], "_", trait, "_manhattan.rds")))
+	grid.text(programs[i], 0.1, 0.9, hjust = 0)
+	upViewport()
+}
 
 dev.off()
 

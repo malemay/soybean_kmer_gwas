@@ -1,5 +1,5 @@
 # Loading the required packages
-library(grid)
+suppressMessages(library(grid))
 
 # Reading the ID being analyzed from the command line
 id <- commandArgs(trailingOnly = TRUE)[1]

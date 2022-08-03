@@ -1,7 +1,7 @@
 # Loading the required libraries
-library(grid)
-library(gwastools)
-library(GenomicRanges)
+suppressMessages(library(grid))
+suppressMessages(library(gwastools))
+suppressMessages(library(GenomicRanges))
 
 # Getting the name of the trait-locus combination and of the program that called the genotypes from the command line
 id <- commandArgs(trailingOnly = TRUE)[1]
