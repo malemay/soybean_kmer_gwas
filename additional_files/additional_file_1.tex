@@ -58,7 +58,7 @@
 \newcommand{\manhattanplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_manhattan}
-	\caption[Figure caption]{Figure caption}
+	\caption[Figure caption]{}
 	\label{#1_manhattan}
 \end{cfigure}
 
@@ -67,7 +67,7 @@
 \newcommand{\signalplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_signal}
-	\caption[Figure caption]{Figure caption}
+	\caption[Figure caption]{}
 	\label{#1_signal}
 \end{cfigure}
 
@@ -76,7 +76,7 @@
 \newcommand{\geneplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_gene}
-	\caption[Figure caption]{Figure caption}
+	\caption[Figure caption]{}
 	\label{#1_gene}
 \end{cfigure}
 
@@ -127,48 +127,119 @@
 
 % Manhattan plots of all traits
 \manhattanplot{stem_termination_all}
-\signalplot{sda_dt1}
+\signalplot{stem_termination_all_Dt2}
+\signalplot{stem_termination_all_Dt1}
+\signalplot{stem_termination_all_E3}
 \geneplot{sda_dt1}
+
 \manhattanplot{stem_termination_sn}
+\signalplot{stem_termination_sn_Dt2}
+\signalplot{stem_termination_sn_Dt1}
+\signalplot{stem_termination_sn_E3}
+
 \manhattanplot{pubescence_color_all}
-\signalplot{pca_t}
+\signalplot{pubescence_color_all_Td}
+\signalplot{pubescence_color_all_T}
 \geneplot{pca_t}
+
 \manhattanplot{pubescence_color_nogray}
-\signalplot{pbcng_td}
+\signalplot{pubescence_color_nogray_Td}
+\signalplot{pubescence_color_nogray_T}
+
 \manhattanplot{protein}
+
 \manhattanplot{pubescence_form_all}
-\signalplot{pfa_pa1}
+\signalplot{pubescence_form_all_Pa1}
+\signalplot{pubescence_form_all_Pa2}
+
 \manhattanplot{pubescence_form_noerect}
-\signalplot{pfne_pa1}
+\signalplot{pubescence_form_noerect_Pa1}
+\signalplot{pubescence_form_noerect_Pa2}
+
 \manhattanplot{oil}
-\signalplot{oil_gm15}
+
 \manhattanplot{pubescence_density}
-\signalplot{pd_ps}
+\signalplot{pubescence_density_Pd1}
+\signalplot{pubescence_density_Ps}
+\signalplot{pubescence_density_P1}
+
 \manhattanplot{seed_coat_luster_all}
-\signalplot{scla_b}
+\signalplot{seed_coat_luster_all_I}
+\signalplot{seed_coat_luster_all_Bq}
+\signalplot{seed_coat_luster_all_B1}
+\signalplot{seed_coat_luster_all_Hps}
+\signalplot{seed_coat_luster_all_B}
+
 \manhattanplot{seed_coat_luster_nointermediate}
-\signalplot{sclni_b}
+\signalplot{seed_coat_luster_nointermediate_I}
+\signalplot{seed_coat_luster_nointermediate_Bq}
+\signalplot{seed_coat_luster_nointermediate_B1}
+\signalplot{seed_coat_luster_nointermediate_Hps}
+\signalplot{seed_coat_luster_nointermediate_B}
+
 \manhattanplot{seed_coat_luster_dullshiny}
-\signalplot{sclds_b}
+\signalplot{seed_coat_luster_dullshiny_I}
+\signalplot{seed_coat_luster_dullshiny_Bq}
+\signalplot{seed_coat_luster_dullshiny_B1}
+\signalplot{seed_coat_luster_dullshiny_Hps}
+\signalplot{seed_coat_luster_dullshiny_B}
+
 \manhattanplot{pod_color_all}
-\signalplot{pdca_l1}
+\signalplot{pod_color_all_L2}
+\signalplot{pod_color_all_L1}
+
 \manhattanplot{pod_color_blbr}
-\signalplot{pdcbb_l1}
+\signalplot{pod_color_blbr_L2}
+\signalplot{pod_color_blbr_L1}
+
 \manhattanplot{flower_color}
-\signalplot{fc_w}
+\signalplot{flower_color_W1}
+\signalplot{flower_color_L1}
 \geneplot{fc_w}
+
 \manhattanplot{seed_coat_color_all}
-\signalplot{scca_i}
+\signalplot{seed_coat_color_all_G}
+\signalplot{seed_coat_color_all_T}
+\signalplot{seed_coat_color_all_O}
+\signalplot{seed_coat_color_all_I}
+\signalplot{seed_coat_color_all_R}
+
 \manhattanplot{seed_coat_color_greenyellow}
-\signalplot{sccgy_g}
+\signalplot{seed_coat_color_greenyellow_G}
+\signalplot{seed_coat_color_greenyellow_T}
+\signalplot{seed_coat_color_greenyellow_O}
+\signalplot{seed_coat_color_greenyellow_I}
+\signalplot{seed_coat_color_greenyellow_R}
+
 \manhattanplot{hilum_color_all}
-\signalplot{hca_t}
+\signalplot{hilum_color_all_T}
+\signalplot{hilum_color_all_O}
+\signalplot{hilum_color_all_I}
+\signalplot{hilum_color_all_R}
+\signalplot{hilum_color_all_W1}
 \geneplot{hca_t}
+
 \manhattanplot{hilum_color_blackbrown}
-\signalplot{hcbb_r}
+\signalplot{hilum_color_blackbrown_T}
+\signalplot{hilum_color_blackbrown_O}
+\signalplot{hilum_color_blackbrown_I}
+\signalplot{hilum_color_blackbrown_R}
+\signalplot{hilum_color_blackbrown_W1}
 \geneplot{hcbb_r}
+
 \manhattanplot{hilum_color_rbr}
+\signalplot{hilum_color_rbr_T}
+\signalplot{hilum_color_rbr_O}
+\signalplot{hilum_color_rbr_I}
+\signalplot{hilum_color_rbr_R}
+\signalplot{hilum_color_rbr_W1}
+
 \manhattanplot{maturity_group}
+\signalplot{maturity_group_E1}
+\signalplot{maturity_group_E2}
+\signalplot{maturity_group_E3}
+\signalplot{maturity_group_E4}
+
 \manhattanplot{corrected_dry_weight}
 
 \end{document}
