@@ -124,24 +124,28 @@ figures/%_manhattan.png: figures/manhattan_plot.R \
 # The next four blocks pertain to the sub-manhattan plots of each SV genotyping approach
 figures/ggplots/platypus_%_manhattan.rds: figures/manhattan_subplot.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_signals.rds \
 	gwas_results/platypus/%_gwas.csv \
 	gwas_results/platypus/%_threshold_5per.txt
 	$(RSCRIPT) figures/manhattan_subplot.R $* platypus
 
 figures/ggplots/vg_%_manhattan.rds: figures/manhattan_subplot.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_signals.rds \
 	gwas_results/vg/%_gwas.csv \
 	gwas_results/vg/%_threshold_5per.txt
 	$(RSCRIPT) figures/manhattan_subplot.R $* vg
 
 figures/ggplots/paragraph_%_manhattan.rds: figures/manhattan_subplot.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_signals.rds \
 	gwas_results/paragraph/%_gwas.csv \
 	gwas_results/paragraph/%_threshold_5per.txt
 	$(RSCRIPT) figures/manhattan_subplot.R $* paragraph
 
 figures/ggplots/kmers_%_manhattan.rds: figures/manhattan_subplot.R \
 	gwas_results/kmers/%_kmer_positions.rds \
+	utilities/all_signals.rds \
 	gwas_results/kmers/%_threshold_5per \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	$(RSCRIPT) figures/manhattan_subplot.R $* kmers

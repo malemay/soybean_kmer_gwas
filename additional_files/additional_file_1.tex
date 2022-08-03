@@ -19,6 +19,7 @@
 \usepackage{longtable} % allow tables to span more than one page
 \usepackage{threeparttablex} % threeparttable for longtable
 \usepackage{capt-of} % put caption on next page
+\usepackage{listings}
 
 % Formatting the table of contents/subsection
 \renewcommand{\contentsname}{Supplemental methods}
@@ -58,7 +59,7 @@
 \newcommand{\manhattanplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_manhattan}
-	\caption[Figure caption]{}
+	\caption{#1\_manhattan}
 	\label{#1_manhattan}
 \end{cfigure}
 
@@ -67,7 +68,7 @@
 \newcommand{\signalplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_signal}
-	\caption[Figure caption]{}
+	\caption{#1\_manhattan}
 	\label{#1_signal}
 \end{cfigure}
 
@@ -76,12 +77,14 @@
 \newcommand{\geneplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_gene}
-	\caption[Figure caption]{}
+	\caption{#1\_manhattan}
 	\label{#1_gene}
 \end{cfigure}
 
 \clearpage}
 
+% Allows underscores in captions but is not a great solution
+\catcode`_=12
 
 % Information for the title page
 \title{Supplemental data to ``ARTICLE TITLE''}

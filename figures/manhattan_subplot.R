@@ -8,6 +8,11 @@ suppressMessages(library(GenomicRanges))
 trait <- commandArgs(trailingOnly = TRUE)[1]
 program <- commandArgs(trailingOnly = TRUE)[2]
 
+# Reading the reference signals for this trait
+signals <- readRDS("utilities/all_signals.rds")
+signals <- signals[signals$trait == trait]
+if(!length(signals)) signals <- NULL
+
 # The location of the reference genome fasta
 # DEPENDENCY: refgenome/Gmax_508_v4.0_mit_chlp.fasta
 refgenome <- "refgenome/Gmax_508_v4.0_mit_chlp.fasta"
@@ -21,8 +26,9 @@ if(program == "kmers") {
 
 	gwas_plot <- manhattanGrob(gwas_results,
 				   threshold = as.numeric(readLines(paste0("gwas_results/kmers/", trait, "_threshold_5per"))),
+				   signals = signals,
 				   numeric_chrom = TRUE,
-				   margins = c(5.1, 3.1, 0.1, 0.1))
+				   margins = c(5.1, 4.1, 0.1, 0.1))
 
 } else if(program %in% c("platypus", "paragraph", "vg")) {
 	# Loading the results from the CSV file and formatting them as a GRanges object
@@ -34,8 +40,9 @@ if(program == "kmers") {
 	# Plotting the results using the gwastools::manhattan_plot function
 	gwas_plot <- manhattanGrob(gwas_results,
 				   threshold = -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt")))),
+				   signals = signals,
 				   numeric_chrom = TRUE,
-				   margins = c(5.1, 3.1, 0.1, 0.1))
+				   margins = c(5.1, 4.1, 0.1, 0.1))
 } else {
 	stop("Unrecognized program option")
 }
