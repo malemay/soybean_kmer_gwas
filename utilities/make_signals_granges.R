@@ -27,6 +27,10 @@ stopifnot(!anyDuplicated(all_signals$signal_id))
 # Saving the list of signal names to file
 writeLines(paste(names(all_signals), all_signals$trait, sep = ","), con = "utilities/signal_ids.txt")
 
+# Also saving a list of signals for which the causal gene is known
+gene_signals <- all_signals[!is.na(all_signals$gene_name_v4)]
+writeLines(names(gene_signals), con = "utilities/gene_signal_ids.txt")
+
 # Saving the GRanges object to an .rds file
 saveRDS(all_signals, file = "utilities/all_signals.rds", compress = FALSE)
 

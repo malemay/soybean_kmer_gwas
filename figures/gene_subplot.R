@@ -1,29 +1,23 @@
 # Loading the required libraries
-library(gwastools)
-library(grid)
-library(GenomicRanges)
+suppressMessages(library(gwastools))
+suppressMessages(library(grid))
+suppressMessages(library(GenomicRanges))
 
 # Getting the name of the trait-locus combination and of the program that called the genotypes from the command line
 id <- commandArgs(trailingOnly = TRUE)[1]
 program <- commandArgs(trailingOnly = TRUE)[2]
 
-# Getting the ID of the gene associated with the trait and the name of the trait from the utilities/loci.txt file
-# DEPENDENCY: utilities/loci.txt
-loci <- read.table("utilities/loci.txt", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-gene_v1 <- loci[loci$id == id, "gene_v1"]
-trait <- loci[loci$id == id, "trait"]
+# Getting the ID of the gene associated with the trait and the name of the trait from the all_signals.rds file
+# DEPENDENCY: utilities/all_signals.rds
+target_signal <- readRDS("utilities/all_signals.rds")
+target_signal <- target_signal[id]
 
-# The reference genome is needed for formatting the GWAS results from programs other than k-mers
-# DEPENDENCY: refgenome/Gmax_508_v4.0_mit_chlp.fasta
-refgenome <- "refgenome/Gmax_508_v4.0_mit_chlp.fasta"
+gene_name <- target_signal$gene_name_v4
+trait <- target_signal$trait
 
 # A vector of Glycine max chromosome names
 chromosomes <- paste0("Gm", ifelse(1:20 < 10, "0", ""), 1:20)
 ### ----------
-
-# Loading the lookup table from Gmax v1 gene names to Gmax v4 gene names
-# DEPENDENCY: refgenome/lookup_v1_to_v4.rds
-lookup_v1_to_v4 <- readRDS("refgenome/lookup_v1_to_v4.rds")
 
 # Getting the set of genes, transcripts, exons and coding sequences
 # DEPENDENCY: refgenome/*.rds
@@ -32,36 +26,42 @@ transcripts <- readRDS("refgenome/gmax_v4_transcripts.rds")
 exons <- readRDS("refgenome/gmax_v4_exons.rds")
 cds <- readRDS("refgenome/gmax_v4_cds.rds")
 
+# Handling the special case where the gene_name value contains more than one gene or no gene at all
+if(!is.na(gene_name) && grepl(";", gene_name)) {
+	gene_names <- strsplit(gene_name, ";")[[1]]
+	gene <- genes[gene_names]
+	gene <- reduce(gene, min.gapwidth = 10^6, ignore.strand = TRUE)
+} else if (!is.na(gene_name)) {
+	gene <- genes[gene_name]
+} else {
+	gene <- NULL
+}
+
+if(is.null(gene)) stop("No gene found where there should be one")
+
 # Reading the data.frame of marker associations; treatment is different for k-mers than for other approaches
 # DEPENDENCY: GWAS association results
 # DEPENDENCY: GWAS thresholds
 if(program == "kmers") {
-	gwas_results <- readRDS(paste0("gwas_results/kmers/", trait, "_kmer_positions.rds"))
-	threshold <- as.numeric(readLines(paste0("gwas_results/kmers/", trait, "_threshold_5per")))
+	threshold <- as.numeric(readLines(paste0("gwas_results/kmers/", id, "_locus_threshold_5per")))
 } else if(program %in% c("platypus", "paragraph", "vg")) {
-	# Loading the results from the CSV file and formatting them as a GRanges object
-	gwas_results <- format_gapit_gwas(filename = paste0("gwas_results/", program, "/", trait, "_gwas.csv"),
-					  ref_fasta = refgenome,
-					  chromosomes = chromosomes,
-					  pattern = "^Gm[0-9]{2}$")
-	threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt"))))
+	threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", id, "_locus_threshold_5per.txt"))))
 }
 
-# Extracting the signal at the location of the gene
-gwas_signals <- extract_signals(gwas_results, threshold = threshold, distance = 10^5)
+# Loading the results from the rds file
+gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_gwas.rds"))
 
-# Getting the name of the gene in the genome assembly version 4
-gene_v4 <- lookup_v1_to_v4[gene_v1]
-stopifnot(!is.na(gene_v4))
+# Extracting the signal at the location of the gene
+gwas_signals <- extract_signals(gwas_results, threshold = threshold, distance = 250000)
 
 # Getting the one signal associated with this gene
-signal <- subsetByOverlaps(gwas_signals, genes[gene_v4])
+signal <- subsetByOverlaps(gwas_signals, gene)
 
-if(!length(signal) == 1) warning("There is no signal overlapping the gene ", gene_v4, " for phenotype ", trait)
+if(!length(signal) == 1) warning("There is no signal overlapping the gene ", gene, " for locus ", id)
 
 # Using the right viewport to focus on the p-values over the length of the gene
 ptx_plot <- pvalue_tx_grob(gwas_results = gwas_results,
-			       xscale = genes[gene_v4],
+			       xscale = gene,
 			       xexpand = c(0.1, 0.1),
 			       yexpand = c(0.1, 0.1),
 			       genes = genes,
@@ -74,6 +74,6 @@ ptx_plot <- pvalue_tx_grob(gwas_results = gwas_results,
 
 # Saving the grob to an RDS file for retrieval later on
 saveRDS(ptx_plot,
-	file = paste0("figures/ggplots/", program, "_", id, "_gene.rds"),
+	file = paste0("figures/grobs/", program, "_", id, "_gene.rds"),
 	compress = FALSE)
 

@@ -12,7 +12,7 @@ xscale_padding <- 500
 # A parameter that sets the distance between markers for merging signals with extract_signals
 signal_distance <- 250000
 
-# Getting the ID of the gene associated with the trait and the name of the trait from the all_signals.rds file
+# Getting the ID of the gene associated with the locus
 # DEPENDENCY: utilities/all_signals.rds
 target_signal <- readRDS("utilities/all_signals.rds")
 target_signal <- target_signal[id]
@@ -20,11 +20,6 @@ target_signal <- target_signal[id]
 stopifnot(length(target_signal) == 1)
 
 gene_name <- target_signal$gene_name_v4
-trait <- target_signal$trait
-
-# The reference genome is needed for formatting the GWAS results from programs other than k-mers
-# DEPENDENCY: refgenome/Gmax_508_v4.0_mit_chlp.fasta
-refgenome <- "refgenome/Gmax_508_v4.0_mit_chlp.fasta"
 
 # A vector of Glycine max chromosome names
 chromosomes <- paste0("Gm", ifelse(1:20 < 10, "0", ""), 1:20)
@@ -52,16 +47,13 @@ if(!is.na(gene_name) && grepl(";", gene_name)) {
 # DEPENDENCY: GWAS association results
 # DEPENDENCY: GWAS thresholds
 if(program == "kmers") {
-	gwas_results <- readRDS(paste0("gwas_results/kmers/", trait, "_kmer_positions.rds"))
-	threshold <- as.numeric(readLines(paste0("gwas_results/kmers/", trait, "_threshold_5per")))
+	threshold <- as.numeric(readLines(paste0("gwas_results/kmers/", id, "_locus_threshold_5per")))
 } else if(program %in% c("platypus", "paragraph", "vg")) {
-	# Loading the results from the CSV file and formatting them as a GRanges object
-	gwas_results <- format_gapit_gwas(filename = paste0("gwas_results/", program, "/", trait, "_gwas.csv"),
-					  ref_fasta = refgenome,
-					  chromosomes = chromosomes,
-					  pattern = "^Gm[0-9]{2}$")
-	threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt"))))
+	threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", id, "_locus_threshold_5per.txt"))))
 }
+
+# Reading the GWAS results from the RDS file
+gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_gwas.rds"))
 
 # Extracting the signal at the location of the gene
 gwas_signals <- extract_signals(gwas_results, threshold = threshold, distance = signal_distance)
@@ -100,6 +92,6 @@ if(!length(signal)) {
 
 # Saving the grob to an RDS file for retrieval later on
 saveRDS(ptx_plot,
-	file = paste0("figures/ggplots/", program, "_", id, "_signal.rds"),
+	file = paste0("figures/grobs/", program, "_", id, "_signal.rds"),
 	compress = FALSE)
 

@@ -1,5 +1,5 @@
 # Loading the required packages
-library(grid)
+suppressMessages(library(grid))
 
 # Reading the ID being analyzed from the command line
 id <- commandArgs(trailingOnly = TRUE)[1]
@@ -7,7 +7,7 @@ id <- commandArgs(trailingOnly = TRUE)[1]
 programs <- c("platypus", "vg", "paragraph", "kmers")
 
 # Outputting to a PNG file
-png(paste0("figures/", id, "_gene.png"), width = 9, height = 10, units = "in", res = 300)
+png(paste0("figures/", id, "_gene.png"), width = 9, height = 10, units = "in", res = 100)
 
 # Resetting the viewport
 grid.newpage()
@@ -23,7 +23,7 @@ pushViewport(viewport(layout = grid.layout(nrow = 4)))
 # Reading and printing each of the subplots in turn in their viewport row
 for(i in 1:4){
 	pushViewport(viewport(layout.pos.row = i))
-	grid.draw(readRDS(paste0("figures/ggplots/", programs[i], "_", id, "_gene.rds")))
+	grid.draw(readRDS(paste0("figures/grobs/", programs[i], "_", id, "_gene.rds")))
 	grid.text(programs[i], 0.1, 0.9, hjust = 0)
 	upViewport()
 }
