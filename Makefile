@@ -23,7 +23,8 @@ all: $(SDIR)/additional_file_1.pdf
 	$(grobdir)/platypus_%_gene.rds $(grobdir)/vg_%_gene.rds \
 	$(grobdir)/paragraph_%_gene.rds $(grobdir)/kmers_%_gene.rds \
 	gwas_results/platypus/%_gwas.rds gwas_results/vg/%_gwas.rds \
-	gwas_results/paragraph/%_gwas.rds gwas_results/kmers/%_gwas.rds
+	gwas_results/paragraph/%_gwas.rds gwas_results/kmers/%_gwas.rds \
+	gwas_results/kmers/%_threshold_5per.txt
 
 # Compiling the Supplemental Data file from the .tex file
 $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures)
@@ -35,20 +36,26 @@ $(signals_gr) utilities/signal_ids.txt utilities/gene_signal_ids.txt: utilities/
 	utilities/trait_names.txt
 	$(RSCRIPT) utilities/make_signals_granges.R
 
+# Putting the k-mer 5% thresholds on the same scale as the thresholds for the other programs
+gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gwas_results/kmers/%_threshold_5per
+	$(RSCRIPT) gwas_results/scale_kmer_thresholds.R $*
+
 # GWAS RESULTS --------------------------------------------------
 
 # Preparing the GWAS results for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph,$(eval gwas_results/$(prog)/%_gwas.rds: gwas_results/format_gwas_results.R \
 	$(refgen) \
 	utilities/signal_ids.txt \
-	gwas_results/$(prog)/%_gwas.csv ; \
+	gwas_results/$(prog)/%_gwas.csv \
+	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) gwas_results/format_gwas_results.R $$* $(prog)))
 
-# kmers need sepcial treatment because of the threshold
+# kmers need special treatment
 gwas_results/kmers/%_gwas.rds: gwas_results/format_gwas_results.R \
 	utilities/signal_ids.txt \
 	$(refgen) \
-	gwas_results/kmers/%_kmer_positions.rds 
+	gwas_results/kmers/%_kmer_positions.rds \
+	gwas_results/kmers/%_threshold_5per.txt
 	$(RSCRIPT) gwas_results/format_gwas_results.R $* kmers
 
 # MANHATTAN PLOTS --------------------------------------------------
@@ -62,19 +69,11 @@ figures/%_manhattan.png: figures/manhattan_plot.R \
 	$(RSCRIPT) figures/manhattan_plot.R $*
 
 # Preparing the manhattan subplots for each of platypus, vg and paragraph
-$(foreach prog,platypus vg paragraph,$(eval $(grobdir)/$(prog)_%_manhattan.rds: figures/manhattan_subplot.R \
+$(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan.rds: figures/manhattan_subplot.R \
 	$(signals_gr) \
 	gwas_results/$(prog)/%_gwas.rds \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) figures/manhattan_subplot.R $$* $(prog)))
-
-
-# kmers need sepcial treatment because of the threshold
-$(grobdir)/kmers_%_manhattan.rds: figures/manhattan_subplot.R \
-	$(signals_gr) \
-	gwas_results/kmers/%_gwas.rds \
-	gwas_results/kmers/%_threshold_5per
-	$(RSCRIPT) figures/manhattan_subplot.R $* kmers
 
 # SIGNAL PLOTS --------------------------------------------------
 
@@ -87,20 +86,12 @@ figures/%_signal.png: figures/signal_plot.R \
 	$(RSCRIPT) figures/signal_plot.R $*
 
 # Preparing the signal subplots for each of platypus, vg and paragraph
-$(foreach prog,platypus vg paragraph,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
+$(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
 	$(signals_gr) \
 	$(txdb) \
 	gwas_results/$(prog)/%_locus_gwas.rds \
 	gwas_results/$(prog)/%_locus_threshold_5per.txt ; \
 	$(RSCRIPT) figures/signal_subplot.R $$* $(prog)))
-
-# kmers need sepcial treatment because of the threshold
-$(grobdir)/kmers_%_signal.rds: figures/signal_subplot.R \
-	$(signals_gr) \
-	$(txdb) \
-	gwas_results/kmers/%_locus_gwas.rds \
-	gwas_results/kmers/%_locus_threshold_5per
-	$(RSCRIPT) figures/signal_subplot.R $* kmers
 
 # GENE PLOTS --------------------------------------------------
 
@@ -113,18 +104,11 @@ figures/%_gene.png: figures/gene_plot.R \
 	$(RSCRIPT) figures/gene_plot.R $*
 
 # Preparing the gene subplots for each of platypus, vg and paragraph
-$(foreach prog,platypus vg paragraph,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
+$(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
 	$(signals_gr) \
 	$(txdb) \
 	gwas_results/$(prog)/%_locus_gwas.rds \
 	gwas_results/$(prog)/%_locus_threshold_5per.txt ; \
 	$(RSCRIPT) figures/gene_subplot.R $$* $(prog)))
 
-# kmers need sepcial treatment because of the threshold
-$(grobdir)/kmers_%_gene.rds: figures/gene_subplot.R \
-	$(signals_gr) \
-	$(txdb) \
-	gwas_results/kmers/%_locus_gwas.rds \
-	gwas_results/kmers/%_locus_threshold_5per
-	$(RSCRIPT) figures/gene_subplot.R $* kmers
 

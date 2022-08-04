@@ -42,11 +42,7 @@ if(is.null(gene)) stop("No gene found where there should be one")
 # Reading the data.frame of marker associations; treatment is different for k-mers than for other approaches
 # DEPENDENCY: GWAS association results
 # DEPENDENCY: GWAS thresholds
-if(program == "kmers") {
-	threshold <- as.numeric(readLines(paste0("gwas_results/kmers/", id, "_locus_threshold_5per")))
-} else if(program %in% c("platypus", "paragraph", "vg")) {
-	threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", id, "_locus_threshold_5per.txt"))))
-}
+threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", id, "_locus_threshold_5per.txt"))))
 
 # Loading the results from the rds file
 gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_gwas.rds"))

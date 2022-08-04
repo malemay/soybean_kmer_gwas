@@ -18,11 +18,7 @@ if(!length(signals)) signals <- NULL
 chromosomes <- paste0("Gm", ifelse(1:20 < 10, "0", ""), 1:20)
 
 # It is a special case if we are analyzing k-mers
-if(program == "kmers") {
-	threshold <- as.numeric(readLines(paste0("gwas_results/kmers/", trait, "_threshold_5per")))
-} else {
-	threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt"))))
-}
+threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt"))))
 
 # Loading the results from the rds file
 gwas_results <- readRDS(paste0("gwas_results/", program, "/", trait, "_gwas.rds"))
