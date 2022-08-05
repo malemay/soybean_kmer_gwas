@@ -4,8 +4,10 @@
 *fasta
 *fasta.fai
 *fastq.gz
-gwas
-gwas_results/
+gwas_results/kmers
+gwas_results/platypus
+gwas_results/paragraph
+gwas_results/vg
 *lof
 *log
 *lot

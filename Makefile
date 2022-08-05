@@ -24,7 +24,10 @@ all: $(SDIR)/additional_file_1.pdf
 	$(grobdir)/paragraph_%_gene.rds $(grobdir)/kmers_%_gene.rds \
 	gwas_results/platypus/%_gwas.rds gwas_results/vg/%_gwas.rds \
 	gwas_results/paragraph/%_gwas.rds gwas_results/kmers/%_gwas.rds \
-	gwas_results/kmers/%_threshold_5per.txt
+	gwas_results/kmers/%_threshold_5per.txt \
+	gwas_results/platypus/%_signal.rds gwas_results/vg/%_signal.rds \
+	gwas_results/paragraph/%_signal.rds gwas_results/kmers/%_signal.rds
+
 
 # Compiling the Supplemental Data file from the .tex file
 $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures)
@@ -58,6 +61,14 @@ gwas_results/kmers/%_gwas.rds: gwas_results/format_gwas_results.R \
 	gwas_results/kmers/%_threshold_5per.txt
 	$(RSCRIPT) gwas_results/format_gwas_results.R $* kmers
 
+# SIGNALS --------------------------------------------------
+# Creating a GRanges object containing the signal(s) for all traits for each program
+$(foreach prog,platypus vg paragraph kmers,$(eval gwas_results/$(prog)/%_signal.rds: gwas_results/find_signals.R \
+	utilities/signal_ids.txt \
+	gwas_results/$(prog)/%_gwas.rds \
+	gwas_results/$(prog)/%_threshold_5per.txt ; \
+	$(RSCRIPT) gwas_results/find_signals.R $$* $(prog)))
+
 # MANHATTAN PLOTS --------------------------------------------------
 
 # This block assembles the four manhattan subplots for a given trait
@@ -90,7 +101,7 @@ $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rd
 	$(signals_gr) \
 	$(txdb) \
 	gwas_results/$(prog)/%_locus_gwas.rds \
-	gwas_results/$(prog)/%_locus_threshold_5per.txt ; \
+	gwas_results/$(prog)/%_locus_signal.rds ; \
 	$(RSCRIPT) figures/signal_subplot.R $$* $(prog)))
 
 # GENE PLOTS --------------------------------------------------
@@ -108,7 +119,7 @@ $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds:
 	$(signals_gr) \
 	$(txdb) \
 	gwas_results/$(prog)/%_locus_gwas.rds \
-	gwas_results/$(prog)/%_locus_threshold_5per.txt ; \
+	gwas_results/$(prog)/%_locus_signal.rds ; \
 	$(RSCRIPT) figures/gene_subplot.R $$* $(prog)))
 
 

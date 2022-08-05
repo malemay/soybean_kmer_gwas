@@ -15,8 +15,6 @@ target_signal <- target_signal[id]
 gene_name <- target_signal$gene_name_v4
 trait <- target_signal$trait
 
-# A vector of Glycine max chromosome names
-chromosomes <- paste0("Gm", ifelse(1:20 < 10, "0", ""), 1:20)
 ### ----------
 
 # Getting the set of genes, transcripts, exons and coding sequences
@@ -42,13 +40,10 @@ if(is.null(gene)) stop("No gene found where there should be one")
 # Reading the data.frame of marker associations; treatment is different for k-mers than for other approaches
 # DEPENDENCY: GWAS association results
 # DEPENDENCY: GWAS thresholds
-threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", id, "_locus_threshold_5per.txt"))))
 
-# Loading the results from the rds file
+# Loading the results and signals from the rds file
 gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_gwas.rds"))
-
-# Extracting the signal at the location of the gene
-gwas_signals <- extract_signals(gwas_results, threshold = threshold, distance = 250000)
+gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_signal.rds"))
 
 # Getting the one signal associated with this gene
 signal <- subsetByOverlaps(gwas_signals, gene)
