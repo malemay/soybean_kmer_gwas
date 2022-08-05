@@ -1,6 +1,6 @@
 # Loading the required libraries
-suppressMessages(library(gwastools))
 suppressMessages(library(grid))
+suppressMessages(library(gwastools))
 suppressMessages(library(GenomicRanges))
 
 # Getting the name of the trait-locus combination and of the program that called the genotypes from the command line
@@ -13,16 +13,11 @@ target_signal <- readRDS("utilities/all_signals.rds")
 target_signal <- target_signal[id]
 
 gene_name <- target_signal$gene_name_v4
-trait <- target_signal$trait
-
 ### ----------
 
-# Getting the set of genes, transcripts, exons and coding sequences
-# DEPENDENCY: refgenome/*.rds
+# Getting the set of reference genes
+# DEPENDENCY: refgenome/gmax_v4_genes.rds
 genes <- readRDS("refgenome/gmax_v4_genes.rds")
-transcripts <- readRDS("refgenome/gmax_v4_transcripts.rds")
-exons <- readRDS("refgenome/gmax_v4_exons.rds")
-cds <- readRDS("refgenome/gmax_v4_cds.rds")
 
 # Handling the special case where the gene_name value contains more than one gene or no gene at all
 if(!is.na(gene_name) && grepl(";", gene_name)) {
@@ -51,17 +46,11 @@ signal <- subsetByOverlaps(gwas_signals, gene)
 if(!length(signal) == 1) warning("There is no signal overlapping the gene ", gene, " for locus ", id)
 
 # Using the right viewport to focus on the p-values over the length of the gene
-ptx_plot <- pvalue_tx_grob(gwas_results = gwas_results,
-			       xscale = gene,
-			       xexpand = c(0.1, 0.1),
-			       yexpand = c(0.1, 0.1),
-			       genes = genes,
-			       transcripts = transcripts,
-			       exons = exons,
-			       cds = cds,
-			       transcript_margins = c(0, 3.6, 0, 1.1),
-			       pvalue_margins = c(5.1, 3.6, 0.5, 1.1))
-
+ptx_plot <- pvalueGrob(gwas_results = gwas_results,
+		       interval = gene,
+		       feature = NULL,
+		       pvalue_margins = c(5.1, 3.6, 0.5, 1.1),
+		       yexpand = c(0.1, 0.1))
 
 # Saving the grob to an RDS file for retrieval later on
 saveRDS(ptx_plot,

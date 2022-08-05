@@ -8,7 +8,7 @@ id <- commandArgs(trailingOnly = TRUE)[1]
 program <- commandArgs(trailingOnly = TRUE)[2]
 
 # A parameter that sets the padding of the x-scale when the signal consists of only one marker
-xscale_padding <- 500
+xscale_padding <- 10
 
 # Getting the ID of the gene associated with the locus
 # DEPENDENCY: utilities/all_signals.rds
@@ -20,12 +20,9 @@ stopifnot(length(target_signal) == 1)
 gene_name <- target_signal$gene_name_v4
 ### ----------
 
-# Getting the set of genes, transcripts, exons and coding sequences
+# Getting the set of reference genes
 # DEPENDENCY: refgenome/*.rds
 genes <- readRDS("refgenome/gmax_v4_genes.rds")
-transcripts <- readRDS("refgenome/gmax_v4_transcripts.rds")
-exons <- readRDS("refgenome/gmax_v4_exons.rds")
-cds <- readRDS("refgenome/gmax_v4_cds.rds")
 
 # Handling the special case where the gene_name value contains more than one gene or no gene at all
 if(!is.na(gene_name) && grepl(";", gene_name)) {
@@ -61,19 +58,11 @@ if(!length(signal)) {
 	}
 
 	# Creating a grob representing the p-value plot and transcript
-	ptx_plot <- pvalue_tx_grob(gwas_results = gwas_results,
-				   feature = gene,
-				   xscale = signal,
-				   first_tx_only = TRUE,
-				   xexpand = c(0.05, 0.05),
-				   yexpand = c(0.1, 0.1),
-				   genes = genes,
-				   transcripts = transcripts,
-				   exons = exons,
-				   cds = cds,
-				   transcript_margins = c(0, 3.6, 0, 1.1),
-				   pvalue_margins = c(5.1, 3.6, 0.5, 1.1),
-				   pvalue_fraction = 0.95)
+	ptx_plot <- pvalueGrob(gwas_results = gwas_results,
+			       interval = signal,
+			       feature = gene,
+			       pvalue_margins = c(5.1, 3.6, 0.5, 1.1),
+			       yexpand = c(0.1, 0.1))
 }
 
 # Saving the grob to an RDS file for retrieval later on

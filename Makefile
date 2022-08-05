@@ -99,7 +99,7 @@ figures/%_signal.png: figures/signal_plot.R \
 # Preparing the signal subplots for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
 	$(signals_gr) \
-	$(txdb) \
+	refgenome/gmax_v4_genes.rds \
 	gwas_results/$(prog)/%_locus_gwas.rds \
 	gwas_results/$(prog)/%_locus_signal.rds ; \
 	$(RSCRIPT) figures/signal_subplot.R $$* $(prog)))
@@ -117,7 +117,7 @@ figures/%_gene.png: figures/gene_plot.R \
 # Preparing the gene subplots for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
 	$(signals_gr) \
-	$(txdb) \
+	refgenome/gmax_v4_genes.rds \
 	gwas_results/$(prog)/%_locus_gwas.rds \
 	gwas_results/$(prog)/%_locus_signal.rds ; \
 	$(RSCRIPT) figures/gene_subplot.R $$* $(prog)))
