@@ -14,6 +14,11 @@ signals <- readRDS("utilities/all_signals.rds")
 signals <- signals[signals$trait == trait]
 if(!length(signals)) signals <- NULL
 
+# Reading the signals that were found for this trait and program
+# DEPENDENCY: trait-wise signals
+found_signals <- readRDS(paste0("gwas_results/", program, "/", trait, "_signal.rds"))
+if(!length(signals)) found_signals <- NULL
+
 # A vector of Glycine max chromosome names
 chromosomes <- paste0("Gm", ifelse(1:20 < 10, "0", ""), 1:20)
 
@@ -26,7 +31,8 @@ gwas_results <- readRDS(paste0("gwas_results/", program, "/", trait, "_gwas.rds"
 # Plotting the results using the gwastools::manhattan_plot function
 gwas_plot <- manhattanGrob(gwas_results,
 			   threshold = threshold,
-			   signals = signals,
+			   ref_signals = signals,
+			   new_signals = found_signals,
 			   numeric_chrom = TRUE,
 			   margins = c(5.1, 4.1, 0.1, 0.1))
 

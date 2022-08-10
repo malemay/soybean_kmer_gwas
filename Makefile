@@ -82,6 +82,7 @@ figures/%_manhattan.png: figures/manhattan_plot.R \
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan.rds: figures/manhattan_subplot.R \
 	$(signals_gr) \
 	gwas_results/$(prog)/%_gwas.rds \
+	gwas_results/$(prog)/%_signal.rds \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) figures/manhattan_subplot.R $$* $(prog)))
 
