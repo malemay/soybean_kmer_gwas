@@ -25,16 +25,3 @@ saveRDS(gwas_signals,
 	file = paste0("gwas_results/", program, "/", trait, "_signal.rds"),
 	compress = FALSE)
 
-# Also creating the appropriate symlinks such that the analyses on each locus can relate to the right trait
-signal_ids <- read.table("utilities/signal_ids.txt", header = FALSE, sep = ",")
-signal_ids <- signal_ids[signal_ids[[2]] == trait, ]
-
-if(nrow(signal_ids)) {
-	for(i in 1:nrow(signal_ids)) {
-		signal_file1 <- paste0(signal_ids[i, 2], "_signal.rds")
-		signal_file2 <- paste0("gwas_results/", program, "/", signal_ids[i, 1], "_locus_signal.rds")
-		if(file.exists(signal_file2)) unlink(signal_file2)
-		file.symlink(signal_file1, signal_file2)
-	}
-}
-

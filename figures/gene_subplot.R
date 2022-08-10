@@ -37,8 +37,8 @@ if(is.null(gene)) stop("No gene found where there should be one")
 # DEPENDENCY: GWAS thresholds
 
 # Loading the results and signals from the rds file
-gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_gwas.rds"))
-gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_signal.rds"))
+gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_gwas_locus.rds"))
+gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_signal_locus.rds"))
 
 # Getting the one signal associated with this gene
 signal <- subsetByOverlaps(gwas_signals, gene)

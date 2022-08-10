@@ -22,12 +22,13 @@ all: $(SDIR)/additional_file_1.pdf
 	$(grobdir)/paragraph_%_signal.rds $(grobdir)/kmers_%_signal.rds \
 	$(grobdir)/platypus_%_gene.rds $(grobdir)/vg_%_gene.rds \
 	$(grobdir)/paragraph_%_gene.rds $(grobdir)/kmers_%_gene.rds \
-	gwas_results/platypus/%_gwas.rds gwas_results/vg/%_gwas.rds \
-	gwas_results/paragraph/%_gwas.rds gwas_results/kmers/%_gwas.rds \
-	gwas_results/kmers/%_threshold_5per.txt \
-	gwas_results/platypus/%_signal.rds gwas_results/vg/%_signal.rds \
-	gwas_results/paragraph/%_signal.rds gwas_results/kmers/%_signal.rds
+	gwas_results/kmers/%_threshold_5per.txt
 
+# Adding some more intermediate files to .PRECIOUS
+$(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval .PRECIOUS: $(signal)))
+$(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_signal_locus.rds),$(eval .PRECIOUS: $(signal)))
+$(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_signal.rds))
+$(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_gwas.rds))
 
 # Compiling the Supplemental Data file from the .tex file
 $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures)
@@ -48,7 +49,6 @@ gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gw
 # Preparing the GWAS results for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph,$(eval gwas_results/$(prog)/%_gwas.rds: gwas_results/format_gwas_results.R \
 	$(refgen) \
-	utilities/signal_ids.txt \
 	gwas_results/$(prog)/%_gwas.csv \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) gwas_results/format_gwas_results.R $$* $(prog)))
@@ -64,7 +64,6 @@ gwas_results/kmers/%_gwas.rds: gwas_results/format_gwas_results.R \
 # SIGNALS --------------------------------------------------
 # Creating a GRanges object containing the signal(s) for all traits for each program
 $(foreach prog,platypus vg paragraph kmers,$(eval gwas_results/$(prog)/%_signal.rds: gwas_results/find_signals.R \
-	utilities/signal_ids.txt \
 	gwas_results/$(prog)/%_gwas.rds \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) gwas_results/find_signals.R $$* $(prog)))
@@ -102,8 +101,8 @@ figures/%_signal.png: figures/signal_plot.R \
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
 	$(signals_gr) \
 	refgenome/gmax_v4_genes.rds \
-	gwas_results/$(prog)/%_locus_gwas.rds \
-	gwas_results/$(prog)/%_locus_signal.rds ; \
+	gwas_results/$(prog)/%_gwas_locus.rds \
+	gwas_results/$(prog)/%_signal_locus.rds ; \
 	$(RSCRIPT) figures/signal_subplot.R $$* $(prog)))
 
 # GENE PLOTS --------------------------------------------------
@@ -122,8 +121,21 @@ figures/%_gene.png: figures/gene_plot.R \
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
 	$(signals_gr) \
 	refgenome/gmax_v4_genes.rds \
-	gwas_results/$(prog)/%_locus_gwas.rds \
-	gwas_results/$(prog)/%_locus_signal.rds ; \
+	gwas_results/$(prog)/%_gwas_locus.rds \
+	gwas_results/$(prog)/%_signal_locus.rds ; \
 	$(RSCRIPT) figures/gene_subplot.R $$* $(prog)))
 
+# SYMLINKS --------------------------------------------------
+
+# Creating locus-specific symlinks to signal files of the relevant phenotype
+$(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_signal_locus.rds),$(eval $(signal) : \
+	$(shell echo $(signal) | sed -E 's/[^_]+_signal_locus/signal/') \
+	gwas_results/create_symlink.R ; \
+	$(RSCRIPT) gwas_results/create_symlink.R $$< $$@))
+
+# Creating locus-specific symlinks to GWAS results files of the relevant phenotype
+$(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval $(signal) : \
+	$(shell echo $(signal) | sed -E 's/[^_]+_gwas_locus/gwas/') \
+	gwas_results/create_symlink.R ; \
+	$(RSCRIPT) gwas_results/create_symlink.R $$< $$@))
 

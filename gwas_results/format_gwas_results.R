@@ -31,23 +31,3 @@ if(program == "kmers") {
 # Outputting to an rds file for retrieval in downstream analyses
 saveRDS(gwas_results, file = paste0("gwas_results/", program, "/", trait, "_gwas.rds"), compress = FALSE)
 
-# Also creating the appropriate symlinks such that signals can relate to their underlying results file
-signal_ids <- read.table("utilities/signal_ids.txt", header = FALSE, sep = ",")
-signal_ids <- signal_ids[signal_ids[[2]] == trait, ]
-
-if(nrow(signal_ids)) {
-
-	for(i in 1:nrow(signal_ids)) {
-		gwas_file1 <- paste0(signal_ids[i, 2], "_gwas.rds")
-		gwas_file2 <- paste0("gwas_results/", program, "/", signal_ids[i, 1], "_locus_gwas.rds")
-		if(file.exists(gwas_file2)) unlink(gwas_file2)
-		file.symlink(gwas_file1, gwas_file2)
-
-		threshold_file1 <- paste0(signal_ids[i, 2], "_threshold_5per.txt")
-		threshold_file2 <- paste0("gwas_results/", program, "/", signal_ids[i, 1], "_locus_threshold_5per.txt")
-
-		if(file.exists(threshold_file2)) unlink(threshold_file2)
-		file.symlink(threshold_file1, threshold_file2)
-	}
-
-}

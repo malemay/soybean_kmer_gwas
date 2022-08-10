@@ -36,8 +36,8 @@ if(!is.na(gene_name) && grepl(";", gene_name)) {
 }
 
 # Reading the GWAS results and signals from file
-gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_gwas.rds"))
-gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_locus_signal.rds"))
+gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_gwas_locus.rds"))
+gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_signal_locus.rds"))
 
 # Extracting the signal for the locus of interest from those just read
 signal <- subsetByOverlaps(gwas_signals, target_signal)
