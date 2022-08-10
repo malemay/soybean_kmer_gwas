@@ -49,7 +49,6 @@ if(!length(signal) == 1) warning("There is no signal overlapping the gene ", gen
 ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 		       interval = gene,
 		       feature = NULL,
-		       pvalue_margins = c(5.1, 3.6, 0.5, 1.1),
 		       yexpand = c(0.1, 0.1))
 
 # Saving the grob to an RDS file for retrieval later on

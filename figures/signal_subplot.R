@@ -45,14 +45,9 @@ signal <- subsetByOverlaps(gwas_signals, target_signal)
 if(!length(signal)) {
 	warning("No signal found by ", program, " for signal ID ", id)
 	ptx_plot <- grid::gTree(children = gList(textGrob(paste0("No signal found by ", program, " for signal ID ", id))))
-
-} else if (length(signal) > 1) {
-	warning(length(signal), " signals found by ", program, " for signal ID ", id)
-	ptx_plot <- grid::gTree(children = gList(textGrob(paste0(length(signal), " signals found by ", program, " for signal ID ", id))))
-
 } else {
 	# Setting the x-scale while handling special cases where there is no signal or the signal is only 1 bp wide
-	if(width(signal) == 1) {
+	if(length(signal) == 1 && width(signal) == 1) {
 		start(signal) <- start(signal) - xscale_padding
 		end(signal)   <- end(signal) + xscale_padding
 	}
@@ -61,7 +56,6 @@ if(!length(signal)) {
 	ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 			       interval = signal,
 			       feature = gene,
-			       pvalue_margins = c(5.1, 3.6, 0.5, 1.1),
 			       yexpand = c(0.1, 0.1))
 }
 

@@ -90,6 +90,8 @@ $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan
 
 # This block assembles the four signal subplots for a given locus
 figures/%_signal.png: figures/signal_plot.R \
+	$(signals_gr) \
+	$(txdb) \
 	$(grobdir)/platypus_%_signal.rds \
 	$(grobdir)/vg_%_signal.rds \
 	$(grobdir)/paragraph_%_signal.rds \
@@ -108,6 +110,8 @@ $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rd
 
 # This block assembles the four gene subplots for a given locus
 figures/%_gene.png: figures/gene_plot.R \
+	$(signals_gr) \
+	$(txdb) \
 	$(grobdir)/platypus_%_gene.rds \
 	$(grobdir)/vg_%_gene.rds \
 	$(grobdir)/paragraph_%_gene.rds \
