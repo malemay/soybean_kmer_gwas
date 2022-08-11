@@ -23,6 +23,7 @@ if(program == "kmers") {
 	gwas_results <- format_gapit_gwas(filename = paste0("gwas_results/", program, "/", trait, "_gwas.csv"),
 					  ref_fasta = refgenome,
 					  chromosomes = chromosomes,
+					  vcf_file = paste0("filtered_variants/", program, "/filtered_variants.vcf.gz"),
 					  pattern = "^Gm[0-9]{2}$")
 } else {
 	stop("Unrecognized program option")

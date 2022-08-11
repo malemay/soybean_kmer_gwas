@@ -17,3 +17,5 @@ gwas_results/vg
 *swp
 *rds
 *toc
+*vcf.gz
+*vcf.gz.tbi

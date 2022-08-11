@@ -49,6 +49,7 @@ gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gw
 # Preparing the GWAS results for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph,$(eval gwas_results/$(prog)/%_gwas.rds: gwas_results/format_gwas_results.R \
 	$(refgen) \
+	filtered_variants/$(prog)/filtered_variants.vcf.gz \
 	gwas_results/$(prog)/%_gwas.csv \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) gwas_results/format_gwas_results.R $$* $(prog)))
