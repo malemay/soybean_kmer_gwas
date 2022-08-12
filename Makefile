@@ -63,11 +63,21 @@ gwas_results/kmers/%_gwas.rds: gwas_results/format_gwas_results.R \
 	$(RSCRIPT) gwas_results/format_gwas_results.R $* kmers
 
 # SIGNALS --------------------------------------------------
-# Creating a GRanges object containing the signal(s) for all traits for each program
-$(foreach prog,platypus vg paragraph kmers,$(eval gwas_results/$(prog)/%_signal.rds: gwas_results/find_signals.R \
+# Creating a GRanges object containing the signal(s) for all traits for each program but platypus; also creating subsets of GWAS results that only overlap signals
+$(foreach prog,vg paragraph kmers,$(eval gwas_results/$(prog)/%_signal.rds gwas_results/$(prog)/%_gwas_subset.rds : gwas_results/find_signals.R \
 	gwas_results/$(prog)/%_gwas.rds \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) gwas_results/find_signals.R $$* $(prog)))
+
+# Platypus requires special treatment because of the pruned markers
+gwas_results/platypus/%_signal.rds gwas_results/platypus/%_gwas_subset.rds : gwas_results/find_signals.R \
+	gwas_results/platypus/%_gwas.rds \
+	gwas_results/platypus/%_threshold_5per.txt \
+	filtered_variants/platypus_full.vcf.gz \
+	filtered_variants/platypus_gapit_kinship.rds \
+	filtered_variants/platypus_gapit_pca.rds \
+	phenotypic_data/phenotypic_data.csv
+	$(RSCRIPT) gwas_results/find_signals.R $* platypus
 
 # MANHATTAN PLOTS --------------------------------------------------
 
@@ -137,7 +147,7 @@ $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} e
 
 # Creating locus-specific symlinks to GWAS results files of the relevant phenotype
 $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval $(signal) : \
-	$(shell echo $(signal) | sed -E 's/[^_]+_gwas_locus/gwas/') \
+	$(shell echo $(signal) | sed -E 's/[^_]+_gwas_locus/gwas_subset/') \
 	gwas_results/create_symlink.R ; \
 	$(RSCRIPT) gwas_results/create_symlink.R $$< $$@))
 

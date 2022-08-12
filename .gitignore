@@ -1,6 +1,7 @@
 *aux
 *bam
 *bam.bai
+*.csv
 *fasta
 *fasta.fai
 *fastq.gz
