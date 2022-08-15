@@ -36,7 +36,8 @@ $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures)
 
 # This script prepares the reference signals GRanges object
 $(signals_gr) utilities/signal_ids.txt utilities/gene_signal_ids.txt: utilities/make_signals_granges.R \
-	utilities/bandillo_signals.rds \
+	reference_signals//bandillo2015_signals.rds \
+	reference_signals//bandillo2017_signals.rds \
 	utilities/trait_names.txt
 	$(RSCRIPT) utilities/make_signals_granges.R
 
@@ -56,7 +57,6 @@ $(foreach prog,platypus vg paragraph,$(eval gwas_results/$(prog)/%_gwas.rds: gwa
 
 # kmers need special treatment
 gwas_results/kmers/%_gwas.rds: gwas_results/format_gwas_results.R \
-	utilities/signal_ids.txt \
 	$(refgen) \
 	gwas_results/kmers/%_kmer_positions.rds \
 	gwas_results/kmers/%_threshold_5per.txt
