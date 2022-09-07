@@ -9,11 +9,25 @@ refgen := refgenome/Gmax_508_v4.0_mit_chlp.fasta
 signals_gr := utilities/all_signals.rds
 grobdir := figures/grobs
 
+suptables := tables/FLOWER.COLOR_gwas_table.csv \
+	tables/PUBESCENCE.COLOR_gwas_table.csv \
+	tables/SEED.COAT.COLOR_gwas_table.csv \
+	tables/STEM.TERMINATION.TYPE_gwas_table.csv \
+	tables/HILUM.COLOR_gwas_table.csv \
+	tables/POD.COLOR_gwas_table.csv \
+	tables/PUBESCENCE.FORM_gwas_table.csv \
+	tables/PUBESCENCE.DENSITY_gwas_table.csv \
+	tables/SEED.COAT.LUSTER_gwas_table.csv \
+	tables/MATURITY.GROUP_gwas_table.csv
+
 supfigures := $(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_manhattan.png) \
 	$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo figures/{}_signal.png) \
 	$(shell cat utilities/gene_signal_ids.txt | xargs -I {} echo figures/{}_gene.png)
 
 all: $(SDIR)/additional_file_1.pdf
+
+SUPTABLES: $(suptables)
+SUPFIGURES: $(supfigures)
 
 # Making sure that intermediate files do not get deleted
 .PRECIOUS: $(grobdir)/platypus_%_manhattan.rds $(grobdir)/vg_%_manhattan.rds \
@@ -31,8 +45,8 @@ $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(pro
 $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_gwas.rds))
 
 # Compiling the Supplemental Data file from the .tex file
-$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures)
-	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex
+$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures) $(suptables)
+	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
 
 # This script prepares the reference signals GRanges object
 $(signals_gr) utilities/signal_ids.txt utilities/gene_signal_ids.txt: utilities/make_signals_granges.R \
@@ -44,6 +58,23 @@ $(signals_gr) utilities/signal_ids.txt utilities/gene_signal_ids.txt: utilities/
 # Putting the k-mer 5% thresholds on the same scale as the thresholds for the other programs
 gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gwas_results/kmers/%_threshold_5per
 	$(RSCRIPT) gwas_results/scale_kmer_thresholds.R $*
+
+# PHENOTYPIC DATA --------------------------------------------------
+
+# Creating the table with the numeric coding for a given trait
+tables/%_gwas_table.csv: tables/gwas_table.R \
+	phenotypic_data/trait_names.rds \
+	phenotypic_data/phenotypic_data.csv \
+	phenotypic_data/lookup_tables.rds
+	$(RSCRIPT) tables/gwas_table.R $*
+
+# Creating the lookup tables used to translate the phenotypes into numeric codes
+phenotypic_data/lookup_tables.rds: phenotypic_data/lookup_tables.R
+	$(RSCRIPT) phenotypic_data/lookup_tables.R
+
+# Creating the lookup table used to translate the GRIN trait names into the ones used in this analysis
+phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
+	$(RSCRIPT) phenotypic_data/trait_names.R
 
 # GWAS RESULTS --------------------------------------------------
 
