@@ -10,12 +10,22 @@ library(Biostrings)
 # The padding (number of nucleotides to be extracted from either side of the position) to use as a parameter
 padding <- 20
 
-# The path to reference genome version 1
-gmax_v1_path <- "~/refgenome/Gmax_v1/glyma.Wm82.gnm1.FCtY.genome_main.fna"
-gmax_v4_path <- "~/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta"
+# --- GROUPING ALL EXTERNAL DEPENDENCIES AT THE TOP OF THE FILE
 
-bandillo2015_snps <- read.table("bandillo2015_table1_curated.csv", sep = ",", header = TRUE,
-			       na.strings = "ns", stringsAsFactors = FALSE)
+# The path to reference genome version 1
+# DEPENDENCY: refgenome/glyma.Wm82.gnm1.FCtY.genome_main.fna
+gmax_v1_path <- "refgenome/glyma.Wm82.gnm1.FCtY.genome_main.fna"
+
+# The path to reference genome version 4
+# DEPENDENCY: refgenome/Gmax_508_v4.0_mit_chlp.fasta
+gmax_v4_path <- "refgenome/Gmax_508_v4.0_mit_chlp.fasta"
+
+# A curated table as obtained from the table in Bandillo et al. (2015) processed with Tabula
+# DOI: 10.3835/plantgenome2015.04.0024
+# DEPENDENCY: reference_signals/bandillo2015_table1_curated.csv
+bandillo2015_snps <- read.table("reference_signals/bandillo2015_table1_curated.csv",
+				sep = ",", header = TRUE,
+				na.strings = "ns", stringsAsFactors = FALSE)
 
 # Transforming the dataset from a "wide" dataset to a "long" dataset
 oil_snps <- protein_snps <- bandillo2015_snps
@@ -55,6 +65,10 @@ bandillo2015_signals$glyma_name <- NA
 bandillo2015_signals$common_name <- NA
 bandillo2015_signals$gene_name_v4 <- NA
 
+# Setting the name of the gene for the QTL on chromosome 15
+# according to Zhang et al. (2020), DOI:10.1371/journal.pgen.1009114
+bandillo2015_signals[bandillo2015_signals$Chr == "glyma.Wm82.gnm1.Gm15", "gene_name_v4"] <- tolower("Glyma.15G049200")
+
 # Reordering the columns
 bandillo2015_signals <- bandillo2015_signals[, c("trait", "Chr", "n_snps",
 						 "first_snp", "last_snp", "max_snp",
@@ -62,14 +76,10 @@ bandillo2015_signals <- bandillo2015_signals[, c("trait", "Chr", "n_snps",
 						 "common_name", "gene_name_v4", "signal_id")]
 
 # Generating the fai index for reference genome version 1 if it does not already exist
-if(!file.exists(paste0(gmax_v1_path, ".fai"))) {
-	Rsamtools::indexFa(gmax_v1_path)
-}
+if(!file.exists(paste0(gmax_v1_path, ".fai"))) Rsamtools::indexFa(gmax_v1_path)
 
 # Doing the same for reference genome version 4
-if(!file.exists(paste0(gmax_v4_path, ".fai"))) {
-	Rsamtools::indexFa(gmax_v4_path)
-}
+if(!file.exists(paste0(gmax_v4_path, ".fai"))) Rsamtools::indexFa(gmax_v4_path)
 
 # Creating GRanges objects to store the query positions
 first_granges <- GRanges(seqnames = bandillo2015_signals$Chr, 
@@ -135,8 +145,8 @@ for(i in c("first", "last", "max")) {
 
 
 # Checking that the plot of the widths inferred from both versions still looks the same
-with(bandillo2015_signals, plot(x = abs(first_snp - last_snp), y = abs(first_pos - last_pos)))
-abline(0, 1)
+#with(bandillo2015_signals, plot(x = abs(first_snp - last_snp), y = abs(first_pos - last_pos)))
+#abline(0, 1)
 
 # Let us check that the max_snp is always between first_snp and last_snp
 all(bandillo2015_signals$first_pos <= bandillo2015_signals$max_pos)
@@ -163,5 +173,5 @@ bandillo2015_signals <- makeGRangesFromDataFrame(bandillo2015_signals,
 names(bandillo2015_signals) <- bandillo2015_signals$signal_id
 
 # Saving the output to file
-saveRDS(bandillo2015_signals, file = "bandillo2015_signals.rds")
+saveRDS(bandillo2015_signals, file = "reference_signals/bandillo2015_signals.rds")
 

@@ -27,6 +27,8 @@ do
 	ln -s ~/sv_gwas/usda_lines/gwas/kmers/${trait}/kmers/threshold_5per ${trait}_threshold_5per
 done
 
+cd ../..
+
 # Creating symlinks for the filter VCF files and their indexes
 ln -s ~/sv_gwas/usda_lines/gwas/platypus/platypus_pruned.vcf.gz filtered_variants/platypus/filtered_variants.vcf.gz
 ln -s ~/sv_gwas/usda_lines/gwas/platypus/platypus_pruned.vcf.gz.tbi filtered_variants/platypus/filtered_variants.vcf.gz.tbi

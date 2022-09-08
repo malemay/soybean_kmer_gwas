@@ -3,8 +3,9 @@
 *bam.bai
 *.csv
 *fasta
-*fasta.fai
+*.fai
 *fastq.gz
+*fna
 gwas_results/kmers
 gwas_results/platypus
 gwas_results/paragraph
@@ -15,8 +16,10 @@ gwas_results/vg
 *out
 *pdf
 *png
+refgenome/soybase_genome_annotation_v4.0_04-20-2021.txt
 *swp
 *rds
 *toc
+*tsv
 *vcf.gz
 *vcf.gz.tbi

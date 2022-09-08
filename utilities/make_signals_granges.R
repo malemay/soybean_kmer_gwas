@@ -5,20 +5,10 @@ library(GenomicRanges)
 
 # DEPENDENCY: reference_signals/bandillo2015_signals.rds
 # DEPENDENCY: reference_signals/bandillo2017_signals.rds
+# DEPENDENCY: reference_signals/deronne2022_signal.rds
 bandillo2015_signals <- readRDS("reference_signals/bandillo2015_signals.rds")
 bandillo2017_signals <- readRDS("reference_signals/bandillo2017_signals.rds")
-
-# Manually entering data for the signal found by de Ronne et al. (2021) with BLINK on Gm15
-deronne_signal <- GRanges(seqnames = "Gm15",
-			  ranges = IRanges(start = 36764744, end = 36764744))
-deronne_signal$signal_id <- "cdwGm15"
-deronne_signal$trait <- "corrected_dry_weight"
-deronne_signal$locus <- "cdwGm15"
-deronne_signal$n_snps <- 1
-deronne_signal$log_pvalue <- -log10(7.1 * 10^-13)
-deronne_signal$gene_name_v4 <- NA
-deronne_signal$common_name <- NA
-names(deronne_signal) <- deronne_signal$signal_id
+deronne_signal <- readRDS("reference_signals/deronne2022_signal.rds")
 
 # We need to duplicate every entry with the various coded traits that were used in analyses
 trait_names <- readLines("utilities/trait_names.txt")

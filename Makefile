@@ -48,12 +48,36 @@ $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(pro
 $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures) $(suptables)
 	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
 
+# SIGNALS --------------------------------------------------
+
 # This script prepares the reference signals GRanges object
 $(signals_gr) utilities/signal_ids.txt utilities/gene_signal_ids.txt: utilities/make_signals_granges.R \
-	reference_signals//bandillo2015_signals.rds \
-	reference_signals//bandillo2017_signals.rds \
+	reference_signals/bandillo2017_signals.rds \
+	reference_signals/bandillo2015_signals.rds \
+	reference_signals/deronne2022_signal.rds \
 	utilities/trait_names.txt
 	$(RSCRIPT) utilities/make_signals_granges.R
+
+# Generating the reference signals obtained from Bandillo et al. (2017) for qualitative traits
+reference_signals/bandillo2017_signals.rds: reference_signals/format_bandillo2017_signals.R \
+	refgenome/glyma.Wm82.gnm1.FCtY.genome_main.fna \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	reference_signals/bandillo2017_signals_curated.tsv \
+	refgenome/lookup_v1_to_v4.rds \
+	refgenome/soybase_genome_annotation_v4.0_04-20-2021.txt \
+	refgenome/gmax_v4_genes.rds
+	$(RSCRIPT) reference_signals/format_bandillo2017_signals.R
+
+# Generating the reference signals obtained from Bandillo et al. (2015) for oil and protein
+reference_signals/bandillo2015_signals.rds: reference_signals/format_bandillo2015_signals.R \
+	refgenome/glyma.Wm82.gnm1.FCtY.genome_main.fna \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	reference_signals/bandillo2015_table1_curated.csv
+	$(RSCRIPT) reference_signals/format_bandillo2015_signals.R
+
+# Generating the reference signal obtained from de Ronne et al. (2022) for resistance to P. sojae
+reference_signals/deronne2022_signal.rds: reference_signals/format_deronne2022_signal.R
+	$(RSCRIPT) reference_signals/format_deronne2022_signal.R
 
 # Putting the k-mer 5% thresholds on the same scale as the thresholds for the other programs
 gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gwas_results/kmers/%_threshold_5per
