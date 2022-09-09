@@ -2,10 +2,12 @@
 *bam
 *bam.bai
 *.csv
+*.fa
 *fasta
 *.fai
 *fastq.gz
 *fna
+gwas_results/kmer_data
 gwas_results/kmers
 gwas_results/platypus
 gwas_results/paragraph

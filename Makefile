@@ -22,7 +22,8 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 
 supfigures := $(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_manhattan.png) \
 	$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo figures/{}_signal.png) \
-	$(shell cat utilities/gene_signal_ids.txt | xargs -I {} echo figures/{}_gene.png)
+	$(shell cat utilities/gene_signal_ids.txt | xargs -I {} echo figures/{}_gene.png) \
+	$(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo figures/{}_kmers.png)
 
 all: $(SDIR)/additional_file_1.pdf
 
@@ -36,7 +37,8 @@ SUPFIGURES: $(supfigures)
 	$(grobdir)/paragraph_%_signal.rds $(grobdir)/kmers_%_signal.rds \
 	$(grobdir)/platypus_%_gene.rds $(grobdir)/vg_%_gene.rds \
 	$(grobdir)/paragraph_%_gene.rds $(grobdir)/kmers_%_gene.rds \
-	gwas_results/kmers/%_threshold_5per.txt
+	gwas_results/kmers/%_threshold_5per.txt \
+	gwas_results/kmer_consensus/%_sequences.fa
 
 # Adding some more intermediate files to .PRECIOUS
 $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval .PRECIOUS: $(signal)))
@@ -99,6 +101,18 @@ phenotypic_data/lookup_tables.rds: phenotypic_data/lookup_tables.R
 # Creating the lookup table used to translate the GRIN trait names into the ones used in this analysis
 phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 	$(RSCRIPT) phenotypic_data/trait_names.R
+
+# KMER PLOTS --------------------------------------------------
+# Generating the k-mer plot from the consensus sequences
+figures/%_kmers.png: figures/kmer_plot.R \
+	gwas_results/kmer_consensus/%_sequences.fa
+	$(RSCRIPT) figures/kmer_plot.R $*
+
+# Extracting the consensus sequences from significant k-mer assemblies for a given locus
+gwas_results/kmer_consensus/%_sequences.fa: gwas_results/gather_consensus.sh \
+	utilities/kmer_plot_ranges.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	gwas_results/gather_consensus.sh $*
 
 # GWAS RESULTS --------------------------------------------------
 

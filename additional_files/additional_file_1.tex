@@ -146,6 +146,7 @@
 
 \clearpage}
 
+% Defining a new command for signal plot figures
 \newcommand{\signalplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_signal}
@@ -155,12 +156,23 @@
 
 \clearpage}
 
+% Defining a new command for gene plot figures
 \newcommand{\geneplot}[1]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_gene}
 	\caption{#1\_gene}
 	\label{#1_gene}
 \end{cfigure}
+
+\clearpage}
+
+% Defining a new command for k-mer plot figures
+\newcommand{\kmerplot}[1]{
+	\begin{cfigure}
+		\includegraphics[width = 6.5in]{#1_kmers}
+		\caption{#1\_kmers}
+		\label{#1_kmers}
+	\end{cfigure}
 
 \clearpage}
 
@@ -209,6 +221,7 @@
 \manhattanplot{flower_color}
 \signalplot{flower_color_W1}
 \geneplot{flower_color_W1}
+\kmerplot{flower_color_W1}
 %\signalplot{flower_color_L1}
 %\geneplot{flower_color_L1}
 
@@ -217,10 +230,12 @@
 %\signalplot{pubescence_color_all_Td}
 \signalplot{pubescence_color_all_T}
 \geneplot{pubescence_color_all_T}
+\kmerplot{pubescence_color_all_T}
 
 \manhattanplot{pubescence_color_nogray}
 \signalplot{pubescence_color_nogray_Td}
 \geneplot{pubescence_color_nogray_Td}
+\kmerplot{pubescence_color_nogray_Td}
 %\signalplot{pubescence_color_nogray_T}
 %\geneplot{pubescence_color_nogray_T}
 
@@ -239,6 +254,7 @@
 \manhattanplot{seed_coat_color_greenyellow}
 \signalplot{seed_coat_color_greenyellow_G}
 \geneplot{seed_coat_color_greenyellow_G}
+\kmerplot{seed_coat_color_greenyellow_G}
 %\signalplot{seed_coat_color_greenyellow_T}
 %\geneplot{seed_coat_color_greenyellow_T}
 %\signalplot{seed_coat_color_greenyellow_O}
@@ -253,6 +269,7 @@
 %\geneplot{stem_termination_all_Dt2}
 \signalplot{stem_termination_all_Dt1}
 \geneplot{stem_termination_all_Dt1}
+\kmerplot{stem_termination_all_Dt1}
 %\signalplot{stem_termination_all_E3}
 %\geneplot{stem_termination_all_E3}
 
@@ -268,9 +285,11 @@
 \manhattanplot{hilum_color_all}
 \signalplot{hilum_color_all_T}
 \geneplot{hilum_color_all_T}
+\kmerplot{hilum_color_all_T}
 %\signalplot{hilum_color_all_O}
 \signalplot{hilum_color_all_I}
 \geneplot{hilum_color_all_I}
+\kmerplot{hilum_color_all_I}
 \signalplot{hilum_color_all_R}
 \geneplot{hilum_color_all_R}
 %\signalplot{hilum_color_all_W1}

@@ -1,0 +1,7 @@
+flower_color_W1	flower_color	Gm13:16340200-16340335
+pubescence_color_all_T	pubescence_color_all	Gm06:18550400-18550650
+pubescence_color_nogray_Td	pubescence_color_nogray	Gm03:46473400-46473500
+seed_coat_color_greenyellow_G	seed_coat_color_greenyellow	Gm01:54342120-54342220
+stem_termination_all_Dt1	stem_termination_all	Gm19:45624250-45624580
+hilum_color_all_T	hilum_color_all	Gm06:18550400-18550650
+hilum_color_all_I	hilum_color_all	Gm08:8401790-8401900

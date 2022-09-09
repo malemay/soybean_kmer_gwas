@@ -23,8 +23,20 @@ cd gwas_results/kmers
 
 for trait in $(cat ../../utilities/trait_names.txt)
 do
+	# Creating symlinks to the processed results of the k-mer analysis
 	ln -s ~/sv_gwas/usda_lines/gwas/kmers/${trait}/katcher_results/${trait}_kmer_positions.rds
 	ln -s ~/sv_gwas/usda_lines/gwas/kmers/${trait}/kmers/threshold_5per ${trait}_threshold_5per
+done
+
+cd ../..
+
+# Creating symlinks to the main directories of the k-mer analysis
+mkdir -p gwas_results/kmer_data
+cd gwas_results/kmer_data
+
+for trait in $(cat ../../utilities/trait_names.txt)
+do
+	ln -s ~/sv_gwas/usda_lines/gwas/kmers/${trait}
 done
 
 cd ../..
