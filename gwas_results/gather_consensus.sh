@@ -27,9 +27,12 @@ samtools faidx -n 100000 $reference $region | sed 's/>.*/>Williams82/' > gwas_re
 # DEPENDENCY: aligned assembled sequences for that locus
 for i in $(ls gwas_results/kmer_data/${trait}/assemblies/)
 do
-	samtools consensus -l 100000 --show-del no -m simple -r $region \
-		gwas_results/kmer_data/${trait}/assemblies/${i}/${i}_${trait}_bwa.bam |
-		sed "s/${chrom}/${i}/" >> gwas_results/kmer_consensus/${locus}_sequences.fa
+	if [ -s gwas_results/kmer_data/${trait}/assemblies/${i}/${i}_${trait}_bwa.bam ]
+	then
+		samtools consensus -l 100000 --show-del no -m simple -r $region \
+			gwas_results/kmer_data/${trait}/assemblies/${i}/${i}_${trait}_bwa.bam |
+			sed "s/${chrom}/${i}/" >> gwas_results/kmer_consensus/${locus}_sequences.fa
+	fi
 
 	samtools consensus -l 100000 --show-del no -m simple -r $region \
 		../merged_bams/${i}/${i}_merged.bam |

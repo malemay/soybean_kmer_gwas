@@ -5,3 +5,4 @@ seed_coat_color_greenyellow_G	seed_coat_color_greenyellow	Gm01:54342120-54342220
 stem_termination_all_Dt1	stem_termination_all	Gm19:45624250-45624580
 hilum_color_all_T	hilum_color_all	Gm06:18550400-18550650
 hilum_color_all_I	hilum_color_all	Gm08:8401790-8401900
+pubescence_form_all_Pa1	pubescence_form_all	Gm12:38772280-38772380
