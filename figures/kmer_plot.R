@@ -59,24 +59,9 @@ haplotype_data <- link_phenotypes(sequences = sequences,
 				  id_column = "bayer_id",
 				  phenotype_column = usda_trait)
 
-# Finding the matches of the significant k-mers in the haplotypes
-kmer_overlaps <- lapply(haplotypes, function(x, kmers) {
-				kmers$fmatch <- sapply(kmer_pvalues$kmer, function(kmer) regexpr(kmer, x, fixed = TRUE)) 
-				kmers$rmatch <- sapply(kmer_pvalues$kmer_reverse, function(kmer) regexpr(kmer, x, fixed = TRUE)) 
-				kmers$matchpos <- pmax(kmers$fmatch, kmers$rmatch)
-				kmers
-			     },
-			     kmers = kmer_pvalues)
-names(kmer_overlaps) <- haplotypes
-
-# Keeping only the k-mers for which there is at least one overlapping k-mer with a p-value
-# Also removing irrelevant columns
-kmer_overlaps <- lapply(kmer_overlaps, function(x) x[x$matchpos != -1, c("pvalue", "matchpos")])
-
-# Coercing to an IRanges object
-kmer_overlaps <- lapply(kmer_overlaps, function(x) {
-				IRanges(start = x$matchpos, width = kmer_length, log10p = -log10(x$pvalue))
-			     })
+kmer_overlaps <- match_kmers(haplotypes = haplotypes,
+			     kmers = kmer_pvalues,
+			     kmer_length = kmer_length)
 
 # Generating a data.frame with separate nucleotides and their associated p-value for each haplotype
 plotting_data <-
