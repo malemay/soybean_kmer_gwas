@@ -1,3 +1,5 @@
+# This script generates a k-mer plot from the consensus sequences of a group of samples at a given locus
+
 # Loading the required libraries
 library(grid)
 library(Biostrings)
@@ -5,52 +7,46 @@ library(IRanges)
 library(stringr)
 library(gwastools)
 
-# Reading the locus from the command line
-locus <- commandArgs(trailingOnly = TRUE)[1]
-
 # Setting some analysis parameters
 max_kmers <- 10000 # the maximum number of k-mers to map onto the haplotype sequences
 kmer_length <- 31 # the length of the k-mers used in the analysis
+min_sequences <- 80 # min number of samples that must have a consensus sequence from assembly; otherwise obtained from bwa
 
-# This script generates a k-mer plot from the consensus sequences of a group of samples
+# Reading the locus from the command line
+locus <- commandArgs(trailingOnly = TRUE)[1]
+
+# Getting the trait that corresponds to that locus
+# DEPENDENCY: utilities/kmer_plot_ranges.txt
 locus_data <- read.table("utilities/kmer_plot_ranges.txt")
 trait <- locus_data[locus_data[[1]] == locus, 2]
 
+# Getting the phenotypic data
 # DEPENDENCY: phenotypic_data/phenotypic_data.csv
-phenotypes <- read.table("phenotypic_data/phenotypic_data.csv",
-			 sep = ";", header = TRUE,)
+phenotypes <- read.table("phenotypic_data/phenotypic_data.csv", sep = ";", header = TRUE,)
 
+# Getting the lookup table that links the numeric code to the human-readable phenotype
 # DEPENDENCY: phenotypic_data/lookup_tables.rds
 lookup_tables <- readRDS("phenotypic_data/lookup_tables.rds")
 lookup_table  <- lookup_tables[[paste0(trait, "_lookup")]]
 
+# Reading the k-mers associated with that analysis and their p-values
 # DEPENDENCY: k-mer p-values
-kmer_pvalues <- read.table(paste0("gwas_results/kmer_data/", trait, "/katcher_results/pass_threshold_5per_sorted.txt"),
-			   colClasses = c("NULL", "character", rep("NULL", 6), "numeric"),
-			   nrows = max_kmers)
-names(kmer_pvalues) <- c("kmer_id", "pvalue")
+kmer_pvalues <- read_kmer_pvalues(kmer_file = paste0("gwas_results/kmer_data/", trait,
+						     "/katcher_results/pass_threshold_5per_sorted.txt"),
+				  max_kmers = max_kmers,
+				  kmer_length = 31)
 
-kmer_pvalues$kmer <- sub("[^ATGC]+", "", kmer_pvalues$kmer_id)
-kmer_pvalues$kmer_reverse <- as.character(reverseComplement(DNAStringSet(kmer_pvalues$kmer)))
+# Reading the consensus sequence from the assemblies
+# DEPENDENCY: consensus sequence computed from the assembly of significant reads
+sequences <- read_consensus(input_fasta = paste0("gwas_results/kmer_consensus/", locus, "_sequences.fa"))
 
-# DEPENDENCY: consensus sequence for a given locus
-fasta_file <- readLines(paste0("gwas_results/kmer_consensus/", locus, "_sequences.fa"))
-
-# Using conensus sequences from bwa in case the assemblies did not yield great results
-if(length(fasta_file) < 200) {
-	warning("Using consensus sequences from read alignment by bwa for locus ", locus)
-	fasta_file <- readLines(paste0("gwas_results/kmer_consensus/", locus, "_bwa_sequences.fa"))
+# DEPENDENCY: consensus sequence computed from the alignment using BWA
+# Using consensus sequences from bwa in case the assemblies did not yield great results
+if(length(sequences) < min_sequences) {
+	warning("Only ", length(sequences), "have a consensus sequence from assembly.",
+	       	"Using consensus sequences from read alignment by bwa for locus ", locus)
+	sequences <- read_consensus(paste0("gwas_results/kmer_consensus/", locus, "_bwa_sequences.fa"))
 }
-
-stopifnot(length(fasta_file) > 200)
-
-# Extracting the names of the samples from the fasta file
-sample_names <- grep("^>", fasta_file, value = TRUE)
-sample_names <- sub("^>", "", sample_names)
-
-# Extracting the sequences themselves from the fasta file
-sequences <- grep("^>", fasta_file, value = TRUE, invert = TRUE)
-names(sequences) <- sample_names
 
 # Getting the number of times that a given sequence occurs across the whole dataset
 # I will call these haplotypes
