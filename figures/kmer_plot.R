@@ -11,6 +11,7 @@ library(gwastools)
 max_kmers <- 10000 # the maximum number of k-mers to map onto the haplotype sequences
 kmer_length <- 31 # the length of the k-mers used in the analysis
 min_sequences <- 80 # min number of samples that must have a consensus sequence from assembly; otherwise obtained from bwa
+min_frequency <- 5 # min number of times that a haplotype must occur to be used for plotting
 
 # Reading the locus from the command line
 locus <- commandArgs(trailingOnly = TRUE)[1]
@@ -20,14 +21,14 @@ locus <- commandArgs(trailingOnly = TRUE)[1]
 locus_data <- read.table("utilities/kmer_plot_ranges.txt")
 trait <- locus_data[locus_data[[1]] == locus, 2]
 
+# Getting the lookup table that links the trait name used in the USDA database to the one used for our analyses
+# DEPENDENCY: phenotypic_data/trait_names.rds
+trait_names <- readRDS("phenotypic_data/trait_names.rds")
+usda_trait <- names(trait_names)[sapply(trait_names, function(x) grepl(paste0("^", x), trait))]
+
 # Getting the phenotypic data
 # DEPENDENCY: phenotypic_data/phenotypic_data.csv
 phenotypes <- read.table("phenotypic_data/phenotypic_data.csv", sep = ";", header = TRUE,)
-
-# Getting the lookup table that links the numeric code to the human-readable phenotype
-# DEPENDENCY: phenotypic_data/lookup_tables.rds
-lookup_tables <- readRDS("phenotypic_data/lookup_tables.rds")
-lookup_table  <- lookup_tables[[paste0(trait, "_lookup")]]
 
 # Reading the k-mers associated with that analysis and their p-values
 # DEPENDENCY: k-mer p-values
@@ -48,45 +49,25 @@ if(length(sequences) < min_sequences) {
 	sequences <- read_consensus(paste0("gwas_results/kmer_consensus/", locus, "_bwa_sequences.fa"))
 }
 
-# Getting the number of times that a given sequence occurs across the whole dataset
-# I will call these haplotypes
-haplotypes <- sort(table(sequences))
-
-# Keeping only haplotypes that occur at least five times
-haplotypes <- haplotypes[haplotypes >= 5]
+# Get a character vector of the haplotypes found with min_frequency in the dataset
+haplotypes <- get_haplotypes(sequences = sequences, min_frequency = min_frequency)
 
 # Creating a data.frame linking haplotypes to phenotypes
-haplotype_data <- data.frame(sample = names(sequences),
-			     haplotype = unname(sequences))
-
-# Assigning a haplotype to each sample
-haplotype_data$id <- NA
-for(i in 1:nrow(haplotype_data)) {
-	if(haplotype_data[i, "haplotype"] %in% names(haplotypes)) {
-		haplotype_data[i, "id"] <- which(names(haplotypes) == haplotype_data[i, "haplotype"])
-	}
-}
-
-# Adding the phenotype for each sample
-stopifnot(all(haplotype_data$sample[haplotype_data$sample != "Williams82"] %in% phenotypes$bayer_id))
-haplotype_data$phenotype_numeric <- phenotypes[match(haplotype_data$sample, phenotypes$bayer_id), trait]
-haplotype_data$phenotype_character <- NA
-for(i in 1:nrow(haplotype_data)) {
-	i_pheno <- haplotype_data[i, "phenotype_numeric"]
-	if(!is.na(i_pheno)) {
-	haplotype_data[i, "phenotype_character"] <- names(lookup_table)[which(i_pheno == lookup_table)]
-	}
-}
+haplotype_data <- link_phenotypes(sequences = sequences,
+				  haplotypes = haplotypes,
+				  phenotypes = phenotypes,
+				  id_column = "bayer_id",
+				  phenotype_column = usda_trait)
 
 # Finding the matches of the significant k-mers in the haplotypes
-kmer_overlaps <- lapply(names(haplotypes), function(x, kmers) {
+kmer_overlaps <- lapply(haplotypes, function(x, kmers) {
 				kmers$fmatch <- sapply(kmer_pvalues$kmer, function(kmer) regexpr(kmer, x, fixed = TRUE)) 
 				kmers$rmatch <- sapply(kmer_pvalues$kmer_reverse, function(kmer) regexpr(kmer, x, fixed = TRUE)) 
 				kmers$matchpos <- pmax(kmers$fmatch, kmers$rmatch)
 				kmers
 			     },
 			     kmers = kmer_pvalues)
-names(kmer_overlaps) <- names(haplotypes)
+names(kmer_overlaps) <- haplotypes
 
 # Keeping only the k-mers for which there is at least one overlapping k-mer with a p-value
 # Also removing irrelevant columns
@@ -99,7 +80,7 @@ kmer_overlaps <- lapply(kmer_overlaps, function(x) {
 
 # Generating a data.frame with separate nucleotides and their associated p-value for each haplotype
 plotting_data <-
-	lapply(names(haplotypes), function(x, kmer_overlaps) {
+	lapply(haplotypes, function(x, kmer_overlaps) {
 		       output_df <- data.frame(pos = 1:nchar(x),
 					       nuc = strsplit(x, "")[[1]],
 					       log10p = 0)
@@ -131,7 +112,7 @@ on.exit(close(output_fasta))
 
 for(i in 1:length(haplotypes)) {
 	cat(paste0(">hap", i, "\n"), file = output_fasta)
-	cat(names(haplotypes)[i], "\n", file = output_fasta)
+	cat(haplotypes[i], "\n", file = output_fasta)
 }
 
 alignment <- system(paste0("mafft --auto gwas_results/kmer_consensus/", locus, "_haplotypes.fa"), intern = TRUE)
@@ -139,15 +120,13 @@ alignment <- strsplit(paste0(alignment, collapse = ""), split = ">hap[0-9]+")[[1
 alignment <- alignment[nchar(alignment) > 0]
 
 # Adjusting the positions for plotting depending on the gaps in the alignment
-gaps <- str_locate_all(alignment, "-")
+gaps <- stringr::str_locate_all(alignment, "-")
 gaps <- lapply(gaps, function(x) IRanges(start = x[, 1], end = x[, 2]))
 gaps <- lapply(gaps, function(x) reduce(x))
 
 plotting_data <- mapply(FUN = adjust_gaps, hapdata = plotting_data, gaps = gaps, SIMPLIFY = FALSE)
 
-
 plotting_data <- fill_gaps(plotting_data)
-
 
 difflist <- nucdiff(plotting_data)
 
