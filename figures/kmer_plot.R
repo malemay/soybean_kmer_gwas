@@ -4,7 +4,6 @@
 library(grid)
 library(Biostrings)
 library(IRanges)
-library(stringr)
 library(gwastools)
 
 # Setting some analysis parameters
@@ -64,11 +63,9 @@ kmer_overlaps <- match_kmers(haplotypes = haplotypes,
 			     kmers = kmer_pvalues,
 			     kmer_length = kmer_length)
 
-
 # Generating a data.frame with separate nucleotides and their associated p-value for each haplotype
 plotting_data <- format_haplotypes(haplotypes = haplotypes,
 				   overlaps = kmer_overlaps)
-
 
 # Performing multiple alignment of the sequences to find the gaps
 alignment <- mafft_align(fasta_path = paste0("gwas_results/kmer_consensus/", locus, "_haplotypes.fa"),
@@ -83,45 +80,35 @@ plotting_data <- adjust_gaps(hapdata = plotting_data,
 # Finding the positions where the aligned nucleotides differ between haplotypes
 difflist <- nucdiff(plotting_data)
 
-# Determining the plotting color from a common palette for all haplotypes
-max_pvalue <- max(do.call("rbind", plotting_data)$log10p)
-
-plotting_data <- lapply(plotting_data, function(x) {
-		       x$color <- map_color(values = x$log10p, min = 0, max = max_pvalue, n.colors = 9, pal = "YlOrRd")
-		       x
-		       })
-
-
 # Outputting to a png file
-png(paste0("figures/", locus, "_kmers.png"), width = 8, height = 2, units = "in", res = 100)
+png(paste0("figures/", locus, "_kmers.png"), width = 8, height = 4, units = "in", res = 100)
 
 # Initializing the device
 grid.newpage()
 
 # Drawing a box around the plotting region
-grid.rect()
+grid::grid.rect()
 
 # Dividing the viewport into three viewports:
 # - The first viewport will be used for showing the haplotype sequences
 # - The second viewport will be used for the colour scale of the p-values
 # - The third viewport will be used for showing a table of the phenotypes observed per haplotype
-pushViewport(viewport(layout = grid.layout(nrow = 3, heights = unit(c(0.3, 0.1, 0.6), "npc"))))
-
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 3, heights = grid::unit(c(0.3, 0.1, 0.6), "npc"))))
 
 # Moving into the viewport associated with the sequences and drawing them
-pushViewport(viewport(layout.pos.row = 1))
-grid.haplotypes(plotting_data, difflist, fontsize = 8)
-upViewport()
+grid::pushViewport(grid::viewport(layout.pos.row = 1))
+grid.haplotypes(plotting_data, difflist, n_colors = 7, pal = "YlOrRd", fontsize = 8)
+grid::upViewport()
 
 # Moving into the viewport for the color scale
-pushViewport(viewport(layout.pos.row = 2))
-grid.text("Color scale")
-upViewport()
+grid::pushViewport(grid::viewport(layout.pos.row = 2))
+grid.colorscale(plotting_data, n_colors = 7, pal = "YlOrRd")
+grid::upViewport()
 
 # Moving into the viewport for the table
-pushViewport(viewport(layout.pos.row = 3))
+grid::pushViewport(grid::viewport(layout.pos.row = 3))
 grid.phenotable(haplotype_data)
-upViewport()
+grid::upViewport()
 
 dev.off()
 
