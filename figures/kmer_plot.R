@@ -59,29 +59,29 @@ haplotype_data <- link_phenotypes(sequences = sequences,
 				  id_column = "bayer_id",
 				  phenotype_column = usda_trait)
 
+# Get the positions in the haplotypes that overlap any of the significant k-mers
 kmer_overlaps <- match_kmers(haplotypes = haplotypes,
 			     kmers = kmer_pvalues,
 			     kmer_length = kmer_length)
 
-# Generating a data.frame with separate nucleotides and their associated p-value for each haplotype
-plotting_data <-
-	lapply(haplotypes, function(x, kmer_overlaps) {
-		       output_df <- data.frame(pos = 1:nchar(x),
-					       nuc = strsplit(x, "")[[1]],
-					       log10p = 0)
 
-		       # Getting the maximum -log10(p-value) for that nucleotide
-		       for(i in 1:nrow(output_df)) {
-			       i_range <- IRanges(start = output_df[i, "pos"], width = 1)
-			       overlapped_pos <- subsetByOverlaps(kmer_overlaps[[x]], i_range)
-			       if(length(overlapped_pos)) {
-				       output_df[i, "log10p"] <- max(mcols(overlapped_pos)$log10p)
-			       }
-		       }
-		       
-		       output_df
-			     },
-		       kmer_overlaps = kmer_overlaps)
+# Generating a data.frame with separate nucleotides and their associated p-value for each haplotype
+plotting_data <- format_haplotypes(haplotypes = haplotypes,
+				   overlaps = kmer_overlaps)
+
+
+# Performing multiple alignment of the sequences to find the gaps
+alignment <- mafft_align(fasta_path = paste0("gwas_results/kmer_consensus/", locus, "_haplotypes.fa"),
+			 haplotypes = haplotypes,
+			 mafft_path = "mafft",
+			 mafft_options = "--auto")
+
+# Adjusting the positions for plotting depending on the gaps in the alignment
+plotting_data <- adjust_gaps(hapdata = plotting_data,
+			     alignment = alignment)
+
+# Finding the positions where the aligned nucleotides differ between haplotypes
+difflist <- nucdiff(plotting_data)
 
 # Determining the plotting color from a common palette for all haplotypes
 max_pvalue <- max(do.call("rbind", plotting_data)$log10p)
@@ -91,29 +91,6 @@ plotting_data <- lapply(plotting_data, function(x) {
 		       x
 		       })
 
-# Performing multiple alignment of the sequences to find the gaps
-output_fasta <- file(paste0("gwas_results/kmer_consensus/", locus, "_haplotypes.fa"), open = "w+")
-on.exit(close(output_fasta))
-
-for(i in 1:length(haplotypes)) {
-	cat(paste0(">hap", i, "\n"), file = output_fasta)
-	cat(haplotypes[i], "\n", file = output_fasta)
-}
-
-alignment <- system(paste0("mafft --auto gwas_results/kmer_consensus/", locus, "_haplotypes.fa"), intern = TRUE)
-alignment <- strsplit(paste0(alignment, collapse = ""), split = ">hap[0-9]+")[[1]]
-alignment <- alignment[nchar(alignment) > 0]
-
-# Adjusting the positions for plotting depending on the gaps in the alignment
-gaps <- stringr::str_locate_all(alignment, "-")
-gaps <- lapply(gaps, function(x) IRanges(start = x[, 1], end = x[, 2]))
-gaps <- lapply(gaps, function(x) reduce(x))
-
-plotting_data <- mapply(FUN = adjust_gaps, hapdata = plotting_data, gaps = gaps, SIMPLIFY = FALSE)
-
-plotting_data <- fill_gaps(plotting_data)
-
-difflist <- nucdiff(plotting_data)
 
 # Outputting to a png file
 png(paste0("figures/", locus, "_kmers.png"), width = 8, height = 2, units = "in", res = 100)
