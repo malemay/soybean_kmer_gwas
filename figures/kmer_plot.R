@@ -93,16 +93,11 @@ grid::grid.rect()
 # - The first viewport will be used for showing the haplotype sequences
 # - The second viewport will be used for the colour scale of the p-values
 # - The third viewport will be used for showing a table of the phenotypes observed per haplotype
-grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 3, heights = grid::unit(c(0.3, 0.1, 0.6), "npc"))))
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 3, heights = grid::unit(c(0.4, 0.2, 0.4), "npc"))))
 
 # Moving into the viewport associated with the sequences and drawing them
 grid::pushViewport(grid::viewport(layout.pos.row = 1))
 grid.haplotypes(plotting_data, difflist, n_colors = 7, pal = "YlOrRd", fontsize = 8)
-grid::upViewport()
-
-# Moving into the viewport for the color scale
-grid::pushViewport(grid::viewport(layout.pos.row = 2))
-grid.colorscale(plotting_data, n_colors = 7, pal = "YlOrRd")
 grid::upViewport()
 
 # Moving into the viewport for the table
