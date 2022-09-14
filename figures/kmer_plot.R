@@ -2,8 +2,6 @@
 
 # Loading the required libraries
 library(grid)
-library(Biostrings)
-library(IRanges)
 library(gwastools)
 
 # Setting some analysis parameters
@@ -38,14 +36,14 @@ kmer_pvalues <- read_kmer_pvalues(kmer_file = paste0("gwas_results/kmer_data/", 
 
 # Reading the consensus sequence from the assemblies
 # DEPENDENCY: consensus sequence computed from the assembly of significant reads
-sequences <- read_consensus(input_fasta = paste0("gwas_results/kmer_consensus/", locus, "_sequences.fa"))
+sequences <- read_fasta(input_fasta = paste0("gwas_results/kmer_consensus/", locus, "_sequences.fa"))
 
 # DEPENDENCY: consensus sequence computed from the alignment using BWA
 # Using consensus sequences from bwa in case the assemblies did not yield great results
 if(length(sequences) < min_sequences) {
 	warning("Only ", length(sequences), "have a consensus sequence from assembly.",
 	       	"Using consensus sequences from read alignment by bwa for locus ", locus)
-	sequences <- read_consensus(paste0("gwas_results/kmer_consensus/", locus, "_bwa_sequences.fa"))
+	sequences <- read_fasta(paste0("gwas_results/kmer_consensus/", locus, "_bwa_sequences.fa"))
 }
 
 # Get a character vector of the haplotypes found with min_frequency in the dataset
@@ -59,9 +57,10 @@ haplotype_data <- link_phenotypes(sequences = sequences,
 				  phenotype_column = usda_trait)
 
 # Get the positions in the haplotypes that overlap any of the significant k-mers
-kmer_overlaps <- match_kmers(haplotypes = haplotypes,
+kmer_overlaps <- match_kmers(sequences = haplotypes,
 			     kmers = kmer_pvalues,
-			     kmer_length = kmer_length)
+			     kmer_length = kmer_length,
+			     data_columns = "log10p")
 
 # Generating a data.frame with separate nucleotides and their associated p-value for each haplotype
 plotting_data <- format_haplotypes(haplotypes = haplotypes,
@@ -69,9 +68,9 @@ plotting_data <- format_haplotypes(haplotypes = haplotypes,
 
 # Performing multiple alignment of the sequences to find the gaps
 alignment <- mafft_align(fasta_path = paste0("gwas_results/kmer_consensus/", locus, "_haplotypes.fa"),
-			 haplotypes = haplotypes,
+			 sequences = haplotypes,
 			 mafft_path = "mafft",
-			 mafft_options = "--auto")
+			 mafft_options = "--auto --quiet")
 
 # Adjusting the positions for plotting depending on the gaps in the alignment
 plotting_data <- adjust_gaps(hapdata = plotting_data,
@@ -97,12 +96,12 @@ grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 3, heights =
 
 # Moving into the viewport associated with the sequences and drawing them
 grid::pushViewport(grid::viewport(layout.pos.row = 1))
-grid.haplotypes(plotting_data, difflist, n_colors = 7, pal = "YlOrRd", fontsize = 8)
+grid.haplotypes(hapdata = plotting_data, difflist = difflist)
 grid::upViewport()
 
 # Moving into the viewport for the table
 grid::pushViewport(grid::viewport(layout.pos.row = 3))
-grid.phenotable(haplotype_data)
+grid.phenotable(phenodata = haplotype_data)
 grid::upViewport()
 
 dev.off()
