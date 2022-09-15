@@ -25,8 +25,20 @@ supfigures := $(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{
 	$(shell cat utilities/gene_signal_ids.txt | xargs -I {} echo figures/{}_gene.png) \
 	$(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo figures/{}_kmers.png)
 
-all: $(SDIR)/additional_file_1.pdf
 
+topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
+
+allgenes := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_all_genes.tsv))
+
+topgenes := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_genes.tsv))
+
+nearestgene := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_nearest_gene.tsv))
+
+genetables := $(allgenes) $(topgenes) $(nearestgene)
+
+all: $(SDIR)/additional_file_1.pdf $(genetables)
+
+GENETABLES : $(genetables)
 SUPTABLES: $(suptables)
 SUPFIGURES: $(supfigures)
 
@@ -103,12 +115,16 @@ phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 	$(RSCRIPT) phenotypic_data/trait_names.R
 
 # KMER PLOTS --------------------------------------------------
-# Generating the k-mer plot from the consensus sequences
+# Generating the k-mer plot from the consensus sequences (the k-mer p-values are missing from the list of dependencies)
 figures/%_kmers.png: figures/kmer_plot.R \
+	utilities/kmer_plot_ranges.txt \
+	phenotypic_data/trait_names.rds \
+	phenotypic_data/phenotypic_data.csv \
 	gwas_results/kmer_consensus/%_sequences.fa
 	$(RSCRIPT) figures/kmer_plot.R $*
 
 # Extracting the consensus sequences from significant k-mer assemblies for a given locus
+# The BWA alignment results are missing from the list of dependencies
 gwas_results/kmer_consensus/%_sequences.fa: gwas_results/gather_consensus.sh \
 	utilities/kmer_plot_ranges.txt \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
@@ -132,7 +148,8 @@ gwas_results/kmers/%_gwas.rds: gwas_results/format_gwas_results.R \
 	$(RSCRIPT) gwas_results/format_gwas_results.R $* kmers
 
 # SIGNALS --------------------------------------------------
-# Creating a GRanges object containing the signal(s) for all traits for each program but platypus; also creating subsets of GWAS results that only overlap signals
+# Creating a GRanges object containing the signal(s) for all traits for each program but platypus
+# Also creating subsets of GWAS results that only overlap signals
 $(foreach prog,vg paragraph kmers,$(eval gwas_results/$(prog)/%_signal.rds gwas_results/$(prog)/%_gwas_subset.rds : gwas_results/find_signals.R \
 	gwas_results/$(prog)/%_gwas.rds \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
@@ -147,6 +164,19 @@ gwas_results/platypus/%_signal.rds gwas_results/platypus/%_gwas_subset.rds : gwa
 	filtered_variants/platypus_gapit_pca.rds \
 	phenotypic_data/phenotypic_data.csv
 	$(RSCRIPT) gwas_results/find_signals.R $* platypus
+
+# GENE ANALYSIS  --------------------------------------------------
+# Generating a GRanges object and tsv files for each locus
+$(foreach prog,platypus vg paragraph kmers,$(eval \
+	gwas_results/$(prog)/%_top_markers.rds gwas_results/$(prog)/%_all_genes.tsv \
+	gwas_results/$(prog)/%_top_genes.tsv gwas_results/$(prog)/%_nearest_gene.tsv : \
+	gwas_results/gene_analysis.R \
+	$(signals_gr) \
+	refgenome/gmax_v4_genes.rds \
+	refgenome/soybase_gmax_v4_annotations.rds \
+	gwas_results/$(prog)/%_gwas_locus.rds \
+	gwas_results/$(prog)/%_signal_locus.rds ; \
+	$(RSCRIPT) gwas_results/gene_analysis.R $$* $(prog)))
 
 # MANHATTAN PLOTS --------------------------------------------------
 
@@ -181,6 +211,7 @@ figures/%_signal.png: figures/signal_plot.R \
 # Preparing the signal subplots for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
 	$(signals_gr) \
+	gwas_results/$(prog)/%_top_markers.rds \
 	refgenome/gmax_v4_genes.rds \
 	gwas_results/$(prog)/%_gwas_locus.rds \
 	gwas_results/$(prog)/%_signal_locus.rds ; \

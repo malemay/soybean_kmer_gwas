@@ -35,12 +35,13 @@ if(!is.na(gene_name) && grepl(";", gene_name)) {
 	gene <- NULL
 }
 
-# Reading the GWAS results and signals from file
+# Reading the GWAS results, signals, and region of top markers from file
 gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_gwas_locus.rds"))
 gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_signal_locus.rds"))
+top_markers <- readRDS(paste0("gwas_results/", program, "/", id, "_top_markers.rds"))
 
 # Extracting the signal for the locus of interest from those just read
-signal <- subsetByOverlaps(gwas_signals, target_signal)
+signal <- subsetByOverlaps(gwas_signals, target_signal, ignore.strand = TRUE)
 
 if(!length(signal)) {
 	warning("No signal found by ", program, " for signal ID ", id)
@@ -56,6 +57,7 @@ if(!length(signal)) {
 	ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 			       interval = signal,
 			       feature = gene,
+			       shading = top_markers,
 			       yexpand = c(0.1, 0.1))
 }
 
