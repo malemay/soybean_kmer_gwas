@@ -11,8 +11,13 @@ suppressMessages(library(GenomicRanges))
 id <- commandArgs(trailingOnly = TRUE)[1]
 program <- commandArgs(trailingOnly = TRUE)[2]
 
-# The distance at which signals overlapping the reference signal will be merged
-gapwidth <- 10^6
+#----- ANALYSIS PARAMETERS
+gapwidth <- 10^6 # The distance at which signals overlapping the reference signal will be merged
+fractions <- c("platypus" = 0.01, # the fraction of top k-mers considered to be delimiting the top region
+	       "vg" = 0.05,       # depends on the approach used given the size of the datasets
+	       "paragraph" = 0.05,
+	       "kmers" = 0.01)
+top_fraction <- fractions[program]
 
 # Getting the ID of the gene associated with the locus
 # DEPENDENCY: utilities/all_signals.rds
@@ -172,7 +177,7 @@ subset_annotation <- function(region, markers, genes, annotation, causal_genes, 
 	return(subset_annot)
 }
 
-top_granges <- top_region(gwas_markers, fraction = 0.05)
+top_granges <- top_region(gwas_markers, fraction = top_fraction)
 
 # Getting a data.frame of all the genes in the region
 all_genes_df <- subset_annotation(region = locus_signal, markers = gwas_markers,

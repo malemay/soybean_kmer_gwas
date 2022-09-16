@@ -7,8 +7,8 @@ trait <- commandArgs(trailingOnly = TRUE)[1]
 program <- commandArgs(trailingOnly = TRUE)[2]
 
 # A parameter that sets the distance between markers for merging signals with extract_signals
-signal_distance <- 10^5
-platypus_extend <- 20000 # A parameter that sets how much platypus signals are extended for computing the p-values of pruned markers
+signal_distance <- 250000
+platypus_extend <- 50000 # A parameter that sets how much platypus signals are extended for computing the p-values of pruned markers
 
 # Reading the GWAS results and threshold
 # DEPENDENCY: GWAS association results

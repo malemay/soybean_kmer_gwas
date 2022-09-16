@@ -23,7 +23,8 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 supfigures := $(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_manhattan.png) \
 	$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo figures/{}_signal.png) \
 	$(shell cat utilities/gene_signal_ids.txt | xargs -I {} echo figures/{}_gene.png) \
-	$(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo figures/{}_kmers.png)
+	$(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo figures/{}_kmers.png) \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_scaffolds_manhattan.png)
 
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
@@ -195,6 +196,12 @@ $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan
 	gwas_results/$(prog)/%_signal.rds \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) figures/manhattan_subplot.R $$* $(prog)))
+
+# Manhattan plots for unanchored scaffolds (for the k-mers only)
+figures/%_scaffolds_manhattan.png: figures/scaffolds_manhattan.R \
+	gwas_results/kmers/%_gwas.rds \
+	gwas_results/kmers/%_threshold_5per.txt
+	$(RSCRIPT) figures/scaffolds_manhattan.R $* kmers
 
 # SIGNAL PLOTS --------------------------------------------------
 

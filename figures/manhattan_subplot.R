@@ -19,14 +19,16 @@ if(!length(signals)) signals <- NULL
 found_signals <- readRDS(paste0("gwas_results/", program, "/", trait, "_signal.rds"))
 if(!length(signals)) found_signals <- NULL
 
-# A vector of Glycine max chromosome names
-chromosomes <- paste0("Gm", ifelse(1:20 < 10, "0", ""), 1:20)
-
 # It is a special case if we are analyzing k-mers
 threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt"))))
 
 # Loading the results from the rds file
 gwas_results <- readRDS(paste0("gwas_results/", program, "/", trait, "_gwas.rds"))
+
+# If the program is the k-mers, we filter out variants that are located on unachored scaffolds
+if(program == "kmers") {
+	GenomeInfoDb::seqlevels(gwas_results, pruning.mode = "coarse") <- grep("^Gm[0-9]{2}$", GenomeInfoDb::seqlevels(gwas_results), value = TRUE)
+}
 	
 # Plotting the results using the gwastools::manhattan_plot function
 gwas_plot <- manhattanGrob(gwas_results,

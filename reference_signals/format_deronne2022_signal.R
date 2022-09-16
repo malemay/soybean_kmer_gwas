@@ -7,7 +7,7 @@ library(GenomicRanges)
 
 # Manually entering data for the signal found by de Ronne et al. (2021) with BLINK on Gm15
 deronne_signal <- GRanges(seqnames = "Gm15",
-			  ranges = IRanges(start = 36395777, end = 36895690))
+			  ranges = IRanges(start = 36000000, end = 40000000))
 deronne_signal$signal_id <- "cdwGm15"
 deronne_signal$trait <- "corrected_dry_weight"
 deronne_signal$locus <- "cdwGm15"

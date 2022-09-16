@@ -57,6 +57,8 @@ if(!length(signal)) {
 	ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 			       interval = signal,
 			       feature = gene,
+			       col = "blue",
+			       pruned_col = if(program == "platypus") "firebrick2" else NULL,
 			       shading = top_markers,
 			       yexpand = c(0.1, 0.1))
 }
