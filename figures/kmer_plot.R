@@ -5,7 +5,7 @@ library(grid)
 library(gwastools)
 
 # Setting some analysis parameters
-max_kmers <- 10000 # the maximum number of k-mers to map onto the haplotype sequences
+max_kmers <- -1 # the maximum number of k-mers to map onto the haplotype sequences; -1 means all k-mers
 kmer_length <- 31 # the length of the k-mers used in the analysis
 min_sequences <- 80 # min number of samples that must have a consensus sequence from assembly; otherwise obtained from bwa
 min_frequency <- 5 # min number of times that a haplotype must occur to be used for plotting

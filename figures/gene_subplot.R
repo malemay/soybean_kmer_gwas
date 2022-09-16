@@ -40,6 +40,11 @@ if(is.null(gene)) stop("No gene found where there should be one")
 gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_gwas_locus.rds"))
 gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_signal_locus.rds"))
 
+# Getting the name of the trait associated with the signal, and from it the significance threshold
+trait <- target_signal$trait
+# DEPENDENCY: significance thresholds (should not need to be included in Makefile, because the dependence is implicit)
+threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt"))))
+
 # Getting the one signal associated with this gene
 signal <- subsetByOverlaps(gwas_signals, gene)
 
@@ -49,6 +54,7 @@ if(!length(signal) == 1) warning("There is no signal overlapping the gene ", gen
 ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 		       interval = gene,
 		       feature = NULL,
+		       threshold = threshold,
 		       col = "blue",
 		       pruned_col = if(program == "platypus") "firebrick2" else NULL,
 		       yexpand = c(0.1, 0.1))

@@ -59,6 +59,8 @@ $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} e
 $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_signal.rds))
 $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_gwas.rds))
 
+.PRECIOUS : $(topgranges)
+
 # Compiling the Supplemental Data file from the .tex file
 $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures) $(suptables)
 	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
@@ -70,6 +72,7 @@ $(signals_gr) utilities/signal_ids.txt utilities/gene_signal_ids.txt: utilities/
 	reference_signals/bandillo2017_signals.rds \
 	reference_signals/bandillo2015_signals.rds \
 	reference_signals/deronne2022_signal.rds \
+	reference_signals/custom_signals.rds \
 	utilities/trait_names.txt
 	$(RSCRIPT) utilities/make_signals_granges.R
 
@@ -93,6 +96,10 @@ reference_signals/bandillo2015_signals.rds: reference_signals/format_bandillo201
 # Generating the reference signal obtained from de Ronne et al. (2022) for resistance to P. sojae
 reference_signals/deronne2022_signal.rds: reference_signals/format_deronne2022_signal.R
 	$(RSCRIPT) reference_signals/format_deronne2022_signal.R
+
+# Generating the customs signals observed from our analyses for various signals
+reference_signals/custom_signals.rds: reference_signals/format_custom_signals.R
+	$(RSCRIPT) reference_signals/format_custom_signals.R
 
 # Putting the k-mer 5% thresholds on the same scale as the thresholds for the other programs
 gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gwas_results/kmers/%_threshold_5per

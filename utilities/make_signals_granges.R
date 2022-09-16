@@ -9,6 +9,7 @@ library(GenomicRanges)
 bandillo2015_signals <- readRDS("reference_signals/bandillo2015_signals.rds")
 bandillo2017_signals <- readRDS("reference_signals/bandillo2017_signals.rds")
 deronne_signal <- readRDS("reference_signals/deronne2022_signal.rds")
+custom_signals <- readRDS("reference_signals/custom_signals.rds")
 
 # We need to duplicate every entry with the various coded traits that were used in analyses
 trait_names <- readLines("utilities/trait_names.txt")
@@ -24,7 +25,7 @@ all_signals <- lapply(trait_names,
 	       }
 		       signals
        },
-       signals = c(deronne_signal, bandillo2015_signals, bandillo2017_signals))
+       signals = c(deronne_signal, bandillo2015_signals, bandillo2017_signals, custom_signals))
 
 all_signals <- do.call("c", all_signals)
 stopifnot(!anyDuplicated(all_signals$signal_id))

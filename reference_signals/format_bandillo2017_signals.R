@@ -109,7 +109,9 @@ bandillo_signals[bandillo_signals$locus == "I", "gene_name_v4"] <- chalcone_gene
 # The other gene not found in Gmax v1 annotation is glyma19g27460 and its
 # Gmax v4 equivalent is Glyma.19G101700 according to Sedivy et al. (2017)
 # DOI:10.1111/nph.14418
-bandillo_signals[bandillo_signals$locus == "L1", "gene_name_v4"] <- tolower("Glyma.19G101700")
+# bandillo_signals[bandillo_signals$locus == "L1", "gene_name_v4"] <- tolower("Glyma.19G101700")
+# this gene, however, does not appear to be the right one. We suggest Glyma.19G120300 instead
+bandillo_signals[bandillo_signals$locus == "L1", "gene_name_v4"] <- tolower("Glyma.19G120300")
 
 # Let us also add the genes that have been cloned after Bandillo et al. (2017) and
 # therefore not originally listed in their work

@@ -40,8 +40,14 @@ gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_gwas_locus.r
 gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_signal_locus.rds"))
 top_markers <- readRDS(paste0("gwas_results/", program, "/", id, "_top_markers.rds"))
 
+
 # Extracting the signal for the locus of interest from those just read
 signal <- subsetByOverlaps(gwas_signals, target_signal, ignore.strand = TRUE)
+
+# Getting the name of the trait associated with the signal, and from it the significance threshold
+trait <- target_signal$trait
+# DEPENDENCY: significance thresholds (should not need to be included in Makefile, because the dependencs is implicit)
+threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", trait, "_threshold_5per.txt"))))
 
 if(!length(signal)) {
 	warning("No signal found by ", program, " for signal ID ", id)
@@ -57,6 +63,7 @@ if(!length(signal)) {
 	ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 			       interval = signal,
 			       feature = gene,
+			       threshold = threshold,
 			       col = "blue",
 			       pruned_col = if(program == "platypus") "firebrick2" else NULL,
 			       shading = top_markers,
