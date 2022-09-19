@@ -207,6 +207,50 @@
 
 \clearpage
 
+\begin{landscape} \footnotesize
+	\begin{ThreePartTable}
+
+		\begin{TableNotes}
+		\item[a] test
+		\end{TableNotes}
+
+		\begin{longtable}{llcclccccl}
+
+			\caption{Signals}\\
+			\label{signals_table}\\
+
+			\toprule
+			Trait & Locus & Chromosome & -log10(p) & Gene & Platypus & vg & Paragraph & k-mers  & Study \\
+			\midrule \endfirsthead
+
+			\caption[]{Signals \emph{(continued)}}\\
+
+			\toprule
+			Trait & Locus & Chromosome & -log10(p) & Gene & Platypus & vg & Paragraph & k-mers  & Study \\
+			\midrule
+			\endhead
+
+			\bottomrule
+			Continued on next page \\
+			\endfoot
+
+			\bottomrule \insertTableNotes
+			\endlastfoot
+			\csvreader[head to column names,
+			late after line=\\,
+			late after last line=,
+			before reading={\catcode`\#=12},
+			after reading={\catcode`\#=6},
+			/csv/separator=semicolon]%
+			{../tables/signals_table.csv}{}{\Trait & \Locus & \Chromosome & \Pvalues & \Gene & \Platypus & \Vg & \Paragraph & \Kmers & \Study}
+
+		\end{longtable}
+
+	\end{ThreePartTable}
+
+\end{landscape}
+\clearpage
+
 \gwastableone{FLOWER.COLOR}
 \gwastabletwo{PUBESCENCE.COLOR}
 \gwastabletwo{SEED.COAT.COLOR}

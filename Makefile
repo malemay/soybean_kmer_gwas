@@ -18,7 +18,8 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/PUBESCENCE.FORM_gwas_table.csv \
 	tables/PUBESCENCE.DENSITY_gwas_table.csv \
 	tables/SEED.COAT.LUSTER_gwas_table.csv \
-	tables/MATURITY.GROUP_gwas_table.csv
+	tables/MATURITY.GROUP_gwas_table.csv \
+	tables/signals_table.csv
 
 supfigures := $(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_manhattan.png) \
 	$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo figures/{}_signal.png) \
@@ -104,6 +105,15 @@ reference_signals/custom_signals.rds: reference_signals/format_custom_signals.R
 # Putting the k-mer 5% thresholds on the same scale as the thresholds for the other programs
 gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gwas_results/kmers/%_threshold_5per
 	$(RSCRIPT) gwas_results/scale_kmer_thresholds.R $*
+
+# Generating the .csv file with data regarding which reference signals were found and their p-values
+tables/signals_table.csv: tables/signals_table.R \
+	$(signals_gr) \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/platypus/{}_signal.rds) \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/vg/{}_signal.rds) \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/paragraph/{}_signal.rds) \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/kmers/{}_signal.rds)
+	$(RSCRIPT) tables/signals_table.R
 
 # PHENOTYPIC DATA --------------------------------------------------
 
