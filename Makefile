@@ -135,6 +135,8 @@ phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 # KMER PLOTS --------------------------------------------------
 # Generating the k-mer plot from the consensus sequences (the k-mer p-values are missing from the list of dependencies)
 figures/%_kmers.png: figures/kmer_plot.R \
+	$(signals_gr) \
+	$(txdb) \
 	utilities/kmer_plot_ranges.txt \
 	phenotypic_data/trait_names.rds \
 	phenotypic_data/phenotypic_data.csv \

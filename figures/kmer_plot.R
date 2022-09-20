@@ -3,12 +3,14 @@
 # Loading the required libraries
 library(grid)
 library(gwastools)
+library(GenomicRanges)
 
 # Setting some analysis parameters
 max_kmers <- -1 # the maximum number of k-mers to map onto the haplotype sequences; -1 means all k-mers
 kmer_length <- 31 # the length of the k-mers used in the analysis
 min_sequences <- 80 # min number of samples that must have a consensus sequence from assembly; otherwise obtained from bwa
 min_frequency <- 5 # min number of times that a haplotype must occur to be used for plotting
+xextend <- 0.1 # The expansion factor on either side of the gene for the transcript plot x-scale
 
 # Reading the locus from the command line
 locus <- commandArgs(trailingOnly = TRUE)[1]
@@ -18,10 +20,45 @@ locus <- commandArgs(trailingOnly = TRUE)[1]
 locus_data <- read.table("utilities/kmer_plot_ranges.txt")
 trait <- locus_data[locus_data[[1]] == locus, 2]
 
+# Also extracting the plotting range
+plotting_range <- locus_data[locus_data[[1]] == locus, 3]
+chrom <- sub(":.*", "", plotting_range)
+grange <- as.numeric(strsplit(sub(".*:", "", plotting_range), "-")[[1]])
+
 # Getting the lookup table that links the trait name used in the USDA database to the one used for our analyses
 # DEPENDENCY: phenotypic_data/trait_names.rds
 trait_names <- readRDS("phenotypic_data/trait_names.rds")
 usda_trait <- names(trait_names)[sapply(trait_names, function(x) grepl(paste0("^", x), trait))]
+
+# Loading the reference gene and transcript data for plotting the transcript
+genes <- readRDS("refgenome/gmax_v4_genes.rds")
+transcripts <- readRDS("refgenome/gmax_v4_transcripts.rds")
+cds <- readRDS("refgenome/gmax_v4_cds.rds")
+exons <- readRDS("refgenome/gmax_v4_exons.rds")
+
+# Loading the data corresponding to that signal so we can extract the causal gene
+target_signal <- readRDS("utilities/all_signals.rds")[locus]
+stopifnot(length(target_signal) == 1)
+
+gene_name <- target_signal$gene_name_v4
+
+# Handling the special case where the gene_name value contains more than one gene or no gene at all
+if(!is.na(gene_name) && grepl(";", gene_name)) {
+	gene_names <- strsplit(gene_name, ";")[[1]]
+	causal_gene <- genes[gene_names]
+	causal_gene <- reduce(causal_gene, min.gapwidth = 10^6, ignore.strand = TRUE)
+} else if (!is.na(gene_name)) {
+	causal_gene <- genes[gene_name]
+} else {
+	gene <- NULL
+}
+
+if(is.null(causal_gene)) stop("No gene found where there should be one")
+
+# Extending the window for the causal gene
+window_size <- GenomicRanges::width(causal_gene)
+start(causal_gene) <- start(causal_gene) - xextend * window_size
+end(causal_gene) <- end(causal_gene) + xextend * window_size
 
 # Getting the phenotypic data
 # DEPENDENCY: phenotypic_data/phenotypic_data.csv
@@ -80,7 +117,7 @@ plotting_data <- adjust_gaps(hapdata = plotting_data,
 difflist <- nucdiff(plotting_data)
 
 # Outputting to a png file
-png(paste0("figures/", locus, "_kmers.png"), width = 8, height = 4, units = "in", res = 100)
+png(paste0("figures/", locus, "_kmers.png"), width = 8, height = 8, units = "in", res = 100)
 
 # Initializing the device
 grid.newpage()
@@ -88,19 +125,33 @@ grid.newpage()
 # Drawing a box around the plotting region
 grid::grid.rect()
 
-# Dividing the viewport into three viewports:
-# - The first viewport will be used for showing the haplotype sequences
-# - The second viewport will be used for the colour scale of the p-values
-# - The third viewport will be used for showing a table of the phenotypes observed per haplotype
-grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 3, heights = grid::unit(c(0.4, 0.2, 0.4), "npc"))))
+# Dividing the viewport into five row viewports:
+# - The first viewport is used to plot the transcript for the gene and the highlighted region
+# - The second viewport acts as a buffer between the first and third
+# - The third viewport is used for showing the haplotype sequences
+# - The fourth viewport acts as a buffer between the third and fifth
+# - The fifth viewport is used for showing a table of the phenotypes observed per haplotype
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 5, heights = grid::unit(c(0.1, 0.15, 0.3, 0.15, 0.3), "npc"))))
+
+# Plotting the transcript in the first viewport
+grid::pushViewport(grid::viewport(width = 0.84, layout.pos.row = 1))
+grid.draw(transcriptsGrob(genes = genes,
+			  transcripts = transcripts,
+			  exons = exons,
+			  cds = cds,
+			  xscale = causal_gene,
+			  highlight = GenomicRanges::GRanges(seqnames = chrom,
+							     ranges = IRanges::IRanges(start = grange[1], end = grange[2])),
+			  first_tx_only = TRUE))
+grid::upViewport()
 
 # Moving into the viewport associated with the sequences and drawing them
-grid::pushViewport(grid::viewport(layout.pos.row = 1))
-grid.haplotypes(hapdata = plotting_data, difflist = difflist)
+grid::pushViewport(grid::viewport(layout.pos.row = 3))
+grid.haplotypes(hapdata = plotting_data, difflist = difflist, position = plotting_range)
 grid::upViewport()
 
 # Moving into the viewport for the table
-grid::pushViewport(grid::viewport(layout.pos.row = 3))
+grid::pushViewport(grid::viewport(layout.pos.row = 5))
 grid.phenotable(phenodata = haplotype_data)
 grid::upViewport()
 

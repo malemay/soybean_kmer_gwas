@@ -12,26 +12,11 @@ transcripts <- readRDS("refgenome/gmax_v4_transcripts.rds")
 cds <- readRDS("refgenome/gmax_v4_cds.rds")
 exons <- readRDS("refgenome/gmax_v4_exons.rds")
 
-# Getting the ID of the gene associated with the trait and the name of the trait from the all_signals.rds file
+### ----------
+# Getting the chromosome of the gene associated with the trait from the all_signals.rds file
 # DEPENDENCY: utilities/all_signals.rds
 target_signal <- readRDS("utilities/all_signals.rds")
-target_signal <- target_signal[id]
-
-gene_name <- target_signal$gene_name_v4
-### ----------
-
-# Handling the special case where the gene_name value contains more than one gene or no gene at all
-if(!is.na(gene_name) && grepl(";", gene_name)) {
-	gene_names <- strsplit(gene_name, ";")[[1]]
-	gene <- genes[gene_names]
-	gene <- reduce(gene, min.gapwidth = 10^6, ignore.strand = TRUE)
-} else if (!is.na(gene_name)) {
-	gene <- genes[gene_name]
-} else {
-	gene <- NULL
-}
-
-if(is.null(gene)) stop("No gene found where there should be one")
+xchrom <- seqnames(target_signal[id])
 
 # DEPENDENCY: Paragraph gene subplot
 # DEPENDENCY: vg gene subplot
@@ -43,7 +28,7 @@ pvalue_grobs <- list(readRDS(paste0("figures/grobs/platypus_", id, "_gene.rds"))
 		     readRDS(paste0("figures/grobs/kmers_", id, "_gene.rds")))
 
 output_grob <- pvalue_tx_grob(pvalue_grobs = pvalue_grobs,
-			      xrange = gene,
+			      xchrom = xchrom,
 			      genes = genes,
 			      transcripts = transcripts,
 			      exons = exons,
