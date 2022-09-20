@@ -142,6 +142,7 @@ grid.draw(transcriptsGrob(genes = genes,
 			  xscale = causal_gene,
 			  highlight = GenomicRanges::GRanges(seqnames = chrom,
 							     ranges = IRanges::IRanges(start = grange[1], end = grange[2])),
+			  draw_arrows = TRUE,
 			  first_tx_only = TRUE))
 grid::upViewport()
 

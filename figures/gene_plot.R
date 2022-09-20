@@ -33,6 +33,7 @@ output_grob <- pvalue_tx_grob(pvalue_grobs = pvalue_grobs,
 			      transcripts = transcripts,
 			      exons = exons,
 			      cds = cds,
+			      draw_arrows = TRUE,
 			      first_tx_only = TRUE,
 			      margins = c(4.1, 3.6, 2.5, 1.1))
 
