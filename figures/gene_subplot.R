@@ -33,6 +33,18 @@ if(!is.na(gene_name) && grepl(";", gene_name)) {
 	gene <- NULL
 }
 
+# Reading the CNV range (if applicable)
+# DEPENDENCY: utilities/cnv_genes.txt
+cnv_genes <- read.table("utilities/cnv_genes.txt")
+if(id %in% cnv_genes[[1]]) {
+	cnv_range <- readRDS(cnv_genes[cnv_genes[[1]] == id, 2])
+} else {
+	cnv_range <- NULL
+}
+
+# The Ps locus is a special case because we want to set the plotting window to include the CNV
+if(id == "pubescence_density_Ps") gene <- cnv_range
+
 if(is.null(gene)) stop("No gene found where there should be one")
 
 # Extending the window for the causal gene
@@ -61,6 +73,7 @@ if(!length(signal) == 1) warning("There is no signal overlapping the gene ", gen
 # Using the right viewport to focus on the p-values over the length of the gene
 ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 		       interval = gene,
+		       shading = cnv_range,
 		       feature = NULL,
 		       threshold = threshold,
 		       col = "blue",

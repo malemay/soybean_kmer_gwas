@@ -258,10 +258,35 @@ figures/%_gene.png: figures/gene_plot.R \
 # Preparing the gene subplots for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
 	$(signals_gr) \
+	utilities/cnv_genes.txt \
+	$(shell cut -f2 utilities/cnv_genes.txt | uniq) \
 	refgenome/gmax_v4_genes.rds \
 	gwas_results/$(prog)/%_gwas_locus.rds \
 	gwas_results/$(prog)/%_signal_locus.rds ; \
 	$(RSCRIPT) figures/gene_subplot.R $$* $(prog)))
+
+# CNV ANALYSES --------------------------------------------------
+# Preparing the CNV ranges for the loci that harbor CNV (only Ps and Hps so far)
+cnv_analysis/%_cnv_range.rds: cnv_analysis/%_analysis.R \
+	cnv_analysis/cnv_functions.R \
+	utilities/srr_id_correspondence.txt \
+	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo illumina_data/merged_bams/{}_merged.bam) \
+	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo illumina_data/merged_bams/{}_merged.bam.bai) \
+	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo sv_genotyping/paragraph/manifest_files/{}_manifest.txt) \
+	refgenome/gmax_v4_genes.rds
+	$(RSCRIPT) $<
+
+# The I locus is a special case because it does not have as many prerequisites
+cnv_analysis/i_cnv_range.rds: cnv_analysis/i_analysis.R \
+	cnv_analysis/i_locus.bam
+	$(RSCRIPT) $<
+
+# The script that creates the alignment of the I locus on the reference assembly
+cnv_analysis/i_locus.bam: cnv_analysis/extract_I_locus.sh \
+	external_data/BAC77G7-a.fasta \
+	external_data/BAC77G7-a.fasta.fai \
+	$(refgen)
+	$<
 
 # SYMLINKS --------------------------------------------------
 

@@ -1,0 +1,10 @@
+seed_coat_luster_all_B	cnv_analysis/hps_cnv_range.rds
+pubescence_density_Ps	cnv_analysis/ps_cnv_range.rds
+seed_coat_luster_all_I	cnv_analysis/i_cnv_range.rds
+seed_coat_luster_nointermediate_I	cnv_analysis/i_cnv_range.rds
+seed_coat_luster_dullshiny_I	cnv_analysis/i_cnv_range.rds
+seed_coat_color_all_I	cnv_analysis/i_cnv_range.rds
+seed_coat_color_greenyellow_I	cnv_analysis/i_cnv_range.rds
+hilum_color_all_I	cnv_analysis/i_cnv_range.rds
+hilum_color_blackbrown_I	cnv_analysis/i_cnv_range.rds
+hilum_color_rbr_I	cnv_analysis/i_cnv_range.rds
