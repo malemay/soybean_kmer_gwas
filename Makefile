@@ -8,6 +8,7 @@ txdb := refgenome/gmax_v4_genes.rds refgenome/gmax_v4_transcripts.rds refgenome/
 refgen := refgenome/Gmax_508_v4.0_mit_chlp.fasta
 signals_gr := utilities/all_signals.rds
 grobdir := figures/grobs
+addfile := additional_files/additional_file_1.tex
 
 suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/PUBESCENCE.COLOR_gwas_table.csv \
@@ -21,12 +22,20 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/MATURITY.GROUP_gwas_table.csv \
 	tables/signals_table.csv
 
-supfigures := $(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_manhattan.png) \
-	$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo figures/{}_signal.png) \
-	$(shell cat utilities/gene_signal_ids.txt | xargs -I {} echo figures/{}_gene.png) \
-	$(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo figures/{}_kmers.png) \
-	$(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_scaffolds_manhattan.png) \
-	figures/flower_color_ld.png
+# Getting the LD png figures to generate dynamically from additional_files/additional_file_1.tex
+manhattanplots := $(shell grep '^\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
+scaffoldplots := $(shell grep '^\\manhattanplot' $(addfile) | grep scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
+ldplots := $(shell grep '^\\ldplot' $(addfile) | sed -E 's/\\ldplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_ld.png)
+geneplots := $(shell grep '^\\geneplot' $(addfile) | sed -E 's/\\geneplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_gene.png)
+kmerplots := $(shell grep '^\\kmerplot' $(addfile) | sed -E 's/\\kmerplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_kmers.png)
+signalplots := $(shell grep '^\\signalplot' $(addfile) | sed -E 's/\\signalplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_signal.png)
+
+supfigures := $(manhattanplots) \
+	$(signalplots) \
+	$(geneplots) \
+	$(kmerplots) \
+	$(scaffoldplots) \
+	$(ldplots)
 
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
@@ -54,7 +63,9 @@ SUPFIGURES: $(supfigures)
 	$(grobdir)/paragraph_%_gene.rds $(grobdir)/kmers_%_gene.rds \
 	gwas_results/kmers/%_threshold_5per.txt \
 	gwas_results/kmer_consensus/%_sequences.fa \
-	gwas_results/kmers/%_clustered_ld.txt
+	gwas_results/kmers/%_clustered_ld.txt \
+	cnv_analysis/hps_cnv_range.rds \
+	cnv_analysis/ps_cnv_range.rds
 
 # Adding some more intermediate files to .PRECIOUS
 $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval .PRECIOUS: $(signal)))
