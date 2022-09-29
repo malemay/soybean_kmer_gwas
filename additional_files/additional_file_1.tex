@@ -176,6 +176,16 @@
 
 \clearpage}
 
+% Defining a new command for LD plot figures
+\newcommand{\ldplot}[1]{
+	\begin{cfigure}
+		\includegraphics[width = 6.5in]{#1_ld}
+		\caption{#1\_ld}
+		\label{#1_ld}
+	\end{cfigure}
+
+\clearpage}
+
 % Allows underscores in captions but is not a great solution
 \catcode`_=12
 
@@ -263,6 +273,7 @@
 \gwastableone{MATURITY.GROUP}
 
 \manhattanplot{flower_color}
+\ldplot{flower_color}
 %\manhattanplot{flower_color_scaffolds}
 \signalplot{flower_color_W1}
 \geneplot{flower_color_W1}

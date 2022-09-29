@@ -15,7 +15,8 @@ gwas_results/kmers
 gwas_results/platypus
 gwas_results/paragraph
 gwas_results/vg
-kmers_pca_analysis/*txt
+kmers_table/kmers_table.names
+kmers_table/kmers_table.table
 *lof
 *log
 *lot
@@ -25,7 +26,7 @@ kmers_pca_analysis/*txt
 *png
 refgenome/soybase_genome_annotation_v4.0_04-20-2021.txt
 *sa
-scripts/kmer_pca_analysis.R
+spurious_kmers_analysis/
 sv_genotyping/paragraph/manifest_files/*txt
 *swp
 *rds

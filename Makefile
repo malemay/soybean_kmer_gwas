@@ -25,7 +25,8 @@ supfigures := $(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{
 	$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo figures/{}_signal.png) \
 	$(shell cat utilities/gene_signal_ids.txt | xargs -I {} echo figures/{}_gene.png) \
 	$(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo figures/{}_kmers.png) \
-	$(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_scaffolds_manhattan.png)
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo figures/{}_scaffolds_manhattan.png) \
+	figures/flower_color_ld.png
 
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
@@ -52,7 +53,8 @@ SUPFIGURES: $(supfigures)
 	$(grobdir)/platypus_%_gene.rds $(grobdir)/vg_%_gene.rds \
 	$(grobdir)/paragraph_%_gene.rds $(grobdir)/kmers_%_gene.rds \
 	gwas_results/kmers/%_threshold_5per.txt \
-	gwas_results/kmer_consensus/%_sequences.fa
+	gwas_results/kmer_consensus/%_sequences.fa \
+	gwas_results/kmers/%_clustered_ld.txt
 
 # Adding some more intermediate files to .PRECIOUS
 $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval .PRECIOUS: $(signal)))
@@ -132,7 +134,7 @@ phenotypic_data/lookup_tables.rds: phenotypic_data/lookup_tables.R
 phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 	$(RSCRIPT) phenotypic_data/trait_names.R
 
-# KMER PLOTS --------------------------------------------------
+# KMER HAPLOTYPE PLOTS --------------------------------------------------
 # Generating the k-mer plot from the consensus sequences (the k-mer p-values are missing from the list of dependencies)
 figures/%_kmers.png: figures/kmer_plot.R \
 	$(signals_gr) \
@@ -154,6 +156,21 @@ gwas_results/kmer_consensus/%_sequences.fa: gwas_results/gather_consensus.sh \
 # Creating lookup tables to simplify phenotype names
 phenotypic_data/pheno_names_lookup.rds: phenotypic_data/pheno_names_lookup.R
 	$(RSCRIPT) $<
+
+# KMER LD PLOTS --------------------------------------------------
+
+# Generating the LD plot from the clustered matrix
+figures/%_ld.png: figures/ld_plot.R \
+	gwas_results/kmers/%_clustered_ld.txt \
+	gwas_results/kmers/%_gwas.rds
+	$(RSCRIPT) $< $*
+
+# Generating the clustered LD matrix from the GWAS results and the full k-mers table
+gwas_results/kmers/%_clustered_ld.txt: gwas_results/ld_analysis.R \
+	kmers_table/kmers_table.table \
+	kmers_table/kmers_table.names \
+	gwas_results/kmers/%_gwas.rds
+	$(RSCRIPT) $< $*
 
 # GWAS RESULTS --------------------------------------------------
 
