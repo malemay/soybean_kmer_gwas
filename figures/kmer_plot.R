@@ -1,9 +1,9 @@
 # This script generates a k-mer plot from the consensus sequences of a group of samples at a given locus
 
 # Loading the required libraries
-library(grid)
-library(gwastools)
-library(GenomicRanges)
+suppressMessages(library(grid))
+suppressMessages(library(gwastools))
+suppressMessages(library(GenomicRanges))
 
 # Setting some analysis parameters
 max_kmers <- -1 # the maximum number of k-mers to map onto the haplotype sequences; -1 means all k-mers
@@ -29,6 +29,9 @@ grange <- as.numeric(strsplit(sub(".*:", "", plotting_range), "-")[[1]])
 # DEPENDENCY: phenotypic_data/trait_names.rds
 trait_names <- readRDS("phenotypic_data/trait_names.rds")
 usda_trait <- names(trait_names)[sapply(trait_names, function(x) grepl(paste0("^", x), trait))]
+
+# DEPENDENCY: phenotypic_data/pheno_names_lookup.rds
+pheno_names_lookup <- readRDS("phenotypic_data/pheno_names_lookup.rds")[[usda_trait]]
 
 # Loading the reference gene and transcript data for plotting the transcript
 genes <- readRDS("refgenome/gmax_v4_genes.rds")
@@ -63,6 +66,12 @@ end(causal_gene) <- end(causal_gene) + xextend * window_size
 # Getting the phenotypic data
 # DEPENDENCY: phenotypic_data/phenotypic_data.csv
 phenotypes <- read.table("phenotypic_data/phenotypic_data.csv", sep = ";", header = TRUE,)
+
+# Setting the values of the phenotype to that in pheno_names_lookup
+phenotypes[[usda_trait]] <- pheno_names_lookup[phenotypes[[usda_trait]]]
+
+# Setting to NA the values that were NA in the analysis being considered
+phenotypes[[usda_trait]][is.na(phenotypes[[trait]])] <- NA
 
 # Reading the k-mers associated with that analysis and their p-values
 # DEPENDENCY: k-mer p-values

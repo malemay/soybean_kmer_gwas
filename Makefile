@@ -137,6 +137,7 @@ phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 figures/%_kmers.png: figures/kmer_plot.R \
 	$(signals_gr) \
 	$(txdb) \
+	phenotypic_data/pheno_names_lookup.rds \
 	utilities/kmer_plot_ranges.txt \
 	phenotypic_data/trait_names.rds \
 	phenotypic_data/phenotypic_data.csv \
@@ -149,6 +150,10 @@ gwas_results/kmer_consensus/%_sequences.fa: gwas_results/gather_consensus.sh \
 	utilities/kmer_plot_ranges.txt \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	gwas_results/gather_consensus.sh $*
+
+# Creating lookup tables to simplify phenotype names
+phenotypic_data/pheno_names_lookup.rds: phenotypic_data/pheno_names_lookup.R
+	$(RSCRIPT) $<
 
 # GWAS RESULTS --------------------------------------------------
 
