@@ -48,7 +48,10 @@ nearestgene := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1
 
 genetables := $(allgenes) $(topgenes) $(nearestgene)
 
-all: $(SDIR)/additional_file_1.pdf $(genetables)
+phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo gwas_results/kmers/{}_phenodata.rds)
+
+
+all: $(SDIR)/additional_file_1.pdf $(genetables) $(phenodata)
 
 GENETABLES : $(genetables)
 SUPTABLES: $(suptables)
@@ -147,7 +150,7 @@ phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 
 # KMER HAPLOTYPE PLOTS --------------------------------------------------
 # Generating the k-mer plot from the consensus sequences (the k-mer p-values are missing from the list of dependencies)
-figures/%_kmers.png: figures/kmer_plot.R \
+figures/%_kmers.png gwas_results/kmers/%_phenodata.rds: figures/kmer_plot.R \
 	$(signals_gr) \
 	$(txdb) \
 	phenotypic_data/pheno_names_lookup.rds \

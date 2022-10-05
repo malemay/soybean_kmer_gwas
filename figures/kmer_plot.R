@@ -102,6 +102,9 @@ haplotype_data <- link_phenotypes(sequences = sequences,
 				  id_column = "bayer_id",
 				  phenotype_column = usda_trait)
 
+# Writing this data.frame to file for retrieval later
+saveRDS(haplotype_data, file = paste0("gwas_results/kmers/", locus, "_phenodata.rds"))
+
 # Get the positions in the haplotypes that overlap any of the significant k-mers
 kmer_overlaps <- match_kmers(sequences = haplotypes,
 			     kmers = kmer_pvalues,
