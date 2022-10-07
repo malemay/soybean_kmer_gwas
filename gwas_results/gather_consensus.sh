@@ -35,7 +35,7 @@ do
 	fi
 
 	samtools consensus -l 100000 --show-del no -m simple -r $region \
-		../merged_bams/${i}/${i}_merged.bam |
+		illumina_data/merged_bams/${i}_merged.bam |
 		sed "s/${chrom}/${i}/" >> gwas_results/kmer_consensus/${locus}_bwa_sequences.fa
 done
 

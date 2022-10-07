@@ -30,8 +30,8 @@ kmer_positions <- readRDS(paste0("gwas_results/kmers/", trait, "_gwas.rds"))
 names(kmer_positions) <- kmer_positions$kmer_canon
 
 # Optionally doing some processing to subsample only some k-mers if there are too many
-if(length(kmer_positions) > 2500) {
-	kmer_positions <- subsample_kmers(kmer_positions, nkmers = 2500, npvalue = 1000)
+if(length(kmer_positions) > 1500) {
+	kmer_positions <- subsample_kmers(kmer_positions, nkmers = 1500, npvalue = 500)
 }
 
 # Writing the significant k-mers to file

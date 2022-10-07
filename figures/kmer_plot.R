@@ -80,6 +80,12 @@ kmer_pvalues <- read_kmer_pvalues(kmer_file = paste0("gwas_results/kmer_data/", 
 				  max_kmers = max_kmers,
 				  kmer_length = 31)
 
+# Checking if any of the -log10(p-values) are infinite and setting them to the maximum possible value if so
+if(any(is.infinite(kmer_pvalues$log10p))) {
+	warning("Setting infinite -log10(p-values) to -log10(.Machine$double.xmin)")
+	kmer_pvalues[is.infinite(kmer_pvalues$log10p), "log10p"] <- -log10(.Machine$double.xmin)
+}
+
 # Reading the consensus sequence from the assemblies
 # DEPENDENCY: consensus sequence computed from the assembly of significant reads
 sequences <- read_fasta(input_fasta = paste0("gwas_results/kmer_consensus/", locus, "_sequences.fa"))
