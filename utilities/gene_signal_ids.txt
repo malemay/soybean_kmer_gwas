@@ -23,10 +23,7 @@ seed_coat_luster_nointermediate_B
 seed_coat_luster_dullshiny_I
 seed_coat_luster_dullshiny_Hps
 seed_coat_luster_dullshiny_B
-pod_color_all_L1
-pod_color_blbr_L1
 flower_color_W1
-flower_color_L1
 seed_coat_color_all_G
 seed_coat_color_all_T
 seed_coat_color_all_I

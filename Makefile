@@ -273,6 +273,7 @@ figures/%_signal.png: figures/signal_plot.R \
 # Preparing the signal subplots for each of platypus, vg and paragraph
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
 	$(signals_gr) \
+	utilities/cnv_genes.txt \
 	gwas_results/$(prog)/%_top_markers.rds \
 	refgenome/gmax_v4_genes.rds \
 	gwas_results/$(prog)/%_gwas_locus.rds \

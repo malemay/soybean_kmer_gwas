@@ -18,8 +18,8 @@ pubescence_color_Gm16_signal$common_name <- NA
 names(pubescence_color_Gm16_signal) <- pubescence_color_Gm16_signal$signal_id
 
 # Manually entering data for the signal found on chromosome 11 for stem_termination_sn
-# This signal goes from 15127026-15402077 for kmers and 15159161-15259163 for Platypus
-stem_termination_Gm11_signal <- GRanges(seqnames = "Gm11", ranges = IRanges(start = 15127026, end = 15402077))
+# This signal goes from 15039148-15413930 for kmers
+stem_termination_Gm11_signal <- GRanges(seqnames = "Gm11", ranges = IRanges(start = 15039148, end = 15413930))
 stem_termination_Gm11_signal$signal_id <- "stem_termination_sn_Gm11"
 stem_termination_Gm11_signal$trait <- "stem_termination"
 stem_termination_Gm11_signal$locus <- "stGm11"
@@ -29,9 +29,33 @@ stem_termination_Gm11_signal$gene_name_v4 <- NA
 stem_termination_Gm11_signal$common_name <- NA
 names(stem_termination_Gm11_signal) <- stem_termination_Gm11_signal$signal_id
 
+# Manually entering data for the signal found on chromosome 18 for stem_termination_sn
+# This signal goes from 50694062-50707043 for kmers
+stem_termination_Gm18_signal <- GRanges(seqnames = "Gm18", ranges = IRanges(start = 50694062, end = 50707043))
+stem_termination_Gm18_signal$signal_id <- "stem_termination_sn_Gm18"
+stem_termination_Gm18_signal$trait <- "stem_termination"
+stem_termination_Gm18_signal$locus <- "stGm18"
+stem_termination_Gm18_signal$n_snps <- NA
+stem_termination_Gm18_signal$log_pvalue <- 10 # Choosing a random p-value just so it shows up on Manhattan plots
+stem_termination_Gm18_signal$gene_name_v4 <- NA
+stem_termination_Gm18_signal$common_name <- NA
+names(stem_termination_Gm18_signal) <- stem_termination_Gm18_signal$signal_id
+
+# Manually entering data for the signal found on chromosome 16 for stem_termination_sn
+# This signal goes from 31899974-31999228 for kmers
+stem_termination_Gm16_signal <- GRanges(seqnames = "Gm16", ranges = IRanges(start = 31899974, end = 31999228))
+stem_termination_Gm16_signal$signal_id <- "stem_termination_sn_Gm16"
+stem_termination_Gm16_signal$trait <- "stem_termination"
+stem_termination_Gm16_signal$locus <- "stGm16"
+stem_termination_Gm16_signal$n_snps <- NA
+stem_termination_Gm16_signal$log_pvalue <- 10 # Choosing a random p-value just so it shows up on Manhattan plots
+stem_termination_Gm16_signal$gene_name_v4 <- NA
+stem_termination_Gm16_signal$common_name <- NA
+names(stem_termination_Gm16_signal) <- stem_termination_Gm16_signal$signal_id
+
 # Manually entering data for the signal found on chromosome 15 for pod_color_blbr
-# This signal goes from 3908733-4166999 for kmers and 3878655-4084300 for Platypus
-pod_color_Gm15_signal <- GRanges(seqnames = "Gm15", ranges = IRanges(start = 3878655, end = 4166999))
+# This signal goes from 3933772-4125388 for kmers
+pod_color_Gm15_signal <- GRanges(seqnames = "Gm15", ranges = IRanges(start = 3933772, end = 4125388))
 pod_color_Gm15_signal$signal_id <- "pod_color_blbr_Gm15"
 pod_color_Gm15_signal$trait <- "pod_color"
 pod_color_Gm15_signal$locus <- "pdcGm15"
@@ -92,6 +116,8 @@ names(seed_coat_luster_Gm20_signal) <- seed_coat_luster_Gm20_signal$signal_id
 # Bundling all those signals together and saving them to file
 custom_signals <- c(pubescence_color_Gm16_signal,
 		    stem_termination_Gm11_signal,
+		    stem_termination_Gm16_signal,
+		    stem_termination_Gm18_signal,
 		    pod_color_Gm15_signal,
 		    pubescence_form_Gm04_signal,
 		    pubescence_form_Gm15_signal,

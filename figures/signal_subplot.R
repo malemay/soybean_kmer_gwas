@@ -35,6 +35,16 @@ if(!is.na(gene_name) && grepl(";", gene_name)) {
 	gene <- NULL
 }
 
+# Handling special cases where the causal variant acutally spans several genes
+# In this case we set the "gene" variable to the span of the CNV/variant
+# Reading the CNV range (if applicable)
+# DEPENDENCY: utilities/cnv_genes.txt
+cnv_genes <- read.table("utilities/cnv_genes.txt")
+
+if(id %in% cnv_genes[[1]]) {
+	gene <- readRDS(cnv_genes[cnv_genes[[1]] == id, 2])
+} 
+
 # Reading the GWAS results, signals, and region of top markers from file
 gwas_results <- readRDS(paste0("gwas_results/", program, "/", id, "_gwas_locus.rds"))
 gwas_signals <- readRDS(paste0("gwas_results/", program, "/", id, "_signal_locus.rds"))

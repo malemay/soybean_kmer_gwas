@@ -3,12 +3,14 @@ suppressMessages(library(grid))
 suppressMessages(library(gwastools))
 suppressMessages(library(GenomicRanges))
 
-# Setting some analysis parameters
-xextend <- 0.1 # The expansion factor on either side of the gene for the transcript plot x-scale
-
 # Getting the name of the trait-locus combination and of the program that called the genotypes from the command line
 id <- commandArgs(trailingOnly = TRUE)[1]
 program <- commandArgs(trailingOnly = TRUE)[2]
+
+# Setting some analysis parameters
+xextend <- 0.1 # The expansion factor on either side of the gene for the transcript plot x-scale
+# The R locus is a special case because I want to see its promoter region
+# if(id == "hilum_color_blackbrown_R") xextend <- 2
 
 # Getting the ID of the gene associated with the trait and the name of the trait from the all_signals.rds file
 # DEPENDENCY: utilities/all_signals.rds
@@ -37,7 +39,7 @@ if(!is.na(gene_name) && grepl(";", gene_name)) {
 # DEPENDENCY: utilities/cnv_genes.txt
 cnv_genes <- read.table("utilities/cnv_genes.txt")
 if(id %in% cnv_genes[[1]]) {
-	cnv_range <- readRDS(cnv_genes[cnv_genes[[1]] == id, 2])
+	gene <- cnv_range <- readRDS(cnv_genes[cnv_genes[[1]] == id, 2])
 } else {
 	cnv_range <- NULL
 }

@@ -111,7 +111,9 @@ bandillo_signals[bandillo_signals$locus == "I", "gene_name_v4"] <- chalcone_gene
 # DOI:10.1111/nph.14418
 # bandillo_signals[bandillo_signals$locus == "L1", "gene_name_v4"] <- tolower("Glyma.19G101700")
 # this gene, however, does not appear to be the right one. We suggest Glyma.19G120300 instead
-bandillo_signals[bandillo_signals$locus == "L1", "gene_name_v4"] <- tolower("Glyma.19G120300")
+
+# this gene does not appear sure enough, therefore I will leave it blank
+bandillo_signals[bandillo_signals$locus == "L1", "gene_name_v4"] <- NA
 
 # Let us also add the genes that have been cloned after Bandillo et al. (2017) and
 # therefore not originally listed in their work
@@ -138,6 +140,9 @@ hps_genes <- sort(gmax_v4_genes[hps_genes], ignore.strand = TRUE)
 hps_genes <- subsetByOverlaps(hps_genes,
 			      GRanges(seqnames = "Gm15", ranges = IRanges(start = 9 * 10^6, end = 10 * 10^6)),
 			      ignore.strand = TRUE)
+
+# R locus; my results support another gene as being the causal gene so I'll have a look at it
+# bandillo_signals[bandillo_signals$locus == "R", "gene_name_v4"] <- tolower("glyma.09g234900")
 
 # Let us add the names of the first and last of those genes in the gene_name_v4 column
 hps_gene_ids <- paste0(names(hps_genes)[c(1, length(hps_genes))], collapse = ";")
