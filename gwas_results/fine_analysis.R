@@ -247,3 +247,47 @@ pubescence_density$kmers[1]$kmer_canon
 system("samtools view gwas_results/kmer_data/pubescence_density/katcher_results/USB-672/USB-672_pvalues_sorted.bam | grep AAAATTAATGATATTTTTTTGTAAAAATTAT | less -S")
 # This k-mer is clearly associated with the CNV at the Ps locus
 
+
+
+
+# SEED COAT LUSTER (DULL-SHINY)
+seed_coat_luster <- read_gwas("seed_coat_luster_dullshiny")
+seed_coat_luster$kmers[1:10]
+
+# Checking if any of the top k-mers have reads with special patterns
+seed_coat_luster$kmers[1:10]$kmer_canon
+#  [1] "AAAGTTAGATATAGTTTTTTTTTTTTTTTTA" "GCCTAATCTGAATATGGAGTATCAAATAAAA" "CTTTCTTTCTTTTCCTTTCTGGTATGTTTTA" "ATAGTGGTAAAAAAAAAAAAAAAAACTATAT" "GATATAGTTTTTTTTTTTTTTTTTACCACTA"
+#  [6] "ATATATATATATATTATATTTCAAGTTACAT" "CATTTTGAGTTCAGATGGCCTAATCTGAATA" "AAATAAATTTATTATAGCGCGTGTATCTAAA" "TCTTGATTTTGACCGGTCCAGTTGGGTAACA" "GCATTTTTTTTTTGTTCAACTACTAGTTTAA"
+as.character(reverseComplement(DNAStringSet(seed_coat_luster$kmers[1:10]$kmer_canon)))
+#  [1] "TAAAAAAAAAAAAAAAACTATATCTAACTTT" "TTTTATTTGATACTCCATATTCAGATTAGGC" "TAAAACATACCAGAAAGGAAAAGAAAGAAAG" "ATATAGTTTTTTTTTTTTTTTTTACCACTAT" "TAGTGGTAAAAAAAAAAAAAAAAACTATATC"
+#  [6] "ATGTAACTTGAAATATAATATATATATATAT" "TATTCAGATTAGGCCATCTGAACTCAAAATG" "TTTAGATACACGCGCTATAATAAATTTATTT" "TGTTACCCAACTGGACCGGTCAAAATCAAGA" "TTAAACTAGTAGTTGAACAAAAAAAAAATGC"
+# Of particular interest are k-mers 1, 4 and 5 (map to the top position) and 6 (maps near the identified boudnary of the CNV)
+
+# k-mer 1
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-032/USB-032_pvalues_sorted.bam | grep AAAGTTAGATATAGTTTTTTTTTTTTTTTTA | less -S")
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-032/USB-032_pvalues_sorted.bam | grep TAAAAAAAAAAAAAAAACTATATCTAACTTT | less -S")
+# this k-mer seems to contain a 4-bp insertion (maybe it is only found in the added copies?)
+
+# k-mer 2
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-032/USB-032_pvalues_sorted.bam | grep GCCTAATCTGAATATGGAGTATCAAATAAAA | less -S")
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-032/USB-032_pvalues_sorted.bam | grep TTTTATTTGATACTCCATATTCAGATTAGGC | less -S")
+# Underlying this k-mer is probably just a SNP
+
+# k-mer 3
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-032/USB-032_pvalues_sorted.bam | grep CTTTCTTTCTTTTCCTTTCTGGTATGTTTTA | less -S")
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-032/USB-032_pvalues_sorted.bam | grep TAAAACATACCAGAAAGGAAAAGAAAGAAAG | less -S")
+
+# k-mer 4
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-440/USB-440_pvalues_sorted.bam | grep ATAGTGGTAAAAAAAAAAAAAAAAACTATAT | less -S")
+# This seemds to be associated with the same insertion as k-mer 1
+
+
+# k-mer 5
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-528/USB-528_pvalues_sorted.bam | grep GATATAGTTTTTTTTTTTTTTTTTACCACTA | less -S")
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-528/USB-528_pvalues_sorted.bam | grep TAGTGGTAAAAAAAAAAAAAAAAACTATATC | less -S")
+# This again seems to be associated with the same insertion
+
+# k-mer 6
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-479/USB-479_pvalues_sorted.bam | grep ATATATATATATATTATATTTCAAGTTACAT | less -S")
+system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-479/USB-479_pvalues_sorted.bam | grep ATGTAACTTGAAATATAATATATATATATAT | less -S")
+# There seems to be a weird matching pattern for this k-mer; it seems to match several positions

@@ -49,7 +49,7 @@ genes[gene_name]
 if(interactive()) {
 	covplot <- plot_coverage(bam_files, average_coverage = average_cov,
 				 yscale = c(0, 15), cores = 30,
-				 grange = GRanges(seqnames = "Gm15", ranges = IRanges(start = 9300000, end = 9450000)))
+				 grange = GRanges(seqnames = "Gm15", ranges = IRanges(start = 9380000, end = 9430000)))
 }
 
 # I will use the window plotted above to calculate the average normalized coverage for all samples
@@ -65,6 +65,33 @@ normalized_cov <- rcoverage / average_cov
 
 # Visualizing the distribution to identify a threshold separating CNV samples from low copy number samples
 if(interactive()) hist(normalized_cov, breaks = 50)
+
+# Having a look at the link between copy number and phenotype
+phenotypic_data <- read.table("phenotypic_data/phenotypic_data.csv", header = TRUE, sep = ";")
+luster <- phenotypic_data[match(names(normalized_cov), phenotypic_data$bayer_id), "seed_coat_luster_all"]
+
+boxplot_data <- data.frame(coverage = normalized_cov,
+			   luster = luster,
+			   stringsAsFactors = FALSE)
+
+boxplot_data$luster <- as.factor(boxplot_data$luster)
+
+boxplot(coverage ~ luster, data = boxplot_data)
+summary(aov(coverage ~ luster, data = boxplot_data))
+TukeyHSD(aov(coverage ~ luster, data = boxplot_data))
+
+# Also plotting the results with only the dull and shiny phenotypes
+boxplot_data$dullshiny <- phenotypic_data[match(names(normalized_cov), phenotypic_data$bayer_id), "seed_coat_luster_dullshiny"]
+boxplot(coverage ~ dullshiny, data = boxplot_data)
+t.test(coverage ~ dullshiny, data = boxplot_data)
+
+# It is weird that some accessions have shiny seed coats, yet high copy number at the B locus
+# Let us make a GWAS contrasting only accessions with high copy number
+cnv_luster_data <- boxplot_data[complete.cases(boxplot_data), ]
+cnv_luster_data <- cnv_luster_data[cnv_luster_data$coverage > 2,]
+cnv_luster_data$id <- rownames(cnv_luster_data)
+write.table(cnv_luster_data, file = "cnv_analysis/cnv_luster_data.csv", sep = ",",
+	    col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Keeping the samples with > 2.5 average coverage over the region
 cnv_samples <- names(normalized_cov[normalized_cov > 2.5])

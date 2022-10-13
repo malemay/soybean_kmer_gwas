@@ -136,6 +136,7 @@ tables/signals_table.csv: tables/signals_table.R \
 # Creating the table with the numeric coding for a given trait
 tables/%_gwas_table.csv: tables/gwas_table.R \
 	phenotypic_data/trait_names.rds \
+	phenotypic_data/pheno_names_lookup.rds \
 	phenotypic_data/phenotypic_data.csv \
 	phenotypic_data/lookup_tables.rds
 	$(RSCRIPT) tables/gwas_table.R $*

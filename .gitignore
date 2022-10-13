@@ -4,6 +4,7 @@
 *bam
 *bam.bai
 *bwt
+cnv_analysis/cnv_luster_gwas/
 *.csv
 *.fa
 *fasta

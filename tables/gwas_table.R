@@ -31,6 +31,11 @@ format_table <- function(phenodata, phenotype, lookup_tables) {
 
 output_table <- format_table(phenotypes, trait, lookup_tables)
 
+# Chaning the names of the phenotypes for more readable ones
+# DEPENDENCY: phenotypic_data/pheno_names_lookup.rds
+pheno_names_lookup <- readRDS("phenotypic_data/pheno_names_lookup.rds")
+output_table$Value <- pheno_names_lookup[[trait]][output_table$Value]
+
 write.table(output_table, sep = ";", col.names = TRUE, quote = FALSE, row.names = FALSE,
 	    file = paste0("tables/", trait, "_gwas_table.csv"))
 
