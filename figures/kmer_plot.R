@@ -53,10 +53,10 @@ if(!is.na(gene_name) && grepl(";", gene_name)) {
 } else if (!is.na(gene_name)) {
 	causal_gene <- genes[gene_name]
 } else {
-	gene <- NULL
+	causal_gene <- NULL
 }
 
-if(is.null(causal_gene)) stop("No gene found where there should be one")
+if(is.null(causal_gene)) warning("No causal gene known for locus ", locus)
 
 # Extending the window for the causal gene
 window_size <- GenomicRanges::width(causal_gene)
@@ -152,17 +152,19 @@ grid::grid.rect()
 grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 5, heights = grid::unit(c(0.1, 0.15, 0.3, 0.15, 0.3), "npc"))))
 
 # Plotting the transcript in the first viewport
-grid::pushViewport(grid::viewport(width = 0.84, layout.pos.row = 1))
-grid.draw(transcriptsGrob(genes = genes,
-			  transcripts = transcripts,
-			  exons = exons,
-			  cds = cds,
-			  xscale = causal_gene,
-			  highlight = GenomicRanges::GRanges(seqnames = chrom,
-							     ranges = IRanges::IRanges(start = grange[1], end = grange[2])),
-			  draw_arrows = TRUE,
-			  first_tx_only = TRUE))
-grid::upViewport()
+if(!is.null(causal_gene)) {
+	grid::pushViewport(grid::viewport(width = 0.84, layout.pos.row = 1))
+	grid.draw(transcriptsGrob(genes = genes,
+				  transcripts = transcripts,
+				  exons = exons,
+				  cds = cds,
+				  xscale = causal_gene,
+				  highlight = GenomicRanges::GRanges(seqnames = chrom,
+								     ranges = IRanges::IRanges(start = grange[1], end = grange[2])),
+				  draw_arrows = TRUE,
+				  first_tx_only = TRUE))
+	grid::upViewport()
+}
 
 # Moving into the viewport associated with the sequences and drawing them
 grid::pushViewport(grid::viewport(layout.pos.row = 3))

@@ -106,7 +106,13 @@ width(vcfFixed(paragraph_t)$REF)
 nchar(vcfFixed(paragraph_t)$ALT)
 
 
+# Let us have a look at the k-mers associated with the signal on chromsomes 16 and 1
+pc_all_signals <- readRDS("gwas_results/kmers/pubescence_color_all_signal.rds")
+pc_all_signals[seqnames(pc_all_signals) %in% c("Gm01", "Gm16") & pc_all_signals$n_markers > 3]
 
+# Let us identify the most significant k-mer at that locus
+subsetByOverlaps(pubescence_color_all$kmers, GRanges(seqnames = "Gm16", ranges = IRanges(start = 1429763, end = 1436822)))
+# One of the k-mers at 1434693-1434723 shows a clear peak that we will use for a k-mer plot
 
 ### ---------- PUBESCENCE COLOR NO GRAY
 pubescence_color_nogray <- read_gwas("pubescence_color_nogray")

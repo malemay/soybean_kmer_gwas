@@ -31,14 +31,15 @@ if(program == "platypus" && length(gwas_signals)) {
 	gwas_subset$pruned <- FALSE
 
 	# Extending each signal to the right and left
-	start(gwas_signals) <- start(gwas_signals) - platypus_extend
-	end(gwas_signals) <- end(gwas_signals) + platypus_extend
+	gwas_focus <- gwas_signals
+	start(gwas_focus) <- start(gwas_focus) - platypus_extend
+	end(gwas_focus) <- end(gwas_focus) + platypus_extend
 
 	# Opening the VCF file that contains the markers before pruning for reading
 	vcf_file <- VariantAnnotation::VcfFile("filtered_variants/platypus_full.vcf.gz")
 
 	# Reading the VCF records found in that region; only keeping those that were not already analyzed
-	subset_vcf <- VariantAnnotation::readVcf(vcf_file, param = VariantAnnotation::ScanVcfParam(fixed = NA, info = NA, geno = "GT", which = gwas_signals))
+	subset_vcf <- VariantAnnotation::readVcf(vcf_file, param = VariantAnnotation::ScanVcfParam(fixed = NA, info = NA, geno = "GT", which = gwas_focus))
 	subset_vcf <- subset_vcf[!names(subset_vcf) %in% names(gwas_subset)]
 
 	# It is only worth computing the GWAS if there are any markers left ; also excluding cases with only one marker as it makes GAPIT fail
@@ -62,6 +63,11 @@ if(program == "platypus" && length(gwas_signals)) {
 		GenomeInfoDb::seqlevels(gapit_results) <- GenomeInfoDb::seqlevels(gwas_subset)
 
 		if(length(gapit_results)) gwas_subset <- c(gwas_subset, gapit_results)
+
+		# We need to re-compute the signals based on this new information
+		gwas_signals <- extract_signals(gwas_subset,
+						threshold = threshold,
+						distance = signal_distance)
 	}
 }
 
