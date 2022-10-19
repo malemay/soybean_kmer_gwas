@@ -1,6 +1,6 @@
 # Loading the required packages
 suppressMessages(library(grid))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 suppressMessages(library(GenomicRanges))
 
 # Reading the ID being analyzed from the command line

@@ -1,5 +1,5 @@
 # Loading the required packages
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 suppressMessages(library(GenomicRanges))
 
 # Reading in the command line arguments; the first one is the trait, the second is the genotyping program

@@ -1,6 +1,6 @@
 # Loading the required libraries
 suppressMessages(library(GenomicRanges))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 
 # Getting the name of the trait and of the program that called the genotypes from the command line
 trait <- commandArgs(trailingOnly = TRUE)[1]

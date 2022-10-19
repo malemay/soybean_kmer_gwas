@@ -1,6 +1,6 @@
 # Loading the required packages
 suppressMessages(library(grid))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 
 # Reading the trait being analyzed from the command line
 trait <- commandArgs(trailingOnly = TRUE)[1]

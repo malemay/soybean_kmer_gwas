@@ -4,7 +4,7 @@
 
 # Loading the required libraries
 suppressMessages(library(GenomicRanges))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 
 # Setting the trait to analyze and loading the k-mer results for
 trait <- commandArgs(trailingOnly = TRUE)[1]

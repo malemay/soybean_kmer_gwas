@@ -1,6 +1,6 @@
 # Loading the required packages
 suppressMessages(library(grid))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 suppressMessages(library(GenomicRanges))
 
 
@@ -30,7 +30,7 @@ if(program == "kmers") {
 	GenomeInfoDb::seqlevels(gwas_results, pruning.mode = "coarse") <- grep("^Gm[0-9]{2}$", GenomeInfoDb::seqlevels(gwas_results), value = TRUE)
 }
 	
-# Plotting the results using the gwastools::manhattan_plot function
+# Plotting the results using the gwask::manhattan_plot function
 gwas_plot <- manhattanGrob(gwas_results,
 			   threshold = threshold,
 			   ref_signals = signals,

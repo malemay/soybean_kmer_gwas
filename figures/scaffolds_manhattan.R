@@ -1,6 +1,6 @@
 # Loading the required packages
 suppressMessages(library(grid))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 suppressMessages(library(GenomeInfoDb))
 suppressMessages(library(GenomicRanges))
 
@@ -25,7 +25,7 @@ GenomeInfoDb::seqlevels(gwas_results, pruning.mode = "coarse") <- seqlevels(gwas
 if(!length(gwas_results)) {
 	gwas_plot <- textGrob(paste0("No significant associations found for ", trait, " using ", program))
 } else {
-	# Plotting the results using the gwastools::manhattan_plot function
+	# Plotting the results using the gwask::manhattan_plot function
 	gwas_plot <- manhattanGrob(gwas_results,
 				   threshold = threshold,
 				   ref_signals = NULL,

@@ -2,7 +2,7 @@
 
 # Loading the required libraries
 suppressMessages(library(grid))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 suppressMessages(library(GenomicRanges))
 
 # Setting some analysis parameters

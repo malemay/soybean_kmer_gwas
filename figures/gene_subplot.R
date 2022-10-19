@@ -1,6 +1,6 @@
 # Loading the required libraries
 suppressMessages(library(grid))
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 suppressMessages(library(GenomicRanges))
 
 # Getting the name of the trait-locus combination and of the program that called the genotypes from the command line

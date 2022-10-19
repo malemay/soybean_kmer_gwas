@@ -2,7 +2,7 @@
 # on a pre-computed LD matrix
 
 # Loading the required packages
-suppressMessages(library(gwastools))
+suppressMessages(library(gwask))
 suppressMessages(library(grid))
 suppressMessages(library(GenomicRanges))
 
