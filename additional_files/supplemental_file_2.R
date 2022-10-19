@@ -30,6 +30,15 @@ average_cov <- sapply(bayer_ids$study_ID, function(x) {
 
 bayer_ids$mapping_depth <- average_cov[bayer_ids$study_ID]
 
+# Adding the results on the concordance rate between the samples and
+# DEPENDENCY: illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
+concordance_rates <- read.table("illumina_data/soysnp50k_genotyping/gtcheck_results.tsv", sep = "\t",
+				header = TRUE, stringsAsFactors = FALSE)
+
+# Adding the concordance rates to the data.frame
+bayer_ids$PI_id <- concordance_rates[match(bayer_ids$study_ID, concordance_rates$bayer), "pi_id"]
+bayer_ids$soysnp50k_concordance <- concordance_rates[match(bayer_ids$study_ID, concordance_rates$bayer), "conc_rate"]
+
 # Writing the table to a CSV file
 write.table(bayer_ids, file = "additional_files/supplemental_file_2.csv", sep = ",",
 	    col.names = TRUE, row.names = FALSE, quote = FALSE)

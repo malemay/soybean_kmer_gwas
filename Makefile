@@ -51,7 +51,7 @@ genetables := $(allgenes) $(topgenes) $(nearestgene)
 phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo gwas_results/kmers/{}_phenodata.rds)
 
 
-all: $(SDIR)/additional_file_1.pdf $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv
+all: $(SDIR)/additional_file_1.pdf $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv
 
 GENETABLES : $(genetables)
 SUPTABLES: $(suptables)
@@ -83,8 +83,16 @@ $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures) $(sup
 	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
 
 # Creating the supplemental CSV files
-$(SDIR)/%.csv: $(SDIR)/%.R utilities/correct_sra_metadata.csv utilities/srr_id_correspondence.txt
+$(SDIR)/%.csv: $(SDIR)/%.R
 	$(RSCRIPT) $<
+
+$(SDIR)/supplemental_file_1.csv: utilities/correct_sra_metadata.csv utilities/srr_id_correspondence.txt
+
+# DEPENDENCIES on samtools stats and manifest files are missing for this rule
+$(SDIR)/supplemental_file_2.csv: utilities/srr_id_correspondence.txt illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
+
+$(SDIR)/supplemental_file_3.csv: phenotypic_data/phenotypic_data.csv
+
 
 # SIGNALS --------------------------------------------------
 
