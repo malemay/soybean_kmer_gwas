@@ -51,7 +51,7 @@ genetables := $(allgenes) $(topgenes) $(nearestgene)
 phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo gwas_results/kmers/{}_phenodata.rds)
 
 
-all: $(SDIR)/additional_file_1.pdf $(genetables) $(phenodata)
+all: $(SDIR)/additional_file_1.pdf $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv
 
 GENETABLES : $(genetables)
 SUPTABLES: $(suptables)
@@ -81,6 +81,10 @@ $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(pro
 # Compiling the Supplemental Data file from the .tex file
 $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures) $(suptables)
 	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
+
+# Creating the supplemental CSV files
+$(SDIR)/%.csv: $(SDIR)/%.R utilities/correct_sra_metadata.csv utilities/srr_id_correspondence.txt
+	$(RSCRIPT) $<
 
 # SIGNALS --------------------------------------------------
 

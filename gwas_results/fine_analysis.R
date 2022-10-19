@@ -297,3 +297,9 @@ system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_
 system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-479/USB-479_pvalues_sorted.bam | grep ATATATATATATATTATATTTCAAGTTACAT | less -S")
 system("samtools view gwas_results/kmer_data/seed_coat_luster_dullshiny/katcher_results/USB-479/USB-479_pvalues_sorted.bam | grep ATGTAACTTGAAATATAATATATATATATAT | less -S")
 # There seems to be a weird matching pattern for this k-mer; it seems to match several positions
+
+
+
+# CORRECTED DRY WEIGHT
+cdw <- read_gwas("corrected_dry_weight")
+genes["glyma.15g217700"]
