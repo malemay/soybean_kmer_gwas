@@ -27,7 +27,7 @@ manhattanplots := $(shell grep '^\\manhattanplot' $(addfile) | grep -v scaffolds
 scaffoldplots := $(shell grep '^\\manhattanplot' $(addfile) | grep scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
 ldplots := $(shell grep '^\\ldplot' $(addfile) | sed -E 's/\\ldplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_ld.png)
 geneplots := $(shell grep '^\\geneplot' $(addfile) | sed -E 's/\\geneplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_gene.png)
-kmerplots := $(shell grep '^\\kmerplot' $(addfile) | sed -E 's/\\kmerplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_kmers.png)
+kmerplots := $(shell grep '^\\kmerplot' $(addfile) | sed -E 's/\\kmerplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_kmers.png)
 signalplots := $(shell grep '^\\signalplot' $(addfile) | sed -E 's/\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_signal.png)
 
 supfigures := $(manhattanplots) \

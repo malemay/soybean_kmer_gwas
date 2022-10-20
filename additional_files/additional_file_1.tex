@@ -190,10 +190,18 @@
 \clearpage}
 
 % Defining a new command for k-mer plot figures
-\newcommand{\kmerplot}[1]{
+\newcommand{\kmerplot}[4]{
 	\begin{cfigure}
 		\includegraphics[width = 6.5in]{#1_kmers}
-		\caption{#1\_kmers}
+		\caption[Variants associated with significant \emph{k}-mers at the #3 locus]%
+		{Identification of variants underlying significant \emph{k}-mers at the #2 associated with the #3 locus for #4.
+		(a) Gene model of #2. Exons are represented by rectangles whereas introns are represented by horizontal lines.
+		Coding sequences are shown in blue and the direction of translation is indicated by arrows.
+		The red rectangle identifies the region that is zoomed-in in panel (b).
+		(b) Nucleotide sequences of haplotypes observed in at least five samples across the dataset.
+		Individual nucleotides are colored according to the $-\log_{10}(p-value)$ of the most significant \emph{k}-mer overlapping them.
+		Dashes indicate gaps in haplotype sequence alignment whereas vertical lines indicate differences in sequence between two haplotypes.
+		(c) Contingency table of the phenotypes and haplotypes observed in the dataset. Haplotypes corresponds to those shown in panel (b).}
 		\label{#1_kmers}
 	\end{cfigure}
 
@@ -312,7 +320,7 @@
 {Vertical dotted lines indicate the location of the \getvar{flower_color_W1_gene} gene associated with the locus.}
 
 \geneplot{flower_color_W1}{flower color}{\emph{W1}}{\getvar{flower_color_W1_gene} gene}
-\kmerplot{flower_color_W1}
+\kmerplot{flower_color_W1}{\getvar{flower_color_W1_gene} gene}{\emph{W1}}{flower color}
 
 
 % Figures for pubescence color
@@ -320,14 +328,14 @@
 \signalplot{pubescence_color_all_T}{pubescence color (first GWAS)}{\emph{T}}%
 {Vertical dotted lines indicate the location of the \getvar{pubescence_color_all_T_gene} gene associated with the locus.}
 \geneplot{pubescence_color_all_T}{pubescence color (first GWAS)}{\emph{T}}{\getvar{pubescence_color_all_T_gene} gene}
-\kmerplot{pubescence_color_all_T}
+\kmerplot{pubescence_color_all_T}{\getvar{pubescence_color_all_T_gene} gene}{\emph{T}}{pubescence color (first GWAS)}
 \ldplot{pubescence_color_all}{pubescence color (first GWAS)}{\getvar{pubescence_color_all_ldkmers}}
 
 \manhattanplot{pubescence_color_nogray}{pubescence color (second GWAS)}{\getvar{pubescence_color_nogray_nsamples}}
 \signalplot{pubescence_color_nogray_Td}{pubescence color (second GWAS)}{\emph{Td}}%
 {Vertical dotted lines indicate the location of the \getvar{pubescence_color_nogray_Td_gene} gene associated with the locus.}
 \geneplot{pubescence_color_nogray_Td}{pubescence color (second GWAS)}{\emph{Td}}{\getvar{pubescence_color_nogray_Td_gene} gene}
-\kmerplot{pubescence_color_nogray_Td}
+\kmerplot{pubescence_color_nogray_Td}{\getvar{pubescence_color_nogray_Td_gene} gene}{\emph{Td}}{pubescence color (second GWAS)}
 
 % Figures for seed coat color
 \manhattanplot{seed_coat_color_all}{seed coat color (first GWAS)}{\getvar{seed_coat_color_all_nsamples}}
@@ -338,14 +346,14 @@
 \signalplot{seed_coat_color_greenyellow_G}{seed coat color (second GWAS)}{\emph{G}}%
 {Vertical dotted lines indicate the location of the \getvar{seed_coat_color_greenyellow_G_gene} gene associated with the locus.}
 \geneplot{seed_coat_color_greenyellow_G}{seed coat color (second GWAS)}{\emph{G}}{\getvar{seed_coat_color_greenyellow_G_gene} gene}
-\kmerplot{seed_coat_color_greenyellow_G}
+\kmerplot{seed_coat_color_greenyellow_G}{\getvar{seed_coat_color_greenyellow_G_gene} gene}{\emph{G}}{seed coat color (second GWAS)}
 
 % Figures for stem termination
 \manhattanplot{stem_termination_all}{stem termination type (first GWAS)}{\getvar{stem_termination_all_nsamples}}
 \signalplot{stem_termination_all_Dt1}{stem termination type (first GWAS)}{\emph{Dt1}}%
 {Vertical dotted lines indicate the location of the \getvar{stem_termination_all_Dt1_gene} gene associated with the locus.}
 \geneplot{stem_termination_all_Dt1}{stem termination type (first GWAS)}{\emph{Dt1}}{\getvar{stem_termination_all_Dt1_gene} gene}
-\kmerplot{stem_termination_all_Dt1}
+\kmerplot{stem_termination_all_Dt1}{\getvar{stem_termination_all_Dt1_gene} gene}{\emph{Dt1}}{stem termination type (first GWAS)}
 
 \manhattanplot{stem_termination_sn}{stem termination type (second GWAS)}{\getvar{stem_termination_sn_nsamples}}
 \ldplot{stem_termination_sn}{stem termination type (second GWAS)}{\getvar{stem_termination_sn_ldkmers}}
@@ -355,7 +363,7 @@
 \signalplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}%
 {Vertical dotted lines indicate the location of the \getvar{hilum_color_all_T_gene} gene associated with the locus.}
 \geneplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}{\getvar{hilum_color_all_T_gene} gene}
-\kmerplot{hilum_color_all_T}
+\kmerplot{hilum_color_all_T}{\getvar{hilum_color_all_T_gene} gene}{\emph{T}}{hilum color (first GWAS)}
 \signalplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}%
 {Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
 \geneplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}{causal tandem duplication/inversion}
@@ -364,7 +372,7 @@
 \signalplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}%
 {Vertical dotted lines indicate the location of the \getvar{hilum_color_blackbrown_R_gene} gene associated with the locus.}
 \geneplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}{\getvar{hilum_color_blackbrown_R_gene}}
-\kmerplot{hilum_color_blackbrown_R}
+\kmerplot{hilum_color_blackbrown_R}{\getvar{hilum_color_blackbrown_R_gene} gene}{\emph{R}}{hilum color (second GWAS)}
 
 \manhattanplot{hilum_color_rbr}{hilum color (third GWAS)}{\getvar{hilum_color_rbr_nsamples}}
 
@@ -382,7 +390,7 @@
 \signalplot{pubescence_form_all_Pa1}{pubescence form (first GWAS)}{\emph{Pa1}}%
 {Vertical dotted lines indicate the location of the \getvar{pubescence_form_all_Pa1_gene} gene that we suggest as a candidate for this locus.}
 \geneplot{pubescence_form_all_Pa1}{pubescence form (first GWAS)}{\emph{Pa1}}{\getvar{pubescence_form_all_Pa1_gene} candidate gene putatively}
-\kmerplot{pubescence_form_all_Pa1}
+\kmerplot{pubescence_form_all_Pa1}{\getvar{pubescence_form_all_Pa1_gene} candidate gene putatively}{\emph{Pa1}}{pubescence form (first GWAS)}
 \signalplot{pubescence_form_all_Pa2}{pubescence form (first GWAS)}{\emph{Pa2}}{}
 \ldplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_ldkmers}}
 
