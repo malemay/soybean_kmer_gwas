@@ -20,6 +20,10 @@
 \usepackage{threeparttablex} % threeparttable for longtable
 \usepackage{capt-of} % put caption on next page
 \usepackage{listings}
+\usepackage{datatool} % allows fetching key-value pairs from a text file
+
+% Setting the separator to use with datatool
+\DTLsetseparator{ = }
 
 % Formatting the table of contents/subsection
 \renewcommand{\contentsname}{Supplemental methods}
@@ -137,30 +141,49 @@
 }
 
 % Defining a command for manhattan plot figures
-\newcommand{\manhattanplot}[1]{
+\newcommand{\manhattanplot}[3]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_manhattan}
-	\caption{#1\_manhattan}
+	\caption[Manhattan plot of #2]{Manhattan plots generated from the GWAS analysis of #2 on #3 samples using four genotype datasets :
+	(a) Platypus (SNPs and indels), (b) vg (SVs), (c) Paragraph (SVs), (d) \emph{k}-mers presence/absence.
+	The x-axis shows the position along the reference assembly version 4 of Williams82.
+	Each point shows the $-\log_{10} {p-value}$ associated with a particular marker or \emph{k}-mer.
+	Horizontal dotted lines indicate the 5\% family-wise error-rate threshold determined from a randomization approach.
+	Vertical dotted lines indicate the position of signals associated with the trait.
+	Signals documented in previous studies are colored according to whether they were founs (green) or not (red) by a particular approach.
+	The ``Gm'' prefix has been left out of chromosome names for simplicity.
+	}
 	\label{#1_manhattan}
 \end{cfigure}
 
 \clearpage}
 
 % Defining a new command for signal plot figures
-\newcommand{\signalplot}[1]{
+\newcommand{\signalplot}[4]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_signal}
-	\caption{#1\_signal}
+	\caption[Zoomed-in Manhattan plot at #3 locus for #2]{Zommed-in Manhattan plots generated from the GWAS analysis of #2 at the #3 locus using four genotype datasets:
+	(b) Platypus (SNPs and indels), (c) vg (SVs), (d) Paragraph (SVs), (e) \emph{k}-mers presence/absence.
+	Panel (a) shows the location of annotated gene models over the plotting interval.
+	#4
+	Gray shaded rectangles indicate the region delimited by the top 5\% (Paragraph and vg) or top 1\% (Platypus and \emph{k}-mers) associations in the signal region.
+	}
 	\label{#1_signal}
 \end{cfigure}
 
 \clearpage}
 
 % Defining a new command for gene plot figures
-\newcommand{\geneplot}[1]{
+\newcommand{\geneplot}[4]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_gene}
-	\caption{#1\_gene}
+	\caption[Zommed-in Manhattan plot at gene(s) associated with #3 locus for #2]%
+	{Zoomed-in Manhattan plots generated from the GWAS analysis of #2 at the #4 associated with the #3 locus using four genotype datasets:
+	(b) Platypus (SNPs and indels), (c) vg (SVs), (d) Paragraph (SVs), (e) \emph{k}-mers presence/absence.
+	Panel (a) shows the location of annotated gene models over the plotting interval.
+	Exons are represented by rectangles whereas introns are represented by horizontal lines.
+	Coding sequences are shown in blue and the direction of translation is indicated by arrows.
+	}
 	\label{#1_gene}
 \end{cfigure}
 
@@ -177,10 +200,15 @@
 \clearpage}
 
 % Defining a new command for LD plot figures
-\newcommand{\ldplot}[1]{
+\newcommand{\ldplot}[3]{
 	\begin{cfigure}
 		\includegraphics[width = 6.5in]{#1_ld}
-		\caption{#1\_ld}
+		\caption[LD plot of significant \emph{k}-mers for #2]{Pairwise LD among #3 significant \emph{k}-mers identified for #2.
+		\emph{k}-mers are sorted along the y-axis according to their putative position along the reference assembly version 4 of Williams82,
+		as identified by ``Gm'' chromosome labels.
+		Sequences that lack a ``Gm'' label (top of the y-axis) represent unanchored scaffolds.
+		\emph{k}-mers are represented in the same order along the x- and y-axis.
+		The colored rectangles drawn below the x-axis represent the $-\log_{10} (p-values)$ of each \emph{k}-mer.}
 		\label{#1_ld}
 	\end{cfigure}
 
@@ -197,6 +225,11 @@
 % END OF PREAMBLE
 
 \begin{document}
+
+% Reading the contents of the variables.txt file first
+\DTLloaddb[noheader, keys={key,value}]{variables}{variables.txt}
+% Defining a new command to fetch the value from the key
+\newcommand{\getvar}[1]{\DTLfetch{variables}{key}{#1}{value}}
 
 \maketitle \thispagestyle{empty}
 
@@ -273,105 +306,119 @@
 \gwastableone{MATURITY.GROUP}
 
 % Figures for flower color
-\manhattanplot{flower_color}
-\ldplot{flower_color}
-\signalplot{flower_color_W1}
-\geneplot{flower_color_W1}
+\manhattanplot{flower_color}{flower color}{\getvar{flower_color_nsamples}}
+\ldplot{flower_color}{flower color}{\getvar{flower_color_ldkmers}}
+\signalplot{flower_color_W1}{flower color}{\emph{W1}}%
+{Vertical dotted lines indicate the location of the \getvar{flower_color_W1_gene} gene associated with the locus.}
+
+\geneplot{flower_color_W1}{flower color}{\emph{W1}}{\getvar{flower_color_W1_gene} gene}
 \kmerplot{flower_color_W1}
 
 
 % Figures for pubescence color
-\manhattanplot{pubescence_color_all}
-\signalplot{pubescence_color_all_T}
-\geneplot{pubescence_color_all_T}
+\manhattanplot{pubescence_color_all}{pubescence color (first GWAS)}{\getvar{pubescence_color_all_nsamples}}
+\signalplot{pubescence_color_all_T}{pubescence color (first GWAS)}{\emph{T}}%
+{Vertical dotted lines indicate the location of the \getvar{pubescence_color_all_T_gene} gene associated with the locus.}
+\geneplot{pubescence_color_all_T}{pubescence color (first GWAS)}{\emph{T}}{\getvar{pubescence_color_all_T_gene} gene}
 \kmerplot{pubescence_color_all_T}
-\ldplot{pubescence_color_all}
+\ldplot{pubescence_color_all}{pubescence color (first GWAS)}{\getvar{pubescence_color_all_ldkmers}}
 
-\manhattanplot{pubescence_color_nogray}
-\signalplot{pubescence_color_nogray_Td}
-\geneplot{pubescence_color_nogray_Td}
+\manhattanplot{pubescence_color_nogray}{pubescence color (second GWAS)}{\getvar{pubescence_color_nogray_nsamples}}
+\signalplot{pubescence_color_nogray_Td}{pubescence color (second GWAS)}{\emph{Td}}%
+{Vertical dotted lines indicate the location of the \getvar{pubescence_color_nogray_Td_gene} gene associated with the locus.}
+\geneplot{pubescence_color_nogray_Td}{pubescence color (second GWAS)}{\emph{Td}}{\getvar{pubescence_color_nogray_Td_gene} gene}
 \kmerplot{pubescence_color_nogray_Td}
 
 % Figures for seed coat color
-\manhattanplot{seed_coat_color_all}
-\signalplot{seed_coat_color_all_I}
+\manhattanplot{seed_coat_color_all}{seed coat color (first GWAS)}{\getvar{seed_coat_color_all_nsamples}}
+\signalplot{seed_coat_color_all_I}{seed coat color (first GWAS)}{\emph{I}}%
+{Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
 
-\manhattanplot{seed_coat_color_greenyellow}
-\signalplot{seed_coat_color_greenyellow_G}
-\geneplot{seed_coat_color_greenyellow_G}
+\manhattanplot{seed_coat_color_greenyellow}{seed coat color (second GWAS)}{\getvar{seed_coat_color_greenyellow_nsamples}}
+\signalplot{seed_coat_color_greenyellow_G}{seed coat color (second GWAS)}{\emph{G}}%
+{Vertical dotted lines indicate the location of the \getvar{seed_coat_color_greenyellow_G_gene} gene associated with the locus.}
+\geneplot{seed_coat_color_greenyellow_G}{seed coat color (second GWAS)}{\emph{G}}{\getvar{seed_coat_color_greenyellow_G_gene} gene}
 \kmerplot{seed_coat_color_greenyellow_G}
 
 % Figures for stem termination
-\manhattanplot{stem_termination_all}
-\signalplot{stem_termination_all_Dt1}
-\geneplot{stem_termination_all_Dt1}
+\manhattanplot{stem_termination_all}{stem termination type (first GWAS)}{\getvar{stem_termination_all_nsamples}}
+\signalplot{stem_termination_all_Dt1}{stem termination type (first GWAS)}{\emph{Dt1}}%
+{Vertical dotted lines indicate the location of the \getvar{stem_termination_all_Dt1_gene} gene associated with the locus.}
+\geneplot{stem_termination_all_Dt1}{stem termination type (first GWAS)}{\emph{Dt1}}{\getvar{stem_termination_all_Dt1_gene} gene}
 \kmerplot{stem_termination_all_Dt1}
 
-\manhattanplot{stem_termination_sn}
-\ldplot{stem_termination_sn}
+\manhattanplot{stem_termination_sn}{stem termination type (second GWAS)}{\getvar{stem_termination_sn_nsamples}}
+\ldplot{stem_termination_sn}{stem termination type (second GWAS)}{\getvar{stem_termination_sn_ldkmers}}
 
 % Figures for hilum color
-\manhattanplot{hilum_color_all}
-\signalplot{hilum_color_all_T}
-\geneplot{hilum_color_all_T}
+\manhattanplot{hilum_color_all}{hilum color (first GWAS)}{\getvar{hilum_color_all_nsamples}}
+\signalplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}%
+{Vertical dotted lines indicate the location of the \getvar{hilum_color_all_T_gene} gene associated with the locus.}
+\geneplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}{\getvar{hilum_color_all_T_gene} gene}
 \kmerplot{hilum_color_all_T}
-\signalplot{hilum_color_all_I}
-\geneplot{hilum_color_all_I}
+\signalplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}%
+{Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
+\geneplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}{causal tandem duplication/inversion}
 
-\manhattanplot{hilum_color_blackbrown}
-\signalplot{hilum_color_blackbrown_R}
-\geneplot{hilum_color_blackbrown_R}
+\manhattanplot{hilum_color_blackbrown}{hilum color (second GWAS)}{\getvar{hilum_color_blackbrown_nsamples}}
+\signalplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}%
+{Vertical dotted lines indicate the location of the \getvar{hilum_color_blackbrown_R_gene} gene associated with the locus.}
+\geneplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}{\getvar{hilum_color_blackbrown_R_gene}}
 \kmerplot{hilum_color_blackbrown_R}
 
-\manhattanplot{hilum_color_rbr}
+\manhattanplot{hilum_color_rbr}{hilum color (third GWAS)}{\getvar{hilum_color_rbr_nsamples}}
 
 % Figures for pod color
-\manhattanplot{pod_color_all}
-\signalplot{pod_color_all_L1}
-\signalplot{pod_color_all_L2}
+\manhattanplot{pod_color_all}{pod color (first GWAS)}{\getvar{pod_color_all_nsamples}}
+\signalplot{pod_color_all_L1}{pod color (first GWAS)}{\emph{L1}}{}
+\signalplot{pod_color_all_L2}{pod color (first GWAS)}{\emph{L2}}{}
 
-\manhattanplot{pod_color_blbr}
-\ldplot{pod_color_blbr}
-\signalplot{pod_color_blbr_pdcGm15}
+\manhattanplot{pod_color_blbr}{pod color (second GWAS)}{\getvar{pod_color_blbr_nsamples}}
+\ldplot{pod_color_blbr}{pod color (second GWAS)}{\getvar{pod_color_blbr_ldkmers}}
+\signalplot{pod_color_blbr_pdcGm15}{pod color (second GWAS)}{newly suggested \emph{pdcGm15}}{}
 
 % Figures for pubescence form
-\manhattanplot{pubescence_form_all}
-\signalplot{pubescence_form_all_Pa1}
-\geneplot{pubescence_form_all_Pa1}
+\manhattanplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_nsamples}}
+\signalplot{pubescence_form_all_Pa1}{pubescence form (first GWAS)}{\emph{Pa1}}%
+{Vertical dotted lines indicate the location of the \getvar{pubescence_form_all_Pa1_gene} gene that we suggest as a candidate for this locus.}
+\geneplot{pubescence_form_all_Pa1}{pubescence form (first GWAS)}{\emph{Pa1}}{\getvar{pubescence_form_all_Pa1_gene} candidate gene putatively}
 \kmerplot{pubescence_form_all_Pa1}
-\signalplot{pubescence_form_all_Pa2}
-\ldplot{pubescence_form_all}
+\signalplot{pubescence_form_all_Pa2}{pubescence form (first GWAS)}{\emph{Pa2}}{}
+\ldplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_ldkmers}}
 
-\manhattanplot{pubescence_form_noerect}
+\manhattanplot{pubescence_form_noerect}{pubescence form (second GWAS)}{\getvar{pubescence_form_noerect_nsamples}}
 
 % Figures for pubescence density
-\manhattanplot{pubescence_density}
-\signalplot{pubescence_density_Ps}
-\geneplot{pubescence_density_Ps}
+\manhattanplot{pubescence_density}{pubescence density}{\getvar{pubescence_density_nsamples}}
+\signalplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}%
+{Vertical dotted lines indicate the boundaries of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene associated with the locus.}
+\geneplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}{location of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene}
 
 % Figures for seed coat luster
-\manhattanplot{seed_coat_luster_all}
+\manhattanplot{seed_coat_luster_all}{seed coat luster (first GWAS)}{\getvar{seed_coat_luster_all_nsamples}}
 
-\manhattanplot{seed_coat_luster_nointermediate}
+\manhattanplot{seed_coat_luster_nointermediate}{seed coat luster (second GWAS)}{\getvar{seed_coat_luster_nointermediate_nsamples}}
 
-\manhattanplot{seed_coat_luster_dullshiny}
-\ldplot{seed_coat_luster_dullshiny}
-\signalplot{seed_coat_luster_dullshiny_B}
-\geneplot{seed_coat_luster_dullshiny_B}
+\manhattanplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_nsamples}}
+\ldplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_ldkmers}}
+\signalplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}%
+{Vertical dotted lines indicate the boundaries of the causal CNV associated with the locus.}
+\geneplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}{location of the causal CNV}
 
 % Figures for corrected dry weight
-\manhattanplot{corrected_dry_weight}
-\ldplot{corrected_dry_weight}
-\signalplot{corrected_dry_weight_cdwGm15}
+\manhattanplot{corrected_dry_weight}{corrected dry weight (resistance to \emph{P. sojae}}{\getvar{corrected_dry_weight_nsamples}}
+\ldplot{corrected_dry_weight}{corrected dry weight (resistance to \emph{P. sojae}}{\getvar{corrected_dry_weight_ldkmers}}
+\signalplot{corrected_dry_weight_cdwGm15}{corrected dry weight (resistance to \emph{P. sojae}}{\emph{cdwGm15}}%
+{Vertical dotted lines indicate the location of the \getvar{corrected_dry_weight_cdwGm15_gene} gene suggested by de Ronne et al. (2022) as associated with the locus.}
 
 % Figures for maturity group
-\manhattanplot{maturity_group}
+\manhattanplot{maturity_group}{maturity group}{\getvar{maturity_group_nsamples}}
 
 % Figures for oil
-\manhattanplot{oil}
+\manhattanplot{oil}{seed oil content}{\getvar{oil_nsamples}}
 
 % Figures for protein
-\manhattanplot{protein}
+\manhattanplot{protein}{seed protein content}{\getvar{protein_nsamples}}
 
 \end{document}
 

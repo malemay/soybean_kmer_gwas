@@ -42,9 +42,9 @@ writeLines(significant_kmers, con = kmers_file)
 command <- paste0(filter_kmers, " -t ", kmers_table, " -k ", kmers_file, " -o ", pav_file)
 system(command)
 
-# Reading the PAV table from file and removing variants that have exactly the same PAV profile
+# Reading the PAV table from file and removing variants that have exactly the same PAV profile (removed this: now all variants are considered)
 pav_table <- read.table(pav_file, header = TRUE)
-pav_table <- pav_table[!duplicated(pav_table[, -1]), ]
+#pav_table <- pav_table[!duplicated(pav_table[, -1]), ]
 
 # Writing this de-duplicated PAV table to file
 write.table(pav_table, file = nodup_pav_file, sep = "\t",

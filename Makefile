@@ -23,12 +23,12 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/signals_table.csv
 
 # Getting the LD png figures to generate dynamically from additional_files/additional_file_1.tex
-manhattanplots := $(shell grep '^\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
+manhattanplots := $(shell grep '^\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/\\manhattanplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_manhattan.png)
 scaffoldplots := $(shell grep '^\\manhattanplot' $(addfile) | grep scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
-ldplots := $(shell grep '^\\ldplot' $(addfile) | sed -E 's/\\ldplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_ld.png)
-geneplots := $(shell grep '^\\geneplot' $(addfile) | sed -E 's/\\geneplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_gene.png)
+ldplots := $(shell grep '^\\ldplot' $(addfile) | sed -E 's/\\ldplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_ld.png)
+geneplots := $(shell grep '^\\geneplot' $(addfile) | sed -E 's/\\geneplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_gene.png)
 kmerplots := $(shell grep '^\\kmerplot' $(addfile) | sed -E 's/\\kmerplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_kmers.png)
-signalplots := $(shell grep '^\\signalplot' $(addfile) | sed -E 's/\\signalplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_signal.png)
+signalplots := $(shell grep '^\\signalplot' $(addfile) | sed -E 's/\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_signal.png)
 
 supfigures := $(manhattanplots) \
 	$(signalplots) \
@@ -79,8 +79,15 @@ $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(pro
 .PRECIOUS : $(topgranges)
 
 # Compiling the Supplemental Data file from the .tex file
-$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex $(supfigures) $(suptables)
+$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex \
+	$(supfigures) \
+	$(suptables) \
+	$(SDIR)/variables.txt
 	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
+
+# Creating the list of variables stored in additional_files/variables.txt, for retrival in additional file 1
+$(SDIR)/variables.txt: $(SDIR)/make_variables.R $(ldplots) phenotypic_data/phenotypic_data.csv utilities/trait_names.txt $(signals_gr)
+	$(RSCRIPT) $<
 
 # Creating the supplemental CSV files
 $(SDIR)/%.csv: $(SDIR)/%.R
