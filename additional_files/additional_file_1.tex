@@ -60,9 +60,12 @@
 \setlength{\parskip}{2ex}
 
 % Defining a command to generate a table of phenotypic data for a single gwas
-\newcommand{\gwastableone}[1]{
+\newcommand{\gwastableone}[2]{
 \begin{table}
-	\caption{Numerical coding of phenotypic data used for the GWAS analysis of #1}
+	\caption[Phenotypic data used for the GWAS analysis of #2]%
+	{Phenotype frequency and numerical coding of phenotypic data used for the GWAS analysis of #2.
+	``NA'' indicates a missing value in the source data.
+	Dashes indicate that this phenotype was not used in the GWAS analysis.}
 	\label{#1_gwas_table}
 
 	\centering
@@ -71,15 +74,12 @@
 		\csvreader[head to column names,
 		/csv/separator=semicolon,
 		tabular = llc,
-		table head = \toprule Phenotype & Frequency & GWAS \#1 \\ \midrule,
+		table head = \toprule Phenotype & Frequency & GWAS \\ \midrule,
 		table foot = \bottomrule]%
 		{../tables/#1_gwas_table.csv}%
 		{}%
 		{\Value & \Frequency & \GWASa}
 
-			   \begin{tablenotes}
-			   \item[a] test
-			   \end{tablenotes}
 	\end{threeparttable}
 
 \end{table}
@@ -87,9 +87,12 @@
 }
 
 % Defining a command to generate a table of phenotypic data for two gwas
-\newcommand{\gwastabletwo}[1]{
+\newcommand{\gwastabletwo}[2]{
 \begin{table}
-	\caption{Numerical coding of phenotypic data used for the GWAS analysis of #1}
+	\caption[Phenotypic data used for the GWAS analyses of #2]%
+	{Phenotype frequency and numerical coding of phenotypic data used in two GWAS analyses of #2.
+	``NA'' indicates a missing value in the source data.
+	Dashes indicate that this phenotype was not used in the GWAS analysis.}
 	\label{#1_gwas_table}
 
 	\centering
@@ -104,9 +107,6 @@
 		{}%
 		{\Value & \Frequency & \GWASa & \GWASb}
 
-			   \begin{tablenotes}
-			   \item[a] test
-			   \end{tablenotes}
 	\end{threeparttable}
 
 \end{table}
@@ -114,9 +114,12 @@
 }
 
 % Defining a command to generate a table of phenotypic data for three gwas
-\newcommand{\gwastablethree}[1]{
+\newcommand{\gwastablethree}[2]{
 \begin{table}
-	\caption{Numerical coding of phenotypic data used for the GWAS analysis of #1}
+	\caption[Phenotypic data used for the GWAS analyses of #2]%
+	{Phenotype frequency and numerical coding of phenotypic data used in three GWAS analyses of #2.
+	``NA'' indicates a missing value in the source data.
+	Dashes indicate that this phenotype was not used in the GWAS analysis.}
 	\label{#1_gwas_table}
 
 	\centering
@@ -262,19 +265,26 @@
 	\begin{ThreePartTable}
 
 		\begin{TableNotes}
-		\item[a] test
+		\item[a] Most significant -log\textsubscript{10}(p) reported at this locus by the study in the Study column
+		\item[b] Gene associated with the locus. An question mark following the identifier of the gene indicates that this is simply a candidate
+			which has yet to be confirmed. A dash indicates that no candidate has been suggested yet.
+		\item[c] Most significant -log\textsubscript{10}(p) reported by Platypus at this locus. A dash indicates that no signal
+			was detected by Platypus at this locus. The same applies for other methods (vg, Paragraph, \emph{k}-mers) in
+			their respective columns.
 		\end{TableNotes}
 
 		\begin{longtable}{llcclccccl}
 
-			\caption{Signals}\\
+			\caption[Description of loci associated with the traits studied]%
+			{Description of loci associated with the traits studied and -log\textsubscript{10}(p) of significant
+			signals detected in our study using four different genotypic datasets.}\\
 			\label{signals_table}\\
 
 			\toprule
-			Trait & Locus & Chromosome & -log10(p) & Gene & Platypus & vg & Paragraph & k-mers  & Study \\
+			Trait & Locus & Chromosome & -log\textsubscript{10}(p)\tnote{a} & Gene\tnote{b} & Platypus\tnote{c} & vg & Paragraph & \emph{k}-mers  & Study \\
 			\midrule \endfirsthead
 
-			\caption[]{Signals \emph{(continued)}}\\
+			\caption[]{Loci associated with the traits studied \emph{(continued)}}\\
 
 			\toprule
 			Trait & Locus & Chromosome & -log10(p) & Gene & Platypus & vg & Paragraph & k-mers  & Study \\
@@ -302,16 +312,16 @@
 \end{landscape}
 \clearpage
 
-\gwastableone{FLOWER.COLOR}
-\gwastabletwo{PUBESCENCE.COLOR}
-\gwastabletwo{SEED.COAT.COLOR}
-\gwastabletwo{STEM.TERMINATION.TYPE}
-\gwastablethree{HILUM.COLOR}
-\gwastabletwo{POD.COLOR}
-\gwastabletwo{PUBESCENCE.FORM}
-\gwastableone{PUBESCENCE.DENSITY}
-\gwastablethree{SEED.COAT.LUSTER}
-\gwastableone{MATURITY.GROUP}
+\gwastableone{FLOWER.COLOR}{flower color}
+\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
+\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
+\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
+\gwastablethree{HILUM.COLOR}{hilum color}
+\gwastabletwo{POD.COLOR}{pod color}
+\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
+\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
+\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
+\gwastableone{MATURITY.GROUP}{Maturity group}
 
 % Figures for flower color
 \manhattanplot{flower_color}{flower color}{\getvar{flower_color_nsamples}}

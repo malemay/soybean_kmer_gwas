@@ -24,6 +24,7 @@ format_table <- function(phenodata, phenotype, lookup_tables) {
 
 	for(i in 1:length(lookup_tables)) {
 		x[[paste0("GWAS", letters[i])]] <- lookup_tables[[i]][x$Value]
+		x[[paste0("GWAS", letters[i])]][is.na(x[[paste0("GWAS", letters[i])]])] <- "-"
 	}
 
 	return(x)
