@@ -146,11 +146,16 @@ grid.newpage()
 # - The third viewport is used for showing the haplotype sequences
 # - The fourth viewport acts as a buffer between the third and fifth
 # - The fifth viewport is used for showing a table of the phenotypes observed per haplotype
-grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 5, heights = grid::unit(c(0.1, 0.15, 0.3, 0.15, 0.3), "npc"))))
+grid::pushViewport(grid::viewport(x = 0.03, y = 0, height = 0.95, width = 0.94, just = c(0, 0),
+				  layout = grid::grid.layout(nrow = 5, heights = grid::unit(c(0.1, 0.15, 0.3, 0.15, 0.3), "npc"))))
 
 # Plotting the transcript in the first viewport
 if(!is.null(causal_gene)) {
-	grid::pushViewport(grid::viewport(width = 0.84, layout.pos.row = 1))
+	grid::pushViewport(grid::viewport(layout.pos.row = 1))
+	# Add a label
+	grid.text("(a)", x = -0.03, y = 1.05, just = c(0, 0))
+
+	# Plot the gene model
 	grid.draw(transcriptsGrob(genes = genes,
 				  transcripts = transcripts,
 				  exons = exons,
@@ -161,16 +166,26 @@ if(!is.null(causal_gene)) {
 				  strand_colors = c("dodgerblue", "dodgerblue"),
 				  draw_arrows = TRUE,
 				  first_tx_only = TRUE))
+
 	grid::upViewport()
 }
 
 # Moving into the viewport associated with the sequences and drawing them
 grid::pushViewport(grid::viewport(layout.pos.row = 3))
+
+# Add a label
+grid.text("(b)", x = -0.03, y = 1.05, just = c(0, 0))
+
+# Plot the haplotype sequences
 grid.haplotypes(hapdata = plotting_data, difflist = difflist, position = plotting_range)
 grid::upViewport()
 
+
 # Moving into the viewport for the table
 grid::pushViewport(grid::viewport(layout.pos.row = 5))
+# Add a label
+grid.text("(c)", x = -0.03, y = 1.05, just = c(0, 0))
+# Plot the contingency table
 grid.phenotable(phenodata = haplotype_data)
 grid::upViewport()
 
