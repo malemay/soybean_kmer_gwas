@@ -72,14 +72,26 @@ signal <- subsetByOverlaps(gwas_signals, gene)
 
 if(!length(signal) == 1) warning("There is no signal overlapping the gene ", gene, " for locus ", id)
 
+# Setting the feature optionally (just for genes for which we want to highlight specific variants)
+# DEPENDENCY: utilities/variant_ranges.txt
+variant_ranges <- read.table("utilities/variant_ranges.txt", head = FALSE, sep = "\t", stringsAsFactors = FALSE)
+key <- paste0(program, "_", id)
+
+if(length(index <- which(key == variant_ranges[[1]]))) {
+	feature <- as(variant_ranges[index, 2], "GRanges")
+} else {
+	feature <- NULL
+}
+
 # Using the right viewport to focus on the p-values over the length of the gene
 ptx_plot <- pvalueGrob(gwas_results = gwas_results,
 		       interval = gene,
 		       shading = cnv_range,
-		       feature = NULL,
+		       feature = feature,
 		       threshold = threshold,
 		       col = "blue",
 		       pruned_col = if(program == "platypus") "firebrick2" else NULL,
+		       cex.points = 0.7,
 		       yexpand = c(0.1, 0.1))
 
 # Saving the grob to an RDS file for retrieval later on

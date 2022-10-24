@@ -10,10 +10,10 @@
 # found in the comments.
 
 # Loading the required libraries
-library(parallel)
-library(Rsamtools)
-library(GenomicRanges)
-library(Biostrings)
+suppressMessages(library(parallel))
+suppressMessages(library(Rsamtools))
+suppressMessages(library(GenomicRanges))
+suppressMessages(library(Biostrings))
 
 # The padding (number of nucleotides to be extracted from either side of the position) to use as a parameter
 padding <- 20
@@ -130,6 +130,9 @@ bandillo_signals[bandillo_signals$locus == "Pa1", "gene_name_v4"] <- tolower("gl
 # Ps locus: Liu et al. (2020), DOI:10.1016/j.molp.2020.10.004
 bandillo_signals[bandillo_signals$locus == "Ps", "gene_name_v4"] <- tolower("Glyma.12G187200")
 
+# Pd1 locus: Liu et al. (2020), DOI:10.1016/j.molp.2020.10.004
+bandillo_signals[bandillo_signals$locus == "Ps", "gene_name_v4"] <- tolower("Glyma.01G240100")
+
 # B locus: Gijzen et al. (2006), DOI:10.1186/1471-2229-6-6
 # This is actually a cluster of HPS genes
 # We have obtained the names of the genes corresponding to HPS genes on chromosome 15 above
@@ -147,6 +150,9 @@ hps_genes <- subsetByOverlaps(hps_genes,
 # Let us add the names of the first and last of those genes in the gene_name_v4 column
 hps_gene_ids <- paste0(names(hps_genes)[c(1, length(hps_genes))], collapse = ";")
 bandillo_signals[bandillo_signals$locus == "B", "gene_name_v4"] <- hps_gene_ids
+
+# We actually remove the Hps locus from analyses as it is not a separate locus
+bandillo_signals <- bandillo_signals[bandillo_signals$locus != "Hps", ]
 
 # Generating the fai index for reference genome version 1 if it does not already exist
 if(!file.exists(paste0(gmax_v1_path, ".fai"))) Rsamtools::indexFa(gmax_v1_path)

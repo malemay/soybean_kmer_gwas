@@ -27,7 +27,7 @@ gsorted_ld <- ld_sort(clustered_ld, kmer_positions, sort_param = "position")
 png(paste0("figures/", trait, "_ld.png"), width = 9, height = 10, units = "in", res = 400)
 
 grid.newpage()
-ld_plot(gsorted_ld, kmer_positions, top_legend = FALSE, ylabels = TRUE, ylabel_pattern = "^Gm[0-9]{2}$")
+ld_plot(gsorted_ld, kmer_positions, top_legend = FALSE, ylabels = TRUE, ylabel_pattern = "^Gm[0-9]{2}$", fontsize = 10)
 
 dev.off()
 

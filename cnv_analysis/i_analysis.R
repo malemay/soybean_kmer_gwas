@@ -2,8 +2,8 @@
 # tandem-inverted I locus based on its alignment with bwa
 
 # Loading the required libraries
-library(Rsamtools)
-library(GenomicRanges)
+suppressMessages(library(Rsamtools))
+suppressMessages(library(GenomicRanges))
 
 # Loading the aligned I locus
 # DEPENDENCY: cnv_analysis/i_locus.bam

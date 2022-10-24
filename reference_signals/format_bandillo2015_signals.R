@@ -2,10 +2,10 @@
 # as GRanges objects with coordinates relative to Williams82 genome assembly version 4
 
 # Loading required libraries
-library(parallel)
-library(GenomicRanges)
-library(Rsamtools)
-library(Biostrings)
+suppressMessages(library(parallel))
+suppressMessages(library(GenomicRanges))
+suppressMessages(library(Rsamtools))
+suppressMessages(library(Biostrings))
 
 # The padding (number of nucleotides to be extracted from either side of the position) to use as a parameter
 padding <- 20
@@ -68,6 +68,9 @@ bandillo2015_signals$gene_name_v4 <- NA
 # Setting the name of the gene for the QTL on chromosome 15
 # according to Zhang et al. (2020), DOI:10.1371/journal.pgen.1009114
 bandillo2015_signals[bandillo2015_signals$Chr == "glyma.Wm82.gnm1.Gm15", "gene_name_v4"] <- tolower("Glyma.15G049200")
+# Also for the one on chromosome Gm20 according to Fliege et al. (2022) : https://doi.org/10.1111/tpj.15658
+bandillo2015_signals[bandillo2015_signals$Chr == "glyma.Wm82.gnm1.Gm20", "gene_name_v4"] <- tolower("Glyma.20g085100")
+
 
 # Reordering the columns
 bandillo2015_signals <- bandillo2015_signals[, c("trait", "Chr", "n_snps",

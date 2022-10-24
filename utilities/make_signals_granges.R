@@ -1,7 +1,7 @@
 # This script combines the reference signals from various sources into a GRanges object
 # that can be used to extract signals found by GWAS analyses and plot them
 
-library(GenomicRanges)
+suppressMessages(library(GenomicRanges))
 
 # DEPENDENCY: reference_signals/bandillo2015_signals.rds
 # DEPENDENCY: reference_signals/bandillo2017_signals.rds

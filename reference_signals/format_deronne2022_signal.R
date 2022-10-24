@@ -3,7 +3,7 @@
 # DOI:10.1002/tpg2.20184
 
 # Loading the GenomicRanges package
-library(GenomicRanges)
+suppressMessages(library(GenomicRanges))
 
 # Manually entering data for the signal found by de Ronne et al. (2021) with BLINK on Gm15
 deronne_signal <- GRanges(seqnames = "Gm15",

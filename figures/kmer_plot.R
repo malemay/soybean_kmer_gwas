@@ -140,9 +140,6 @@ png(paste0("figures/", locus, "_kmers.png"), width = 8, height = 8, units = "in"
 # Initializing the device
 grid.newpage()
 
-# Drawing a box around the plotting region
-grid::grid.rect()
-
 # Dividing the viewport into five row viewports:
 # - The first viewport is used to plot the transcript for the gene and the highlighted region
 # - The second viewport acts as a buffer between the first and third
@@ -161,6 +158,7 @@ if(!is.null(causal_gene)) {
 				  xscale = causal_gene,
 				  highlight = GenomicRanges::GRanges(seqnames = chrom,
 								     ranges = IRanges::IRanges(start = grange[1], end = grange[2])),
+				  strand_colors = c("dodgerblue", "dodgerblue"),
 				  draw_arrows = TRUE,
 				  first_tx_only = TRUE))
 	grid::upViewport()

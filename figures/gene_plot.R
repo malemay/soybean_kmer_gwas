@@ -35,7 +35,8 @@ output_grob <- pvalue_tx_grob(pvalue_grobs = pvalue_grobs,
 			      cds = cds,
 			      draw_arrows = TRUE,
 			      first_tx_only = TRUE,
-			      margins = c(4.1, 3.6, 2.5, 1.1))
+			      strand_colors = c("dodgerblue", "dodgerblue"),
+			      margins = c(3.5, 3.6, 2.5, 1.1))
 
 # Outputting to a PNG file
 png(paste0("figures/", id, "_gene.png"), width = 9, height = 10, units = "in", res = 100)
@@ -44,6 +45,18 @@ png(paste0("figures/", id, "_gene.png"), width = 9, height = 10, units = "in", r
 grid.newpage()
 
 grid.draw(output_grob)
+
+# Add labels for the panels
+grid.text(c("(a)", "(b) Platypus", "(c) vg", "(d) Paragraph"),
+	  x = unit(0.09, "npc"),
+	  y = unit(c(0.993, 0.8725, 0.645, 0.4175), "npc"),
+	  hjust = 0,
+	  gp = gpar(fontsize = 14))
+grid.text(expression(paste("(e) ", italic(k)-mers)),
+	  x = unit(0.09, "npc"),
+	  y = unit(0.19, "npc"),
+	  hjust = 0,
+	  gp = gpar(fontsize = 14))
 
 dev.off()
 

@@ -61,7 +61,7 @@ threshold <- -log10(as.numeric(readLines(paste0("gwas_results/", program, "/", t
 
 if(!length(signal)) {
 	warning("No signal found by ", program, " for signal ID ", id)
-	ptx_plot <- grid::gTree(children = gList(textGrob(paste0("No signal found by ", program, " for signal ID ", id))))
+	ptx_plot <- grid::gTree(children = gList(textGrob(paste0("No signal found by ", program, " at this locus."))))
 } else {
 	# Setting the x-scale while handling special cases where there is no signal or the signal is only 1 bp wide
 	if(length(signal) == 1 && width(signal) == 1) {
@@ -76,6 +76,7 @@ if(!length(signal)) {
 			       threshold = threshold,
 			       col = "blue",
 			       pruned_col = if(program == "platypus") "firebrick2" else NULL,
+			       cex.points = 0.6,
 			       shading = top_markers,
 			       yexpand = c(0.1, 0.1))
 }

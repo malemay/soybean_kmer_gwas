@@ -316,6 +316,7 @@ figures/%_gene.png: figures/gene_plot.R \
 $(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
 	$(signals_gr) \
 	utilities/cnv_genes.txt \
+	utilities/variant_ranges.txt \
 	$(shell cut -f2 utilities/cnv_genes.txt | uniq) \
 	refgenome/gmax_v4_genes.rds \
 	gwas_results/$(prog)/%_gwas_locus.rds \

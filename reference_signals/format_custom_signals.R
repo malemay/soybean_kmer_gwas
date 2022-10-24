@@ -3,7 +3,7 @@
 # downstream analyses
 
 # Loading the GenomicRanges package
-library(GenomicRanges)
+suppressMessages(library(GenomicRanges))
 
 # Manually entering data for the signal found on chromosome 16 for pubescence color
 # This signal goes from 1429763-1436787 for kmers, 1430025-1434520 for Paragraph, and 1380791-1485581 for Platypus
