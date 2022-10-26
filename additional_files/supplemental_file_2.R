@@ -4,7 +4,7 @@ library(parallel)
 # Reading the Bayer IDs and their corresponding SRR IDs
 # DEPENDENCY: utilities/srr_id_correspondence.txt
 bayer_ids <- read.table("utilities/srr_id_correspondence.txt", header = FALSE, stringsAsFactors = FALSE)
-colnames(bayer_ids) <- c("study_ID", "SRA_accessions")
+colnames(bayer_ids) <- c("study_ID", "SRA_runs")
 
 # DEPENDENCY: stats obtained from samtools stats for all samples
 # Now we read the metadata obtained from the samtools stats command to add the number of reads
@@ -28,7 +28,7 @@ average_cov <- sapply(bayer_ids$study_ID, function(x) {
 			      read.table(paste0("sv_genotyping/paragraph/manifest_files/", x, "_manifest.txt"),
 					 skip = 1)[[3]]})
 
-bayer_ids$mapping_depth <- average_cov[bayer_ids$study_ID]
+bayer_ids$average_mapping_depth <- average_cov[bayer_ids$study_ID]
 
 # Adding the results on the concordance rate between the samples and
 # DEPENDENCY: illumina_data/soysnp50k_genotyping/gtcheck_results.tsv

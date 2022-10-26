@@ -177,7 +177,7 @@ grid::pushViewport(grid::viewport(layout.pos.row = 3))
 grid.text("(b)", x = -0.03, y = 1.05, just = c(0, 0))
 
 # Plot the haplotype sequences
-grid.haplotypes(hapdata = plotting_data, difflist = difflist, position = plotting_range)
+grid.haplotypes(hapdata = plotting_data, difflist = difflist, position = plotting_range, fontsize = if(trait == "flower_color") 6 else 8)
 grid::upViewport()
 
 

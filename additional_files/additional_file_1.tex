@@ -147,10 +147,10 @@
 	\caption[Manhattan plots for #2]{Manhattan plots generated from the GWAS analysis of #2 on #3 samples using four genotype datasets :
 	(a) Platypus (SNPs and indels), (b) vg (SVs), (c) Paragraph (SVs), (d) \emph{k}-mers presence/absence.
 	The x-axis shows the position along the reference assembly version 4 of Williams82.
-	Each point shows the $-\log_{10} {p-value}$ associated with a particular marker or \emph{k}-mer.
-	Horizontal dotted lines indicate the 5\% family-wise error-rate threshold determined from a randomization approach.
+	Each point shows the $-\log_{10} (p)$ associated with a particular marker or \emph{k}-mer.
+	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
 	Vertical dotted lines indicate the position of signals associated with the trait.
-	Signals documented in previous studies are colored according to whether they were founs (green) or not (red) by a particular approach.
+	Documented loci are colored according to whether they were found (green) or not (red) by a particular approach.
 	The ``Gm'' prefix has been left out of chromosome names for simplicity.
 	}
 	\label{#1_manhattan}
@@ -162,9 +162,10 @@
 \newcommand{\signalplot}[4]{
 \begin{cfigure}
 	\includegraphics[width = 6in]{#1_signal}
-	\caption[Zoomed-in Manhattan plots of the #3 locus]{Zommed-in Manhattan plots generated from the GWAS analysis of #2 at the #3 locus using four genotype datasets:
+	\caption[Zoomed-in Manhattan plots of the #3 locus]{Zommed-in Manhattan plots of signals detected by the GWAS analysis of #2 at the #3 locus using four genotype datasets:
 	(b) Platypus (SNPs and indels), (c) vg (SVs), (d) Paragraph (SVs), (e) \emph{k}-mers presence/absence.
-	Panel (a) shows gene models over the plotting interval.
+	Panel (a) shows gene models over the genomic interval.
+	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
 	#4
 	Gray shaded rectangles indicate the region delimited by the top 5\% (Paragraph and vg) or top 1\% (Platypus and \emph{k}-mers) associations in the signal region.
 	In the case of Platypus, blue points denote markers used in the original analysis, whereas red points denote points that had originally been pruned but whose
@@ -183,11 +184,12 @@
 	{Zoomed-in Manhattan plots generated from the GWAS analysis of #2 at the #4 associated with the #3 locus using four genotype datasets:
 	(b) Platypus (SNPs and indels), (c) vg (SVs), (d) Paragraph (SVs), (e) \emph{k}-mers presence/absence.
 	#5
+	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
 	In the case of Platypus, blue points denote markers used in the original analysis, whereas red points denote points that had originally been pruned but whose
 	\emph{p}-values were computed after signal discovery.
 	Panel (a) shows gene models over the plotting interval.
 	Exons are represented by rectangles whereas introns are represented by horizontal lines.
-	Coding sequences are shown in blue and the direction of translation is indicated by arrows.
+	Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
 	}
 	\label{#1_gene}
 \end{cfigure}
@@ -199,14 +201,14 @@
 	\begin{cfigure}
 		\includegraphics[width = 6.5in]{#1_kmers}
 		\caption[Variants associated with significant \emph{k}-mers at the #3 locus]%
-		{Identification of #5 underlying significant \emph{k}-mers at the #2 associated with the #3 locus for #4.
+		{Identification of #5 underlying significant \emph{k}-mers at the #2 gene associated with the #3 locus for #4.
 		(a) Gene model of #2. Exons are represented by rectangles whereas introns are represented by horizontal lines.
-		Coding sequences are shown in blue and the direction of translation is indicated by arrows.
+		Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
 		The red rectangle identifies the region that is zoomed-in in panel (b).
 		(b) Nucleotide sequences of haplotypes observed in at least five samples across the dataset.
-		Individual nucleotides are colored according to the $-\log_{10}(p-value)$ of the most significant \emph{k}-mer overlapping them.
+		Individual nucleotides are colored according to the $-\log_{10}(p)$ of the most significant \emph{k}-mer overlapping them.
 		Dashes indicate gaps in haplotype sequence alignment whereas vertical lines indicate differences in sequence between two haplotypes.
-		(c) Contingency table of the phenotypes and haplotypes observed in the dataset. Haplotypes corresponds to those shown in panel (b).}
+		(c) Contingency table of the phenotypes and haplotypes observed in the dataset. Haplotypes correspond to those shown in panel (b).}
 		\label{#1_kmers}
 	\end{cfigure}
 
@@ -221,7 +223,7 @@
 		as identified by ``Gm'' chromosome labels.
 		Sequences that lack a ``Gm'' label (top of the y-axis) represent unanchored scaffolds.
 		\emph{k}-mers are represented in the same order along the x- and y-axis.
-		The colored rectangles drawn below the x-axis represent the $-\log_{10} (p-values)$ of each \emph{k}-mer.}
+		The colored rectangles drawn below the x-axis represent the $-\log_{10} (p)$ of each \emph{k}-mer.}
 		\label{#1_ld}
 	\end{cfigure}
 
@@ -259,13 +261,26 @@
 
 \clearpage
 
+\gwastableone{FLOWER.COLOR}{flower color}
+\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
+\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
+\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
+\gwastablethree{HILUM.COLOR}{hilum color}
+\gwastabletwo{POD.COLOR}{pod color}
+\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
+\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
+\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
+\gwastableone{MATURITY.GROUP}{maturity group}
+
+% Table with all signals
 \begin{landscape} \footnotesize
 	\begin{ThreePartTable}
 
 		\begin{TableNotes}
-		\item[a] Most significant -log\textsubscript{10}(\emph{p}) reported at this locus by the study in the Study column
+		\item[a] Most significant -log\textsubscript{10}(\emph{p}) previously reported at this locus by the study in the Study column
 		\item[b] Gene associated with the locus. A question mark following the identifier of the gene indicates that this is simply a candidate
-			that has yet to be confirmed. A dash indicates that no candidate has been suggested yet.
+			that has yet to be confirmed. A dash indicates that no candidate has been suggested yet. We have only included candidate
+			genes that have been suggested in previous studies.
 		\item[c] Most significant -log\textsubscript{10}(\emph{p}) reported by Platypus at this locus. A dash indicates that no signal
 			was detected by Platypus at this locus. The same applies for other methods (vg, Paragraph, \emph{k}-mers) in
 			their respective columns.
@@ -313,26 +328,16 @@
 \end{landscape}
 \clearpage
 
-\gwastableone{FLOWER.COLOR}{flower color}
-\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
-\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
-\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
-\gwastablethree{HILUM.COLOR}{hilum color}
-\gwastabletwo{POD.COLOR}{pod color}
-\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
-\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
-\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
-\gwastableone{MATURITY.GROUP}{Maturity group}
 
 % Figures for flower color
 \manhattanplot{flower_color}{flower color}{\getvar{flower_color_nsamples}}
-\ldplot{flower_color}{flower color}{\getvar{flower_color_ldkmers}}
 \signalplot{flower_color_W1}{flower color}{\emph{W1}}%
 {Vertical dotted lines indicate the location of the \getvar{flower_color_W1_gene} gene associated with the locus.}
 
 \geneplot{flower_color_W1}{flower color}{\emph{W1}}{\getvar{flower_color_W1_gene} gene}%
 {Vertical dotted lines in panels (c), (d) and (e) indicate the location of the causal SV at this locus.}
 \kmerplot{flower_color_W1}{\getvar{flower_color_W1_gene}}{\emph{W1}}{flower color}{a causal SV}
+\ldplot{flower_color}{flower color}{\getvar{flower_color_ldkmers}}
 
 
 % Figures for pubescence color
@@ -341,7 +346,7 @@
 {Vertical dotted lines indicate the location of the \getvar{pubescence_color_all_T_gene} gene associated with the locus.}
 \geneplot{pubescence_color_all_T}{pubescence color (first GWAS)}{\emph{T}}{\getvar{pubescence_color_all_T_gene} gene}%
 {Vertical dotted lines in panels (b) and (e) indicate the location of the causal indel at this locus.}
-\kmerplot{pubescence_color_all_T}{\getvar{pubescence_color_all_T_gene} gene}{\emph{T}}{pubescence color (first GWAS)}{a causal indel}
+\kmerplot{pubescence_color_all_T}{\getvar{pubescence_color_all_T_gene}}{\emph{T}}{pubescence color (first GWAS)}{a causal indel}
 \ldplot{pubescence_color_all}{pubescence color (first GWAS)}{\getvar{pubescence_color_all_ldkmers}}
 
 \manhattanplot{pubescence_color_nogray}{pubescence color (second GWAS)}{\getvar{pubescence_color_nogray_nsamples}}
@@ -349,7 +354,7 @@
 {Vertical dotted lines indicate the location of the \getvar{pubescence_color_nogray_Td_gene} gene associated with the locus.}
 \geneplot{pubescence_color_nogray_Td}{pubescence color (second GWAS)}{\emph{Td}}{\getvar{pubescence_color_nogray_Td_gene} gene}%
 {Vertical dotted lines in panels (b) and (e) indicate the location of the causal SNP at this locus.}
-\kmerplot{pubescence_color_nogray_Td}{\getvar{pubescence_color_nogray_Td_gene} gene}{\emph{Td}}{pubescence color (second GWAS)}{a causal SNP}
+\kmerplot{pubescence_color_nogray_Td}{\getvar{pubescence_color_nogray_Td_gene}}{\emph{Td}}{pubescence color (second GWAS)}{a causal SNP}
 
 % Figures for seed coat color
 \manhattanplot{seed_coat_color_all}{seed coat color (first GWAS)}{\getvar{seed_coat_color_all_nsamples}}
@@ -361,7 +366,7 @@
 {Vertical dotted lines indicate the location of the \getvar{seed_coat_color_greenyellow_G_gene} gene associated with the locus.}
 \geneplot{seed_coat_color_greenyellow_G}{seed coat color (second GWAS)}{\emph{G}}{\getvar{seed_coat_color_greenyellow_G_gene} gene}%
 {Vertical dotted lines in panels (b) and (e) indicate the location of the causal SNP at this locus.}
-\kmerplot{seed_coat_color_greenyellow_G}{\getvar{seed_coat_color_greenyellow_G_gene} gene}{\emph{G}}{seed coat color (second GWAS)}{a causal SNP}
+\kmerplot{seed_coat_color_greenyellow_G}{\getvar{seed_coat_color_greenyellow_G_gene}}{\emph{G}}{seed coat color (second GWAS)}{a causal SNP}
 
 % Figures for stem termination
 \manhattanplot{stem_termination_all}{stem termination type (first GWAS)}{\getvar{stem_termination_all_nsamples}}
@@ -369,7 +374,7 @@
 {Vertical dotted lines indicate the location of the \getvar{stem_termination_all_Dt1_gene} gene associated with the locus.}
 \geneplot{stem_termination_all_Dt1}{stem termination type (first GWAS)}{\emph{Dt1}}{\getvar{stem_termination_all_Dt1_gene} gene}%
 {Vertical dotted lines in panels (b) and (e) indicate the location of a causal SNP at this locus.}
-\kmerplot{stem_termination_all_Dt1}{\getvar{stem_termination_all_Dt1_gene} gene}{\emph{Dt1}}{stem termination type (first GWAS)}{a causal SNP}
+\kmerplot{stem_termination_all_Dt1}{\getvar{stem_termination_all_Dt1_gene}}{\emph{Dt1}}{stem termination type (first GWAS)}{a causal SNP}
 
 \manhattanplot{stem_termination_sn}{stem termination type (second GWAS)}{\getvar{stem_termination_sn_nsamples}}
 \ldplot{stem_termination_sn}{stem termination type (second GWAS)}{\getvar{stem_termination_sn_ldkmers}}
@@ -380,17 +385,16 @@
 {Vertical dotted lines indicate the location of the \getvar{hilum_color_all_T_gene} gene associated with the locus.}
 \geneplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}{\getvar{hilum_color_all_T_gene} gene}%
 {Vertical dotted lines in panels (b) and (e) indicate the location of the causal indel at this locus.}
-\kmerplot{hilum_color_all_T}{\getvar{hilum_color_all_T_gene} gene}{\emph{T}}{hilum color (first GWAS)}{a causal indel}
+\kmerplot{hilum_color_all_T}{\getvar{hilum_color_all_T_gene}}{\emph{T}}{hilum color (first GWAS)}{a causal indel}
 \signalplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}%
 {Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
-\geneplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}{causal tandem duplication/inversion region}{}
 
 \manhattanplot{hilum_color_blackbrown}{hilum color (second GWAS)}{\getvar{hilum_color_blackbrown_nsamples}}
 \signalplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}%
 {Vertical dotted lines indicate the location of the \getvar{hilum_color_blackbrown_R_gene} gene associated with the locus.}
 \geneplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}{\getvar{hilum_color_blackbrown_R_gene} gene}%
-{Vertical dotted lines indicate the location a SNP (panels b and e) and an indel (panel e) that are putatively causal at this locus.}
-\kmerplot{hilum_color_blackbrown_R}{\getvar{hilum_color_blackbrown_R_gene} gene}{\emph{R}}{hilum color (second GWAS)}{a SNP and an indel that are putatively causal}
+{Vertical dotted lines indicate the location an indel (panels b and e) and a SNP (panel e) that are putatively causal at this locus.}
+\kmerplot{hilum_color_blackbrown_R}{\getvar{hilum_color_blackbrown_R_gene}}{\emph{R}}{hilum color (second GWAS)}{a SNP and an indel that are putatively causal}
 
 \manhattanplot{hilum_color_rbr}{hilum color (third GWAS)}{\getvar{hilum_color_rbr_nsamples}}
 
@@ -409,7 +413,7 @@
 {Vertical dotted lines indicate the location of the \getvar{pubescence_form_all_Pa1_gene} gene that we suggest as a candidate for this locus.}
 \geneplot{pubescence_form_all_Pa1}{pubescence form (first GWAS)}{\emph{Pa1}}{\getvar{pubescence_form_all_Pa1_gene} candidate gene putatively}%
 {Vertical dotted lines in panels (b) and (e) indicate the location of two highly significant non-synonymous SNPs at this gene.}
-\kmerplot{pubescence_form_all_Pa1}{\getvar{pubescence_form_all_Pa1_gene} candidate gene putatively}{\emph{Pa1}}{pubescence form (first GWAS)}{a non-synonymous SNP}
+\kmerplot{pubescence_form_all_Pa1}{\getvar{pubescence_form_all_Pa1_gene} candidate}{\emph{Pa1}}{pubescence form (first GWAS)}{a non-synonymous SNP}
 \signalplot{pubescence_form_all_Pa2}{pubescence form (first GWAS)}{\emph{Pa2}}{}
 \ldplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_ldkmers}}
 
@@ -419,8 +423,9 @@
 \manhattanplot{pubescence_density}{pubescence density}{\getvar{pubescence_density_nsamples}}
 \signalplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}%
 {Vertical dotted lines indicate the boundaries of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene associated with the locus.}
-\geneplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}{location of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene}%
-{The vertical dotted line in panel (e) indicates the location of the most significant \emph{k}-mer, which is associated with the causal CNV at this locus.}
+\geneplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}{location of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene.}%
+{The vertical dotted line in panel (e) indicates the location of the most significant \emph{k}-mer, which is associated with the causal CNV at this locus.
+The shaded gray rectangles show the boundaries of the causal CNV.}
 
 % Figures for seed coat luster
 \manhattanplot{seed_coat_luster_all}{seed coat luster (first GWAS)}{\getvar{seed_coat_luster_all_nsamples}}
@@ -431,16 +436,17 @@
 \ldplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_ldkmers}}
 \signalplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}%
 {Vertical dotted lines indicate the boundaries of the causal CNV associated with the locus.}
-\geneplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}{location of the causal CNV}{}
+\geneplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}{location of the causal CNV}%
+{The shaded gray rectangles show the boundaries of the causal CNV.}
+
+% Figures for maturity group
+\manhattanplot{maturity_group}{maturity group}{\getvar{maturity_group_nsamples}}
 
 % Figures for corrected dry weight
 \manhattanplot{corrected_dry_weight}{corrected dry weight (resistance to \emph{P. sojae})}{\getvar{corrected_dry_weight_nsamples}}
 \ldplot{corrected_dry_weight}{corrected dry weight (resistance to \emph{P. sojae})}{\getvar{corrected_dry_weight_ldkmers}}
 \signalplot{corrected_dry_weight_cdwGm15}{corrected dry weight (resistance to \emph{P. sojae})}{\emph{cdwGm15}}%
 {Vertical dotted lines indicate the location of the \getvar{corrected_dry_weight_cdwGm15_gene} gene suggested by de Ronne et al. (2022) as associated with the locus.}
-
-% Figures for maturity group
-\manhattanplot{maturity_group}{maturity group}{\getvar{maturity_group_nsamples}}
 
 % Figures for oil
 \manhattanplot{oil}{seed oil content}{\getvar{oil_nsamples}}

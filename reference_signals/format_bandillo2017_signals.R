@@ -131,7 +131,10 @@ bandillo_signals[bandillo_signals$locus == "Pa1", "gene_name_v4"] <- tolower("gl
 bandillo_signals[bandillo_signals$locus == "Ps", "gene_name_v4"] <- tolower("Glyma.12G187200")
 
 # Pd1 locus: Liu et al. (2020), DOI:10.1016/j.molp.2020.10.004
-bandillo_signals[bandillo_signals$locus == "Ps", "gene_name_v4"] <- tolower("Glyma.01G240100")
+bandillo_signals[bandillo_signals$locus == "Pd1", "gene_name_v4"] <- tolower("Glyma.01G240100")
+
+# P1 locus: Liu et al. (2020), DOI:10.1016/j.molp.2020.10.004
+bandillo_signals[bandillo_signals$locus == "P1", "gene_name_v4"] <- tolower("Glyma.09G278000")
 
 # B locus: Gijzen et al. (2006), DOI:10.1186/1471-2229-6-6
 # This is actually a cluster of HPS genes

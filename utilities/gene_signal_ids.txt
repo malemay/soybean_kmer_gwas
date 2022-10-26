@@ -14,6 +14,7 @@ pubescence_form_all_Pa1
 pubescence_form_noerect_Pa1
 oil_oilGm20
 oil_oilGm15
+pubescence_density_Pd1
 pubescence_density_Ps
 pubescence_density_P1
 seed_coat_luster_all_I
