@@ -8,6 +8,7 @@ suppressMessages(library(GenomicRanges))
 
 # Setting the trait and locus for this series of plots
 locus <- commandArgs(trailingOnly = TRUE)[1]
+cropping <- c(30, 35)
 
 # DEPENDENCY: utilities/kmer_plot_ranges.txt
 locus_data <- read.table("utilities/kmer_plot_ranges.txt")
@@ -82,7 +83,7 @@ grid.draw(transcriptsGrob(genes = genes,
 			  cds = cds,
 			  xscale = causal_gene,
 			  highlight = GenomicRanges::GRanges(seqnames = chrom,
-							     ranges = IRanges::IRanges(start = grange[1], end = grange[2])),
+							     ranges = IRanges::IRanges(start = grange[1] + cropping[1], end = grange[2] - cropping[2])),
 			  strand_colors = c("dodgerblue", "dodgerblue"),
 			  draw_arrows = TRUE,
 			  first_tx_only = TRUE))
@@ -92,7 +93,7 @@ seekViewport("main")
 pushViewport(viewport(layout.pos.row = 7, name = "kmers"))
 grid.text("(d)", x = 0.02, y = 0.95)
 pushViewport(viewport(width = 0.90))
-draw_haplotypes(plotting_data = plotting_data, difflist = difflist, plotting_range = plotting_range, cropping = c(30, 35), fontsize = 9)
+draw_haplotypes(plotting_data = plotting_data, difflist = difflist, plotting_range = plotting_range, cropping = cropping, fontsize = 9)
 
 
 # Plotting the contingency table
