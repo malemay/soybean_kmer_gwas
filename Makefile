@@ -37,6 +37,7 @@ supfigures := $(manhattanplots) \
 	$(scaffoldplots) \
 	$(ldplots)
 
+mainfigures := figures/flower_color_W1_main_figure.png
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
 
@@ -51,7 +52,7 @@ genetables := $(allgenes) $(topgenes) $(nearestgene)
 phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo gwas_results/kmers/{}_phenodata.rds)
 
 
-all: $(SDIR)/additional_file_1.pdf $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv
+all: $(SDIR)/additional_file_1.pdf $(mainfigures) $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv
 
 GENETABLES : $(genetables)
 SUPTABLES: $(suptables)
@@ -100,6 +101,28 @@ $(SDIR)/supplemental_file_2.csv: utilities/srr_id_correspondence.txt illumina_da
 
 $(SDIR)/supplemental_file_3.csv: phenotypic_data/phenotypic_data.csv
 
+# MAIN FIGURES
+#figures/%_main_figure.png: utilities/kmer_plot_ranges.txt \
+#	gwas_results/kmer_consensus/%_plotting_data.rds \
+#	gwas_results/kmer_consensus/%_difflist.rds \
+#	gwas_results/kmer_consensus/%_causal_gene.rds \
+#	gwas_results/kmer_consensus/%_phenodata.rds	 \
+#	$(txdb) \
+#	figures/main_figure_functions.R
+
+figures/flower_color_W1_main_figure.png: figures/flower_color_main_figure.R \
+	utilities/kmer_plot_ranges.txt \
+	gwas_results/kmer_consensus/flower_color_W1_plotting_data.rds \
+	gwas_results/kmer_consensus/flower_color_W1_difflist.rds \
+	gwas_results/kmer_consensus/flower_color_W1_causal_gene.rds \
+	gwas_results/kmers/flower_color_W1_phenodata.rds	 \
+	$(txdb) \
+	figures/main_figure_functions.R \
+	figures/grobs/paragraph_flower_color_manhattan.rds \
+	figures/grobs/kmers_flower_color_manhattan.rds \
+	figures/grobs/paragraph_flower_color_W1_signal.rds \
+	figures/grobs/kmers_flower_color_W1_signal.rds
+	$(RSCRIPT) $< flower_color_W1
 
 # SIGNALS --------------------------------------------------
 
@@ -170,7 +193,7 @@ phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 
 # KMER HAPLOTYPE PLOTS --------------------------------------------------
 # Generating the k-mer plot from the consensus sequences (the k-mer p-values are missing from the list of dependencies)
-figures/%_kmers.png gwas_results/kmers/%_phenodata.rds: figures/kmer_plot.R \
+figures/%_kmers.png gwas_results/kmers/%_phenodata.rds gwas_results/kmer_consensus/%_plotting_data.rds gwas_results/kmer_consensus/%_difflist.rds gwas_results/kmer_consensus/%_causal_gene.rds: figures/kmer_plot.R \
 	$(signals_gr) \
 	$(txdb) \
 	phenotypic_data/pheno_names_lookup.rds \

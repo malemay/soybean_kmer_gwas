@@ -134,6 +134,12 @@ plotting_data <- adjust_gaps(hapdata = plotting_data,
 # Finding the positions where the aligned nucleotides differ between haplotypes
 difflist <- nucdiff(plotting_data)
 
+# Outputting the results derived from this script to files so they can be
+# retrieved for plotting by other scripts
+saveRDS(plotting_data, file = paste0("gwas_results/kmer_consensus/", locus, "_plotting_data.rds"), compress = FALSE)
+saveRDS(difflist, file = paste0("gwas_results/kmer_consensus/", locus, "_difflist.rds"), compress = FALSE)
+saveRDS(causal_gene, file = paste0("gwas_results/kmer_consensus/", locus, "_causal_gene.rds"), compress = FALSE)
+
 # Outputting to a png file
 png(paste0("figures/", locus, "_kmers.png"), width = 8, height = 8, units = "in", res = 100)
 
