@@ -8,21 +8,21 @@ suppressMessages(library(GenomicRanges))
 
 # Setting the trait and locus for this series of plots
 locus <- commandArgs(trailingOnly = TRUE)[1]
-cropping <- c(30, 35)
+cropping <- c(5, 25)
 
 # DEPENDENCY: utilities/kmer_plot_ranges.txt
 locus_data <- read.table("utilities/kmer_plot_ranges.txt")
 trait <- locus_data[locus_data[[1]] == locus, 2]
 
 # Loading the grid objects to plot
-# DEPENDENCY: figures/grobs/paragraph_flower_color_manhattan.rds
-# DEPENDENCY: figures/grobs/kmers_flower_color_manhattan.rds
-paragraph_gwide_manhattan <- readRDS(paste0("figures/grobs/paragraph_", trait, "_manhattan.rds"))
+# DEPENDENCY: figures/grobs/platypus_pubescence_color_all_manhattan.rds
+# DEPENDENCY: figures/grobs/kmers_pubescence_color_all_manhattan.rds
+platypus_gwide_manhattan <- readRDS(paste0("figures/grobs/platypus_", trait, "_manhattan.rds"))
 kmers_gwide_manhattan <- readRDS(paste0("figures/grobs/kmers_", trait, "_manhattan.rds"))
 
-# DEPENDENCY: figures/grobs/paragraph_flower_color_W1_signal.rds
-# DEPENDENCY: figures/grobs/kmers_flower_color_W1_signal.rds
-paragraph_zoomed_manhattan <- readRDS(paste0("figures/grobs/paragraph_", locus, "_signal.rds"))
+# DEPENDENCY: figures/grobs/platypus_pubescence_color_all_Td_signal.rds
+# DEPENDENCY: figures/grobs/kmers_pubescence_color_all_Td_signal.rds
+platypus_zoomed_manhattan <- readRDS(paste0("figures/grobs/platypus_", locus, "_signal.rds"))
 kmers_zoomed_manhattan <- readRDS(paste0("figures/grobs/kmers_", locus, "_signal.rds"))
 
 # Loading the data associated with the k-mer analysis
@@ -64,17 +64,17 @@ pushViewport(viewport(layout = grid.layout(nrow = 9, ncol = 1, heights = unit(c(
 # Drawing the genome-wide Manhattan plots
 pushViewport(viewport(layout.pos.row = 1, name = "gwide_manhattan"))
 grid.text("(a)", x = 0.02, y = 0.95)
-draw_manhattan(list(paragraph_gwide_manhattan, kmers_gwide_manhattan), 
-	       sigline_regexp  = "sigline_1",
+draw_manhattan(list(platypus_gwide_manhattan, kmers_gwide_manhattan), 
+	       sigline_regexp = "sigline_1",
 	       siglabel_regexp = "siglabel_1",
-	       labels = c("Paragraph", "k-mers"), fontsize = 11)
+	       labels = c("Platypus", "k-mers"), fontsize = 11)
 
 
 # Drawing the zoomed-in Manhattan plots
 seekViewport("main")
 pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
-draw_zoomed(list(paragraph_zoomed_manhattan, kmers_zoomed_manhattan), c("Paragraph", "k-mers"), fontsize = 11)
+draw_zoomed(list(platypus_zoomed_manhattan, kmers_zoomed_manhattan), c("Platypus", "k-mers"), fontsize = 11)
 
 # Plotting the gene model
 seekViewport("main")

@@ -1,5 +1,5 @@
 # Creating a function that plots only the relevant data from a genome-wide Manahttan plot
-draw_manhattan <- function(mplots, labels, fontsize = 10) {
+draw_manhattan <- function(mplots, labels, fontsize = 10, sigline_regexp = "sigline", siglabel_regexp = "siglabel") {
 
 	stopifnot(length(labels) == length(mplots))
 
@@ -23,8 +23,8 @@ draw_manhattan <- function(mplots, labels, fontsize = 10) {
 		grid.draw(getGrob(mplots[[i]], "manhattan_threshold"))
 
 		# Plotting all signal lines and labels
-		grid.draw(getGrob(mplots[[i]], "sigline", grep = TRUE, global = TRUE))
-		grid.draw(getGrob(mplots[[i]], "siglabel", grep = TRUE, global = TRUE))
+		grid.draw(getGrob(mplots[[i]], sigline_regexp, grep = TRUE, global = TRUE))
+		grid.draw(getGrob(mplots[[i]], siglabel_regexp, grep = TRUE, global = TRUE))
 
 		# Drawing the y-axis
 		grid.draw(editGrob(getGrob(mplots[[i]], "manhattan_yaxis"), gp = gpar(fontsize = fontsize)))

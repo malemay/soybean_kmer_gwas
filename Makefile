@@ -39,7 +39,7 @@ supfigures := $(manhattanplots) \
 	$(scaffoldplots) \
 	$(ldplots)
 
-mainfigures := figures/flower_color_W1_main_figure.png
+mainfigures := figures/flower_color_W1_main_figure.png figures/pubescence_color_nogray_Td_main_figure.png
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
 
@@ -125,6 +125,21 @@ figures/flower_color_W1_main_figure.png: figures/flower_color_main_figure.R \
 	figures/grobs/paragraph_flower_color_W1_signal.rds \
 	figures/grobs/kmers_flower_color_W1_signal.rds
 	$(RSCRIPT) $< flower_color_W1
+
+figures/pubescence_color_nogray_Td_main_figure.png: figures/pubescence_color_nogray_main_figure.R \
+	utilities/kmer_plot_ranges.txt \
+	gwas_results/kmer_consensus/pubescence_color_nogray_Td_plotting_data.rds \
+	gwas_results/kmer_consensus/pubescence_color_nogray_Td_difflist.rds \
+	gwas_results/kmer_consensus/pubescence_color_nogray_Td_causal_gene.rds \
+	gwas_results/kmers/pubescence_color_nogray_Td_phenodata.rds	 \
+	$(txdb) \
+	figures/main_figure_functions.R \
+	figures/grobs/platypus_pubescence_color_nogray_manhattan.rds \
+	figures/grobs/kmers_pubescence_color_nogray_manhattan.rds \
+	figures/grobs/platypus_pubescence_color_nogray_Td_signal.rds \
+	figures/grobs/kmers_pubescence_color_nogray_Td_signal.rds
+	$(RSCRIPT) $< pubescence_color_nogray_Td
+
 
 # SIGNALS --------------------------------------------------
 
