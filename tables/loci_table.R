@@ -120,6 +120,9 @@ loci_table[loci_table$id == "flower_color_W1", c("vg", "paragraph", "kmers")] <-
 loci_table[loci_table$id == "pubescence_color_Td", "kmers"] <- 4
 loci_table[loci_table$id == "seed_coat_color_G", "kmers"] <- 4
 loci_table[loci_table$id == "pubescence_density_Ps", "kmers"] <- 4
+# And also a single case where a gene overlap is falsely reported
+loci_table[loci_table$id == "seed_coat_color_R", "kmers"] <- 1
+
 
 # Converting the numbers to asteriks for display in a table
 significance_lookup <- c("-", "*", "**", "***")
