@@ -22,6 +22,8 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/MATURITY.GROUP_gwas_table.csv \
 	tables/signals_table.csv
 
+maintables := tables/loci_table.csv
+
 # Getting the LD png figures to generate dynamically from additional_files/additional_file_1.tex
 manhattanplots := $(shell grep '^\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/\\manhattanplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_manhattan.png)
 scaffoldplots := $(shell grep '^\\manhattanplot' $(addfile) | grep scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
@@ -52,7 +54,7 @@ genetables := $(allgenes) $(topgenes) $(nearestgene)
 phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo gwas_results/kmers/{}_phenodata.rds)
 
 
-all: $(SDIR)/additional_file_1.pdf $(mainfigures) $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv
+all: $(SDIR)/additional_file_1.pdf $(mainfigures) $(maintables) $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv
 
 GENETABLES : $(genetables)
 SUPTABLES: $(suptables)
@@ -172,6 +174,17 @@ tables/signals_table.csv: tables/signals_table.R \
 	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/paragraph/{}_signal.rds) \
 	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/kmers/{}_signal.rds)
 	$(RSCRIPT) tables/signals_table.R
+
+# Generating the .csv file with data regarding the performance of various approaches on loci for which genes are known
+tables/loci_table.csv: tables/loci_table.R \
+	utilities/all_signals.rds \
+	refgenome/gmax_v4_genes.rds \
+	cnv_analysis/i_cnv_range.rds \
+	cnv_analysis/hps_cnv_range.rds \
+	cnv_analysis/ps_cnv_range.rds \
+	$(signalplots)
+	$(RSCRIPT) $<
+
 
 # PHENOTYPIC DATA --------------------------------------------------
 
