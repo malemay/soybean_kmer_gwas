@@ -39,7 +39,7 @@ supfigures := $(manhattanplots) \
 	$(scaffoldplots) \
 	$(ldplots)
 
-mainfigures := figures/flower_color_W1_main_figure.png figures/pubescence_color_nogray_Td_main_figure.png
+mainfigures := figures/flower_color_W1_main_figure.png figures/pubescence_color_nogray_Td_main_figure.png figures/seed_coat_color_greenyellow_G_main_figure.png
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
 
@@ -140,6 +140,19 @@ figures/pubescence_color_nogray_Td_main_figure.png: figures/pubescence_color_nog
 	figures/grobs/kmers_pubescence_color_nogray_Td_signal.rds
 	$(RSCRIPT) $< pubescence_color_nogray_Td
 
+figures/seed_coat_color_greenyellow_G_main_figure.png: figures/seed_coat_color_greenyellow_main_figure.R \
+	utilities/kmer_plot_ranges.txt \
+	gwas_results/kmer_consensus/seed_coat_color_greenyellow_G_plotting_data.rds \
+	gwas_results/kmer_consensus/seed_coat_color_greenyellow_G_difflist.rds \
+	gwas_results/kmer_consensus/seed_coat_color_greenyellow_G_causal_gene.rds \
+	gwas_results/kmers/seed_coat_color_greenyellow_G_phenodata.rds	 \
+	$(txdb) \
+	figures/main_figure_functions.R \
+	figures/grobs/platypus_seed_coat_color_greenyellow_manhattan.rds \
+	figures/grobs/kmers_seed_coat_color_greenyellow_manhattan.rds \
+	figures/grobs/platypus_seed_coat_color_greenyellow_G_signal.rds \
+	figures/grobs/kmers_seed_coat_color_greenyellow_G_signal.rds
+	$(RSCRIPT) $< seed_coat_color_greenyellow_G
 
 # SIGNALS --------------------------------------------------
 

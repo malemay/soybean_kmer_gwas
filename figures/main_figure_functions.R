@@ -1,5 +1,6 @@
 # Creating a function that plots only the relevant data from a genome-wide Manahttan plot
-draw_manhattan <- function(mplots, labels, fontsize = 10, sigline_regexp = "sigline", siglabel_regexp = "siglabel") {
+draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.02,
+			   sigline_regexp = "sigline", siglabel_regexp = "siglabel") {
 
 	stopifnot(length(labels) == length(mplots))
 
@@ -36,7 +37,7 @@ draw_manhattan <- function(mplots, labels, fontsize = 10, sigline_regexp = "sigl
 		}
 
 		# Drawing the label for that plot in the top-left corner
-		grid.text(labels[i], x = 0.02, y = 0.87, just = 0)
+		grid.text(labels[i], x = label_pos, y = 0.87, just = 0)
 
 		upViewport(2)
 	}

@@ -1,4 +1,4 @@
-# Code for the figure on flower color to include in the main text
+# Code for the figure on pubescence color (Td locus) to include in the main text
 # of the manuscript
 
 # Loading the required libraries
@@ -15,13 +15,13 @@ locus_data <- read.table("utilities/kmer_plot_ranges.txt")
 trait <- locus_data[locus_data[[1]] == locus, 2]
 
 # Loading the grid objects to plot
-# DEPENDENCY: figures/grobs/platypus_pubescence_color_all_manhattan.rds
-# DEPENDENCY: figures/grobs/kmers_pubescence_color_all_manhattan.rds
+# DEPENDENCY: figures/grobs/platypus_pubescence_color_nogray_manhattan.rds
+# DEPENDENCY: figures/grobs/kmers_pubescence_color_nogray_manhattan.rds
 platypus_gwide_manhattan <- readRDS(paste0("figures/grobs/platypus_", trait, "_manhattan.rds"))
 kmers_gwide_manhattan <- readRDS(paste0("figures/grobs/kmers_", trait, "_manhattan.rds"))
 
-# DEPENDENCY: figures/grobs/platypus_pubescence_color_all_Td_signal.rds
-# DEPENDENCY: figures/grobs/kmers_pubescence_color_all_Td_signal.rds
+# DEPENDENCY: figures/grobs/platypus_pubescence_color_nogray_Td_signal.rds
+# DEPENDENCY: figures/grobs/kmers_pubescence_color_nogray_Td_signal.rds
 platypus_zoomed_manhattan <- readRDS(paste0("figures/grobs/platypus_", locus, "_signal.rds"))
 kmers_zoomed_manhattan <- readRDS(paste0("figures/grobs/kmers_", locus, "_signal.rds"))
 
@@ -96,7 +96,7 @@ seekViewport("main")
 pushViewport(viewport(layout.pos.row = 7, name = "kmers"))
 grid.text("(d)", x = 0.02, y = 0.95)
 pushViewport(viewport(width = 0.90))
-draw_haplotypes(plotting_data = plotting_data, difflist = difflist, plotting_range = plotting_range, cropping = cropping, fontsize = 9)
+draw_haplotypes(plotting_data = plotting_data, difflist = difflist, plotting_range = plotting_range, cropping = cropping, fontsize = 8)
 
 
 # Plotting the contingency table
