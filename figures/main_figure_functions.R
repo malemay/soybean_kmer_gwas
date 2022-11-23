@@ -1,5 +1,6 @@
 # Creating a function that plots only the relevant data from a genome-wide Manahttan plot
 draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.02,
+			   xaxis = TRUE,
 			   sigline_regexp = "sigline", siglabel_regexp = "siglabel") {
 
 	stopifnot(length(labels) == length(mplots))
@@ -31,7 +32,7 @@ draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.02,
 		grid.draw(editGrob(getGrob(mplots[[i]], "manhattan_yaxis"), gp = gpar(fontsize = fontsize)))
 
 		# Optionally plotting the x-axis
-		if(i == length(mplots)) {
+		if(i == length(mplots) && xaxis) {
 			grid.draw(editGrob(getGrob(mplots[[i]], "manhattan_xaxis"), gp = gpar(fontsize = fontsize)))
 			grid.draw(editGrob(getGrob(mplots[[i]], "manhattan_xlabel"), gp = gpar(fontsize = fontsize)))
 		}
@@ -39,16 +40,17 @@ draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.02,
 		# Drawing the label for that plot in the top-left corner
 		grid.text(labels[i], x = label_pos, y = 0.87, just = 0)
 
+		# Drawing the y-axis label
+		grid.text(expression(-log[10](italic(p))), x = grid::unit(-3, "lines"), rot = 90, gp = gpar(fontsize = fontsize))
+
 		upViewport(2)
 	}
 
-	# Drawing the y-axis label
 	upViewport()
-	grid.text(expression(-log[10](italic(p))), x = grid::unit(1.2, "lines"), rot = 90, gp = gpar(fontsize = fontsize))
 }
 
 # A function that draws a set of zoomed-in Manhattan plots using common x-scale coordinates and x-axis
-draw_zoomed <- function(mgrobs, labels, fontsize = 10) {
+draw_zoomed <- function(mgrobs, labels, fontsize = 10, xaxis = TRUE) {
 
 	stopifnot(length(labels) == length(mgrobs))
 
@@ -75,7 +77,7 @@ draw_zoomed <- function(mgrobs, labels, fontsize = 10) {
 		grid.draw(getGrob(mgrobs[[i]], "pvalue_feature", grep = TRUE, global = TRUE))
 		grid.draw(editGrob(getGrob(mgrobs[[i]], "pvalue_yaxis"), gp = gpar(fontsize = fontsize)))
 
-		if(i == length(mgrobs)) {
+		if(i == length(mgrobs) && xaxis) {
 			grid.draw(editGrob(getGrob(mgrobs[[i]], "pvalue_xlabel", grep = TRUE, global = TRUE), gp = gpar(fontsize = fontsize)))
 			grid.draw(editGrob(getGrob(mgrobs[[i]], "xaxis", grep = TRUE, global = TRUE), gp = gpar(fontsize = fontsize)))
 		}
@@ -83,12 +85,13 @@ draw_zoomed <- function(mgrobs, labels, fontsize = 10) {
 		# Drawing the label for that plot in the top-left corner
 		grid.text(labels[i], x = 0.02, y = 0.87, just = 0)
 
+		# Drawing the y-axis label
+		grid.text(expression(-log[10](italic(p))), x = grid::unit(-3, "lines"), rot = 90, gp = gpar(fontsize = fontsize))
+
 		upViewport(2)
 	}
 
-	# Drawing the y-axis label
 	upViewport()
-	grid.text(expression(-log[10](italic(p))), x = grid::unit(1.2, "lines"), rot = 90, gp = gpar(fontsize = fontsize))
 }
 
 # Creating a wrapper around grid.haplotypes which crops the beginning and end of the sequence so it can be shown with a bigger font
