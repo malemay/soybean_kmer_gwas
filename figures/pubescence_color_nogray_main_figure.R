@@ -67,14 +67,16 @@ grid.text("(a)", x = 0.02, y = 0.95)
 draw_manhattan(list(platypus_gwide_manhattan, kmers_gwide_manhattan), 
 	       sigline_regexp = "sigline_1",
 	       siglabel_regexp = "siglabel_1",
-	       labels = c("Platypus", "k-mers"), fontsize = 11)
+	       labels = c("SNP/indels", "k-mers"), fontsize = 11)
 
 
 # Drawing the zoomed-in Manhattan plots
 seekViewport("main")
 pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
-draw_zoomed(list(platypus_zoomed_manhattan, kmers_zoomed_manhattan), c("Platypus", "k-mers"), fontsize = 11)
+draw_zoomed(list(platypus_zoomed_manhattan, kmers_zoomed_manhattan),
+	    labels = c("SNP/indels", "k-mers"),
+	    fontsize = 11)
 
 # Plotting the gene model
 seekViewport("main")

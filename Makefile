@@ -40,7 +40,7 @@ supfigures := $(manhattanplots) \
 	$(ldplots)
 
 mainfigures := figures/flower_color_W1_main_figure.png figures/pubescence_color_nogray_Td_main_figure.png figures/seed_coat_color_greenyellow_G_main_figure.png \
-	figures/pubescence_density_Ps_main_figure.png
+	figures/pubescence_density_Ps_main_figure.png figures/pubescence_form_all_Pa1_main_figure.png
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
 
@@ -155,7 +155,7 @@ figures/seed_coat_color_greenyellow_G_main_figure.png: figures/seed_coat_color_g
 	figures/grobs/kmers_seed_coat_color_greenyellow_G_signal.rds
 	$(RSCRIPT) $< seed_coat_color_greenyellow_G
 
-# Main figure for pubescence color
+# Main figure for pubescence density
 # The mapped reads processed through katcher have yet to be included in this rule
 figures/pubescence_density_Ps_main_figure.png: figures/pubescence_density_main_figure.R \
 	figures/grobs/kmers_pubescence_density_manhattan.rds \
@@ -166,6 +166,18 @@ figures/pubescence_density_Ps_main_figure.png: figures/pubescence_density_main_f
 	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo illumina_data/merged_bams/{}_merged.bam.bai) \
 	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo sv_genotyping/paragraph/manifest_files/{}_manifest.txt)
 	$(RSCRIPT) $<
+
+figures/pubescence_form_all_Pa1_main_figure.png: figures/pubescence_form_all_main_figure.R \
+	utilities/kmer_plot_ranges.txt \
+	$(txdb) \
+	figures/main_figure_functions.R \
+	figures/grobs/platypus_pubescence_form_all_manhattan.rds \
+	figures/grobs/kmers_pubescence_form_all_manhattan.rds \
+	figures/grobs/platypus_pubescence_form_all_Pa1_signal.rds \
+	figures/grobs/kmers_pubescence_form_all_Pa1_signal.rds \
+	figures/grobs/platypus_pubescence_form_all_Pa1_gene.rds \
+	figures/grobs/kmers_pubescence_form_all_Pa1_gene.rds
+	$(RSCRIPT) $< pubescence_form_all_Pa1
 
 #
 # SIGNALS --------------------------------------------------
