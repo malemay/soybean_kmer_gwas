@@ -40,7 +40,7 @@ supfigures := $(manhattanplots) \
 	$(ldplots)
 
 mainfigures := figures/flower_color_W1_main_figure.png figures/pubescence_color_nogray_Td_main_figure.png figures/seed_coat_color_greenyellow_G_main_figure.png \
-	figures/pubescence_density_Ps_main_figure.png figures/pubescence_form_all_Pa1_main_figure.png
+	figures/pubescence_density_Ps_main_figure.png figures/pubescence_form_all_Pa1_main_figure.png figures/stem_termination_sn_main_figure.png
 
 topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
 
@@ -178,6 +178,13 @@ figures/pubescence_form_all_Pa1_main_figure.png: figures/pubescence_form_all_mai
 	figures/grobs/platypus_pubescence_form_all_Pa1_gene.rds \
 	figures/grobs/kmers_pubescence_form_all_Pa1_gene.rds
 	$(RSCRIPT) $< pubescence_form_all_Pa1
+
+figures/stem_termination_sn_main_figure.png: figures/stem_termination_sn_main_figure.R \
+	figures/main_figure_functions.R \
+	figures/grobs/kmers_stem_termination_sn_manhattan.rds \
+	gwas_results/kmers/stem_termination_sn_clustered_ld.txt \
+	gwas_results/kmers/stem_termination_sn_gwas.rds
+	$(RSCRIPT) $<
 
 #
 # SIGNALS --------------------------------------------------
