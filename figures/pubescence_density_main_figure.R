@@ -97,13 +97,13 @@ kmer_mapping_pos <- kmer_mapping_pos[kmer_mapping_pos$MAPQ > 0, ]
 kmer_hist_data <- (hist(kmer_mapping_pos$POS, breaks = 35, plot = FALSE))
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 8, units = "in", res = 100)
+png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 5.8, units = "in", res = 100)
 
 # Resetting the plotting page
 grid.newpage()
 
 # Creating the layout for the whole figure
-pushViewport(viewport(layout = grid.layout(nrow = 8, ncol = 1, heights = unit(c(4, 1.5, 4, 0.3, 4, 0.3, 4, 1.5), "null")),
+pushViewport(viewport(layout = grid.layout(nrow = 8, ncol = 1, heights = unit(c(4, 1.5, 4, 0.3, 4, 0.3, 4, 2), "null")),
 		      name = "main"))
 
 # Drawing the genome-wide Manhattan plots
