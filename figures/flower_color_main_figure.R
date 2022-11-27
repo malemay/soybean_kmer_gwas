@@ -52,7 +52,7 @@ grange <- as.numeric(strsplit(sub(".*:", "", plotting_range), "-")[[1]])
 source("figures/main_figure_functions.R")
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 10, units = "in", res = 100)
+png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 10, units = "in", res = 200)
 
 # Resetting the plotting page
 grid.newpage()
@@ -67,7 +67,8 @@ grid.text("(a)", x = 0.02, y = 0.95)
 draw_manhattan(list(paragraph_gwide_manhattan, kmers_gwide_manhattan), 
 	       sigline_regexp  = "sigline_1",
 	       siglabel_regexp = "siglabel_1",
-	       labels = c("SVs", "k-mers"), fontsize = 11)
+	       label_pos = 0.01,
+	       labels = c("SVs", "k-mers"), fontsize = 10)
 
 
 # Drawing the zoomed-in Manhattan plots
@@ -75,8 +76,9 @@ seekViewport("main")
 pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
 draw_zoomed(list(paragraph_zoomed_manhattan, kmers_zoomed_manhattan),
+	    label_pos = 0.01,
 	    labels = c("SVs", "k-mers"),
-	    fontsize = 11)
+	    fontsize = 10)
 
 # Plotting the gene model
 seekViewport("main")

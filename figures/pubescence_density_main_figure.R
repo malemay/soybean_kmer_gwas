@@ -97,13 +97,13 @@ kmer_mapping_pos <- kmer_mapping_pos[kmer_mapping_pos$MAPQ > 0, ]
 kmer_hist_data <- (hist(kmer_mapping_pos$POS, breaks = 35, plot = FALSE))
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 5.8, units = "in", res = 100)
+png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 5.8, units = "in", res = 200)
 
 # Resetting the plotting page
 grid.newpage()
 
 # Creating the layout for the whole figure
-pushViewport(viewport(layout = grid.layout(nrow = 8, ncol = 1, heights = unit(c(4, 1.5, 4, 0.3, 4, 0.3, 4, 2), "null")),
+pushViewport(viewport(layout = grid.layout(nrow = 8, ncol = 1, heights = unit(c(4, 1.8, 4, 0.2, 4, 0.2, 4, 1.8), "null")),
 		      name = "main"))
 
 # Drawing the genome-wide Manhattan plots
@@ -113,21 +113,21 @@ draw_manhattan(list(kmers_gwide_manhattan),
 	       sigline_regexp = "sigline_3",
 	       siglabel_regexp = "siglabel_3",
 	       labels = "",
-	       fontsize = 11)
+	       fontsize = 10)
 
 
 # Drawing the zoomed-in Manhattan plots
 seekViewport("main")
 pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
-draw_zoomed(list(kmers_zoomed_manhattan), labels = "", fontsize = 11, xaxis = FALSE)
+draw_zoomed(list(kmers_zoomed_manhattan), labels = "", fontsize = 10, xaxis = FALSE)
 
 # Push a viewport to plot the coverage data
 seekViewport("main")
 pushViewport(viewport(layout.pos.row = 5))
 grid.text("(c)", x = 0.02, y = 0.95)
 pushViewport(plotViewport(c(0.5, 4.5, 0.5, 0.5), xscale = kmers_zoomed_manhattan$vp$xscale, yscale = c(0, 6.9)))
-grid.yaxis(gp = gpar(fontsize = 11))
+grid.yaxis(gp = gpar(fontsize = 10))
 grid.rect()
 
 # Plotting the data
@@ -157,7 +157,7 @@ grid.text("Normal pubescence", x = 0.06, y = 0.835, hjust = 0,
 	  gp = gpar(fontsize = 8))
 
 # Adding the y-axis label
-grid.text("Sequencing depth (X)", x = unit(-3, "lines"), rot = 90, gp = gpar(fontsize = 11))
+grid.text("Copy number", x = unit(-3, "lines"), rot = 90, gp = gpar(fontsize = 10))
 
 # Plotting the positions of the mapped reads
 seekViewport("main")
@@ -194,7 +194,7 @@ grid.histogram <- function(x, xscale, xlabel, ylabel, fontsize) {
 
 grid.histogram(kmer_hist_data, xscale = kmers_zoomed_manhattan$vp$xscale,
 	       xlabel = "Position along Gm12 (Mb)", ylabel = "Number of reads",
-	       fontsize = 11)
+	       fontsize = 10)
 
 dev.off()
 

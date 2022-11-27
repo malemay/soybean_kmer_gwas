@@ -1,5 +1,5 @@
 # Creating a function that plots only the relevant data from a genome-wide Manahttan plot
-draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.02,
+draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.01,
 			   xaxis = TRUE,
 			   sigline_regexp = "sigline", siglabel_regexp = "siglabel") {
 
@@ -38,7 +38,7 @@ draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.02,
 		}
 
 		# Drawing the label for that plot in the top-left corner
-		grid.text(labels[i], x = label_pos, y = 0.87, just = 0)
+		grid.text(labels[i], x = label_pos, y = 0.87, just = 0, gp = gpar(fontsize = fontsize))
 
 		# Drawing the y-axis label
 		grid.text(expression(-log[10](italic(p))), x = grid::unit(-3, "lines"), rot = 90, gp = gpar(fontsize = fontsize))
@@ -50,7 +50,7 @@ draw_manhattan <- function(mplots, labels, fontsize = 10, label_pos = 0.02,
 }
 
 # A function that draws a set of zoomed-in Manhattan plots using common x-scale coordinates and x-axis
-draw_zoomed <- function(mgrobs, labels, fontsize = 10, xaxis = TRUE) {
+draw_zoomed <- function(mgrobs, labels, label_pos = 0.01, fontsize = 10, xaxis = TRUE) {
 
 	stopifnot(length(labels) == length(mgrobs))
 
@@ -83,7 +83,7 @@ draw_zoomed <- function(mgrobs, labels, fontsize = 10, xaxis = TRUE) {
 		}
 
 		# Drawing the label for that plot in the top-left corner
-		grid.text(labels[i], x = 0.02, y = 0.87, just = 0)
+		grid.text(labels[i], x = label_pos, y = 0.87, just = 0, gp = gpar(fontsize = fontsize))
 
 		# Drawing the y-axis label
 		grid.text(expression(-log[10](italic(p))), x = grid::unit(-3, "lines"), rot = 90, gp = gpar(fontsize = fontsize))

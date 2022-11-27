@@ -33,7 +33,7 @@ names(kmer_positions) <- kmer_positions$kmer_canon
 gsorted_ld <- ld_sort(clustered_ld, kmer_positions, sort_param = "position")
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", trait, "_main_figure.png"), width = 6, height = 6.5, units = "in", res = 100)
+png(paste0("figures/", trait, "_main_figure.png"), width = 6, height = 6.5, units = "in", res = 200)
 
 # Resetting the plotting page
 grid.newpage()
@@ -47,7 +47,7 @@ grid.text("(a)", x = 0.02, y = 0.94)
 draw_manhattan(list(kmers_gwide_manhattan), 
 	       sigline_regexp = "sigline_[1356]",
 	       siglabel_regexp = "siglabel_[1356]",
-	       labels = "", fontsize = 11)
+	       labels = "", fontsize = 10)
 # Adjusting the position of the label for stGm16
 #grid.edit("manhattan_siglabel_1", hjust = 1.2)
 grid.edit("manhattan_siglabel_1", y = unit(3.5, "native"))

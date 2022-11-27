@@ -41,7 +41,7 @@ exons <- readRDS("refgenome/gmax_v4_exons.rds")
 source("figures/main_figure_functions.R")
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 10, units = "in", res = 100)
+png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 10, units = "in", res = 200)
 
 # Resetting the plotting page
 grid.newpage()
@@ -56,7 +56,9 @@ grid.text("(a)", x = 0.02, y = 0.95)
 draw_manhattan(list(platypus_gwide_manhattan, kmers_gwide_manhattan), 
 	       sigline_regexp = "sigline_[23]",
 	       siglabel_regexp = "siglabel_[23]",
-	       labels = c("SNP/indels", "k-mers"), fontsize = 11)
+	       label_pos = 0.01,
+	       labels = c("SNP/indels", "k-mers"),
+	       fontsize = 10)
 
 
 # Drawing the zoomed-in Manhattan plots at the locus
@@ -64,8 +66,9 @@ seekViewport("main")
 pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
 draw_zoomed(list(platypus_zoomed_manhattan, kmers_zoomed_manhattan),
+	    label_pos = 0.01,
 	    labels = c("SNP/indels", "k-mers"),
-	    fontsize = 11)
+	    fontsize = 10)
 
 # Plotting the gene model along with p-values at this location
 seekViewport("main")
@@ -91,7 +94,7 @@ grid.draw(transcriptsGrob(genes = genes,
 seekViewport("main")
 pushViewport(viewport(layout.pos.row = 7, name = "zoomed_manhattan"))
 grid.text("(d)", x = 0.02, y = 0.95)
-draw_zoomed(list(platypus_gene_manhattan, kmers_gene_manhattan), c("Platypus", "k-mers"), fontsize = 11)
+draw_zoomed(list(platypus_gene_manhattan, kmers_gene_manhattan), c("SNP/indels", "k-mers"), fontsize = 10)
 
 dev.off()
 
