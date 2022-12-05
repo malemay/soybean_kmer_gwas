@@ -150,10 +150,53 @@ loci_table$locus <- paste0("\\textit{", loci_table$locus, "}")
 # Formatting the gene names with an initial capital
 loci_table$gene_name_v4 <- sub("^g", "G", loci_table$gene_name_v4)
 
+# Adding the type of causal variant using a lookup table
+causal_lookup <- c("flower_color_W1" = "Deletion \\citep{zabala2007}",
+		   "pubescence_color_T" = "Indel \\citep{zabala2003}",
+		   "pubescence_color_Td" = "SNP \\citep{yan2020}",
+		   "seed_coat_color_I" = "Inversion/duplication \\citep{tuteja2008}",
+		   "seed_coat_color_G" = "SNP \\citep{wang2018}",
+		   "seed_coat_color_T" = "Indel \\citep{zabala2003}",
+		   "seed_coat_color_R" = "SNPs and indels \\citep{gillman2011}",
+		   "stem_termination_Dt1" = "SNPs \\citep{liu2010}",
+		   "stem_termination_Dt2" = "SNPs \\citep{ping2014}",
+		   "stem_termination_E3" = "Various types \\citep{tardivel2019}",
+		   "hilum_color_T" = "Indel \\citep{zabala2003}",
+		   "hilum_color_I" = "Inversion/duplication \\citep{tuteja2008}",
+		   "hilum_color_R" = "SNPs and indels \\citep{gillman2011}",
+		   "hilum_color_W1" = "Deletion \\citep{zabala2007}",
+		   "pubescence_density_Ps" = "CNV \\citep{liu2020ps}",
+		   "pubescence_density_Pd1" = "SNP \\citep{liu2020ps}",
+		   "pubescence_density_P1" = "SNP \\citep{liu2020ps}",
+		   "seed_coat_luster_B" = "CNV \\citep{gijzen2006}",
+		   "seed_coat_luster_I" = "Inversion/duplication \\citep{tuteja2008}",
+		   "maturity_group_E1" = "Various types \\citep{tardivel2019}",
+		   "maturity_group_E2" = "Various types \\citep{tardivel2019}",
+		   "maturity_group_E3" = "Various types \\citep{tardivel2019}",
+		   "maturity_group_E4" = "Various types \\citep{tardivel2019}",
+		   "oil_oilGm20" = "Deletion \\citep{fliege2022}",
+		   "oil_oilGm15" = "SNPs and indels \\citep{zhang2020}",
+		   "protein_proteinGm20" = "Deletion \\citep{fliege2022}",
+		   "protein_proteinGm15" = "SNPs and indels \\citep{zhang2020}")
+
+# Add the column for the causal variant
+loci_table$causal <- causal_lookup[loci_table$id]
+
+# Adding a note for loci that are not discussed in the main text
+nomain <- c("seed_coat_color_T", "seed_coat_color_R", "stem_termination_Dt2",
+	    "stem_termination_E3", "hilum_color_W1", "pubescence_density_Pd1",
+	    "pubescence_density_P1", "seed_coat_luster_I")
+
+loci_table$original_trait <- paste0(loci_table$original_trait, ifelse(loci_table$id %in% nomain, "\\tnote{c}", ""))
+
+# Reordering the table based on the causal_lookup vector
+loci_table$id <- factor(loci_table$id, levels = names(causal_lookup))
+loci_table <- loci_table[order(loci_table$id), ]
+
 loci_table$id <- NULL
 
 # Formatting the columns
-colnames(loci_table) <- c("Trait", "Locus", "Gene", "platypus", "vg", "paragraph", "kmers")
+colnames(loci_table) <- c("Trait", "Locus", "Gene", "platypus", "vg", "paragraph", "kmers", "Causal")
 
 # Writing the table to file
 write.table(loci_table, file = "tables/loci_table.csv", sep = ",", row.names = FALSE,
