@@ -12,6 +12,7 @@ cnv_analysis/cnv_luster_gwas/
 *.fai
 *fastq.gz
 *fna
+figshare_data/
 gwas_results/kmer_data
 gwas_results/kmers
 gwas_results/platypus
