@@ -4,6 +4,8 @@ additional_files/variables.txt
 *aux
 *bam
 *bam.bai
+*bbl
+*blg
 *bwt
 cnv_analysis/cnv_luster_gwas/
 *.csv

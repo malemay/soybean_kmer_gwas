@@ -1,5 +1,6 @@
 RSCRIPT := ~/.local/bin/Rscript --quiet
 PDFLATEX := ~/.local/texlive/2022/bin/x86_64-linux/pdflatex
+BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 
 SDIR := additional_files
 
@@ -25,12 +26,12 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 maintables := tables/loci_table.csv
 
 # Getting the LD png figures to generate dynamically from additional_files/additional_file_1.tex
-manhattanplots := $(shell grep '^\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/\\manhattanplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_manhattan.png)
+manhattanplots := $(shell grep '^[%]*\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/[%]*\\manhattanplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_manhattan.png)
 scaffoldplots := $(shell grep '^\\manhattanplot' $(addfile) | grep scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
-ldplots := $(shell grep '^\\ldplot' $(addfile) | sed -E 's/\\ldplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_ld.png)
-geneplots := $(shell grep '^\\geneplot' $(addfile) | sed -E 's/\\geneplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_gene.png)
-kmerplots := $(shell grep '^\\kmerplot' $(addfile) | sed -E 's/\\kmerplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_kmers.png)
-signalplots := $(shell grep '^\\signalplot' $(addfile) | sed -E 's/\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_signal.png)
+ldplots := $(shell grep '^[%]*\\ldplot' $(addfile) | sed -E 's/[%]*\\ldplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_ld.png)
+geneplots := $(shell grep '^[%]*\\geneplot' $(addfile) | sed -E 's/[%]*\\geneplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_gene.png)
+kmerplots := $(shell grep '^[%]*\\kmerplot' $(addfile) | sed -E 's/[%]*\\kmerplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_kmers.png)
+signalplots := $(shell grep '^[%]*\\signalplot' $(addfile) | sed -E 's/[%]*\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_signal.png)
 
 supfigures := $(manhattanplots) \
 	$(signalplots) \
@@ -87,7 +88,7 @@ $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex \
 	$(supfigures) \
 	$(suptables) \
 	$(SDIR)/variables.txt
-	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
+	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
 
 # Creating the list of variables stored in additional_files/variables.txt, for retrival in additional file 1
 $(SDIR)/variables.txt: $(SDIR)/make_variables.R $(ldplots) phenotypic_data/phenotypic_data.csv utilities/trait_names.txt $(signals_gr)
