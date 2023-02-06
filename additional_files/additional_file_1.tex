@@ -1,5 +1,11 @@
-\chapter{Supplemental data}
+\chapter*{Supplemental data}
 \label{supdata}
+
+% Format figure and table numbers to follow S1, S2, ...
+\renewcommand\thefigure{S\arabic{figure}} 
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\renewcommand\thetable{S\arabic{table}} 
 
 % Reading the contents of the variables.txt file first
 \DTLloaddb[noheader, keys={key,value}]{variables}{variables.txt}
@@ -7,10 +13,10 @@
 \newcommand{\getvar}[1]{\DTLfetch{variables}{key}{#1}{value}}
 
 % Detailed methods for some aspects of the paper
-\section{Detailed methods}
+\section*{Detailed methods}
 \label{annexe-sv-gwas-detailed-methods}
 
-\subsection{Discovery of structural variation from Illumina data}
+\subsection*{Discovery of structural variation from Illumina data}
 \label{sv-gwas-sv-discovery-illumina}
 
 We used the Illumina WGS data of the 389 selected \emph{G. max} accessions as a
@@ -63,7 +69,7 @@ a sliding window of 15 bp in SVmerge.  We proceeded this way because using a
 sliding window of 15 bp on the outputs of all tools without pre-merging
 resulted in a computationally intractable number of pairwise comparisons.
 
-\subsection{Discovery of structural variation from Oxford Nanopore sequencing data}
+\subsection*{Discovery of structural variation from Oxford Nanopore sequencing data}
 \label{sv-gwas-sv-discovery-ont}
 
 We used SVs discovered among 17 Canadian soybean cultivars sequenced using
@@ -79,7 +85,7 @@ discovered from the Illumina data was that whenever both technologies discover
 the same variants, Illumina data is likely to be more precise given its higher
 basecalling accuracy.
 
-\subsection{Discovery of structural variation from high-quality assemblies}
+\subsection*{Discovery of structural variation from high-quality assemblies}
 \label{sv-gwas-sv-discovery-assembly}
 
 In addition to using the Illumina data from 389 accessions, we also used
@@ -116,7 +122,7 @@ Finally, we normalized the VCF files using \texttt{bcftools norm} and merged
 them using SVmerge to obtain a single VCF file of variants discovered through
 comparison of high-quality genome assemblies.
 
-\subsection{Genotyping structural variation using Paragraph}
+\subsection*{Genotyping structural variation using Paragraph}
 \label{sv-gwas-sv-genotyping-paragraph}
 
 We used Paragraph v. 2.4a \citep{chen2019} as one of two SV genotyping programs
@@ -141,7 +147,7 @@ from less than two reads to missing and by removing variants with minor allele
 frequency < 0.02 or a proportion of missing data > 0.5. The resulting dataset
 of 186,306 SVs was used for GWAS.
 
-\subsection{Genotyping structural variation using the vg toolkit}
+\subsection*{Genotyping structural variation using the vg toolkit}
 \label{sv-gwas-sv-genotyping-vg}
 
 We also used the vg toolkit v. 1.41.0 \citep{hickey2020} and its Giraffe
@@ -178,7 +184,7 @@ fraction of missing genotypes $\leq$ 0.5 and a minor allele frequency $\geq$
 0.02. The resulting VCF file, which was used for GWAS, contained 51,960 SVs.
 
 
-\subsection{Comparison of WGS and SoySNP50K genotypes}
+\subsection*{Comparison of WGS and SoySNP50K genotypes}
 \label{annexe-sv-gwas-soysnp50k}
 When we first analyzed the results from the GWAS analysis on all 389 samples,
 we found discrepancies between the haplotypes at some loci and the expected
@@ -206,7 +212,7 @@ concordance between WGS data and SoySNP50K genotypes is included in
 Additional file 2.
 
 % Detailed results that are not meant to fit the main paper
-\section{Detailed results}
+\section*{Detailed results}
 \label{annexe-sv-gwas-detailed-results}
 
 This section provides a more detailed account of some the the results obtained
@@ -218,7 +224,7 @@ at all loci using all four methods is presented in Table \ref{signals_table}.
 Readers are invited to refer to this table as we go over the results obtained
 for each trait below.
 
-\subsection{Flower color}
+\subsection*{Flower color}
 \label{sv-gwas-flower-color}
 
 We conducted a single GWAS analysis contrasting purple and white flower colors
@@ -240,7 +246,7 @@ of those \textit{k}-mers showed that all \textit{k}-mers formed a single LD bloc
 linked to the \textit{W1} locus (Figure \ref{flower_color_ld}), ruling out the
 presence of a second locus controlling that trait in this population.
 
-\subsection{Pubescence color}
+\subsection*{Pubescence color}
 \label{sv-gwas-pubescence-color}
 
 We conducted two GWAS analyses on pubescence color. The first analysis
@@ -273,7 +279,7 @@ and instead focus on the effect of the \emph{Td} locus on pubescence color
 can be viewed in figures \ref{pubescence-color-main-figure}, \ref{pubescence_color_nogray_Td_signal} and
 \ref{pubescence_color_nogray_Td_gene}). 
 
-\subsection{Seed coat color}
+\subsection*{Seed coat color}
 \label{sv-gwas-seed-coat-color}
 
 We conducted two different GWAS analyses on seed coat color. The first GWAS
@@ -297,7 +303,7 @@ this analysis can be viewed in figures \ref{seed-coat-color-main-figure},
 \ref{seed_coat_color_greenyellow_G_signal} and
 \ref{seed_coat_color_greenyellow_G_gene}.
 
-\subsection{Stem termination type}
+\subsection*{Stem termination type}
 \label{sv-gwas-stem-termination}
 
 We conducted two GWAS analyses on stem termination type. The first GWAS
@@ -316,7 +322,7 @@ detect signals at the \textit{E3} locus, which is more commonly associated
 with maturity but was mentioned as associated with stem termination type by
 \cite{bandillo2017}.
 
-\subsection{Hilum color}
+\subsection*{Hilum color}
 \label{sv-gwas-hilum-color}
 
 We conducted three different GWAS analyses on hilum color. The first GWAS
@@ -365,7 +371,7 @@ phenotypes in order to detect a signal at the \emph{O} locus, however this GWAS
 did not detect associations at any of the classical loci (Figure
 \ref{hilum_color_rbr_manhattan}).
 
-\subsection{Pod color}
+\subsection*{Pod color}
 \label{sv-gwas-pod-color}
 
 We conducted two GWAS analyses on pod color. The first analysis included four
@@ -388,7 +394,7 @@ not in LD with any other signal (Figures \ref{pod_color_blbr_manhattan},
 27 genes (Figure \ref{pod_color_blbr_pdcGm15_signal}), but none of those was
 annotated as having an obvious role in controlling pod color.
 
-\subsection{Pubescence form}
+\subsection*{Pubescence form}
 \label{sv-gwas-pubesence-form}
 
 We conducted two different GWAS on pubescence form. The first GWAS used three
@@ -413,7 +419,7 @@ this analysis only detected weak signals at the \emph{Pa1} locus (Figure
 \ref{pubescence_form_noerect_manhattan}) and its results were therefore not
 analyzed further.
 
-\subsection{Pubescence density}
+\subsection*{Pubescence density}
 \label{sv-gwas-pubescence-density}
 
 We conducted a single GWAS analysis on pubescence density (Table
@@ -430,7 +436,7 @@ total of about 42 kb. Detailed results at this locus can be viewed in figures
 \ref{pubescence_density_Ps_signal}, \ref{pubescence_density_Ps_gene}, and
 \ref{pubescence-density-main-figure}.
 
-\subsection{Seed coat luster}
+\subsection*{Seed coat luster}
 \label{sv-gwas-seed-coat-luster}
 
 We performed three different GWAS analyses on seed coat luster (Table
@@ -467,7 +473,7 @@ of the variants found to the presence of copy number variation.
 with seed coat luster, however we did not find evidence for such an association
 in our dataset.
 
-\subsection{Maturity group}
+\subsection*{Maturity group}
 \label{sv-gwas-maturity-group}
 
 A GWAS conducted on maturity group did not yield any significant signals
@@ -475,7 +481,7 @@ overlapping the classical E1-E4 loci using any of the four GWAS approaches,
 although signals at the E1 locus did approach significance in the Platypus
 analysis (Table \ref{MATURITY.GROUP_gwas_table}, Figure \ref{maturity_group_manhattan}).
 
-\subsection{Resistance to \emph{Phytophthora sojae}}
+\subsection*{Resistance to \emph{Phytophthora sojae}}
 \label{sv-gwas-resistance}
 
 We conducted a single GWAS analysis on horizontal resistance to
@@ -484,7 +490,7 @@ measure of resistance. Detailed results can be viewed in figures
 \ref{corrected_dry_weight_manhattan} and
 \ref{corrected_dry_weight_cdwGm15_signal}.
 
-\subsection{Seed oil content}
+\subsection*{Seed oil content}
 \label{sv-gwas-seed-oil-content}
 
 We conducted a GWAS analysis on the seed oil content data obtained from the
@@ -501,7 +507,7 @@ away from Glyma.15g049200, the sugar transporter gene identified by
 \cite{zhang2020} as associated with that locus. Therefore, the significantly
 associated \emph{k}-mers were not linked to the causal variation at that locus.
 
-\subsection{Seed protein content}
+\subsection*{Seed protein content}
 \label{sv-gwas-seed-protein-content}
 
 Similarly to seed oil content, we conducted a GWAS on seed protein content
@@ -518,7 +524,7 @@ represent the causal variation at that locus.
 \clearpage
 
 % Supplemental tables
-\section{Supplemental tables}
+\section*{Supplemental tables}
 \label{annexe-sv-gwas-tables}
 
 \clearpage
@@ -592,7 +598,7 @@ represent the causal variation at that locus.
 \clearpage
 
 % Supplemental figures
-\section{Supplemental figures}
+\section*{Supplemental figures}
 \label{annexe-sv-gwas-figures}
 
 % Figures mentioned in the main text

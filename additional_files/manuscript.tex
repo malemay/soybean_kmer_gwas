@@ -1,6 +1,7 @@
 \documentclass[12pt]{report}
 
 \usepackage[utf8]{inputenc} % declare encoding as utf8
+\usepackage[T1]{fontenc} % declare encoding as utf8
 \usepackage{graphicx} % to enable \includegraphics
 \usepackage{flafter} % to make sure floats appear after their position in text
 \usepackage{pdflscape} % allow some pages to be in landscape orientation
@@ -24,33 +25,18 @@
 \usepackage{datatool} % allows fetching key-value pairs from a text file
 \usepackage[sectionbib]{natbib}
 \usepackage{chapterbib}
+\usepackage{setspace}
 
 % Remove indent for new paragraphs
 \setlength{\parindent}{0pt}
 
+% Adjust line spacing to 1.5
+\onehalfspacing
+
 % Setting the separator to use with datatool
 \DTLsetseparator{ = }
 
-% Formatting the table of contents/subsection
-\renewcommand{\contentsname}{Supplemental methods}
-
-% Formatting the list of tables
-\renewcommand{\listtablename}{Supplemental tables} % Write "Supplemental tables" instead of "List of tables"
-\renewcommand\cfttabpresnum{Table } % Write "Table" before table number in list of tables
-\setlength{\cfttabnumwidth}{6em} % Spacing before captions
-\setlength{\cftbeforefigskip}{1ex} % Vertical spacing between entries
-
-% Formatting the list of figures
-\renewcommand{\listfigurename}{Supplemental figures} % Write "Supplemental figures" instead of "List of figures"
-\renewcommand\cftfigpresnum{Figure } % Write "Figure" before fig number in list of figures
-\setlength{\cftfignumwidth}{6em} % Spacing before captions
-\setlength{\cftbeforetabskip}{1ex} % Vertical spacing between entries
-
 \graphicspath{ {../figures/} } % tell Latex to look for figures in figures/
-
-% Format figure and table numbers to follow S1, S2, ...
-\renewcommand\thefigure{S\arabic{figure}} 
-\renewcommand\thetable{S\arabic{table}} 
 
 % Defining new environments as I will always want the figures centered
 \newenvironment{cfigure}
