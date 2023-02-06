@@ -56,7 +56,7 @@ genetables := $(allgenes) $(topgenes) $(nearestgene)
 phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo gwas_results/kmers/{}_phenodata.rds)
 
 
-all: $(SDIR)/additional_file_1.pdf $(mainfigures) $(maintables) $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv
+all: $(SDIR)/manuscript.pdf $(mainfigures) $(maintables) $(genetables) $(phenodata) $(SDIR)/supplemental_file_1.csv $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv
 
 GENETABLES : $(genetables)
 SUPTABLES: $(suptables)
@@ -84,11 +84,13 @@ $(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(pro
 .PRECIOUS : $(topgranges)
 
 # Compiling the Supplemental Data file from the .tex file
-$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex \
+$(SDIR)/manuscript.pdf: $(SDIR)/manuscript.tex \
+	$(SDIR)/main_text.tex \
+	$(SDIR)/additional_file_1.tex \
 	$(supfigures) \
 	$(suptables) \
 	$(SDIR)/variables.txt
-	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
+	cd $(SDIR) ; $(PDFLATEX) manuscript.tex ; $(BIBTEX) main_text ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) manuscript.tex ; $(PDFLATEX) manuscript.tex
 
 # Creating the list of variables stored in additional_files/variables.txt, for retrival in additional file 1
 $(SDIR)/variables.txt: $(SDIR)/make_variables.R $(ldplots) phenotypic_data/phenotypic_data.csv utilities/trait_names.txt $(signals_gr)

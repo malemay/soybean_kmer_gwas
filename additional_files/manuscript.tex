@@ -1,0 +1,247 @@
+\documentclass[12pt]{report}
+
+\usepackage[utf8]{inputenc} % declare encoding as utf8
+\usepackage{graphicx} % to enable \includegraphics
+\usepackage{flafter} % to make sure floats appear after their position in text
+\usepackage{pdflscape} % allow some pages to be in landscape orientation
+\usepackage{layout} % for debugging purposes, looking at page layout
+\usepackage[margin=1in]{geometry} % leaves more space for text body
+\usepackage[hidelinks]{hyperref} % hyperlinks from list of figures/tables
+\usepackage[labelfont=bf]{caption} % format captions and make links go to figure instead of caption
+\usepackage{csvsimple} % read and display csv files as tables
+\usepackage{booktabs} % prettier tables
+\usepackage{threeparttable} % easy addition of footnotes below tables
+\usepackage{textcomp} % makes the \textdegree command available
+\usepackage{tocloft} % formatting the lists of tables and figures
+\usepackage{xcolor} % enable text coloring
+\usepackage{calc} % makes \widthof available to set the width of the last column
+\usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
+\usepackage{longtable} % allow tables to span more than one page
+\usepackage{threeparttablex} % threeparttable for longtable
+\usepackage{capt-of} % put caption on next page
+\usepackage{ccaption}
+\usepackage{listings}
+\usepackage{datatool} % allows fetching key-value pairs from a text file
+\usepackage[sectionbib]{natbib}
+\usepackage{chapterbib}
+
+% Remove indent for new paragraphs
+\setlength{\parindent}{0pt}
+
+% Setting the separator to use with datatool
+\DTLsetseparator{ = }
+
+% Formatting the table of contents/subsection
+\renewcommand{\contentsname}{Supplemental methods}
+
+% Formatting the list of tables
+\renewcommand{\listtablename}{Supplemental tables} % Write "Supplemental tables" instead of "List of tables"
+\renewcommand\cfttabpresnum{Table } % Write "Table" before table number in list of tables
+\setlength{\cfttabnumwidth}{6em} % Spacing before captions
+\setlength{\cftbeforefigskip}{1ex} % Vertical spacing between entries
+
+% Formatting the list of figures
+\renewcommand{\listfigurename}{Supplemental figures} % Write "Supplemental figures" instead of "List of figures"
+\renewcommand\cftfigpresnum{Figure } % Write "Figure" before fig number in list of figures
+\setlength{\cftfignumwidth}{6em} % Spacing before captions
+\setlength{\cftbeforetabskip}{1ex} % Vertical spacing between entries
+
+\graphicspath{ {../figures/} } % tell Latex to look for figures in figures/
+
+% Format figure and table numbers to follow S1, S2, ...
+\renewcommand\thefigure{S\arabic{figure}} 
+\renewcommand\thetable{S\arabic{table}} 
+
+% Defining new environments as I will always want the figures centered
+\newenvironment{cfigure}
+	{\begin{figure} \centering}
+	{\end{figure}}
+
+\newenvironment{lsfigure}
+	{\begin{landscape} \begin{figure} \centering}
+	{\end{figure} \end{landscape}}
+
+\setcounter{totalnumber}{1} % Allow a maximum of one float (table/figure) per page
+
+\setlength{\parskip}{2ex}
+
+% Defining a command to generate a table of phenotypic data for a single gwas
+\newcommand{\gwastableone}[2]{
+\begin{table}
+	\caption[Phenotypic data used for the GWAS analysis of #2]%
+	{Phenotype frequency and numerical coding of phenotypic data used for the GWAS analysis of #2.
+	``NA'' indicates a missing value in the source data.
+	Dashes indicate that this phenotype was not used in the GWAS analysis.}
+	\label{#1_gwas_table}
+
+	\centering
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		/csv/separator=semicolon,
+		tabular = llc,
+		table head = \toprule Phenotype & Frequency & GWAS \\ \midrule,
+		table foot = \bottomrule]%
+		{../tables/#1_gwas_table.csv}%
+		{}%
+		{\Value & \Frequency & \GWASa}
+
+	\end{threeparttable}
+
+\end{table}
+\clearpage
+}
+
+
+% Defining a command to generate a table of phenotypic data for two gwas
+\newcommand{\gwastabletwo}[2]{
+\begin{table}
+	\caption[Phenotypic data used for the GWAS analyses of #2]%
+	{Phenotype frequency and numerical coding of phenotypic data used in two GWAS analyses of #2.
+	``NA'' indicates a missing value in the source data.
+	Dashes indicate that this phenotype was not used in the GWAS analysis.}
+	\label{#1_gwas_table}
+
+	\centering
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		/csv/separator=semicolon,
+		tabular = llcc,
+		table head = \toprule Phenotype & Frequency & GWAS \#1 & GWAS \# 2\\ \midrule,
+		table foot = \bottomrule]%
+		{../tables/#1_gwas_table.csv}%
+		{}%
+		{\Value & \Frequency & \GWASa & \GWASb}
+
+	\end{threeparttable}
+
+\end{table}
+\clearpage
+}
+
+% Defining a command to generate a table of phenotypic data for three gwas
+\newcommand{\gwastablethree}[2]{
+\begin{table}
+	\caption[Phenotypic data used for the GWAS analyses of #2]%
+	{Phenotype frequency and numerical coding of phenotypic data used in three GWAS analyses of #2.
+	``NA'' indicates a missing value in the source data.
+	Dashes indicate that this phenotype was not used in the GWAS analysis.}
+	\label{#1_gwas_table}
+
+	\centering
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		/csv/separator=semicolon,
+		tabular = llccc,
+		table head = \toprule Phenotype & Frequency & GWAS \#1 & GWAS \# 2 & GWAS \# 3\\ \midrule,
+		table foot = \bottomrule]%
+		{../tables/#1_gwas_table.csv}%
+		{}%
+		{\Value & \Frequency & \GWASa & \GWASb & \GWASc}
+
+	\end{threeparttable}
+
+\end{table}
+\clearpage
+}
+
+% Defining a command for manhattan plot figures
+\newcommand{\manhattanplot}[3]{
+\begin{cfigure}
+	\includegraphics[width = 5.8in]{#1_manhattan}
+	\caption[Manhattan plots for #2]{Manhattan plots generated from the GWAS analysis of #2 on #3 samples using four genotype datasets :
+	(a) Platypus (SNPs and indels), (b) vg (SVs), (c) Paragraph (SVs), (d) \emph{k}-mers presence/absence.
+	The x-axis shows the position along the reference assembly version 4 of Williams82.
+	Each point shows the $-\log_{10} (p)$ associated with a particular marker or \emph{k}-mer.
+	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
+	Vertical dotted lines indicate the position of signals associated with the trait.
+	Documented loci are colored according to whether they were found (green) or not (red) by a particular approach.
+	The ``Gm'' prefix has been left out of chromosome names for simplicity.
+	}
+	\label{#1_manhattan}
+\end{cfigure}
+
+\clearpage}
+
+% Defining a new command for signal plot figures
+\newcommand{\signalplot}[4]{
+\begin{cfigure}
+	\includegraphics[width = 5.8in]{#1_signal}
+	\caption[Zoomed-in Manhattan plots of the #3 locus]{Zoomed-in Manhattan plots of signals detected by the GWAS analysis of #2 at the #3 locus using four genotype datasets:
+	(b) Platypus (SNPs and indels), (c) vg (SVs), (d) Paragraph (SVs), (e) \emph{k}-mers presence/absence.
+	Panel (a) shows gene models over the genomic interval.
+	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
+	#4
+	Gray shaded rectangles indicate the region delimited by the top 5\% (Paragraph and vg) or top 1\% (Platypus and \emph{k}-mers) associations in the signal region.
+	In the case of Platypus, blue points denote markers used in the original analysis, whereas red points denote points that had originally been pruned but whose
+	\emph{p}-values were computed after signal discovery.
+	}
+	\label{#1_signal}
+\end{cfigure}
+
+\clearpage}
+
+% Defining a new command for gene plot figures
+\newcommand{\geneplot}[5]{
+\begin{cfigure}
+	\includegraphics[width = 5.8in]{#1_gene}
+	\caption[Zoomed-in Manhattan plots of the #3 locus gene]%
+	{Zoomed-in Manhattan plots generated from the GWAS analysis of #2 at the #4 associated with the #3 locus using four genotype datasets:
+	(b) Platypus (SNPs and indels), (c) vg (SVs), (d) Paragraph (SVs), (e) \emph{k}-mers presence/absence.
+	#5
+	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
+	In the case of Platypus, blue points denote markers used in the original analysis, whereas red points denote points that had originally been pruned but whose
+	\emph{p}-values were computed after signal discovery.
+	Panel (a) shows gene models over the plotting interval.
+	Exons are represented by rectangles whereas introns are represented by horizontal lines.
+	Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
+	}
+	\label{#1_gene}
+\end{cfigure}
+
+\clearpage}
+
+% Defining a new command for k-mer plot figures
+\newcommand{\kmerplot}[5]{
+	\begin{cfigure}
+		\includegraphics[width = 5.8in]{#1_kmers}
+		\caption[Variants associated with significant \emph{k}-mers at the #3 locus]%
+		{Identification of #5 underlying significant \emph{k}-mers at the #2 gene associated with the #3 locus for #4.
+		(a) Gene model of #2. Exons are represented by rectangles whereas introns are represented by horizontal lines.
+		Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
+		The red rectangle identifies the region that is zoomed-in in panel (b).
+		(b) Nucleotide sequences of haplotypes observed in at least five samples across the dataset.
+		Individual nucleotides are colored according to the $-\log_{10}(p)$ of the most significant \emph{k}-mer overlapping them.
+		Dashes indicate gaps in haplotype sequence alignment whereas vertical lines indicate differences in sequence between two haplotypes.
+		(c) Contingency table of the phenotypes and haplotypes observed in the dataset. Haplotypes correspond to those shown in panel (b).}
+		\label{#1_kmers}
+	\end{cfigure}
+
+\clearpage}
+
+% Defining a new command for LD plot figures
+\newcommand{\ldplot}[3]{
+	\begin{cfigure}
+		\includegraphics[width = 5.8in]{#1_ld}
+		\caption[LD plot of significant \emph{k}-mers for #2]{Pairwise LD among #3 significant \emph{k}-mers identified for #2.
+		\emph{k}-mers are sorted along the y-axis according to their putative position along the reference assembly version 4 of Williams82,
+		as identified by ``Gm'' chromosome labels.
+		Sequences that lack a ``Gm'' label (top of the y-axis) represent unanchored scaffolds.
+		\emph{k}-mers are represented in the same order along the x- and y-axis.
+		The colored rectangles drawn below the x-axis represent the $-\log_{10} (p)$ of each \emph{k}-mer.}
+		\label{#1_ld}
+	\end{cfigure}
+
+\clearpage}
+
+% END OF PREAMBLE
+
+\begin{document}
+
+\include{main_text}
+\include{additional_file_1}
+
+\end{document}
+
