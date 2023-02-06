@@ -21,30 +21,28 @@ François Belzile\textsuperscript{1,2,3}
 
 Genome-wide association studies (GWAS) are powerful statistical methods
 that detect associations between genotype and phenotype at genome scale. Despite
-their power, GWAS often fail to pinpoint the causal variant or the gene
-controlling a trait at a given locus.  Assessing genetic variants other
-than single-nucleotide polymorphisms (SNPs) may alleviate this problem
-by including functionally relevant structural variants (SVs) that are
-typically omitted from GWAS.  In this study, we assessed the potential
-of SV- and \emph{k}-mer-based GWAS by applying these methods to 13
-traits on which SNP-based GWAS had been performed previously and for
-which the causal genes and variants are known in some cases. We found
-that \emph{k}-mer-based GWAS had an impressive ability to pinpoint
+their power, GWAS frequently fail to pinpoint the causal variant or the gene
+controlling a trait at a given locus in crop species. Assessing genetic variants beyond
+single-nucleotide polymorphisms (SNPs) may alleviate this problem,
+for example by including structural variants (SVs) that may have a greater functional impact.
+In this study, we tested the potential
+of SV- and \emph{k}-mer-based GWAS in soybean by applying these methods to 13
+traits on which SNP-based GWAS had been performed previously.
+We assessed the performance of each GWAS approach based on results at loci for which
+the causal genes or variants were known from previous genetic studies. We found
+that \emph{k}-mer-based GWAS was the most versatile approach and the best at pinpointing
 causal variants or candidate genes based on the most significantly
-associated \emph{k}-mers. The ability of SNP/indel-based and SV-based
-GWAS to similarly pinpoint known variants or genes was almost
-systematically reduced compared to \emph{k}-mers.  We suggest that
-SV-based GWAS may not generally be worth the investment in time and
-computational resources required to discover and genotype such variants
-given the results obtained with \emph{k}-mer-based GWAS, which requires
-comparatively lower resources.  Moreover, analyses based on
-\emph{k}-mer GWAS identified promising candidate genes for loci related
+associated \emph{k}-mers. Given the traits that we analyzed, SV-based GWAS did not add any value
+compared to \textit{k}-mer-based GWAS and may not generally be worth the investment in time and
+computational resources required to discover and genotype such variants.
+Moreover, \textit{k}-mer-based analyses
+identified promising candidate genes for loci related
 to pod color, pubescence form, and resistance to the oomycete
-\textit{Phytophthora sojae}.  Despite these encouraging results,
+\textit{Phytophthora sojae}. Despite promising results,
 significant challenges remain regarding the downstream analysis of
-\emph{k}-mer GWAS, notably in linking significant \emph{k}-mers to
+\emph{k}-mer-based GWAS, notably in associating significant \emph{k}-mers with
 sequence variation and ensuring that all variation types are adequately
-detected from \emph{k}-mer occurrence patterns.  Our results suggest
+detected from \emph{k}-mer occurrence patterns. Together, our results suggest
 that coupling \emph{k}-mer- and SNP/indel-based GWAS may represent a
 powerful approach for discovering candidate genes in crop species.
 
@@ -53,62 +51,57 @@ powerful approach for discovering candidate genes in crop species.
 
 Genome-wide association studies (GWAS) are analytical approaches that detect
 statistical associations between phenotypic observations for a trait of
-interest and the genotypes of markers or variants distributed throughout the
-genome \citep{tam2019}.  Such studies have been used for over 15 years
-\citep{visscher2012} and have enabled significant advances in our understanding
+interest and the genotypes of variants distributed throughout the
+genome \citep{tam2019}. This approach has been used for over 15 years
+\citep{visscher2012} and has enabled significant advances in our understanding
 of the genetic architecture of traits involved in human health
-\citep[e.g.][]{wellcome2007gwas} and crop \citep{tibbs2021} or animal
+\citep[e.g.][]{wellcome2007gwas} and crop \citep{tibbs2021} and animal
 \citep{ma2019} production, among others.
 
 Despite their power and convenience for finding significantly associated loci,
-GWAS analyses often fail to pinpoint the gene(s) associated with a trait and
-the causal variant(s) involved \citep{tam2019}.  One possible reason for this
-failure is that most GWAS do not include the causal variant itself among the
-genotypes assessed \citep{tibbs2021}. This could be either because the analysis
+GWAS analyses frequently fail to pinpoint the gene(s) associated with a trait and
+the causal variant(s) involved \citep{tam2019}. One possible reason for this
+is that many GWAS analyses do not include the causal variant itself in their variant dataset
+\citep{tibbs2021}. This could be either because the analysis
 is restricted to a particular type of variant, such as single-nucleotide
 polymorphisms (SNPs), or because the set of markers/variants genotyped in the
 association panel is limited by the technology being used
-\citep[e.g.][]{bandillo2015, sonah2015}.  Despite these limitations, variants
-located near the gene controlling the trait should appear statistically
+\citep[e.g.][]{bandillo2015, sonah2015}. Despite this limitation, variants
+located near the gene controlling the trait often do appear statistically
 associated with the phenotype through linkage disequilibrium (LD) with the
 causal variant \citep{korte2013}.  A typical workflow then involves the
 identification of candidate genes within the haplotype blocks defined by the
 statistically associated markers and follow-up functional analyses to confirm
 that a given gene controls the trait \citep[e.g.][]{wang2018, liu2020ps}.
-Other limitations that may preclude the identification of causal variants from
-the output of GWAS include incomplete gene annotation, genetic divergence
-between the accessions and the reference genome used, or the existence of
-several different causal variants at a locus.
 
-One way of overcoming those limitations would be to broaden the set of genetic
-variants used in GWAS by also including structural variants (SVs) such as
-deletions, insertions, inversions, or any other type of rearrangement that
-exceeds a certain size \cite[typically 50 bp; ][]{ho2020}.  SVs are known to
+The inclusion of structural variants (SVs) as genotype data in GWAS may partly overcome
+this issue by providing a set of variants with a potentially high functional impact.
+SVs include any variant involving a difference of at least 50 nucleotides, such as
+deletions, insertions, or inversions \citep{ho2020}. Such variants are known to
 have large phenotypic impacts by disrupting coding or regulatory sequences
-\citep{marroni2014} and have been identified as causal variants in traits such
+\citep{marroni2014}, and have been identified as causal variants in traits such
 as resistance to soybean cyst nematode \citep{cook2012}, aluminum tolerance in
 wheat \citep{maron2013}, and branching in maize \citep{studer2011}.  SVs have
-already been used in GWAS in studies that have shown promising results
+already been used in GWAS in studies with promising results
 \citep[e.g.][]{zhang2015, akakpo2020, dominguez2020, liu2020-pangenome}, but
-their inclusion in GWAS is not systematic.
+their inclusion in GWAS is the exception rather than the norm.
 
-Despite their high potential, SVs are difficult to discover and genotype with
+Despite their phenotypic impact, SVs are still largely understudied compared to SNPs
+because of the difficulty of discovering and genotyping them with
 accuracy. Comprehensive detection of SVs requires a combination of several
 methods that often need to be tailored to the study species and data available
 \citep{alkan2011, ho2020}. Even then, assessments of the performance of SV
 discovery and genotyping generally reveal subpar sensitivity and precision
 \citep[e.g.][]{cameron2019, chaisson2019, kosugi2019}. Moreover, despite recent
 improvements in computational approaches for genotyping SVs
-\citep[e.g.][]{siren2021, ebler2022}, such approaches remain computationally
-expensive compared to SNP genotyping workflows. Therefore, discovering and
-genotyping SVs at a scale required for GWAS may prove daunting even when
-sufficient computational resources and skilled analysts are available.
+\citep[e.g.][]{siren2021, ebler2022}, such approaches remain relatively inaccurate
+compared to SNP genotyping workflows.
 
-In this context, alternative approaches that allow to assess a large spectrum
+Alternative approaches that allow one to assess a large spectrum
 of variants in GWAS without genotyping SVs at population scale could be useful.
 \cite{voichek2020} developed a \emph{k}-mer-based GWAS approach that may
 represent such an alternative method. This approach relies on the presence or
-absence of \emph{k}-mers observed in sequence reads as genotypes for use in
+absence of \emph{k}-mers observed in sequence reads instead of genotypes for use in
 GWAS. Once a presence/absence table of \emph{k}-mers has been generated for the
 population under study, this table can be used in association analyses
 similarly to SNP or SV genotype calls. One advantage of using \emph{k}-mers is
@@ -126,16 +119,15 @@ In this study, we assessed the potential of SV- and \emph{k}-mer-based GWAS in
 a major crop, soybean (\emph{Glycine max}).  In order to test these methods, we
 analyzed ten qualitative traits \citep{bandillo2017} and two quantitative
 traits \citep{bandillo2015} that have been previously studied using a SNP array
-developed for soybean \citep{song2013} as well as a quantitative trait
+developed for soybean \citep{song2013}. In addition, we analyzed a quantitative trait
 (horizontal resistance to \emph{Phytophthora sojae}) that has been previously
-studied using whole-genome sequencing (WGS) data \citep{deronne2022}.  The fact
-that the underlying genes and causal variants are already known for several of
-these traits provides a good test case for the use of newer GWAS methods, as
-the expected result is already known. Our objectives as part of this work were
-to:
+studied using whole-genome sequencing (WGS) data \citep{deronne2022}.
+Since the underlying genes and causal variants are already known for several of
+these traits, they provide a good test case for the performance of GWAS methods.
+The objectives of our study were to:
 
 \begin{enumerate}
-	\item Assess the potential of SV- and \emph{k}-mer-based GWAS to
+	\item Assess the potential of SV- and \emph{k}-mer-based GWAS approaches to
 		pinpoint genes and causal variants associated with loci whose
 		underlying genes or variants are already known.
 	\item Identify potential candidate genes and/or causal variants at loci
