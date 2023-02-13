@@ -146,25 +146,24 @@ The objectives of our study were to:
 We selected 389 inbred \emph{G. max} accessions based on the availability of
 Illumina WGS data and phenotypic data for resistance to the oomycete \emph{P.
 sojae} \citep{deronne2022}.  We identified 741 SRA runs corresponding to
-Illumina paired-end sequencing data for those 389 accessions among the ones
-analyzed by \cite{bayer2021} and downloaded them from the SRA.  We obtained
-reads in FASTQ format using the sratoolkit command fastq-dump v. 2.9.6
+Illumina paired-end sequencing data for those 389 accessions \citep[data from][]{zhou2015, valliyodan2016, fang2017, bayer2021}
+and extracted paired-end reads using the fastq-dump command v. 2.9.6
 (\citeauthor[][\url{https://github.com/ncbi/sra-tools}]{sratoolkit}) with the
-option \texttt{-\-split-3} as some of the runs contained reads that were
-unpaired. Reads that were not paired in the raw sequencing data were not used
+option \texttt{-\-split-3}.
+Reads that were not paired in the raw sequencing data were not used
 for downstream analyses.  The runs downloaded from the SRA and associated
 metadata are listed in Additional file 1.
 
-We filtered the sequencing data for quality and the presence of sequencing
+We first filtered the sequencing data for quality and the presence of sequencing
 adapters using bbduk from BBtools v. 38.25
-(\citeauthor[][\url{https://sourceforge.net/projects/bbmap/}]{bbtools}). We
-then aligned reads to the reference assembly version 4 of \emph{G. max}
-cultivar Williams82 \citep{valliyodan2019} to which we concatenated chloroplast
+(\citeauthor[][\url{https://sourceforge.net/projects/bbmap/}]{bbtools}). Reads
+were then mapped to the reference assembly version 4 of \emph{G. max}
+cultivar Williams82 \citep{valliyodan2019} concatenated with chloroplast
 and mitochondrion sequences obtained from SoyBase \citep{grant2010}. We used
-bwa-mem v. 0.7.17-r1188 \citep{li2009-bwa} with default parameters to align the
+bwa-mem v. 0.7.17-r1188 \citep{li2009-bwa} with default parameters to map the
 reads in paired-end mode. Reads that were left unpaired following adapter- and
-quality-trimming were aligned separately in single-end mode using bwa-mem and
-merged with the reads aligned in paired-end mode using samtools \texttt{merge}
+quality-trimming were aligned separately in single-end mode with bwa-mem and
+merged with mapped paired-end reads using samtools \texttt{merge}
 v. 1.12 \citep{li2009-samtools}.  We then added read groups identifying
 individual SRA runs to the BAM files and merged the reads belonging to the same
 accession using bamaddrg
@@ -176,21 +175,20 @@ Metadata on mapping depth of aligned data can be found in Additional file 2.
 \label{sv-gwas-sv-discovery-genotyping}
 
 Our SV analysis pipeline consisted of separate SV discovery and genotyping steps.
-The \emph{discovery} step consisted in methods leading to a set of candidate SVs,
-whereas the \emph{genotyping} step consisted in determining the genotype
-of the candidate SVs for all samples in the population. We used three different
-sources of data in the SV discovery step to generate a set of candidate variants:
+The \emph{discovery} step identified a set of candidate SVs using various methods,
+whereas the \emph{genotyping} step determined the genotype
+of the candidate SVs for all accessions in the population from the mapped Illumina reads. We used three different
+approaches in the SV discovery step to generate a set of candidate variants:
 
 \begin{itemize}
-	\item We used Illumina WGS data of the 389 accessions mentioned above
-		to call SVs in the population following methods outlined
-		in \cite{lemay2022}. In brief, we combined information from
+	\item We used Illumina WGS data from the 389 accessions mentioned above
+		to call SVs in the population following a pipeline outlined
+		by \cite{lemay2022}. In brief, we combined information from
 		the SV calling programs AsmVar \citep{liu2015}, Manta \citep{chen2016},
 		smoove \citep{pedersen2019} and SvABA \citep{wala2018} to generate
-		a set of candidate SVs from Illumina data.
+		a set of candidate SVs from the mapped Illumina data.
 	\item We used SVs discovered by \cite{lemay2022} from Oxford Nanopore
-		sequencing data of 17 Canadian soybean cultivars as a second
-		source of SVs.
+		sequencing data of 17 Canadian soybean cultivars.
 	\item We called SVs from 26 high-quality genome assemblies published by
 		\cite{liu2020-pangenome}, as well as that of the cultivar Zhonghuang 13 (ZH13),
 		\textit{G. soja} accession W05, and \textit{G. max} cultivar Lee.
@@ -198,59 +196,52 @@ sources of data in the SV discovery step to generate a set of candidate variants
 		SVs from the comparison of these assemblies to that of Williams82.
 \end{itemize}
 
-We merged the SVs called using each of these approaches using SVmerge
-\citep{wong2010} and used the resulting set of candidate SVs for genotyping. We
-used two programs with different genotyping models for genotyping this set of
-SVs, Paragraph \citep{chen2019} and vg \citep{hickey2020}. In brief, Paragraph
-genotypes each SV individually whereas vg builds a variation graph from a set
-of candidate variants and then uses this graph to align sequence reads and
-genotype variants.  Detailed methods regarding the SV discovery and genotyping
-steps can be found in Supplemental data.
+The SVs called using each of these approaches were merged using SVmerge
+\citep{wong2010} and the resulting set of candidate SVs was used for
+genotyping. We used Paragraph \citep{chen2019} to genotype the candidate SVs
+from the mapped Illumina reads for all accessions. Detailed methods regarding
+the SV discovery and genotyping steps can be found in Supplemental data.
 
 \subsection*{Discovery and genotyping of SNPs and indels}
 \label{sv-gwas-snp-discovery}
 
-We used Platypus v. 0.8.1.1 \citep{rimmer2014} to call SNPs and indels on the
-mapped reads of the 389 cultivars. We initially filtered the 21.1 M SNPs and
-indels from the raw output of Platypus to keep only those with:
+We used Platypus v. 0.8.1.1 \citep{rimmer2014} to call SNPs and indels from the
+mapped reads of the 389 accessions. The 21.1 M SNPs and
+indels from the raw output of Platypus were filtered to keep only those with:
 
 \begin{enumerate}
 	\item \texttt{FILTER} field set to \texttt{PASS}
-	\item minor allele frequency (MAF) $\geq$ 0.005
-	\item fraction of missing genotypes $\leq$ 0.8
+	\item minor allele frequency (MAF) $\geq$ 0.02
+	\item fraction of missing genotypes $\leq$ 0.5
 	\item heterozygosity rate $\leq$ 0.2.
 \end{enumerate}
 
-The $\sim$7M SNPs and indels kept until this point were included in
-the variation graph used for SV genotyping with the vg toolkit (see
-Supplemental data).
-
-The dataset of SNPs and indels used for GWAS was further filtered to achieve a
-MAF $\geq$ 0.02 and a fraction of missing genotypes $\leq$ 0.5. Moreover, we
-pruned the dataset using the \texttt{-\-indep-pairwise} option of PLINK v.
-1.90b5.3 \citep{purcell2007} using a window of 1,000 markers with a step of 100
-markers and an $r^2$ LD threshold of 0.9. Markers located on unanchored
-scaffolds were also removed. The resulting dataset used for GWAS comprised
-924,630 SNPs and indels.
+Moreover, we pruned the dataset using the \texttt{-\-indep-pairwise} option of
+PLINK v. 1.90b5.3 \citep{purcell2007} with a window of 1,000 markers, a
+step of 100 markers and an $r^2$ LD threshold of 0.9. This pruning step was
+implemented to reduce the computational requirements of the GWAS analysis by
+removing co-segregating markers. Markers located on unanchored scaffolds were
+also removed. The resulting dataset was used for GWAS and comprised 773,060
+SNPs and 151,570 indels.
 
 \subsection*{Computing the presence/absence table of \emph{k}-mers}
 \label{sv-gwas-kmer-pav}
 
 We used the approach outlined by \cite{voichek2020} for \emph{k}-mer-based GWAS
-as well as their binary executables (v. 0.2-beta) and recommendations on the
-associated GitHub page (\url{https://github.com/voichek/kmersGWAS}) to generate
-a table of \emph{k}-mer presence/absence for use in GWAS.  The first step of
-the approach required counting the \emph{k}-mers of length 31 (31-mers) present
-in the trimmed FASTQ sequencing files of all samples using KMC3 v. 3.2.1
-\citep{kokot2017}. We counted \emph{k}-mers twice, the first time using their
+and their recommendations on the
+associated GitHub page (v. 0.2-beta, \url{https://github.com/voichek/kmersGWAS}) to generate
+a presence/absence \emph{k}-mer table for use in GWAS.  The first step of
+the approach involved counting all \emph{k}-mers of length 31 (31-mers) present
+in the trimmed (FASTQ) reads for each accession using KMC3 v. 3.2.1
+\citep{kokot2017}. \emph{k}-mers were counted twice, the first time using their
 canonized form (the first of either the observed \textit{k}-mer or its reverse
 complement in lexicographical order) and the second time using the observed
-\emph{k}-mers themselves (non-canonized form). After the information from both KMC3 runs was
-combined, we filtered the set of \emph{k}-mers to be used for the analysis by
-keeping only those seen in at least 5 samples and observed in both canonized
-and non-canonized form in at least 20\% of the samples in which they are found.
-We then generated a table indicating the presence/absence in all samples of the
-\emph{k}-mers that passed all filters. This table was used to compute a kinship
+\emph{k}-mers themselves (non-canonized form). The two sets of \textit{k}-mers
+were then combined and filtered by
+keeping only those seen in at least 5 accessions, and observed in both canonized
+and non-canonized form in at least 20\% of the accessions in which they are found.
+We then generated a table indicating the presence or absence of each
+\emph{k}-mer in all accessions. This table was used to compute a kinship
 table for use in GWAS and was also used directly as input genotypes for the
 GWAS analyses. We used \emph{k}-mers with a MAF $\geq$ 0.02 for both the
 computation of kinship and GWAS.
@@ -258,15 +249,15 @@ computation of kinship and GWAS.
 \subsection*{Phenotypic data}
 \label{sv-gwas-phenotypic-data}
 
-We analyzed ten qualitative traits studied by \cite{bandillo2017}: flower
+We analyzed ten qualitative traits previously studied by \cite{bandillo2017}: flower
 color, pubescence color, seed coat color, stem termination type, hilum color,
 pod color, pubescence form, pubescence density, seed coat luster, and maturity
 group.  We obtained phenotypic data for these traits from the GRIN database
 (\url{https://npgsweb.ars-grin.gov/gringlobal/search}) by querying the database
 using the PI identifiers of the 389 accessions used.  Four out of the 389
 accessions did not match the GRIN database and were therefore not used for the
-analysis of qualitative traits. We recoded the phenotypes of qualitative traits
-to numerical values for GWAS analysis similarly to the numerical coding used by
+analysis of qualitative traits. The phenotypes of qualitative traits were recoded
+to numerical values for GWAS analysis following methods similar to those of
 \cite{bandillo2017}.  For some traits, we conducted more than one GWAS analysis
 using targeted subsets of the observed phenotypes in order to focus on specific
 loci. The phenotypes and numerical values used for all analyses as well as the
@@ -274,46 +265,44 @@ number of observations in the dataset that we used for GWAS are listed in
 Tables \ref{FLOWER.COLOR_gwas_table} to \ref{MATURITY.GROUP_gwas_table}.
 
 We analyzed three quantitative traits in addition to the ten qualitative traits
-mentioned above.  We retrieved seed oil and protein content from the GRIN
+mentioned above. Seed oil and protein content were retrieved from the GRIN
 database. In cases where more than one value was listed for a given accession,
-we computed the average of those values and used it in GWAS analyses. We also
-used the horizontal resistance to the oomycete \emph{P. sojae} (corrected dry
-weight, CDW) assessed in a hydroponic assay \citep{deronne2022} as a third
-quantitative trait. Our analysis included 340 accessions whose phenotypic data
-was already published by \cite{deronne2022} plus 49 additional accessions for
+we computed the average of those values and used it for GWAS analyses. As a third quantitative trait, we
+used the horizontal resistance to the oomycete \textit{P. sojae} (corrected dry
+weight, CDW) as recently assessed in a hydroponic assay \citep{deronne2022}.
+Our analysis included 340 accessions whose phenotypic data
+was already published by \cite{deronne2022} as well as 49 additional accessions for
 which sequencing data was not yet available when their study was conducted.
-Because of ambiguity regarding the identity of one of the samples (HN019), the
-number of samples for which CDW data was available was 388 and this sample
-was also dropped from all other GWAS analyses. Similarly to seed oil and
-protein content, the CDW values for some samples for which more than one
+Because of ambiguity regarding the identity of one of the accessions (HN019), this accession
+was dropped from all GWAS analyses. Similarly to seed oil and
+protein content, the CDW values for some accessions for which more than one
 observation was available were averaged.
 
-Because of clear discrepancies between the observed haplotypes and the
-reported phenotypes for some simple traits such as flower color and seed coat
-color, we suspected possible errors in the identification of some of the
-accessions. We compared the SNP genotypes derived from the SoySNP50K array
-and our WGS data (see Supplemental data
-for detailed methods) at over 32,000 SNPs, and
-identified 24 samples with < 90\% concordance between the two genotype
-datasets. We removed them from the dataset in addition to another
-sample that exhibited an atypical GC content suggesting contamination.
-Following these filtering steps, 363 samples remained for GWAS analyses. The
-concordance between WGS data and SoySNP50K genotypes is included in
-Additional file 2 and averaged 98.3\% among retained lines while the
-phenotypic data used in this study can be found in Additional file 3.
+Because of clear discrepancies between the observed haplotypes and the reported
+phenotypes for some simple traits such as flower color and seed coat color, we
+suspected possible errors in the identity of some of the accessions. To
+investigate this, we compared the SNP genotypes derived from the SoySNP50K
+array and our WGS data at over 32,000 SNPs, and identified 24 accessions with <
+90\% concordance between the two genotype datasets (see Supplemental data for
+detailed methods). These samples were removed from the dataset in addition to another
+accession that exhibited an atypical GC content suggesting contamination.
+Following these filtering steps and the removal of HN019, 363 accessions
+remained for GWAS analyses. The concordance between WGS data and SoySNP50K
+genotypes is included in Additional file 2 and averaged 98.3\% among retained
+lines. The phenotypic data used in this study can be found in Additional file 3.
 
 \subsection*{GWAS analyses}
 \label{sv-gwas-gwas-methods}
 
 We used the GAPIT3 R package v. 3.1.0 \citep{wang2021} for conducting GWAS on
 the SNP/indel and SV datasets described above. SVs and indels required some additional
-preprocessing steps detailed in \cite{lemay2022gwas} to make variant
-representation suitable for downstream analyses. Briefly, we recoded all
+preprocessing steps to make variant
+representation suitable for downstream analyses \citep{lemay2022gwas}. Briefly, we recoded all
 variants as SNPs prior to converting the VCF files to Hapmap diploid format
 using the TASSEL command-line tools \citep{bradbury2007}; variant IDs enabled
 retrieval of the proper metadata for each variant after GWAS.
 
-We ran GAPIT using an MLM model with 9 principal components and the VanRaden
+We ran GAPIT using a mixed linear model (MLM) with 9 principal components and the VanRaden
 algorithm for computing the kinship matrix. We used an MLM model for
 consistency with the statistical model used by the \textit{k}-mer-based
 approach.  We used a randomization approach to determine the 5\% family-wise
@@ -321,55 +310,46 @@ error-rate threshold for each GWAS analysis as described in \cite{voichek2020}.
 To compute this threshold, we permuted the phenotypic observations 100 times
 and computed a GWAS on these permuted phenotypes to obtain a distribution of
 top \emph{p}-values under the null hypothesis. The fifth most significant of
-the 100 top \emph{p}-values was used as the significance threshold for
+the top 100 \emph{p}-values was used as the significance threshold for
 inference, i.e. markers with \emph{p}-values lower than this threshold were
 considered significant.
 
-We conducted GWAS based on \emph{k}-mers similarly to the method outlined by
-\cite{voichek2020} and used their binary executables
-(\url{https://github.com/voichek/kmersGWAS}) for doing so.  In brief, the
+We conducted GWAS based on \emph{k}-mers using the method developed by
+\cite{voichek2020}. In brief, the
 analysis was conducted in two steps. The first step used an approximate model
-and identified 1 million possibly significant \emph{k}-mers that were used in
-the second step with an exact model implemented in GEMMA \citep{zhou2012} to
-compute the \emph{p}-values associated with each of these \emph{k}-mers. We
+to identify 1 million potentially significant \emph{k}-mers. These were then used in
+the second step as input to an exact model implemented in GEMMA \citep{zhou2012}, resulting
+in a \emph{p}-value for each \emph{k}-mer. We
 used the kinship computed from the \emph{k}-mers to correct for relatedness
-between accessions. The program implemented by \cite{voichek2020} automatically
-returned a list of \emph{k}-mers that passed a 5\% family-wise error-rate
-threshold determined by a randomization approach.  These \emph{k}-mers were
-considered significant for the purposes of downstream analyses.
+between accessions. The program automatically outputs a list of \emph{k}-mers
+that passed a 5\% family-wise error-rate threshold determined by a
+randomization approach, which we considered significant for the purposes of
+downstream analyses.
 
 \subsection*{Analysis of significant \emph{k}-mers}
 \label{sv-gwas-kmers-analysis-methods}
 
 \emph{k}-mers are not intrinsically associated with a particular genomic region
 and a tailored analysis was therefore required to associate them with genomic
-coordinates. To do so, we queried the aligned reads of all samples for matches
+coordinates. To do so, we queried the reads (in BAM format) of all accessions for matches
 to significant \emph{k}-mers for a given trait. Because this is a
 computationally demanding operation (there were typically tens of thousands of
-significant \emph{k}-mers per trait), we developed a program called katcher
-(\url{https://github.com/malemay/katcher}) that is written in the C language
-and uses the htslib library \citep{bonfield2021} for efficient reading and
-writing of BAM files. katcher and its associated utilities allow the efficient
+significant \emph{k}-mers per trait), we developed a C program called katcher
+(\url{https://github.com/malemay/katcher}) that
+uses the htslib library \citep{bonfield2021} for efficient reading and
+writing of BAM files. katcher and its associated utilities allow for efficient
 retrieval and annotation of mapped reads containing any \emph{k}-mer from a set
 of interest.
 
-For one trait (flower color), the significance of some \emph{k}-mers was so
-high that their \emph{p}-values were numerically equal to 0. In order to
-compute $-\log_{10} (p)$ for visualization on Manhattan plots in these cases,
-we set the \emph{p}-value to the smallest numerical value that could be
-represented using R on our machine (2.225074e-308). In this particular case,
-the values represented on the Manhattan plots represent an upper bound on the
-\emph{p}-value and not an exact value.
-
-Once we retrieved all the reads containing significant \emph{k}-mers, we still
+Once we retrieved all the reads containing significant \emph{k}-mers, we next
 needed to gather the mapping information contained in those reads for the
-purposes of identifying contiguous signals and generating Manhattan plots. To
+purposes of identifying contiguous signals and comparing them to annotations. To
 simplify the amount of information to process in downstream analyses, we
 considered only the most significant \emph{k}-mer contained in a given read and
-only considered the position where this \emph{k}-mer was most often observed in
+the position where this \emph{k}-mer was most often observed in
 the dataset. Moreover, we limited the analysis to reads with a minimum mapping
 quality of 20 and to \emph{k}-mers that were observed at least 10 times in at
-least one sample to filter out for spurious \emph{k}-mers that may originate
+least one accession. The latter was done to remove spurious \emph{k}-mers that may originate
 from sequencing errors. All downstream analyses (Manhattan plots,
 identification of signals, analysis of genes located near significant
 \emph{k}-mers, etc.) used this processed set of significant \emph{k}-mers.
@@ -377,11 +357,11 @@ identification of signals, analysis of genes located near significant
 \subsection*{Downstream analyses of significant association signals}
 \label{sv-gwas-methods-downstream}
 
-We used contiguous regions comprising significant associations, which we called
+We used contiguous regions of significant associations, which we called
 ``signals'', as a basis to compare our results with those obtained by previous
-studies and to query the genome for candidate genes.  We defined the boundaries
+studies and to query the genome for candidate genes. We defined the boundaries
 of those signals by grouping any significant markers or \emph{k}-mers that
-occurred within 250 kb of one another.  We did consider the extent of deletions
+occurred within 250 kb of one another.  We did consider the length of deletions
 or \emph{k}-mers in defining the distance between significant associations.
 
 For the GWAS analyses computed from Platypus genotype calls, we retrieved all
@@ -402,12 +382,10 @@ and \emph{k}-mers) found within the signal. In cases where such a fraction
 represented fewer than two markers or \emph{k}-mers, the highly significant
 region was simply delimited by the two most significant associations.
 
-Because \cite{bandillo2015} and \cite{bandillo2017} used assembly version 1 of
-Williams82, we converted the genomic positions of their signals from assembly
-version 1 to version 4 by using the same method that was used for converting
-SoySNP50K positions (see Supplemental data).  The
-boundaries of the signals thus translated to genome assembly version 4 were
-used for comparison with the signals found in our analyses. For the analysis of
+Because previous studies \citep{bandillo2015, bandillo2017} used assembly version 1 of
+Williams82, we converted the genomic coordinates of their signals to assembly version 4
+using the same method that we used for converting
+SoySNP50K positions (see Supplemental data). For the analysis of
 qualitative traits, we only compared our results to signals at named classical
 loci and ignored previously reported minor signals with \emph{p}-values that
 just barely made it above the significance threshold.
@@ -415,26 +393,24 @@ just barely made it above the significance threshold.
 \subsection*{Linking significant \emph{k}-mers to variants}
 \label{sv-gwas-methods-linking-kmers}
 
-We used the reads retrieved by katcher as a starting point for identifying the
-variants associated with a given set of \emph{k}-mers. For any such
-\emph{k}-mer set of interest, we used the QNAME field (in the BAM format) of
-the reads identified by katcher to extract all reads with a QNAME corresponding
-to a read containing significant \emph{k}-mers. We proceeded this way so as to
-retrieve the reads that are paired with a significant read even though that
-read may not have matched a significant \emph{k}-mer in the first place. Once
-all such reads were identified, we converted them to paired-end reads in FASTQ
-format using \texttt{samtools fastq} and used the reads for \emph{de novo}
-assembly with SPAdes v. 3.15.4 \citep{spades} with the \texttt{-\-careful}
-parameter as advised by \cite{voichek2020}. Assemblies were done individually
-for each sample and aligned to the Williams82 reference assembly using bwa mem.
-Assemblies targeting a region of interest for samples used in a given GWAS were
-aligned using multiple sequence alignment with the MAFFT program v. 7.475
-\citep{katoh2002} for visualization purposes. We only considered haplotypes
-occurring at least five times in the population in such analyses in order to
-leave out potential assembly errors. In a single case (\emph{Dt1} locus),
-assembly at the locus succeeded for a very low number of samples (26). In this
-case, we used consensus sequences from the reads aligned with bwa for comparing
-the haplotypes across samples.
+We used the reads retrieved by katcher and an assembly-based approach for
+identifying the variants associated with a given set of \emph{k}-mers. In
+addition to the reads themselves, we also retrieved their paired reads even
+though they may not have matched a significant \emph{k}-mer in the first place.
+These read pairs were used for \emph{de novo} assembly with SPAdes v. 3.15.4
+\citep{spades} using the \texttt{--careful} parameter. The assemblies were done
+individually for each accession and then aligned to the Williams82 reference
+assembly using bwa mem with default parameters.  Aligned assembled sequences
+that overlapped loci of interest were realigned using multiple sequence
+alignment with the MAFFT program v. 7.475 \citep{katoh2002} for identifying and
+visualizing the haplotypes at these loci. The identification of variants
+supported by significant \textit{k}-mers was based entirely on visual analysis
+of haplotype alignments. We only considered haplotypes occurring at least five
+times in the population in such analyses in order to leave out potential
+assembly errors. In a single case (\emph{Dt1} locus), assembly at the locus
+succeeded for a very low number of accessions (26). In this case, we instead used
+consensus sequences from the reads aligned with bwa for comparing the
+haplotypes across accessions. 
 
 \subsection*{Computation of LD between \emph{k}-mers}
 \label{sv-gwas-ld-kmers}
@@ -549,11 +525,11 @@ analysis, we found that the most likely cause of this discrepancy was a
 mismatch between the genotype data and the identity of the accession for which
 the phenotypic data was obtained. Indeed, when we compared SNP calls made
 directly from the WGS data to those made using the SoySNP50K array, we observed
-that these two samples had concordance rates of only 62\% and 70\%. To
+that these two accessions had concordance rates of only 62\% and 70\%. To
 prevent such mismatches from affecting our GWAS analyses, we computed the
 concordance between genotype calls made from WGS data and the SoySNP50K array
 for the whole population (see the Methods section) and
-excluded 24 samples for which the concordance rate was below 90\%.
+excluded 24 accessions for which the concordance rate was below 90\%.
 
 % Figure 1 with the results on flower color at locus W1
 \begin{figure}
@@ -849,15 +825,15 @@ CNV region may represent differences in sequence between the copies.
 	vertical dotted line indicates the location of the most significant
 	\textit{k}-mer. The shaded gray area shows the extent of the causal CNV.
 	(c) Estimated copy number (sequencing depth at position divided by
-	sample average sequencing depth) of accessions with normal and
+	accession average sequencing depth) of accessions with normal and
 	semi-sparse pubescence at the \textit{Ps} locus. Solid lines represent
 	the average copy number across 73 (semi-sparse pubescence) and 180
-	samples (normal pubescence) computed using a 100-bp sliding window.
+	accessions (normal pubescence) computed using a 100-bp sliding window.
 	Shaded areas outline the first and third quartiles. The start and end
 	of the CNV region can be clearly inferred from the divergence between
-	the copy number of samples with contrasting pubescence.
+	the copy number of accessions with contrasting pubescence.
 	(d) Histogram of the mapping location of 1,169 reads containing the
-	most significant \textit{k}-mer in samples with semi-sparse pubescence.
+	most significant \textit{k}-mer in accessions with semi-sparse pubescence.
 	Reads containing this \textit{k}-mer map to either end of the CNV
 	region, suggesting that they are associated with this variant. Panels
 	b, c and d share the same x-axis.}
@@ -1249,7 +1225,7 @@ All additional files can be accessed on figshare \citep{kmer-gwas-figshare}.
 \begin{description}
 	\item[Additional file 1.csv] Metadata on the sequencing runs retrieved
 		from the Sequence Read Archive (SRA) (CSV 71 KB)
-	\item[Additional file 2.csv] Metadata on individual samples following mapping
+	\item[Additional file 2.csv] Metadata on individual accessions following mapping
 		and comparison to SoySNP50K data (CSV 36KB)
 	\item[Additional file 3.csv] Phenotypic dataset used for GWAS analyses (CSV 135
 		KB)

@@ -183,7 +183,6 @@ quality (GQ) value < 10 were set to missing, and variants were filtered for a
 fraction of missing genotypes $\leq$ 0.5 and a minor allele frequency $\geq$
 0.02. The resulting VCF file, which was used for GWAS, contained 51,960 SVs.
 
-
 \subsection*{Comparison of WGS and SoySNP50K genotypes}
 \label{annexe-sv-gwas-soysnp50k}
 When we first analyzed the results from the GWAS analysis on all 389 samples,
@@ -210,6 +209,17 @@ but poor raw sequencing data quality (\%GC content) suggested contamination.
 Following these filtering steps, 363 samples remained for GWAS analyses. The
 concordance between WGS data and SoySNP50K genotypes is included in
 Additional file 2.
+
+\subsection*{Analysis of extremely low \textit{p}-values}
+\label{annexe-sv-gwas-pvalues}
+
+For one trait (flower color), the significance of some \emph{k}-mers was so
+high that their \emph{p}-values were numerically equal to 0. In order to
+compute $-\log_{10} (p)$ for visualization in Manhattan plots in these cases,
+we set the \emph{p}-value to the smallest numerical value that could be
+represented using R on our machine (2.225074e-308). In this particular case,
+the values represented on the Manhattan plots represent an upper bound on the
+\emph{p}-value and not an exact value.
 
 % Detailed results that are not meant to fit the main paper
 \section*{Detailed results}
