@@ -66,7 +66,7 @@ roll_averaged_cov$pos <- (kmers_zoomed_manhattan$vp$xscale[1] - 100):(kmers_zoom
 
 coverage_data <- list(normal = roll_averaged_cov[, samples[phenotype == 1]], semisparse = roll_averaged_cov[, samples[phenotype == 2]])
 
-average <- lapply(coverage_data, function(x) apply(x, 1, mean))
+average <- lapply(coverage_data, function(x) apply(x, 1, median))
 lower_bound <- lapply(coverage_data, function(x) apply(x, 1, quantile, probs = 0.25))
 upper_bound <- lapply(coverage_data, function(x) apply(x, 1, quantile, probs = 0.75))
 
@@ -112,7 +112,7 @@ grid.text("(a)", x = 0.02, y = 0.95)
 draw_manhattan(list(kmers_gwide_manhattan), 
 	       sigline_regexp = "sigline_3",
 	       siglabel_regexp = "siglabel_3",
-	       labels = "",
+	       labels = "k-mers",
 	       fontsize = 10)
 
 
@@ -120,7 +120,7 @@ draw_manhattan(list(kmers_gwide_manhattan),
 seekViewport("main")
 pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
-draw_zoomed(list(kmers_zoomed_manhattan), labels = "", fontsize = 10, xaxis = FALSE)
+draw_zoomed(list(kmers_zoomed_manhattan), labels = "k-mers", fontsize = 10, xaxis = FALSE)
 
 # Push a viewport to plot the coverage data
 seekViewport("main")
