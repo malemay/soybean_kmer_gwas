@@ -1054,13 +1054,13 @@ at the known \textit{L1} locus and may therefore represent a distinct locus (Fig
 \subsection*{Potential of \emph{k}-mer-based GWAS}
 \label{sv-gwas-potential-kmers}
 
-Arguably, the most striking result from the analyses presented above is the
+One of the most striking results from the analyses presented above is the
 impressive performance of \emph{k}-mer-based GWAS compared to SNP/indel- and
-SV-based GWAS. Indeed, the GWAS analyses using \emph{k}-mers readily identified
+SV-based GWAS. The GWAS analyses using \emph{k}-mers identified
 the causal variant as the most significantly associated variant at four loci
 with various types of causal variants: \emph{W1} for flower color, \emph{Td}
 for pubescence color, \emph{G} for seed coat color, and \emph{Ps} for
-pubescence density. In comparison, this result was achieved by SV-based GWAS
+pubescence density (Table \ref{loci-table}). In comparison, this result was achieved by SV-based GWAS
 at the \textit{W1} locus only, and at none of the loci for SNP/indel-based GWAS.
 The \textit{k}-mer approach also systematically performed at least as well as
 the other three approaches in identifying signals overlapping known variants or genes
@@ -1071,17 +1071,17 @@ overlapped the known causal variant or gene.
 Even in cases where the most significantly associated \emph{k}-mers did not
 pinpoint known causal variants, they were often located near
 those variants. For example, the most significantly associated \emph{k}-mers
-mapping to the \emph{T} locus for pubescence color mapped to intronic sequences
-of the gene known to be associated with this locus, even though they did not
-correspond to the documented causal variant. Similarly, the most significantly associated
+mapping to the \emph{T} locus for pubescence color were located in intronic sequences
+of the gene known to be associated with this locus.
+Similarly, the most significantly associated
 \emph{k}-mers at the \emph{B} locus for seed coat luster mapped within a
-genomic interval known to vary in copy number at that locus, and the most
+genomic interval known to vary in copy number at that locus. In addition, the most
 significant \emph{k}-mers at the \emph{R} locus mapped just upstream of a
 homolog of the gene associated with the locus. Even though the \emph{k}-mer
 analysis did not identify the causal variants directly in those cases, it still
 provided a very strong starting point for candidate gene identification.
 
-As would be expected of any GWAS, the success of the \emph{k}-mer approach
+As would be expected of any GWAS analysis, the success of the \emph{k}-mer approach
 depends on the quality of the phenotypic data and the complexity of the genetic
 architecture of the trait. It is clear that the loci for which the
 \emph{k}-mer approach was most successful (\emph{W1}, \emph{Td}, \emph{G} and
@@ -1096,24 +1096,27 @@ traits, the numerical scale used to recode phenotypes for use in GWAS is somewha
 arbitrary and may influence the final results. In the case of quantitative
 phenotypes, the usual limitations to the precision and stochastic variation of
 phenotypic values will necessarily make the interpretation more difficult than
-for simple qualitative traits. Notwithstanding those limitations, it remains
-clear that \textit{k}-mer GWAS performed better than any of the other
-approaches tested here given the same phenotypic data
+for simple qualitative traits. Notwithstanding those limitations,
+\textit{k}-mer-based GWAS clearly performed better than any of the other
+approaches tested here given the same phenotypic data. This is partly due
+to the fact that the \textit{k}-mer approach encompasses all variant types.
+Moreover, it is likely that the simpler workflow that results from using
+\textit{k}-mer presence/absence avoids some of the errors introduced during
+variant calling and genotyping, and therefore yields more accurate results.
 
 \subsection*{Limitations and challenges of \emph{k}-mer-based GWAS}
 \label{limitations-of-kmers-GWAS}
 
-While we have obtained considerable success when using \emph{k}-mers for GWAS, this
-approach does present unique challenges and limitations. One obvious limitation
+While we have have shown that using \emph{k}-mers for GWAS in soybean performed
+well compared to other GWAS methods, this
+approach does present some unique challenges and limitations. One obvious limitation
 is that using the presence/absence of \emph{k}-mers may not be appropriate in
 species where heterozygosity is common (i.e., most species other than inbred
 crops) as the \emph{k}-mers associated with the presence of both alleles will
 be observed at heterozygous loci. Moreover, although the presence/absence of
 \emph{k}-mers can detect variation independently of its type, some types of
-variation may be more difficult to detect than others. More precisely,
-variation will only be detected if it results in the presence or absence of a
-specific \emph{k}-mer or set of \emph{k}-mers of a given length (here, 31 bases) in a
-sequencing dataset. For example, copy number variation at a locus may not be
+variation may be more difficult to detect than others.
+For example, copy number variation at a locus may not be
 detected from presence/absence alone if all copies are identical and occur in
 tandem, such that no \textit{k}-mer can differentiate between two copies and
 more. For similar reasons, \emph{k}-mers may also fail to capture variation
@@ -1129,39 +1132,36 @@ inexpensive, downstream analysis and interpretation of the output is
 challenging. Indeed, there are no state-of-the-art methods for identifying the
 putative genomic coordinates of a \emph{k}-mer, grouping significant
 \emph{k}-mers together into coherent signals, and linking them to biologically
-meaningful sequence variation. The fact that this approach is
-reference-agnostic suggests that a paradigm shift will be needed to move away
-from reference-based analysis to better suited methods. For example, mapping
+meaningful sequence variation. Going forward, mapping
 the \emph{k}-mers or reads to a graph-based genome \citep[using e.g. the vg
-toolkit;][]{siren2021} instead of a linear reference may represent an
-improvement. Grouping significant \emph{k}-mers by LD instead of by genomic
-position, as was done for some of the analyses in this paper, should also prove
-useful in determining how many loci control a trait and as a starting point to
-identify the variation underlying presence/absence patterns. While we used an
+toolkit;][]{siren2021} may represent an
+improvement to using a single linear genome.
+Grouping significant \emph{k}-mers by LD instead of by genomic
+position, as was done for some of the analyses in this paper, could prove
+useful in determining how many loci control a trait. In this study, we used an
 assembly-based approach similar to what others have previously done
-\citep[e.g.][]{voichek2020, rahman2018} and have been able to link
-\emph{k}-mers to their underlying variation in simple cases involving SNPs or
-indels, we have not been able to link significantly associated \emph{k}-mers to
+\citep[e.g.][]{voichek2020, rahman2018}. This approach allowed us to link
+\emph{k}-mers to their underlying variation for simple cases involving SNPs and
+indels, but we were unable to link significantly associated \emph{k}-mers to
 more challenging causal variants such as those explaining the \emph{I} or
 \emph{B} loci. In this context, developing approaches to systematically link
 significant \emph{k}-mers to the sequence variation that underlies their
-presence is much needed. Finding ways to limit the number of spurious
+presence is much needed. Furthermore, finding ways to limit the number of spurious
 associations found for some traits, as was the case for flower color and
-pubescence color in our study, is also needed in order to obtain robust results
-from \emph{k}-mer-based GWAS.
+pubescence color in our study, is also needed in order to obtain robust results.
 
-In this work, we aimed to provide a set of tools enabling the downstream
+In this work, we provide a set of tools enabling the downstream
 analysis of \emph{k}-mer-based GWAS. Most importantly, we developed the
 katcher program for retrieving all reads containing
-any of a set of significant \emph{k}-mers in a computationally efficient manner. Previously published studies usually
+any of a set of significant \emph{k}-mers in a computationally efficient manner. Previous studies usually
 mapped \emph{k}-mers to a reference genome to identify their reference-based
 coordinates \citep[e.g.][]{voichek2020, he2021, rahman2018, tripodi2021}.
 However, while this approach may work for \emph{k}-mers that show little
 divergence from the reference, it might fail to identify the genomic location
 of \emph{k}-mers that diverge significantly or are not found at all in the
-reference. Moreover, it does not take into account the sequence context where
+reference. Moreover, it does not take into account the sequence context of the read where
 the \emph{k}-mer was found, which may provide valuable information for mapping
-purposes. Our approach avoids these pitfalls by systematically retrieving reads
+purposes. Our approach avoids these pitfalls by instead systematically retrieving reads
 containing significant \emph{k}-mers, including those that did not map at all
 to the reference assembly. While we were able to position the most significant
 \emph{k}-mers on the reference sequence in our analyses, it may not be the case
@@ -1171,40 +1171,40 @@ a large novel insertion.
 \subsection*{Use of SV genotypes for GWAS}
 \label{use-of-svs-for-gwas}
 
-In addition to \emph{k}-mers, we also assessed the use of SVs in GWAS. Our
-rationale was that since SVs have an important functional impact, they may
-facilitate the identification of causal variants when these are in fact SVs.
+In addition to \emph{k}-mers, we also assessed the use of SVs in GWAS analysis of soybean.
 Although we did find the causal variant as the most significantly associated SV
-at the \emph{W1} locus, results have otherwise been rather inconclusive.
+at the \emph{W1} locus, results were otherwise rather inconclusive.
 Indeed, most of the other known or putative causal variants were SNPs or
-indels, and therefore were not represented in the SV datasets. GWAS analyses at
-other loci where SVs are known to be the underlying causal variant (e.g.
-\emph{I}, \emph{B}, \emph{Ps}) did not find the causal variants, most likely
+indels, and therefore were not represented in the SV datasets. At
+most loci where SVs are known to be the underlying causal variant (e.g.
+\emph{I}, \emph{B}, \emph{Ps}), the analyses based on SVs did not find the causal variants, most likely
 due to the difficulty of calling and genotyping such variants
-\citep{kosugi2019, lemay2022}.
+\citep{kosugi2019, lemay2022}. In the case of the \textit{Ps} locus, this limitation
+was due to a filtering step in our pipeline rather than to an inherent inability to
+properly call and genotype the causal variant.
 
-Based on these results, we believe that it may not be worth, at least in
-soybean, to conduct GWAS based on SVs. Given the current performance of SV
+Given the current performance of SV
 genotyping programs, it is not clear whether using SVs for GWAS provides any
 advantage over using \emph{k}-mer- or SNP-based GWAS, or a combination of both.
 Indeed, in the single case where the SV-based analyses identified the causal
 variant, the \emph{k}-mer-based GWAS identified it as well. Moreover,
 SNP/indel-based GWAS provided better guidance in delimiting the signals found
-at a given locus given the much higher density of markers in the SNP dataset
-than in the SV dataset. The usefulness of SV-based GWAS compared to SNP-based
+at a given locus because of the much higher density of markers compared to SVs.
+The usefulness of SV-based GWAS compared to SNP-based
 GWAS will largely depend on whether SVs can represent variation that is not
 otherwise in LD with SNPs. In tomato, \cite{dominguez2020} found that most
 transposable element insertions associated with phenotypic variation in
 agronomic traits were not tagged by SNPs. On the other hand, in humans,
 \cite{maretty2017} found that the majority of SVs were in high LD with SNPs. It
-is therefore likely that the ``tagability'' of SVs using SNPs will depend on
-the particular type of variant and on the species being studied. Even though
-SVs remain important components of sequence and functional variation, a more
+is therefore likely that how well SVs can be tagged by SNPs will depend on
+the particular type of SV and on the species. A more
 efficient approach than SV-based GWAS may be to conduct \emph{k}-mer-based GWAS
-and only then use SV discovery methods to identify SVs in the population and
-link them to significant \emph{k}-mers. While previous studies have found
-interesting results using SVs for GWAS \citep[e.g.][]{zhang2015, akakpo2020,
-dominguez2020}, we would be curious to see whether these results
+and only then link known SVs to significant \emph{k}-mers.
+Alternatively, \textit{k}-mer-based GWAS can be conducted specifically for
+\textit{k}-mers that are associated with SVs \citep{jayakodi2020}.
+Previous studies have
+obtained noteworthy results by using SVs for GWAS analyses \citep[e.g.][]{zhang2015, akakpo2020,
+dominguez2020}, however it would be worthwhile to see whether these results
 could be replicated using \emph{k}-mer-based GWAS.
 
 \section*{Conclusion}
@@ -1214,18 +1214,18 @@ qualitative traits and three quantitative traits in soybean cultivars and
 compared the results to traditional SNP/indel-based GWAS. While
 \emph{k}-mer-based GWAS proved to be a powerful approach in pinpointing the
 causal variation or genes associated with known loci, it is unclear whether
-conducting SV-based GWAS is worth the investment. We also used the
+conducting SV-based GWAS is worth the investment. In addition, we used the
 results from the \emph{k}-mer- and SNP-based GWAS to suggest candidate genes
 for a few classical loci that have yet to be cloned. Based on our results, we
 believe that an optimal workflow may involve conducting SNP and \emph{k}-mer
-GWAS in parallel to identify significant signals and candidate genes, and then
-possibly use SV datasets to identify interesting variants. Given the large
-number of accessions for which WGS data are now available in several species,
+GWAS in parallel to identify significant signals and candidate genes,
+potentially in combination with SV datasets. Given the large
+number of samples for which WGS data are now available in several species,
 applying \emph{k}-mer-based GWAS to leverage already existing sequencing and
 phenotypic data appears feasible and promising. As part of our work, we
-developed several computational tools that should help other researchers to
-analyze the results of a \emph{k}-mer-based GWAS analysis. However, much work
-remains to be done to define state-of-the-art methods for the downstream
+developed several computational tools that should help other researchers with the downstream
+analysis of a \emph{k}-mer-based GWAS results. However, much work
+remains to be done in developing state-of-the-art methods for the downstream
 analysis of significant \emph{k}-mers. In particular, better approaches are
 needed for linking \emph{k}-mers to sequence variation and moving from
 presence/absence-based methods to count-based methods.
