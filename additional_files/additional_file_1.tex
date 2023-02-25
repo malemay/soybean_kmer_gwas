@@ -19,8 +19,8 @@
 \subsection*{Discovery of structural variation from Illumina data}
 \label{sv-gwas-sv-discovery-illumina}
 
-We used the Illumina WGS data of the 389 selected \emph{G. max} accessions as a
-first source of data for SV discovery using methods similar to those used by
+We used the Illumina whole-genome sequencing (WGS) data from the 389 selected \emph{G. max} accessions
+for SV discovery using methods similar to those described by
 \cite{lemay2022}.  Briefly, we used four different SV discovery programs or
 pipelines: 
 
@@ -30,42 +30,44 @@ pipelines:
 	from \emph{de novo} assemblies generated with SOAPdenovo2 v. 2.04
 		\citep{luo2012} and aligned to the reference genome using LAST
 		v. 1047 \citep{kielbasa2011}.
-\item We ran Manta v. 1.6.0 \citep{chen2016} in 78 randomly selected batches of
+\item We ran Manta v. 1.6.0 \citep{chen2016} in randomly selected batches: 77 batches of
 	5 samples and 1 batch of 4 samples. We used the candidate SVs
 		identified from each of the batches for downstream analyses.
-\item We used smoove v. 0.2.4 \citep{pedersen2019} with the sequence of
-	commands \texttt{smoove call}, \texttt{smoove merge}, \texttt{smoove
-		genotype} and \texttt{smoove paste} to obtain a dataset of
-		candidate SVs. For three (3) of the 389 samples, we were unable
-		to obtain candidate variants from smoove due to a reproducible
-		cryptic error (segmentation fault) when running \texttt{smoove
-		call}. We nevertheless decided to use smoove given that this
-		represented a very small fraction of the total number of
-		samples and that other programs were able to successfully
-		discover SVs from those samples.
-\item We used SvABA v. 1.1.3 \citep{wala2018} to call SVs from each of the
+\item We used smoove v. 0.2.4 \citep{pedersen2019} to obtain a dataset of candidate SVs
+	using the following sequence of commands:
+	\texttt{smoove call}, \texttt{smoove merge}, \texttt{smoove
+		genotype} and \texttt{smoove paste}.
+		For three (3) of the 389 samples, we were unable
+		to obtain candidate variants due to a reproducible
+		error (segmentation fault) when running \texttt{smoove
+		call}.
+	\item We used SvABA v. 1.1.3 \citep{wala2018} to call SVs from each of the
 	samples separately. We classified the SVs called as breakends by SvABA
 		as either deletions, duplications or inversions, and converted
-		them to explicit sequence using our own R script. Variants
+		them to explicit sequence using a custom R script. Variants
 		called as indels by SvABA were used as is for downstream
 		analyses.
 \end{enumerate}
 
-We filtered the SVs called by all tools to remove those smaller than 50 bp or
-larger than 500 kb in size, those located on unanchored scaffolds or organellar
-genomes, those classified as unresolved breakends (\texttt{SVTYPE=BND}), and
-any variant containing at least one N in either the reference or alternate
-allele sequence.  We converted all variants to a sequence-explicit format and
-normalized them using bcftools \texttt{norm} v. 1.10.2-105
-\citep{li2009-samtools}.
+We filtered the SVs called by each tool to remove those meeting any of the following conditions:
 
-We generated a single VCF file from the variants called using Illumina data by
+\begin{itemize}
+	\item smaller than 50 bp or larger than 500 kb in size
+	\item located on unanchored scaffolds or organellar genomes
+	\item classified as unresolved breakends (\texttt{SVTYPE=BND})
+	\item containing at least one N in either the reference or alternate allele sequence
+\end{itemize}
+
+Next, we converted all filtered variants to a sequence-explicit format using
+\texttt{bayesTyperTools convertAllele} \citep{sibbesen2018} and normalized them
+using bcftools \texttt{norm} v. 1.10.2-105 \citep{li2009-samtools}.
+
+A single VCF file was generated from the variants called using Illumina data by
 running SVmerge \citep{wong2010} in two steps. In the first step, we merged
-variants among the ones called by a given tool by running SVmerge using a
-sliding window of 5 bp to merge together very similar variants called by the
-same tool. In the second step, we used the output of the first merging steps
-for all four tools and merged similar variants across these four datasets using
-a sliding window of 15 bp in SVmerge.  We proceeded this way because using a
+very similar variants among the ones called by the same tool using a
+sliding window of 5 bp. Next, we used the output of the first merging steps
+for all four tools and merged similar variants across the four datasets using
+a sliding window of 15 bp. This approach was used because a
 sliding window of 15 bp on the outputs of all tools without pre-merging
 resulted in a computationally intractable number of pairwise comparisons.
 
@@ -73,37 +75,37 @@ resulted in a computationally intractable number of pairwise comparisons.
 \label{sv-gwas-sv-discovery-ont}
 
 We used SVs discovered among 17 Canadian soybean cultivars sequenced using
-Oxford Nano\-pore Technologies (ONT) by \cite{lemay2022} as a second source of
-data for SV discovery.  Although that set of cultivars does not overlap the
-ones analyzed in this study, the high quality of the SVs that can be discovered
-from long-read sequencing data motivated the inclusion of this dataset among
-the SV candidates subjected to genotyping.  We merged the SVs detected in the
+Oxford Nano\-pore Technologies (ONT) by \cite{lemay2022} as an additional
+source of candidate SVs. Although this set of cultivars does not overlap the
+ones analyzed in this study, it is likely that many of the SVs occurring
+in Canadian germplasm also occur in the germplasm used for this study given that modern soybean
+cultivars are derived from a rather small set of progenitors. We merged the SVs detected in the
 long-read (ONT) data with the ones discovered in the short-read (Illumina) data
 using SVmerge and systematically favored SVs discovered by Illumina whenever
 SVs from the two sets were to be merged.  Our rationale for favoring variants
 discovered from the Illumina data was that whenever both technologies discover
-the same variants, Illumina data is likely to be more precise given its higher
-basecalling accuracy.
+the same variants, the breakpoints of SVs discovered from Illumina data are
+likely to be more precise given the higher basecalling accuracy.
 
 \subsection*{Discovery of structural variation from high-quality assemblies}
 \label{sv-gwas-sv-discovery-assembly}
 
-In addition to using the Illumina data from 389 accessions, we also used
+In addition to Illumina data from 389 accessions, we also used
 high-quality genome assemblies of 29 \emph{G. max} or \emph{Glycine soja}
-accessions and called SVs by comparing their sequence to that of Williams82. We
+accessions to call SVs. We
 retrieved 26 high-quality genomes assembled by \cite{liu2020-pangenome} as well
-as that of the cultivar Zhonghuang 13 (ZH13) from the Genome Warehouse
-repository (\url{https://ngdc.cncb.ac.cn/gwh/}).  We also retrieved the genomes
+as the genome of the cultivar Zhonghuang 13 (ZH13) from the Genome Warehouse
+repository (\url{https://ngdc.cncb.ac.cn/gwh/}). Furthermore, we retrieved the genomes
 of \emph{G. soja} accession W05 and \emph{G. max} cultivar Lee from SoyBase
 \citep{grant2010}.
 
-We used methods based on \cite{liu2020-pangenome} to call SVs based on those
+We used methods based on \cite{liu2020-pangenome} to call SVs from the
 genome assemblies.  First, we used the nucmer program of the MUMmer suite of
 tools v. 4.0.0rc1 \citep{marcais2018} with option \texttt{-c 1000} to align
 each of the assemblies to the Williams82 assembly. Next, we used the
 delta-filter program of the MUMmer suite to keep only one-to-one alignments
 between any genome and the Williams82 reference using the \texttt{-1} option.
-We used these filtered alignments to call SVs using a version of the svmu
+The filtered alignments were used to call SVs with a version of the svmu
 program \citep{chakraborty2019} that we forked from the original repository
 (\url{https://github.com/malemay/svmu}) in order to improve execution time and
 memory usage.
@@ -113,75 +115,37 @@ We used a set of tools that we assembled in an R package called svmutools
 format. We limited ourselves to processing deletions and insertions because of
 the complexity of resolving other types of variants from whole-genome
 assemblies.  Copy number variants and inversions called by svmu were therefore
-excluded from downstream analyses, although we did take inverted regions into
-account when determining the sequence of insertions in these regions to ensure
-their proper representation in the output VCF file. We also filtered the
-resulting set of variants to remove those smaller than 50 bp or larger than 500
+excluded from downstream analyses. The
+resulting set of variants was filtered to remove those smaller than 50 bp or larger than 500
 kb and those with any N in either the reference or alternate allele sequence.
 Finally, we normalized the VCF files using \texttt{bcftools norm} and merged
-them using SVmerge to obtain a single VCF file of variants discovered through
+them using SVmerge to obtain a single file with variants discovered through
 comparison of high-quality genome assemblies.
 
 \subsection*{Genotyping structural variation using Paragraph}
 \label{sv-gwas-sv-genotyping-paragraph}
 
-We used Paragraph v. 2.4a \citep{chen2019} as one of two SV genotyping programs
-to generate a set of SV genotypes for the population of 389 samples for use in
-GWAS analyses.  The set of SVs used as input for Paragraph was the result of
-merging the set of variants discovered from the Illumina and ONT data with
-those discovered from the high-quality assemblies and svmu using SVmerge.
-Variants in this candidate set were prepared for input to Paragraph by removing
+We used Paragraph v. 2.4a \citep{chen2019}
+to generate a set of SV genotypes from the Illumina data of the 389 samples used in
+GWAS analyses.  The set of SVs used as input for Paragraph was generated using SVmerge by
+merging variants discovered from the Illumina and ONT data with
+those discovered from the high-quality assemblies and svmu.
+Variants in this candidate set were prepared for input to Paragraph by first removing
 those closer than 150 bp (the maximum read length in our dataset) to any
-chromosome end and padding the variant representation using a script written by
-\cite{hickey2020} for that purpose.
+chromosome end and then padding the variant representation using a script written by
+\cite{hickey2020}. The latter step was necessary for the variants to be used
+as input to Paragraph.
 
-We used the recommendations by the authors of Paragraph for running their
-program at population scale by running Paragraph individually on each sample.
-We computed average sequencing depth for each sample from the output of the
+We ran Paragraph individually on each sample as recommended by the authors.
+We computed the average sequencing depth for each sample from the output of the
 \texttt{samtools coverage} command and used 20 times that value for the
 \texttt{-M} parameter of Paragraph.  We ran Paragraph using the
 \texttt{multigrmpy} command and merged the resulting VCF files using
 \texttt{bcftools merge} in order to get a  single genotype file for the whole
-population. This VCF was further filtered by setting the genotype calls made
-from less than two reads to missing and by removing variants with minor allele
+population. Finally, we filtered the genotyped SVs by setting the genotype calls made
+from less than two reads to missing and by removing variants with a minor allele
 frequency < 0.02 or a proportion of missing data > 0.5. The resulting dataset
-of 186,306 SVs was used for GWAS.
-
-\subsection*{Genotyping structural variation using the vg toolkit}
-\label{sv-gwas-sv-genotyping-vg}
-
-We also used the vg toolkit v. 1.41.0 \citep{hickey2020} and its Giraffe
-aligner \citep{siren2021} for genotyping our set of candidate SVs on the whole
-population. The reason for also using vg is that its variation graph model allows
-the integration of SNPs and indels and makes for a more robust and integrated
-approach to SV genotyping, even though previous benchmarks comparing those two
-programs in soybean showed a reduced sensitivity of the vg toolkit in
-genotyping insertions \citep{lemay2022}.
-
-We constructed the variation graph using the \texttt{vg autoindex} command with
-the \texttt{-\-workflow giraffe} option. We used the Williams82 reference
-assembly version 4 as a basis for the graph, to which we added the set of
-candidate SVs described above and the set of 7M SNPs and indels called by
-Platypus.  We aligned the trimmed reads of the 741 SRA runs in FASTQ format to
-the variation graph using the \texttt{vg giraffe} command with default
-parameters. Reads that were still paired after adapter- and quality- trimming
-were aligned in paired-end mode, whereas the remaining reads were aligned in
-single-end mode. The resulting files in GAM format were used to compute read
-coverage on the graph using the \texttt{vg pack} command with options
-\texttt{-Q5 -s5}. GAM files belonging to the same accession but originating
-from different SRA runs were concatenated to be used as input for the
-\texttt{vg pack} command such that a single coverage file per accession was
-obtained as output of this step. The command \texttt{vg call} was then used to
-call genotypes based on read coverage using the parameters
-\texttt{-\-genotype-snarls -\-min-length 50} in order to call all variants
-$\geq$ 50 bp supported by the graph.
-
-We merged the genotypes called on all samples using \texttt{bcftools merge} to
-obtain a single VCF file for the population. Multiallelic records were split
-into biallelic records after merging. Genotype calls made with a genotype
-quality (GQ) value < 10 were set to missing, and variants were filtered for a
-fraction of missing genotypes $\leq$ 0.5 and a minor allele frequency $\geq$
-0.02. The resulting VCF file, which was used for GWAS, contained 51,960 SVs.
+of 186,306 called SVs was used for GWAS.
 
 \subsection*{Comparison of WGS and SoySNP50K genotypes}
 \label{annexe-sv-gwas-soysnp50k}
@@ -190,25 +154,24 @@ we found discrepancies between the haplotypes at some loci and the expected
 phenotype that should correspond to that haplotype for simple traits such as
 flower color and seed coat color. Upon further analysis, we found that a
 mismatch between the sequencing data and the identity of the accession was the
-most probable cause of these discrepancies. In order to filter out all samples
+most probable cause of these discrepancies. In order to identify the samples
 for which this could be the case, we compared the genotypes of SNPs obtained
-from the SoySNP50K array \cite{song2013} to those obtained from the Illumina WGS
-data of the 385 samples that had a match in the GRIN database. Briefly, we
+from the SoySNP50K array \cite{song2013} to those predicted from the Illumina WGS
+data. We did this for the 385 samples that had a match in the GRIN database. Briefly, we
 retrieved SoySNP50K genotype calls from SoyBase \citep{grant2010} and extracted
-all SNPs with a MAF $\geq$ 0.1 in our population. We translated the positions
+all SNPs with a MAF $\geq$ 0.1 in our population. We then translated the positions
 of these SNPs from assembly version 2 to assembly version 4 of Williams by
 finding exact matches of 41-bp sequences surrounding the SNP positions. The
 32,852 SNPs for which unambiguous positions could be found on genome assembly
 version 4 were genotyped from the mapped WGS reads using \texttt{bcftools
 mpileup} and \texttt{bcftools call}. We then used \texttt{bcftools gtcheck} to
-compute the concordance of genotype calls between WGS samples and their
-expected match in the SoySNP50K genotype dataset.  We identified 24 samples
+compute the concordance between the WGS genotype calls and the
+SoySNP50K genotype dataset. We identified 24 samples
 with < 90\% concordance between the two genotype datasets and removed them from
-the dataset, in addition to another sample for which concordance was over 90\%
+the dataset. We also excluded an additional sample for which concordance was over 90\%
 but poor raw sequencing data quality (\%GC content) suggested contamination.
-Following these filtering steps, 363 samples remained for GWAS analyses. The
-concordance between WGS data and SoySNP50K genotypes is included in
-Additional file 2.
+The concordance between WGS data and SoySNP50K genotypes is included in
+Additional file 2 and shown in Figure \ref{concordance-histogram}.
 
 \subsection*{Analysis of extremely low \textit{p}-values}
 \label{annexe-sv-gwas-pvalues}
@@ -715,6 +678,18 @@ represent the causal variation at that locus.
 \ldplot{pod_color_blbr}{pod color (second GWAS)}{\getvar{pod_color_blbr_ldkmers}}
 
 % Figures mentioned only in supplemental data
+
+% Histogram with concordance rates
+\begin{cfigure}
+	\includegraphics[width = 6in]{concordance_histogram}
+	\caption{Histogram of concordance rates between genotypes derived from WGS data and SoySNP50K genotypes for 385 soybean accessions.
+	The vertical line indicates the 0.9 concordance threshold that was used for filtering out mismatching samples.}
+	\label{concordance-histogram}
+
+\end{cfigure}
+
+\clearpage
+
 % Flower color
 \ldplot{flower_color}{flower color}{\getvar{flower_color_ldkmers}}
 

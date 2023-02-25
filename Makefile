@@ -38,7 +38,8 @@ supfigures := $(manhattanplots) \
 	$(geneplots) \
 	$(kmerplots) \
 	$(scaffoldplots) \
-	$(ldplots)
+	$(ldplots) \
+	figures/concordance_histogram.png
 
 mainfigures := figures/flower_color_W1_main_figure.png figures/pubescence_color_nogray_Td_main_figure.png figures/seed_coat_color_greenyellow_G_main_figure.png \
 	figures/pubescence_density_Ps_main_figure.png figures/pubescence_form_all_Pa1_main_figure.png figures/stem_termination_sn_main_figure.png
@@ -189,6 +190,11 @@ figures/stem_termination_sn_main_figure.png: figures/stem_termination_sn_main_fi
 	figures/grobs/kmers_stem_termination_sn_manhattan.rds \
 	gwas_results/kmers/stem_termination_sn_clustered_ld.txt \
 	gwas_results/kmers/stem_termination_sn_gwas.rds
+	$(RSCRIPT) $<
+
+# Figure with concordance rates between WGS and SoySNP50K data
+figures/concordance_histogram.png: figures/concordance_histogram.R \
+	illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
 	$(RSCRIPT) $<
 
 #
