@@ -111,12 +111,11 @@ check_overlap <- function(locus, approach, gene_list, trait_lookup) {
 
 # Filling columns for each approach depending on their performance
 loci_table$platypus <- sapply(loci_table$id, check_overlap, approach = "platypus", gene_list = gene_list, trait_lookup = gwas_lookup)
-loci_table$vg <- sapply(loci_table$id, check_overlap, approach = "vg", gene_list = gene_list, trait_lookup = gwas_lookup)
 loci_table$paragraph <- sapply(loci_table$id, check_overlap, approach = "paragraph", gene_list = gene_list, trait_lookup = gwas_lookup)
 loci_table$kmers <- sapply(loci_table$id, check_overlap, approach = "kmers", gene_list = gene_list, trait_lookup = gwas_lookup)
 
 # Manually adjusting the cases where the most associated variant was the causal variant
-loci_table[loci_table$id == "flower_color_W1", c("vg", "paragraph", "kmers")] <- 4
+loci_table[loci_table$id == "flower_color_W1", c("paragraph", "kmers")] <- 4
 loci_table[loci_table$id == "pubescence_color_Td", "kmers"] <- 4
 loci_table[loci_table$id == "seed_coat_color_G", "kmers"] <- 4
 loci_table[loci_table$id == "pubescence_density_Ps", "kmers"] <- 4
@@ -126,7 +125,7 @@ loci_table[loci_table$id == "seed_coat_color_R", "kmers"] <- 1
 
 # Converting the numbers to asteriks for display in a table
 significance_lookup <- c("-", "*", "**", "***")
-for(i in c("platypus", "vg", "paragraph", "kmers")) {
+for(i in c("platypus", "paragraph", "kmers")) {
 	loci_table[[i]] <- significance_lookup[loci_table[[i]]]
 }
 
@@ -196,7 +195,7 @@ loci_table <- loci_table[order(loci_table$id), ]
 loci_table$id <- NULL
 
 # Formatting the columns
-colnames(loci_table) <- c("Trait", "Locus", "Gene", "platypus", "vg", "paragraph", "kmers", "Causal")
+colnames(loci_table) <- c("Trait", "Locus", "Gene", "platypus", "paragraph", "kmers", "Causal")
 
 # Writing the table to file
 write.table(loci_table, file = "tables/loci_table.csv", sep = ",", row.names = FALSE,

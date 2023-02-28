@@ -478,20 +478,20 @@ a summary of the results discussed below.
 		\begin{threeparttable}
 
 			\csvreader[head to column names,
-			tabular = llllcccc,
-			table head = \toprule Trait & Locus & Gene & Causal variant & Platypus\tnote{a} & vg\tnote{b} & Paragraph\tnote{b} & \textit{k}-mers \\ \midrule,
+			tabular = llllccc,
+			table head = \toprule Trait & Locus & Gene & Causal variant & Platypus\tnote{a} & Paragraph\tnote{b} & \textit{k}-mers \\ \midrule,
 			table foot = \bottomrule]%
 			{../tables/loci_table.csv}%
 			{}%
-			{\Trait & \Locus & \Gene & \Causal & \platypus & \vg & \paragraph & \kmers}
+			{\Trait & \Locus & \Gene & \Causal & \platypus & \paragraph & \kmers}
 
 			\begin{tablenotes}
 			\item[a] Platypus genotypes SNPs and indels
-			\item[b] vg and Paragraph genotype SVs
+			\item[b] Paragraph genotypes SVs
 			\item[c] Locus not discussed in main text. See Supplemental data for detailed results.
 			\item[]- The approach detected no signal overlapping the gene.
 			\item[]* The signal found at this locus overlaps the gene.
-			\item[]** The region defined by the top 5\% (vg and Paragraph) or 1\% (Platypus and \textit{k}-mers) variants or \textit{k}-mers overlaps the gene.
+			\item[]** The region defined by the top 5\% (Paragraph) or 1\% (Platypus and \textit{k}-mers) variants or \textit{k}-mers overlaps the gene.
 			\item[]*** The most significantly associated marker or \textit{k}-mer is the causal variant.
 			\end{tablenotes}
 
