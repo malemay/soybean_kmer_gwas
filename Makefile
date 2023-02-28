@@ -392,13 +392,12 @@ figures/%_signal.png: figures/signal_plot.R \
 	$(signals_gr) \
 	$(txdb) \
 	$(grobdir)/platypus_%_signal.rds \
-	$(grobdir)/vg_%_signal.rds \
 	$(grobdir)/paragraph_%_signal.rds \
 	$(grobdir)/kmers_%_signal.rds
 	$(RSCRIPT) figures/signal_plot.R $*
 
 # Preparing the signal subplots for each of platypus, vg and paragraph
-$(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
+$(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
 	$(signals_gr) \
 	utilities/cnv_genes.txt \
 	gwas_results/$(prog)/%_top_markers.rds \
