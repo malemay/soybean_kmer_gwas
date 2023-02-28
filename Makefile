@@ -414,13 +414,12 @@ figures/%_gene.png: figures/gene_plot.R \
 	$(signals_gr) \
 	$(txdb) \
 	$(grobdir)/platypus_%_gene.rds \
-	$(grobdir)/vg_%_gene.rds \
 	$(grobdir)/paragraph_%_gene.rds \
 	$(grobdir)/kmers_%_gene.rds
 	$(RSCRIPT) figures/gene_plot.R $*
 
 # Preparing the gene subplots for each of platypus, vg and paragraph
-$(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
+$(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
 	$(signals_gr) \
 	utilities/cnv_genes.txt \
 	utilities/variant_ranges.txt \

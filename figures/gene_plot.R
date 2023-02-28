@@ -19,11 +19,9 @@ target_signal <- readRDS("utilities/all_signals.rds")
 xchrom <- seqnames(target_signal[id])
 
 # DEPENDENCY: Paragraph gene subplot
-# DEPENDENCY: vg gene subplot
 # DEPENDENCY: Platypus gene subplot
 # DEPENDENCY: kmers gene subplot
 pvalue_grobs <- list(readRDS(paste0("figures/grobs/platypus_", id, "_gene.rds")),
-		     readRDS(paste0("figures/grobs/vg_", id, "_gene.rds")),
 		     readRDS(paste0("figures/grobs/paragraph_", id, "_gene.rds")),
 		     readRDS(paste0("figures/grobs/kmers_", id, "_gene.rds")))
 
@@ -47,14 +45,14 @@ grid.newpage()
 grid.draw(output_grob)
 
 # Add labels for the panels
-grid.text(c("(a)", "(b) Platypus", "(c) vg", "(d) Paragraph"),
+grid.text(c("(a)", "(b) Platypus", "(c) Paragraph"),
 	  x = unit(0.09, "npc"),
-	  y = unit(c(0.993, 0.8725, 0.645, 0.4175), "npc"),
+	  y = unit(c(0.993, 0.8725, 0.57), "npc"),
 	  hjust = 0,
 	  gp = gpar(fontsize = 14))
-grid.text(expression(paste("(e) ", italic(k)-mers)),
+grid.text(expression(paste("(d) ", italic(k)-mers)),
 	  x = unit(0.09, "npc"),
-	  y = unit(0.19, "npc"),
+	  y = unit(0.2675, "npc"),
 	  hjust = 0,
 	  gp = gpar(fontsize = 14))
 
