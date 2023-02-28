@@ -367,13 +367,12 @@ $(foreach prog,platypus vg paragraph kmers,$(eval \
 # This block assembles the four manhattan subplots for a given trait
 figures/%_manhattan.png: figures/manhattan_plot.R \
 	$(grobdir)/platypus_%_manhattan.rds \
-	$(grobdir)/vg_%_manhattan.rds \
 	$(grobdir)/paragraph_%_manhattan.rds \
 	$(grobdir)/kmers_%_manhattan.rds
 	$(RSCRIPT) figures/manhattan_plot.R $*
 
 # Preparing the manhattan subplots for each of platypus, vg and paragraph
-$(foreach prog,platypus vg paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan.rds: figures/manhattan_subplot.R \
+$(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan.rds: figures/manhattan_subplot.R \
 	$(signals_gr) \
 	gwas_results/$(prog)/%_gwas.rds \
 	gwas_results/$(prog)/%_signal.rds \
