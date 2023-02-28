@@ -521,28 +521,28 @@ represents the causal variation at that locus.
 			that has yet to be confirmed. A dash indicates that no candidate has been suggested yet. We have only included candidate
 			genes that have been suggested in previous studies.
 		\item[c] Most significant -log\textsubscript{10}(\emph{p}) reported by Platypus at this locus. A dash indicates that no signal
-			was detected by Platypus at this locus. The same applies for other methods (vg, Paragraph, \emph{k}-mers) in
+			was detected by Platypus at this locus. The same applies for other methods (Paragraph, \emph{k}-mers) in
 			their respective columns.
 		\item[d] The \emph{p}-value at the W1 locus using the \emph{k}-mers method was so small that it was numerically equal
 			to zero. This value was therefore set to the -log\textsubscript{10} of the smallest value that could be represented
 			in R using our machine.
 		\end{TableNotes}
 
-		\begin{longtable}{llcclccccl}
+		\begin{longtable}{llcclcccl}
 
 			\caption[Description of loci associated with the traits studied]%
 			{Description of loci associated with the traits studied and -log\textsubscript{10}(\emph{p}) of significant
-			signals detected in our study using four different genotypic datasets (Platypus, vg, Paragraph, \emph{k}-mers).}\\
+			signals detected in our study using four different genotypic datasets (Platypus, Paragraph, \emph{k}-mers).}\\
 			\label{signals_table}\\
 
 			\toprule
-			Trait & Locus & Chromosome & -log\textsubscript{10}(\emph{p})\tnote{a} & Gene\tnote{b} & Platypus\tnote{c} & vg & Paragraph & \emph{k}-mers  & Study \\
+			Trait & Locus & Chromosome & -log\textsubscript{10}(\emph{p})\tnote{a} & Gene\tnote{b} & Platypus\tnote{c} & Paragraph & \emph{k}-mers  & Study \\
 			\midrule \endfirsthead
 
 			\caption[]{Loci associated with the traits studied \emph{(continued)}}\\
 
 			\toprule
-			Trait & Locus & Chromosome & -log10(p) & Gene & Platypus & vg & Paragraph & k-mers  & Study \\
+			Trait & Locus & Chromosome & -log10(p) & Gene & Platypus & Paragraph & k-mers  & Study \\
 			\midrule
 			\endhead
 
@@ -558,7 +558,7 @@ represents the causal variation at that locus.
 			before reading={\catcode`\#=12},
 			after reading={\catcode`\#=6},
 			/csv/separator=semicolon]%
-			{../tables/signals_table.csv}{}{\Trait & \Locus & \Chromosome & \Pvalues & \Gene & \Platypus & \Vg & \Paragraph & \Kmers & \Study}
+			{../tables/signals_table.csv}{}{\Trait & \Locus & \Chromosome & \Pvalues & \Gene & \Platypus & \Paragraph & \Kmers & \Study}
 
 		\end{longtable}
 

@@ -8,7 +8,7 @@ suppressMessages(library(GenomicRanges))
 all_signals <- readRDS("utilities/all_signals.rds")
 
 # A vector of program names to query for overlaps with signals
-programs <- c("platypus", "vg", "paragraph", "kmers")
+programs <- c("platypus", "paragraph", "kmers")
 
 # List dependencies for this analysis
 # DEPENDENCY: signals found for each program and trait
@@ -30,7 +30,6 @@ signals_table$original_trait <- as.character(signals_table$original_trait)
 
 # Creating columns for the log10 p-values observed for each program
 signals_table$platypus <- 0
-signals_table$vg <- 0
 signals_table$paragraph <- 0
 signals_table$kmers <- 0
 
@@ -58,7 +57,6 @@ for(program in programs) {
 }
 
 signals_table[signals_table$platypus == 0, "platypus"] <- "-"
-signals_table[signals_table$vg == 0, "vg"] <- "-"
 signals_table[signals_table$paragraph == 0, "paragraph"] <- "-"
 signals_table[signals_table$kmers == 0, "kmers"] <- "-"
 
@@ -118,7 +116,7 @@ signals_table$position <- paste0(signals_table$seqnames, ":", signals_table$star
 
 # Changing the column names
 colnames(signals_table) <- c("Trait", "Locus", "Chromosome", "Start", "End",
-			     "Pvalues", "Gene", "Platypus", "Vg",
+			     "Pvalues", "Gene", "Platypus",
 			     "Paragraph", "Kmers", "Study", "Position")
 
 # Adding a note for the W1 locus with k-mers
