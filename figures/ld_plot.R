@@ -23,11 +23,17 @@ names(kmer_positions) <- kmer_positions$kmer_canon
 # Sorting the k-mers in the LD matrix based on their genomic position
 gsorted_ld <- ld_sort(clustered_ld, kmer_positions, sort_param = "position")
 
+# The ylabel_pattern depends on the locus ; we do not want to clutter the figure
+ypattern <- "^Gm[0-9]{2}$"
+if(trait == "pod_color_blbr") ypattern <- "(Gm13|Gm15|Gm18|Gm19)"
+if(trait == "pubescence_form_all") ypattern <- "(Gm04|Gm12|Gm13|Gm15|Gm20)"
+if(trait == "seed_coat_luster_dullshiny") ypattern <- "(Gm09|Gm15|Gm20)"
+
 # Plotting the results using markers sorted by genomic position
 png(paste0("figures/", trait, "_ld.png"), width = 9, height = 10, units = "in", res = 400)
 
 grid.newpage()
-ld_plot(gsorted_ld, kmer_positions, top_legend = FALSE, ylabels = TRUE, ylabel_pattern = "^Gm[0-9]{2}$", fontsize = 10)
+ld_plot(gsorted_ld, kmer_positions, top_legend = FALSE, ylabels = TRUE, ylabel_pattern = ypattern, fontsize = 10)
 
 dev.off()
 
