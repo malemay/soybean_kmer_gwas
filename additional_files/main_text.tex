@@ -519,6 +519,14 @@ indels, variants located in the gene proved to be among the most closely
 associated, but the causal variant could not be captured given the large size
 of this variant.
 
+The \textit{k}-mer GWAS analysis also identified presumably spurious significant
+\textit{k}-mers scattered throughout the genome (Figure
+\ref{flower_color_manhattan}). An analysis of the pairwise LD between a subset
+of those \textit{k}-mers showed that most \textit{k}-mers formed a single LD block
+linked to the \textit{W1} locus (Figure \ref{flower_color_ld}). A small LD block
+occurred on chromosome Gm09, however it was in moderate LD with the one on chromosome
+Gm13 and therefore probably does not represent a separate locus.
+
 We should note that when we first analyzed the results of the GWAS on flower
 color, we observed that two accessions bearing the haplotype typically
 associated with purple flowers were noted as having white flowers. Upon further
@@ -579,7 +587,11 @@ Platypus and \textit{k}-mer approaches included Glyma.06g202300 (Figure
 correspond to the causal variant (Figure \ref{pubescence_color_all_T_gene}).
 Still, the fourth and fifth most strongly associated \textit{k}-mers
 corresponded to the causal variant (Figures \ref{pubescence_color_all_T_gene},
-\ref{pubescence_color_all_T_kmers}). As for Platypus, the most significant
+\ref{pubescence_color_all_T_kmers}). We
+observed that not all accessions with gray pubescence harbored the deleted
+nucleotide (Figure \ref{pubescence_color_all_T_kmers}c), which could indicate either that other causal variants are resulting in
+a non-functional F3’H in this population, or that the causal
+variant lies elsewhere. As for Platypus, the most significant
 variant within the sequence of Glyma.06g202300 was the causal
 variant, however it was not the most significantly associated variant overall
 (Figures \ref{pubescence_color_all_T_signal},
@@ -766,20 +778,31 @@ its highly complex nature.
 \subsubsection*{Hilum color -- \textit{R} locus}
 \label{sv-gwas-main-results-hilum-color-r}
 
-We conducted a GWAS analysis that only compared accessions with black and brown hila
-in an attempt to detect stronger signals at the \textit{R} locus.  We
-accordingly detected a signal overlapping this locus using all approaches,
-but signals overlapped the Glyma.09g235100 gene associated with the
-\textit{R} locus only for Platypus and \textit{k}-mers (Figures
+We conducted a GWAS analysis that only compared accessions with black and brown
+hila in an attempt to detect stronger signals at the \textit{R} locus.  We
+accordingly detected a signal overlapping this locus using all approaches, but
+only Platypus and \textit{k}-mers detected signals overlapping the
+Glyma.09g235100 gene associated with \textit{R} (Figures
 \ref{hilum_color_blackbrown_manhattan}, \ref{hilum_color_blackbrown_R_signal}).
-We observed two causal variants previously documented by \cite{gillman2011},
-but these were not among the most significantly associated variants or
-\textit{k}-mers (Figures \ref{hilum_color_blackbrown_R_gene},
-\ref{hilum_color_blackbrown_R_kmers}).  This failure to identify causal
-variants more directly could be due to the existence of more than one causal
-variant at this locus. Interestingly, the most significantly associated
-\textit{k}-mers mapped just upstream of a gene (Glyma.09g234900) identified as
-a homolog of Glyma.09g235100 \citep{gillman2011}.
+\cite{gillman2011} identified this R2R3 MYB transcription factor as the
+molecular basis for the \textit{R} locus and documented four different
+loss-of-function alleles linked to brown hilum color. Although our analyses did
+detect strong signals in the vicinity of this gene, the most associated markers
+were not located in the body of the gene (Figure
+\ref{hilum_color_blackbrown_R_signal}).  Interestingly, the most significantly
+associated \emph{k}-mers detected by our analysis mapped 2 kb upstream of
+another gene (Glyma.09g234900) annotated as a MYB transcription factor and
+putatively involved in the regulation of anthocyanin biosynthesis. This gene as
+well as Glyma.09g235100 and two others are part of a tandem array of four R2R3
+MYB genes considered as candidates by \cite{gillman2011}, and of which
+Glyma.09g235100 was the only one expressed in the seed coat. Given the
+convincing evidence provided by \cite{gillman2011}, it is most likely that
+Glyma.09g235100 is indeed the gene associated with the \emph{R} locus and that
+our failure to identify the most significantly associated \emph{k}-mers as
+causal variants is due to the coexistence of several variants that can cause
+loss of function at the \emph{R} locus.  Still, we observed two causal variants
+previously documented by \cite{gillman2011} in our dataset (Figures
+\ref{hilum_color_blackbrown_R_gene}, \ref{hilum_color_blackbrown_R_kmers}). 
 
 % Pubescence density - Ps locus
 \subsubsection*{Pubescence density -- Ps locus}
@@ -788,7 +811,8 @@ a homolog of Glyma.09g235100 \citep{gillman2011}.
 We conducted a GWAS analysis comparing accessions with normal and semi-sparse
 pubes\-cence in order to detect loci associated with pubescence density. This analysis
 detected signals at the \textit{Ps} locus using all three approaches (Figures
-\ref{pubescence-density-main-figure}a-b, \ref{pubescence_density_manhattan}). The causal
+\ref{pubescence-density-main-figure}a-b, \ref{pubescence_density_manhattan}, \ref{pubescence_density_Ps_signal}
+and \ref{pubescence_density_Ps_gene}). The causal
 variant at this recently cloned locus is a copy number variant overlapping the
 Glyma.12g187200 gene, with higher copy number resulting in reduced pubescence \citep{liu2020ps}.
 We identified a region of $\sim$42 kb that varied in copy number across
@@ -846,42 +870,24 @@ to our filtering parameters and not to limitations of the SV genotype calls per 
 \subsubsection*{Seed coat luster -- B locus}
 \label{sv-gwas-main-results-seed-coat-luster-b}
 
-Next, we conducted a GWAS analysis comparing dull and shiny seed coat phenotypes
-for the seed coat luster trait. Seed coat luster has been shown by \cite{gijzen1999}
-to be largely caused by the deposition of a hydrophobic protein (HPS)
-at the seed surface. Copy number variation of this gene at the \textit{B}
-locus was later shown to explain variation in luster, although sequence
-variation in the HPS sequence may also play a role \citep{gijzen2006}.
-We found signals overlapping the causal CNV using all approaches, and the
-most significantly associated \textit{k}-mer was notably located
-within the CNV region (Figures \ref{seed_coat_luster_dullshiny_manhattan},
-\ref{seed_coat_luster_dullshiny_B_signal}). However, we were not able
-to directly link any of the variants or \textit{k}-mers identified to the causal
+Next, we conducted a GWAS analysis comparing dull and shiny seed coat
+phenotypes for the seed coat luster trait. Seed coat luster has been shown by
+\cite{gijzen1999} to be largely caused by the deposition of a hydrophobic
+protein (HPS) at the seed surface. Copy number variation of this gene at the
+\textit{B} locus was later shown to explain variation in luster, although
+sequence variation in the HPS sequence may also play a role \citep{gijzen2006}.
+Using a sequencing depth-based analysis, we identified a 31-kb region spanning
+positions 9,386,109-9,417,431 on chromosome Gm15 that exhibited variation in
+copy number across accessions. This CNV overlapped four genes annotated as
+containing HPS domains and therefore likely represented the causal variant
+(Figures \ref{seed_coat_luster_dullshiny_B_signal},
+\ref{seed_coat_luster_dullshiny_B_gene}).  We found signals overlapping this
+CNV using all approaches, and the most significantly associated \textit{k}-mer
+was notably located within the CNV region (Figures
+\ref{seed_coat_luster_dullshiny_manhattan},
+\ref{seed_coat_luster_dullshiny_B_signal}). However, we were not able to
+directly link any of the variants or \textit{k}-mers identified to the causal
 CNV.
-
-% Maturity group loci
-\subsubsection*{Maturity}
-\label{sv-gwas-main-results-maturity}
-
-We did not detect any signals associated with maturity using our dataset
-(Figure \ref{maturity_group_manhattan}). The use of maturity group as a proxy
-for time to maturity instead of the number of days, combined with the limited
-phenotypic variation of this trait in this collection of accessions (Table
-\ref{MATURITY.GROUP_gwas_table}), likely explains our failure to detect
-any signals.
-
-% Seed oil and protein
-\subsubsection*{Seed oil and protein content}
-\label{sv-gwas-main-results-oil-protein}
-
-We expected to detect signals at two loci controlling seed oil and protein
-content on chromosomes 15 and 20 \citep{bandillo2015}. However, none of our
-analyses detected signals overlapping the genes cloned for these loci (Figures
-\ref{oil_manhattan}, \ref{protein_manhattan}). This is probably due to the fact
-that the oil and protein content data that we used for GWAS were not obtained
-from orthogonal trials, which was a clear limitation to this GWAS given our
-relatively small sample size. 
-
 
 \subsection*{Analysis of loci with unknown causal genes}
 \label{sv-gwas-results}
@@ -924,8 +930,8 @@ The two known loci for pubescence form in soybean, \textit{Pa1} and
 Glyma.12g213900 as a candidate for \textit{Pa1} based on data published
 by \cite{bandillo2017}. This gene encodes a Myb transcription factor annotated
 as playing a role in trichome branching. Indeed, the most
-significant signals found by all three approaches were located near this gene.
-analyses (Figures \ref{pubescence-form-main-figure}a-b,
+significant signals found by all three approaches were located near this gene
+(Figures \ref{pubescence-form-main-figure}a-b,
 \ref{pubescence_form_all_manhattan}, \ref{pubescence_form_all_Pa1_signal}).
 The analyses based on Platypus and \emph{k}-mers identified two highly
 significant non-synonymous SNPs in Glyma.12g213900 that were associated with appressed pubescence
@@ -937,6 +943,12 @@ weaker and the signal observed from the \emph{k}-mer GWAS overlapped a total of
 20 genes (Figures \ref{pubescence_form_all_manhattan},
 \ref{pubescence_form_all_Pa2_signal}), none of which appeared obviously linked
 to pubescence form.
+
+A second GWAS analysis focused only on appressed and semi-appressed phenotypes
+with the objective of enhancing the signal at the \emph{Pa2} locus. However,
+this analysis only detected weak signals at the \emph{Pa1} locus (Figure
+\ref{pubescence_form_noerect_manhattan}) and its results were therefore not
+analyzed further.
 
 % Figure 5 with the results on pubescence form at locus Pa1
 \begin{figure}
@@ -1012,7 +1024,10 @@ loci associated with stem termination type
 analysis comparing accessions with black and brown pods found a previously
 undocumented signal on chromosome Gm15. \textit{k}-mers at this new locus showed no LD with \textit{k}-mers
 at the known \textit{L1} locus and may therefore represent a distinct locus (Figures
-\ref{pod_color_blbr_manhattan}, \ref{pod_color_blbr_ld}).
+\ref{pod_color_blbr_manhattan}, \ref{pod_color_blbr_ld}). The observed signal overlaps a total of
+27 genes (Figure \ref{pod_color_blbr_pdcGm15_signal}), but none of those are
+annotated as having an obvious role in controlling pod color.
+
 
 % Figure 6 with the results novel loci for stem termination type
 \begin{figure}

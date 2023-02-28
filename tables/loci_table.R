@@ -184,7 +184,9 @@ loci_table$causal <- causal_lookup[loci_table$id]
 # Adding a note for loci that are not discussed in the main text
 nomain <- c("seed_coat_color_T", "seed_coat_color_R", "stem_termination_Dt2",
 	    "stem_termination_E3", "hilum_color_W1", "pubescence_density_Pd1",
-	    "pubescence_density_P1", "seed_coat_luster_I")
+	    "pubescence_density_P1", "seed_coat_luster_I", "maturity_group_E1",
+	    "maturity_group_E2", "maturity_group_E3", "maturity_group_E4",
+	    "oil_oilGm20", "oil_oilGm15", "protein_proteinGm20", "protein_proteinGm15")
 
 loci_table$original_trait <- paste0(loci_table$original_trait, ifelse(loci_table$id %in% nomain, "\\tnote{c}", ""))
 

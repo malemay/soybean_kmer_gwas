@@ -185,55 +185,30 @@ the values represented on the Manhattan plots represent an upper bound on the
 \emph{p}-value and not an exact value.
 
 % Detailed results that are not meant to fit the main paper
-\section*{Detailed results}
+\section*{Supplemental results}
 \label{annexe-sv-gwas-detailed-results}
 
-This section provides a more detailed per-trait account of some of the results obtained
-by the GWAS analyses. Aspects of the results that were
-already discussed in the main text are not repeated here; in such cases,
-readers are simply redirected to specific tables and figures containing
-detailed results from all four GWAS approaches. A summary of the signals found
-at all loci using all four methods is presented in Table \ref{signals_table}.
+This section describes results at additional loci that were not discussed in
+the main text. A summary of the signals found at all loci using all four
+methods is presented in Table \ref{signals_table}.
 
-\subsection*{Flower color}
-\label{sv-gwas-flower-color}
+\subsection*{Flower color -- \textit{L1} locus}
+\label{annexe-sv-gwas-flower-color-l1}
 
-We conducted a GWAS analysis contrasting purple and white flower colors
-(Table \ref{FLOWER.COLOR_gwas_table}). Of the two classical loci reported by
-\cite{bandillo2017}, \textit{W1} was detected by all four GWAS approaches whereas
-\textit{L1} was detected by none of the approaches (Figure
-\ref{flower_color_manhattan}). These results are unsurprising as W1 is the
-major contributor to flower color in soybean, whereas the \textit{L1} locus
+In addition to the \textit{W1} locus, \cite{bandillo2017} reported a signal for
+flower color near the \textit{L1} locus.  None of the GWAS approaches that we
+tested found a signal for flower color near this locus (Figure
+\ref{flower_color_manhattan}). This result is unsurprising as W1 is the major
+contributor to flower color in soybean, whereas the \textit{L1} locus
 (typically associated with pod color) was detected with a much less significant
 \textit{p}-value (see Table \ref{signals_table}) and only conjectured as
-associated with flower color by \cite{bandillo2017}. Detailed results for the
-\textit{W1} locus can be viewed in figures \ref{flower-color-main-figure},
-\ref{flower_color_W1_signal} and \ref{flower_color_W1_gene}.
+associated with flower color by \cite{bandillo2017}.
 
-The \textit{k}-mer GWAS analysis also identified presumably spurious significant
-\textit{k}-mers scattered throughout the genome (Figure
-\ref{flower_color_manhattan}). An analysis of the pairwise LD between a subset
-of those \textit{k}-mers showed that most \textit{k}-mers formed a single LD block
-linked to the \textit{W1} locus (Figure \ref{flower_color_ld}). A small LD block
-occurred on chromosome Gm09, however it was in moderate LD with the one on chromosome
-Gm13 and therefore probably does not represent a separate locus.
+\subsection*{Pubescence color -- locus on chromosome Gm16}
+\label{annexe-sv-gwas-pubescence-color-gm16}
 
-\subsection*{Pubescence color}
-\label{sv-gwas-pubescence-color}
-
-We conducted two different GWAS analyses on pubescence color. The first analysis
-contrasted gray, tawny and light tawny pubescence colors (Table
-\ref{PUBESCENCE.COLOR_gwas_table}) and detected a signal overlapping the
-\emph{T} locus using all four approaches (Figure
-\ref{pubescence_color_all_manhattan}). Detailed results at the \textit{T} locus
-can be viewed in figures \ref{pubescence_color_all_T_signal},
-\ref{pubescence_color_all_T_gene} and \ref{pubescence_color_all_T_kmers}. We
-observed that not all accessions with gray pubescence harbored the deleted
-nucleotide, which could indicate either that other causal variants are resulting in
-a non-functional F3’H in this population, or that the causal
-variant lies elsewhere.
-
-This first GWAS analysis also revealed a second locus on chromosome Gm16
+In addition to the \textit{T} locus, the first GWAS analysis conducted on pubescence color
+revealed a second locus on chromosome Gm16
 (Figure \ref{pubescence_color_all_manhattan}). Upon closer analysis, this locus
 appeared to be in strong LD with \emph{k}-mers mapping to chromosome Gm01 and
 most importantly in moderate LD with the \emph{T} locus (Figure
@@ -242,226 +217,86 @@ independent locus controlling pubescence color. This interpretation is also
 supported by the fact that the signal at that locus only spans about 10 kb on
 chromosome Gm16.
 
-In the presence of a functional allele at the \emph{T} locus, the genotype at
-the \emph{Td} locus influences the exact shade of pubescence color.  Therefore,
-we conducted a second GWAS analysis contrasting accessions with tawny and light
-tawny pubescence in order to ignore the epistatic effect of the \emph{T} locus
-and instead focus on the effect of the \emph{Td} locus on pubescence color
-(Table \ref{PUBESCENCE.COLOR_gwas_table}). Detailed results at this locus
-can be viewed in figures \ref{pubescence-color-main-figure}, \ref{pubescence_color_nogray_Td_signal} and
-\ref{pubescence_color_nogray_Td_gene}). 
+\subsection*{Seed coat color -- loci \textit{T}, \textit{O} and \textit{R}}
+\label{annexe-sv-gwas-seed-coat-color-t-o}
 
-\subsection*{Seed coat color}
-\label{sv-gwas-seed-coat-color}
+In addition to the \textit{I} and \textit{G} loci, the \textit{k}-mer-based
+GWAS analysis of five different seed coat color phenotypes (first GWAS in Table
+\ref{SEED.COAT.COLOR_gwas_table}) detected weak signals overlapping the
+\emph{T} and \emph{O} loci (Figure \ref{seed_coat_color_all_manhattan}c).
+However, we interpreted those results as chance associations given the low
+\textit{p}-value associated with the \emph{T} locus and the proximity of the
+\emph{O} locus to the \emph{I} locus. None of the three GWAS approaches detected
+a signal overlapping the \textit{R} locus.
 
-We conducted two different GWAS analyses on seed coat color. The first GWAS
-included five different phenotypes observed in the dataset (Table
-\ref{SEED.COAT.COLOR_gwas_table}) and resulted in the detection of strong
-signals overlapping the \emph{I} locus by all four approaches (Figure
-\ref{seed_coat_color_all_manhattan}). All approaches also detected
-signals at the \emph{G} locus. In addition, the \emph{k}-mer approach also
-detected weak signals overlapping the \emph{T} and \emph{O} loci. However, the
-\emph{T} and \emph{O} loci are likely chance associations given the low \textit{p}-value
-associated with the \emph{T} locus and the proximity of the \emph{O} locus to
-the \emph{I} locus. Detailed results of this first GWAS and the \textit{I}
-locus can be viewed in figures \ref{seed_coat_color_all_manhattan} and
-\ref{seed_coat_color_all_I_signal}.
-
-The second GWAS analysis on seed coat color focused on the subset of accessions
-with yellow or green seed coat only (Table \ref{SEED.COAT.COLOR_gwas_table}),
-as this difference is controlled by the \emph{G} locus. Detailed results of
-this analysis can be viewed in figures \ref{seed-coat-color-main-figure},
-\ref{seed_coat_color_greenyellow_manhattan},
-\ref{seed_coat_color_greenyellow_G_signal} and
-\ref{seed_coat_color_greenyellow_G_gene}.
-
-\subsection*{Stem termination type}
+\subsection*{Stem termination type -- loci \textit{Dt2} and \textit{E3}}
 \label{sv-gwas-stem-termination}
 
-We conducted two different GWAS analyses on stem termination type. The first GWAS
-included all phenotypes observed in the dataset (determinate, semi-determinate,
-and indeterminate; Table \ref{STEM.TERMINATION.TYPE_gwas_table}). The results
-of this analysis at the \textit{Dt1} locus can be viewed in figures \ref{stem_termination_all_manhattan},
-\ref{stem_termination_all_Dt1_signal}, \ref{stem_termination_all_Dt1_gene} and
-\ref{stem_termination_all_Dt1_kmers}.
+We performed a GWAS analysis comparing only semi-determinate and indeterminate
+stem termination phenotypes in an attempt to detect signals at the \emph{Dt2}
+locus (Table \ref{STEM.TERMINATION.TYPE_gwas_table}).  However, this was
+unsuccessful using all three GWAS approaches (Figure
+\ref{stem_termination_sn_manhattan}). Similarly, we failed to detect signals at
+the \textit{E3} locus, which is more commonly associated with maturity but was
+mentioned as associated with stem termination type by \cite{bandillo2017}.
 
-The second GWAS analysis included only
-semi-determinate and indeterminate phenotypes. We performed this analysis in an attempt to also detect signals
-at the \emph{Dt2} locus (Table \ref{STEM.TERMINATION.TYPE_gwas_table}).
-However, this was unsuccessful using all four GWAS
-approaches (Figure \ref{stem_termination_sn_manhattan}). Similarly, we failed to
-detect signals at the \textit{E3} locus, which is more commonly associated
-with maturity but was mentioned as associated with stem termination type by
-\cite{bandillo2017}.
-
-\subsection*{Hilum color}
+\subsection*{Hilum color -- loci \textit{W1} and \textit{O}}
 \label{sv-gwas-hilum-color}
 
-We conducted three different GWAS analyses on hilum color. The first GWAS
-included seven colors (Table \ref{HILUM.COLOR_gwas_table}) and detected signals
-at the \emph{I}, \emph{T} and \emph{R} loci using all four approaches
-(Figure \ref{hilum_color_all_manhattan}). No signals
-were detected at the \emph{W1} and \emph{O} loci studied by
-\cite{bandillo2017}. The detailed results for the \textit{I} locus can be viewed
-in figure \ref{hilum_color_all_I_signal} whereas those for the \textit{T} locus
-can be viewed in figures \ref{hilum_color_all_T_signal}, \ref{hilum_color_all_T_gene}
-and \ref{hilum_color_all_T_kmers}.
-
-Although \cite{bandillo2017} listed the \textit{W1} locus (typically associated
-with flower color) as putatively associated with hilum color, we found no
-evidence of association in our results.
-
-The second GWAS analysis contrasting accessions with either black or brown hilum
-color was better suited at resolving the signal at the \emph{R} locus (Table
-\ref{HILUM.COLOR_gwas_table}). Accordingly, this GWAS analysis detected strong
-signals overlapping the \emph{R} locus and no other classical loci using all
-four approaches (Figure \ref{hilum_color_blackbrown_manhattan}).
-\cite{gillman2011} identified the R2R3 MYB transcription factor Glyma.09g235100
-as the molecular basis for the \emph{R} locus and documented four different
-loss-of-function alleles linked to brown hilum color. Although our analyses did
-detect strong signals in the vicinity of this gene, the most associated markers
-were not located in the body of the gene (Figure
-\ref{hilum_color_blackbrown_R_signal}). Interestingly, the most significantly
-associated \emph{k}-mers detected by our analysis mapped 2 kb upstream of
-another gene (Glyma.09g234900) annotated as a MYB transcription factor and
-putatively involved in the regulation of anthocyanin biosynthesis. This gene
-as well as Glyma.09g235100 and two others are part of a tandem array of four
-R2R3 MYB genes considered as candidates by \cite{gillman2011}, and of which
-Glyma.09g235100 was the only one expressed in the seed coat. Given the
-convincing evidence provided by \cite{gillman2011}, it is most likely that
-Glyma.09g235100 is indeed the gene associated with the \emph{R} locus and that
-our failure to identify the most significantly associated \emph{k}-mers as
-causal variants is due to the coexistence of several variants that can cause
-loss of function at the \emph{R} locus. Indeed, we observed at least two causal
-variants (a 1-bp deletion and a SNP) previously documented by
-\cite{gillman2011} in our dataset (Figure \ref{hilum_color_blackbrown_R_gene},
-\ref{hilum_color_blackbrown_R_kmers}).
-
-We conducted a third GWAS focusing on the brown and reddish brown hilum color
-phenotypes in order to detect a signal at the \emph{O} locus, however this GWAS
-did not detect associations at any of the classical loci (Figure
+None of the three GWAS analyses that we conducted on hilum color found signals
+at the \emph{W1} and \emph{O} loci studied by \cite{bandillo2017} (Figures
+\ref{hilum_color_all_manhattan}, \ref{hilum_color_blackbrown_manhattan},
 \ref{hilum_color_rbr_manhattan}).
 
-\subsection*{Pod color}
-\label{sv-gwas-pod-color}
-
-We conducted two different GWAS analyses on pod color. The first analysis included four
-different colors (Table \ref{POD.COLOR_gwas_table}) and resulted in the
-detection of signals overlapping both the \emph{L1} and \emph{L2} loci using all
-four methods (Figure \ref{pod_color_all_manhattan}). Detailed results at the
-\textit{L1} locus can be viewed in figure \ref{pod_color_all_L1_signal},
-whereas detailed results at the \textit{L2} locus can be viewed in figure
-\ref{pod_color_all_L2_signal}.
-
-The second GWAS analysis compared black and brown pods with the objective of detecting stronger
-signals at the \emph{L1} locus (Table
-\ref{POD.COLOR_gwas_table}).  Accordingly, all four methods detected a signal
-at the \emph{L1} locus but not at the \emph{L2} locus using this GWAS (Figure
-\ref{pod_color_blbr_manhattan}).  Results at the \emph{L1} locus were similar
-to those observed when using all observed phenotypes, but the \emph{k}-mer
-analysis revealed a previously undocumented signal on chromosome Gm15 which was
-not in LD with any other signal (Figures \ref{pod_color_blbr_manhattan},
-\ref{pod_color_blbr_ld}). The observed signal at this locus overlaps a total of
-27 genes (Figure \ref{pod_color_blbr_pdcGm15_signal}), but none of those are
-annotated as having an obvious role in controlling pod color.
-
-\subsection*{Pubescence form}
-\label{sv-gwas-pubesence-form}
-
-We conducted two different GWAS analyses on pubescence form. The first analysis used three
-phenotypes (erect, semi-appressed and appressed; Table
-\ref{PUBESCENCE.FORM_gwas_table}) and detected signals overlapping the
-\emph{Pa1} locus using all four approaches as well as signals overlapping the
-\emph{Pa2} locus using Platypus and the \emph{k}-mer approach (Figure
-\ref{pubescence_form_all_manhattan}). Detailed results at the \textit{Pa1} locus
-can be viewed in figure \ref{pubescence_form_all_Pa1_signal},
-\ref{pubescence_form_all_Pa1_gene} and \ref{pubescence_form_all_Pa1_kmers},
-whereas results at the \textit{Pa2} locus can be viewed in figure
-\ref{pubescence_form_all_Pa2_signal}.
-
-Signals were also observed on chromosomes Gm04 and Gm15 by the Platypus and
-\emph{k}-mer analyses (Figure \ref{pubescence_form_all_manhattan}), however
-upon further analysis of LD patterns they appeared to be linked to the
-\emph{Pa1} locus (Figure \ref{pubescence_form_all_ld}).
-
-The second GWAS analysis focused only on appressed and semi-appressed phenotypes
-with the objective of enhancing the signal at the \emph{Pa2} locus. However,
-this analysis only detected weak signals at the \emph{Pa1} locus (Figure
-\ref{pubescence_form_noerect_manhattan}) and its results were therefore not
-analyzed further.
-
-\subsection*{Pubescence density}
+\subsection*{Pubescence density -- loci \textit{Pd1} and \textit{P1}}
 \label{sv-gwas-pubescence-density}
 
-We conducted a GWAS analysis on pubescence density (Table
-\ref{PUBESCENCE.DENSITY_gwas_table}), which detected signals at the \emph{Ps}
-locus but not the \emph{Pd1} and \emph{P1} loci using all four approaches
-(Figure \ref{pubescence_density_manhattan}). \cite{liu2020ps} linked the gene
-Glyma.12g187200 to the \emph{Ps} locus and identified ia 25.6-kb copy number variation
-containing this gene as the causal variant, with
-higher copy number resulting in decreased pubescence. By
-analyzing the sequencing depth in accessions with increased copy number, we
-identified the boundaries of the CNV region as 36,254,989 -
-36,297,368 (42 kb) on chromosome Gm12.
-Detailed results at this locus can be viewed in figures \ref{pubescence-density-main-figure},
-\ref{pubescence_density_Ps_signal} and \ref{pubescence_density_Ps_gene}.
+Our GWAS analysis on pubescence density did not detect any signals at the
+\emph{Pd1} and \emph{P1} (Figure \ref{pubescence_density_manhattan}). Our
+failure to detect these loci is likely due to our small population size
+compared to \cite{bandillo2017} and to the smaller contribution of those loci
+to pubescence density in our population.
 
-\subsection*{Seed coat luster}
+\subsection*{Seed coat luster -- loci \textit{Hps} \textit{B?} and \textit{I}}
 \label{sv-gwas-seed-coat-luster}
 
 We performed three different GWAS analyses on seed coat luster (Table
 \ref{SEED.COAT.LUSTER_gwas_table}). Since all three analyses yielded similar results
 (Figure \ref{seed_coat_luster_all_manhattan},
-\ref{seed_coat_luster_nointermediate_manhattan},
+\ref{seed_coat_luster_nointermediate_manhattan} and
 \ref{seed_coat_luster_dullshiny_manhattan}), we chose to focus on the
 GWAS contrasting the dull and shiny phenotypes as it yielded the most
 significant signals. In addition, it also provided results that were most consistent with the
-analysis previously done by \cite{bandillo2017}. The analysis detected
-signals at the \emph{B} locus as the sole classical locus using all four
-methods (Figure \ref{seed_coat_luster_dullshiny_manhattan}). Apparent signals
-on chromosomes Gm20 and Gm09 (which may correspond to the B? locus reported by
-\cite{bandillo2017}) were also detected, but analysis of the LD patterns
-between \emph{k}-mers suggested that these signals were most likely in LD with
-the \emph{B} locus (Figure \ref{seed_coat_luster_dullshiny_ld}). All methods
-also detected signals overlapping the \emph{Hps} locus as defined by
-\cite{bandillo2017}, however results shown by \cite{gijzen2003} and our results
-suggest that \emph{Hps} and \emph{B} are the same locus. Using a sequencing depth-based segmentation analysis
-similar to the one used for the \emph{Ps} locus, we identified a 31-kb region
-spanning positions 9,386,109-9,417,431 on chromosome Gm15 that exhibited
-variation in copy number across accessions and overlapped four genes annotated
-as containing HPS domains (Figures \ref{seed_coat_luster_dullshiny_B_signal},
-\ref{seed_coat_luster_dullshiny_B_gene}). The top 5\% / 1\% significant
-associations of all approaches overlapped this CNV region and the
-most significantly associated \emph{k}-mer was located within the CNV region
-(Figures \ref{seed_coat_luster_dullshiny_B_signal},
-\ref{seed_coat_luster_dullshiny_B_gene}). However we were not able to link any
-of the variants found to the presence of copy number variation.
+analysis previously done by \cite{bandillo2017}.
 
-% Seed coat luster - I locus
+The analysis detected signals at the \emph{B} locus as the sole classical locus
+using all four methods (see main text and Figure
+\ref{seed_coat_luster_dullshiny_manhattan}).  All methods also detected signals
+overlapping the \emph{Hps} locus as defined by \cite{bandillo2017}, however
+results shown by \cite{gijzen2003} and our results suggest that \emph{Hps} and
+\emph{B} are the same locus. 
+
+Apparent signals on chromosomes Gm20 and Gm09 (which may correspond to the B?
+locus reported by \cite{bandillo2017}) were also detected, but analysis of the
+LD patterns between \emph{k}-mers suggested that these signals are most likely
+in LD with the \emph{B} locus (Figure \ref{seed_coat_luster_dullshiny_ld}).
 
 \cite{bandillo2017} mentioned the \textit{I} locus as possibly associated
 with seed coat luster, however we did not find evidence for such an association
 in our dataset.
 
-\subsection*{Maturity group}
-\label{sv-gwas-maturity-group}
+\subsubsection*{Maturity group}
+\label{annexe-sv-gwas-maturity}
 
-We conducted on a GWAS analysis on maturity group which did not yield any significant signals
-overlapping the classical E1-E4 loci using any of the four GWAS approaches.
-However, signals at the E1 locus did approach significance in the Platypus
-analysis (Table \ref{MATURITY.GROUP_gwas_table}, Figure \ref{maturity_group_manhattan}).
+We did not detect any signals associated with maturity using our dataset
+(Figure \ref{maturity_group_manhattan}). The use of maturity group as a proxy
+for time to maturity instead of the number of days, combined with the limited
+phenotypic variation of this trait in this collection of accessions (Table
+\ref{MATURITY.GROUP_gwas_table}), likely explains our failure to detect
+any signals.
 
-\subsection*{Resistance to \emph{Phytophthora sojae}}
-\label{sv-gwas-resistance}
-
-We conducted a GWAS analysis on horizontal resistance to
-\textit{Phytophthora sojae} using corrected dry weight (CDW) as a quantitative
-measure of resistance. Detailed results can be viewed in figures
-\ref{corrected_dry_weight_manhattan} and
-\ref{corrected_dry_weight_cdwGm15_signal}.
-
-\subsection*{Seed oil content}
-\label{sv-gwas-seed-oil-content}
+\subsection*{Seed oil and protein content}
+\label{sv-gwas-seed-oil-protein-content}
 
 We conducted a GWAS analysis on seed oil content using data obtained from the
 GRIN database. While several seed oil content quantitative trait loci (QTL)
@@ -477,15 +312,25 @@ away from Glyma.15g049200, the sugar transporter gene identified by
 \cite{zhang2020} as associated with that locus. Therefore, the significantly
 associated \emph{k}-mers were not linked to the causal variation at that locus.
 
-\subsection*{Seed protein content}
-\label{sv-gwas-seed-protein-content}
-
 Similarly to seed oil content, we conducted a GWAS on seed protein content
 using data obtained from the GRIN database. As is generally the case in
 soybean given the negative correlation between seed oil and protein content,
 the two major QTL considered above and reported by \cite{bandillo2015} for seed
 oil content are also major QTL for seed protein content. However, none of the
 approaches detected a signal at this locus.
+
+Our failure to detect signals overlapping the known genes at these two loci for
+oil and protein is probably due to the fact that the oil and protein content
+data that we used for GWAS were not obtained from orthogonal trials, which was
+a clear limitation to this GWAS given our relatively small sample size. 
+
+\subsection*{Pubescence form -- additional loci}
+\label{sv-gwas-pubesence-form}
+
+The first GWAS analysis on pubescence form found were signals on chromosomes Gm04 and Gm15 with Platypus
+\emph{k}-merss (Figure \ref{pubescence_form_all_manhattan}). However,
+upon further analysis of LD patterns, they appeared to be linked to the
+\emph{Pa1} locus (Figure \ref{pubescence_form_all_ld}).
 
 \clearpage
 
