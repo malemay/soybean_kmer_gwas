@@ -157,7 +157,7 @@ Since two or three different GWAS analyses were conducted for some of the traits
 total of 22 GWAS analyses were performed using each of the three approaches.
 Given the large volume of data that this represents, we focus here on the
 most noteworthy results. Readers interested in results at loci that are not
-discussed here are referred to Supplemental data. In particular, table \ref{signals_table}
+discussed here are referred to Supplemental data. In particular, Table \ref{signals_table}
 provides a summary of the \textit{p}-values obtained by each approach at each
 of the loci considered in this study.
 
@@ -214,18 +214,18 @@ F3’5’H enzyme non-functional and prevents pigmentation of the flower. All
 GWAS approaches detected a signal overlapping the gene at this locus (Figures
 \ref{flower_color_manhattan}, \ref{flower_color_W1_signal}). The most
 significant SV and \textit{k}-mers corresponded to the known causal variant
-(Figures \ref{flower-color-main-figure}a-b and \ref{flower_color_W1_gene}).
+(Figures \ref{flower-color-main-figure}a-b and \ref{flower_color_W1_gene}c-d).
 In particular, the assembly of the reads containing the most significant \textit{k}-mers
 and the alignment of the resulting haplotypes showed that these \textit{k}-mers
 directly tagged the causal variant (Figure \ref{flower-color-main-figure}c-e).
 As the catalogue of variants analyzed by Platypus contains only SNPs and small
 indels, the causal variant could not be captured by this approach. Still, SNPs
 and indels located within the gene sequence were among the most significantly
-associated ones.
+associated ones (Figure \ref{flower_color_W1_gene}b).
 
 The \textit{k}-mer GWAS analysis also identified presumably spurious significant
 \textit{k}-mers scattered throughout the genome (Figure
-\ref{flower_color_manhattan}). An analysis of the pairwise LD between a subset
+\ref{flower_color_manhattan}c). An analysis of the pairwise LD between a subset
 of those \textit{k}-mers showed that most \textit{k}-mers formed a single LD block
 linked to the \textit{W1} locus (Figure \ref{flower_color_ld}). A small LD block
 occurred on chromosome Gm09, however it was in moderate LD with the one on chromosome
@@ -241,8 +241,8 @@ directly from the WGS data to those made using the SoySNP50K array, we observed
 that these two accessions had low concordance rates of only 62\% and 70\%. To
 ensure that such mismatches would not affect our GWAS analyses, we computed the
 concordance between genotype calls made from WGS data and the SoySNP50K array
-for all samples (see the Methods section) and
-excluded 24 accessions for which the concordance rate was below 90\%.
+for all samples (see the Methods) and excluded 24 accessions for which the
+concordance rate was below 90\%.
 
 % Figure 1 with the results on flower color at locus W1
 \begin{figure}
@@ -288,37 +288,37 @@ identified by the SNP- and \textit{k}-mer-based approaches included
 Glyma.06g202300 (Figure \ref{pubescence_color_all_T_signal}). While the most
 significant \textit{k}-mers did occur within the sequence of this gene, they
 did not correspond to the causal variant (Figure
-\ref{pubescence_color_all_T_gene}).  Still, the fourth and fifth most strongly
+\ref{pubescence_color_all_T_gene}d).  Still, the fourth and fifth most strongly
 associated \textit{k}-mers corresponded to the causal variant (Figures
-\ref{pubescence_color_all_T_gene}, \ref{pubescence_color_all_T_kmers}). We
+\ref{pubescence_color_all_T_gene}d, \ref{pubescence_color_all_T_kmers}). We
 observed that not all accessions with gray pubescence harbored the deleted
 nucleotide (Figure \ref{pubescence_color_all_T_kmers}c), which could indicate
 either that other causal variants are resulting in a non-functional F3’H in
 this population, or that the causal variant lies elsewhere. As for SNP-based GWAS,
 the most significant variant within the sequence of Glyma.06g202300 was the
 causal variant, however it was not the most significantly associated variant
-overall (Figures \ref{pubescence_color_all_T_signal},
-\ref{pubescence_color_all_T_gene}). SV-based GWAS did not detect the causal variant
+overall (Figures \ref{pubescence_color_all_T_signal}b,
+\ref{pubescence_color_all_T_gene}b). SV-based GWAS did not detect the causal variant
 at this locus, as expected from its size.
 
 \subsubsection*{Pubescence color -- \textit{Td} locus}
 \label{sv-gwas-main-results-pubescence-color-td}
 
 % Pubescence color - Td locus
-We conducted a separate GWAS analysis contrasting only accessions with tawny and light
-tawny pubescence because the \textit{Td} locus is known to control
-these differences in color. Accordingly, we
-detected signals in this region using all three approaches, but only SNP-
-and \textit{k}-mer-based GWAS identified a signal that overlapped Glyma.03g258700
-(Figures \ref{pubescence-color-main-figure}a-b,
-\ref{pubescence_color_nogray_manhattan}, \ref{pubescence_color_nogray_Td_signal}).
-While the most significant \textit{k}-mer identified the causal variant documented
-at this locus \citep{yan2020}, it was the fourth most significantly associated variant
-for the SNP-based approach (Figures
-\ref{pubescence-color-main-figure}b-d, \ref{pubescence_color_nogray_Td_gene}).
-Interestingly, some of the accessions bearing the haplotype associated with tawny pubescence
-displayed light tawny pubescence, suggesting that there may be more than one causal
-variant at this locus (Figure \ref{pubescence-color-main-figure}e).
+We conducted a separate GWAS analysis contrasting only accessions with tawny
+and light tawny pubescence because the \textit{Td} locus is known to control
+these differences in color. Accordingly, we detected signals in this region
+using all three approaches, but only SNP- and \textit{k}-mer-based GWAS
+identified a signal that overlapped Glyma.03g258700 (Figures
+\ref{pubescence-color-main-figure}a-b, \ref{pubescence_color_nogray_manhattan},
+\ref{pubescence_color_nogray_Td_signal}).  While the most significant
+\textit{k}-mer identified the causal variant documented at this locus
+\citep{yan2020}, it was the fourth most significantly associated variant for
+the SNP-based approach (Figures \ref{pubescence-color-main-figure}b-d,
+\ref{pubescence_color_nogray_Td_gene}).  Interestingly, some of the accessions
+bearing the haplotype associated with tawny pubescence displayed light tawny
+pubescence, suggesting that there may be more than one causal variant at this
+locus (Figure \ref{pubescence-color-main-figure}e).
 
 % Figure 2 with the results on pubescence color at locus Td
 \begin{figure}
@@ -445,7 +445,7 @@ more than one causal variant at the \textit{Dt1} locus \citep{liu2010,
 tian2010}. Indeed, a few cultivars bearing the allele associated with
 \emph{dt1} showed indeterminate or semi-determinate phenotypes and some
 cultivars showed a determinate phenotype without bearing the allele associated
-with \emph{dt1} (Figure \ref{stem_termination_all_Dt1_kmers}). The existence of
+with \emph{dt1} (Figure \ref{stem_termination_all_Dt1_kmers}c). The existence of
 several causal variants might explain why our analyses did not identify a
 causal variant more clearly.
 
@@ -495,7 +495,7 @@ the population and was associated with the trait (Figure
 \ref{pubescence-density-main-figure}c), and therefore possibly corresponded to the
 25.6-kb region identified as the causal CNV by \cite{liu2020ps}. We found that
 reads containing the most significantly associated \textit{k}-mer mapped to either of the two ends
-of the CNV (Figure \ref{pubescence-density-main-figure}b,d). This suggests that
+of the CNV (Figure \ref{pubescence-density-main-figure}d). This suggests that
 the most associated \textit{k}-mer is indeed linked to the CNV
 that is causal at this locus, while \textit{k}-mers within the
 CNV region may represent differences in sequence between the copies.

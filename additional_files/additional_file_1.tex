@@ -313,6 +313,16 @@ in LD with the \emph{B} locus (Figure \ref{seed_coat_luster_dullshiny_ld}).
 with seed coat luster, however we did not find evidence for such an association
 in our dataset.
 
+\subsection*{Pubescence form -- additional loci}
+\label{sv-gwas-pubesence-form}
+
+The first GWAS analysis on pubescence form found signals on chromosomes Gm04
+and Gm15 with SNPs and \emph{k}-mers (Figure
+\ref{pubescence_form_all_manhattan}). However, upon further analysis of LD
+patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
+\ref{pubescence_form_all_ld}).
+
+
 \subsection*{Maturity group}
 \label{annexe-sv-gwas-maturity}
 
@@ -345,21 +355,12 @@ using data obtained from the GRIN database. As is generally the case in
 soybean given the negative correlation between seed oil and protein content,
 the two major QTL considered above and reported by \cite{bandillo2015} for seed
 oil content are also major QTL for seed protein content. However, none of the
-approaches detected a signal at this locus.
+approaches detected a signal at this locus (Figure \ref{protein_manhattan}).
 
 Our failure to detect signals overlapping the known genes at these two loci for
 oil and protein is probably due to the fact that the oil and protein content
 data that we used for GWAS were not obtained from orthogonal trials, which was
 a clear limitation to this GWAS given our relatively small sample size. 
-
-\subsection*{Pubescence form -- additional loci}
-\label{sv-gwas-pubesence-form}
-
-The first GWAS analysis on pubescence form found signals on chromosomes Gm04
-and Gm15 with SNPs and \emph{k}-mers (Figure
-\ref{pubescence_form_all_manhattan}). However, upon further analysis of LD
-patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
-\ref{pubescence_form_all_ld}).
 
 \clearpage
 
@@ -368,17 +369,6 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 \label{annexe-sv-gwas-tables}
 
 \clearpage
-
-\gwastableone{FLOWER.COLOR}{flower color}
-\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
-\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
-\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
-\gwastablethree{HILUM.COLOR}{hilum color}
-\gwastabletwo{POD.COLOR}{pod color}
-\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
-\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
-\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
-\gwastableone{MATURITY.GROUP}{maturity group}
 
 
 % Table with all signals
@@ -437,6 +427,18 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 \end{landscape}
 \clearpage
 
+\gwastableone{FLOWER.COLOR}{flower color}
+\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
+\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
+\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
+\gwastablethree{HILUM.COLOR}{hilum color}
+\gwastabletwo{POD.COLOR}{pod color}
+\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
+\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
+\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
+\gwastableone{MATURITY.GROUP}{maturity group}
+
+
 % Supplemental figures
 \section*{Supplemental figures}
 \label{annexe-sv-gwas-figures}
@@ -448,6 +450,7 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 {Vertical dotted lines indicate the location of the \getvar{flower_color_W1_gene} gene associated with the locus.}
 \geneplot{flower_color_W1}{flower color}{\emph{W1}}{\getvar{flower_color_W1_gene} gene}%
 {Vertical dotted lines in panels (c) and (d) indicate the location of the causal SV at this locus.}
+\ldplot{flower_color}{flower color}{\getvar{flower_color_ldkmers}}
 %\kmerplot{flower_color_W1}
 
 % Figures for pubescence color
@@ -487,15 +490,6 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 
 
 % Figures for hilum color
-\manhattanplot{hilum_color_all}{hilum color (first GWAS)}{\getvar{hilum_color_all_nsamples}}
-\signalplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}%
-{Vertical dotted lines indicate the location of the \getvar{hilum_color_all_T_gene} gene associated with the locus.}
-\geneplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}{\getvar{hilum_color_all_T_gene} gene}%
-{Vertical dotted lines in panels (b) and (d) indicate the location of the causal indel at this locus.}
-\kmerplot{hilum_color_all_T}{\getvar{hilum_color_all_T_gene}}{\emph{T}}{hilum color (first GWAS)}{a causal indel}
-\signalplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}%
-{Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
-
 \manhattanplot{hilum_color_blackbrown}{hilum color (second GWAS)}{\getvar{hilum_color_blackbrown_nsamples}}
 \signalplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}%
 {Vertical dotted lines indicate the location of the \getvar{hilum_color_blackbrown_R_gene} gene associated with the locus.}
@@ -505,20 +499,18 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 
 % Figures for pubescence density
 \manhattanplot{pubescence_density}{pubescence density}{\getvar{pubescence_density_nsamples}}
+\signalplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}%
+{Vertical dotted lines indicate the boundaries of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene associated with the locus.}
+\geneplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}{location of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene.}%
+{The vertical dotted line in panel (d) indicates the location of the most significant \emph{k}-mer, which is associated with the causal CNV at this locus.
+The shaded gray rectangles show the boundaries of the causal CNV.}
 
 % Figures for seed coat luster
-\manhattanplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_nsamples}}
 \signalplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}%
 {Vertical dotted lines indicate the boundaries of the causal CNV associated with the locus.}
-
-% Figures for maturity group
-\manhattanplot{maturity_group}{maturity group}{\getvar{maturity_group_nsamples}}
-
-% Figures for oil
-\manhattanplot{oil}{seed oil content}{\getvar{oil_nsamples}}
-
-% Figures for protein
-\manhattanplot{protein}{seed protein content}{\getvar{protein_nsamples}}
+\geneplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}{location of the causal CNV}%
+{The shaded gray rectangles show the boundaries of the causal CNV.}
+\manhattanplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_nsamples}}
 
 % Figures for pod color
 \manhattanplot{pod_color_all}{pod color (first GWAS)}{\getvar{pod_color_all_nsamples}}
@@ -533,6 +525,7 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 {Vertical dotted lines in panels (b) and (d) indicate the location of two highly significant non-synonymous SNPs at this gene.}
 \kmerplot{pubescence_form_all_Pa1}{\getvar{pubescence_form_all_Pa1_gene} candidate}{\emph{Pa1}}{pubescence form (first GWAS)}{a non-synonymous SNP}
 \signalplot{pubescence_form_all_Pa2}{pubescence form (first GWAS)}{\emph{Pa2}}{}
+\manhattanplot{pubescence_form_noerect}{pubescence form (second GWAS)}{\getvar{pubescence_form_noerect_nsamples}}
 
 % Figures for corrected dry weight
 \manhattanplot{corrected_dry_weight}{corrected dry weight (resistance to \emph{P. sojae})}{\getvar{corrected_dry_weight_nsamples}}
@@ -543,6 +536,7 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 % Figures for novel loci
 \manhattanplot{pod_color_blbr}{pod color (second GWAS)}{\getvar{pod_color_blbr_nsamples}}
 \ldplot{pod_color_blbr}{pod color (second GWAS)}{\getvar{pod_color_blbr_ldkmers}}
+\signalplot{pod_color_blbr_pdcGm15}{pod color (second GWAS)}{newly suggested \emph{pdcGm15}}{}
 
 % Figures mentioned only in supplemental data
 
@@ -558,7 +552,6 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 \clearpage
 
 % Flower color
-\ldplot{flower_color}{flower color}{\getvar{flower_color_ldkmers}}
 
 % Pubescence color
 \ldplot{pubescence_color_all}{pubescence color (first GWAS)}{\getvar{pubescence_color_all_ldkmers}}
@@ -568,21 +561,20 @@ patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
 %\ldplot{stem_termination_sn}
 
 % Hilum color
+\manhattanplot{hilum_color_all}{hilum color (first GWAS)}{\getvar{hilum_color_all_nsamples}}
+\signalplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}%
+{Vertical dotted lines indicate the location of the \getvar{hilum_color_all_T_gene} gene associated with the locus.}
+\geneplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}{\getvar{hilum_color_all_T_gene} gene}%
+{Vertical dotted lines in panels (b) and (d) indicate the location of the causal indel at this locus.}
+\kmerplot{hilum_color_all_T}{\getvar{hilum_color_all_T_gene}}{\emph{T}}{hilum color (first GWAS)}{a causal indel}
+\signalplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}%
+{Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
+
 \manhattanplot{hilum_color_rbr}{hilum color (third GWAS)}{\getvar{hilum_color_rbr_nsamples}}
 
 % Pod color
-\signalplot{pod_color_blbr_pdcGm15}{pod color (second GWAS)}{newly suggested \emph{pdcGm15}}{}
-
-% Pubescence form
-\ldplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_ldkmers}}
-\manhattanplot{pubescence_form_noerect}{pubescence form (second GWAS)}{\getvar{pubescence_form_noerect_nsamples}}
 
 % Pubescence density
-\signalplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}%
-{Vertical dotted lines indicate the boundaries of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene associated with the locus.}
-\geneplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}{location of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene.}%
-{The vertical dotted line in panel (d) indicates the location of the most significant \emph{k}-mer, which is associated with the causal CNV at this locus.
-The shaded gray rectangles show the boundaries of the causal CNV.}
 
 % Seed coat luster
 \manhattanplot{seed_coat_luster_all}{seed coat luster (first GWAS)}{\getvar{seed_coat_luster_all_nsamples}}
@@ -590,8 +582,18 @@ The shaded gray rectangles show the boundaries of the causal CNV.}
 
 \ldplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_ldkmers}}
 
-\geneplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}{location of the causal CNV}%
-{The shaded gray rectangles show the boundaries of the causal CNV.}
+% Pubescence form
+\ldplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_ldkmers}}
+
+
+% Figures for maturity group
+\manhattanplot{maturity_group}{maturity group}{\getvar{maturity_group_nsamples}}
+
+% Figures for oil
+\manhattanplot{oil}{seed oil content}{\getvar{oil_nsamples}}
+
+% Figures for protein
+\manhattanplot{protein}{seed protein content}{\getvar{protein_nsamples}}
 
 % Bibliography
 \bibliographystyle{genome_research}              % style de la bibliographie
