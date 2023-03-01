@@ -141,16 +141,17 @@ The objectives of our study were to:
 \section*{Results and discussion}
 \label{sv-gwas-results-discussion}
 
-We analyzed a total of 13 traits using three GWAS approaches that differed in
-the genotypes used. The first approach used SNP and indel
-genotypes called by Platypus. Despite both SNPs and indels being included in
-this approach, we will refer to this approach as SNP-based for simplicity. Our
-SV-based workflow used various sources of data for SV discovery and a single
-program (Paragraph) for genotyping SVs at population scale. Finally, the third
-GWAS approach relied on the presence/absence of \textit{k}-mers as genotypes.
-Because of the large number of \textit{k}-mers analyzed, we only report results
-(e.g. in Manhattan plots) for those that were considered significantly
-associated with traits of interest.
+We analyzed a total of 13 traits in a population of 363 \textit{G. max}
+accessions using three GWAS approaches that differed in the genotypes used. The
+first approach used SNP and indel genotypes called by Platypus. Despite both
+SNPs and indels being included in this approach, we will refer to this approach
+as SNP-based for simplicity. Our SV-based workflow used various sources of data
+for SV discovery and a single program (Paragraph) for genotyping SVs at
+population scale. Finally, the third GWAS approach relied on the
+presence/absence of \textit{k}-mers as genotypes.  Because of the large number
+of \textit{k}-mers analyzed, we only report results (e.g. in Manhattan plots)
+for those that were considered significantly associated with traits of
+interest.
 
 Since two or three different GWAS analyses were conducted for some of the traits, a
 total of 22 GWAS analyses were performed using each of the three approaches.
@@ -182,20 +183,20 @@ a summary of the results discussed below.
 
 			\csvreader[head to column names,
 			tabular = llllccc,
-			table head = \toprule Trait & Locus & Gene & Causal variant & Platypus\tnote{a} & Paragraph\tnote{b} & \textit{k}-mers \\ \midrule,
+			table head = \toprule Trait & Locus & Gene & Causal variant & SNPs\tnote{a} & SVs\tnote{b} & \textit{k}-mers \\ \midrule,
 			table foot = \bottomrule]%
 			{../tables/loci_table.csv}%
 			{}%
 			{\Trait & \Locus & \Gene & \Causal & \platypus & \paragraph & \kmers}
 
 			\begin{tablenotes}
-			\item[a] Platypus genotypes SNPs and indels
-			\item[b] Paragraph genotypes SVs
+			\item[a] SNPs and indels genotyped by Platypus
+			\item[b] SVs genotyped by Paragraph
 			\item[c] Locus not discussed in main text. See Supplemental data for detailed results.
 			\item[]- The approach detected no signal overlapping the gene.
 			\item[]* The signal found at this locus overlaps the gene.
-			\item[]** The region defined by the top 5\% (Paragraph) or 1\% (Platypus and \textit{k}-mers) variants or \textit{k}-mers overlaps the gene.
-			\item[]*** The most significantly associated marker or \textit{k}-mer is the causal variant.
+			\item[]** The region defined by the top 5\% (SVs) or 1\% (SNPs and \textit{k}-mers) variants overlaps the gene.
+			\item[]*** The most significantly associated variant is the causal variant.
 			\end{tablenotes}
 
 		\end{threeparttable}
@@ -218,9 +219,9 @@ In particular, the assembly of the reads containing the most significant \textit
 and the alignment of the resulting haplotypes showed that these \textit{k}-mers
 directly tagged the causal variant (Figure \ref{flower-color-main-figure}c-e).
 As the catalogue of variants analyzed by Platypus contains only SNPs and small
-indels, variants located in the gene proved to be among the most closely
-associated, but the causal variant could not be captured given the large size
-of this variant.
+indels, the causal variant could not be captured by this approach. Still, SNPs
+and indels located within the gene sequence were among the most significantly
+associated ones.
 
 The \textit{k}-mer GWAS analysis also identified presumably spurious significant
 \textit{k}-mers scattered throughout the genome (Figure
@@ -279,27 +280,26 @@ excluded 24 accessions for which the concordance rate was below 90\%.
 
 % Pubescence color - T locus
 \cite{zabala2003} identified Glyma.06g202300 as the gene associated with the
-\textit{T} locus for pubescence color and found a 1-bp deletion as
-a putative causal variant at this locus. For all three GWAS approaches, we
-found a signal overlapping this gene (Figure
-\ref{pubescence_color_all_manhattan}). In
-particular, the regions defined by the top 1\% most associated variants identified by the
-Platypus and \textit{k}-mer approaches included Glyma.06g202300 (Figure
-\ref{pubescence_color_all_T_signal}). While the most significant
-\textit{k}-mers did occur within the sequence of this gene, they did not
-correspond to the causal variant (Figure \ref{pubescence_color_all_T_gene}).
-Still, the fourth and fifth most strongly associated \textit{k}-mers
-corresponded to the causal variant (Figures \ref{pubescence_color_all_T_gene},
-\ref{pubescence_color_all_T_kmers}). We
+\textit{T} locus for pubescence color and found a 1-bp deletion as a putative
+causal variant at this locus. For all three GWAS approaches, we found a signal
+overlapping this gene (Figure \ref{pubescence_color_all_manhattan}). In
+particular, the regions defined by the 1\% most associated variants
+identified by the SNP- and \textit{k}-mer-based approaches included
+Glyma.06g202300 (Figure \ref{pubescence_color_all_T_signal}). While the most
+significant \textit{k}-mers did occur within the sequence of this gene, they
+did not correspond to the causal variant (Figure
+\ref{pubescence_color_all_T_gene}).  Still, the fourth and fifth most strongly
+associated \textit{k}-mers corresponded to the causal variant (Figures
+\ref{pubescence_color_all_T_gene}, \ref{pubescence_color_all_T_kmers}). We
 observed that not all accessions with gray pubescence harbored the deleted
-nucleotide (Figure \ref{pubescence_color_all_T_kmers}c), which could indicate either that other causal variants are resulting in
-a non-functional F3’H in this population, or that the causal
-variant lies elsewhere. As for Platypus, the most significant
-variant within the sequence of Glyma.06g202300 was the causal
-variant, however it was not the most significantly associated variant overall
-(Figures \ref{pubescence_color_all_T_signal},
-\ref{pubescence_color_all_T_gene}). Paragraph did not detect the causal
-variant at this locus given that this approach does not target small indels.
+nucleotide (Figure \ref{pubescence_color_all_T_kmers}c), which could indicate
+either that other causal variants are resulting in a non-functional F3’H in
+this population, or that the causal variant lies elsewhere. As for SNP-based GWAS,
+the most significant variant within the sequence of Glyma.06g202300 was the
+causal variant, however it was not the most significantly associated variant
+overall (Figures \ref{pubescence_color_all_T_signal},
+\ref{pubescence_color_all_T_gene}). SV-based GWAS did not detect the causal variant
+at this locus, as expected from its size.
 
 \subsubsection*{Pubescence color -- \textit{Td} locus}
 \label{sv-gwas-main-results-pubescence-color-td}
@@ -308,13 +308,13 @@ variant at this locus given that this approach does not target small indels.
 We conducted a separate GWAS analysis contrasting only accessions with tawny and light
 tawny pubescence because the \textit{Td} locus is known to control
 these differences in color. Accordingly, we
-detected signals in this region using all three approaches, but only Platypus
-and the \textit{k}-mers identified a signal that overlapped Glyma.03g258700
+detected signals in this region using all three approaches, but only SNP-
+and \textit{k}-mer-based GWAS identified a signal that overlapped Glyma.03g258700
 (Figures \ref{pubescence-color-main-figure}a-b,
 \ref{pubescence_color_nogray_manhattan}, \ref{pubescence_color_nogray_Td_signal}).
 While the most significant \textit{k}-mer identified the causal variant documented
 at this locus \citep{yan2020}, it was the fourth most significantly associated variant
-for the Platypus genotype calls (Figures
+for the SNP-based approach (Figures
 \ref{pubescence-color-main-figure}b-d, \ref{pubescence_color_nogray_Td_gene}).
 Interestingly, some of the accessions bearing the haplotype associated with tawny pubescence
 displayed light tawny pubescence, suggesting that there may be more than one causal
@@ -330,7 +330,7 @@ variant at this locus (Figure \ref{pubescence-color-main-figure}e).
 \end{figure}
 
 \begin{figure}
-	\contcaption{Results of SNP/indel- and \textit{k}-mer-based GWAS at the
+	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
 	\textit{Td} locus for pubescence color. (a) Genome-wide Manhattan plots.
 	Horizontal dotted lines indicate the significance
 	threshold whereas vertical dotted lines indicate the location of the
@@ -338,7 +338,7 @@ variant at this locus (Figure \ref{pubescence-color-main-figure}e).
 	The vertical dotted lines indicate the location of the
 	Glyma.03g258700 gene associated with this locus. The shaded gray
 	rectangles show the regions delimited by the top 1\% associations.
-	In the case of SNP/indels, blue points denote markers used in the
+	In the case of SNPs, blue points denote markers used in the
 	original analysis, whereas red points denote points that had originally
 	been pruned but whose \emph{p}-values were computed after signal
 	discovery.
@@ -364,10 +364,10 @@ that takes the form of a 10.91-kb inverted duplication of three chalcone
 synthase (CHS) genes \citep[CHS1, CHS3 and CHS4;][]{tuteja2008}. The presence of
 this inverted duplication results in the silencing of all CHS genes in the seed
 coat specifically and thus in the absence of seed coat pigmentation
-\citep{tuteja2009}. While we did identify signals overlapping this causal variant
+\citep{tuteja2009}. While we did find signals overlapping this causal variant
 using all three GWAS approaches (Figures \ref{seed_coat_color_all_manhattan},
 \ref{seed_coat_color_all_I_signal}), none of the approaches identified
-the causal variant. This failure to detect the causal variant is likely due
+it. This failure to detect the causal variant is likely due
 to its complexity, which makes it difficult to detect and genotype it. While it
 is likely that at least some of the significantly associated \textit{k}-mers
 actually are derived from this causal variant, the lack of systematic methods for
@@ -385,10 +385,10 @@ approaches (Figure \ref{seed_coat_color_greenyellow_manhattan}).
 this locus and found an A>G SNP affecting transcript splicing as the causal
 variant. Consistently with their results, we identified the two
 most significant \emph{k}-mers and the second most significant marker from the
-Platypus analysis as corresponding to that causal variant (Figures
+SNP-based analysis as corresponding to that causal variant (Figures
 \ref{seed-coat-color-main-figure},
 \ref{seed_coat_color_greenyellow_G_signal},
-\ref{seed_coat_color_greenyellow_G_gene}). Unsurprisingly, Paragraph
+\ref{seed_coat_color_greenyellow_G_gene}). Unsurprisingly, SV-based GWAS
 did not identify the causal variant given its type.
 
 % Figure 3 with the results on pubescence color at locus G
@@ -401,7 +401,7 @@ did not identify the causal variant given its type.
 \end{figure}
 
 \begin{figure}
-	\contcaption{Results of SNP/indel- and \textit{k}-mer-based GWAS at the
+	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
 	\textit{G} locus for seed coat color. (a) Genome-wide Manhattan plots.
 	Horizontal dotted lines indicate the significance
 	threshold whereas vertical dotted lines indicate the location of the
@@ -409,7 +409,7 @@ did not identify the causal variant given its type.
 	The vertical dotted lines indicate the location of the
 	Glyma.01g198500 gene associated with this locus. The shaded gray
 	rectangles show the regions delimited by the top 1\% associations.
-	In the case of SNP/indels, blue points denote markers used in the
+	In the case of SNPs, blue points denote markers used in the
 	original analysis, whereas red points denote points that had originally
 	been pruned but whose \emph{p}-values were computed after signal
 	discovery.
@@ -431,51 +431,23 @@ did not identify the causal variant given its type.
 \label{sv-gwas-main-results-stem-termination-dt1}
 
 While all GWAS approaches found signals near the Glyma.19g194300 gene
-associated with the \textit{Dt1} locus for stem termination type, the
-\textit{k}-mer and Platypus analyses performed best since the region defined by the most highly associated markers
-(top 1\%) included the causal gene (Figures
+associated with the \textit{Dt1} locus for stem termination type, the SNP- and
+\textit{k}-mer-based analyses performed best since the region defined by their
+most highly associated markers (top 1\%) included the causal gene (Figures
 \ref{stem_termination_all_manhattan}, \ref{stem_termination_all_Dt1_signal}).
 We did identify one of the SNPs suggested as putative causal variants for this
 locus by \cite{tian2010} and \cite{liu2010}, however this SNP was only the
 135\textsuperscript{th} most associated marker found by Platypus and the
 12\textsuperscript{th} most associated \emph{k}-mer (Figures
 \ref{stem_termination_all_Dt1_gene}, \ref{stem_termination_all_Dt1_kmers}).
-Our results are consistent with previous findings in
-suggesting that there is more than one causal variant at the \textit{Dt1} locus \citep{liu2010, tian2010}. Indeed, a
-few cultivars bearing the allele associated with \emph{dt1} showed
-indeterminate or semi-determinate phenotypes and some cultivars showed a
-determinate phenotype without bearing the allele associated with \emph{dt1}
-(Figure \ref{stem_termination_all_Dt1_kmers}). The existence of several causal
-variants might explain why our analyses did not identify a causal variant more
-clearly.
-
-% Hilum color - T locus
-\subsubsection*{Hilum color -- \textit{T} locus}
-\label{sv-gwas-main-results-hilum-color-t}
-
-The \textit{T} locus mentioned above for pubescence color is also a determining
-locus for hilum color. We detected signals overlapping the corresponding gene
-using all approaches (Figures \ref{hilum_color_all_manhattan},
-\ref{hilum_color_all_T_signal}). The regions defined by the top 5\% (Paragraph)
-and top 1\% (Platypus and \textit{k}-mers) variants/\textit{k}-mers included
-the Glyma.06g202300 gene associated with this locus. Similarly to what we
-observed for the analysis of the \textit{T} locus based on pubescence color, we
-did identify the documented causal variant at this locus using the Platypus and
-\textit{k}-mer analyses, although these variants were not the most
-significantly associated overall (Figures \ref{hilum_color_all_T_gene},
-\ref{hilum_color_all_T_kmers}).
-
-% Hilum color - I locus
-\subsubsection*{Hilum color -- \textit{I} locus}
-\label{sv-gwas-main-results-hilum-color-i}
-
-Similarly, the \textit{I} locus discussed above for its effect on seed coat
-color also controls hilum color and we detected signals overlapping the
-associated inverted duplication using all approaches (Figures
-\ref{hilum_color_all_manhattan}, \ref{hilum_color_all_I_signal}). However,
-as was the case for the effect of \textit{I} on seed coat color, we were
-not able to link any of the variants identified to the causal variation given
-its highly complex nature.
+Our results are consistent with previous findings in suggesting that there is
+more than one causal variant at the \textit{Dt1} locus \citep{liu2010,
+tian2010}. Indeed, a few cultivars bearing the allele associated with
+\emph{dt1} showed indeterminate or semi-determinate phenotypes and some
+cultivars showed a determinate phenotype without bearing the allele associated
+with \emph{dt1} (Figure \ref{stem_termination_all_Dt1_kmers}). The existence of
+several causal variants might explain why our analyses did not identify a
+causal variant more clearly.
 
 % Hilum color - R locus
 \subsubsection*{Hilum color -- \textit{R} locus}
@@ -484,7 +456,7 @@ its highly complex nature.
 We conducted a GWAS analysis that only compared accessions with black and brown
 hila in an attempt to detect stronger signals at the \textit{R} locus.  We
 accordingly detected a signal overlapping this locus using all approaches, but
-only Platypus and \textit{k}-mers detected signals overlapping the
+only SNP- and \textit{k}-mer-based GWAS detected signals overlapping the
 Glyma.09g235100 gene associated with \textit{R} (Figures
 \ref{hilum_color_blackbrown_manhattan}, \ref{hilum_color_blackbrown_R_signal}).
 \cite{gillman2011} identified this R2R3 MYB transcription factor as the
@@ -516,7 +488,7 @@ pubes\-cence in order to detect loci associated with pubescence density. This an
 detected signals at the \textit{Ps} locus using all three approaches (Figures
 \ref{pubescence-density-main-figure}a-b, \ref{pubescence_density_manhattan}, \ref{pubescence_density_Ps_signal}
 and \ref{pubescence_density_Ps_gene}). The causal
-variant at this recently cloned locus is a copy number variant overlapping the
+variant at this recently cloned locus is a copy number variant (CNV) overlapping the
 Glyma.12g187200 gene, with higher copy number resulting in reduced pubescence \citep{liu2020ps}.
 We identified a region of $\sim$42 kb that varied in copy number across
 the population and was associated with the trait (Figure
@@ -533,11 +505,11 @@ results may be due to the presence of some unresolved sequence (a stretch of
 4,635 'N' nucleotides) over that interval in the reference sequence that we used.
 Because our SV filtering process removed any SV overlapping 'N' nucleotides in
 the reference, we reasoned that the CNV may have been found by our pipeline but
-filtered out later on. Indeed, found that a 42.8-kb duplication corresponding
+filtered out later on. Indeed, found a 42.8-kb duplication corresponding
 to the one described above among the genotype calls made by smoove. An association
 analysis of that single variant using GAPIT found a \textit{p}-value of 1.9e-23,
 which would have made it the most significant SV. In this particular case, the
-failure of the SV GWAS analysis to find identify the causal variant was due
+failure of the SV-based GWAS analysis to find identify the causal variant was due
 to our filtering parameters and not to limitations of the SV genotype calls per se.
 
 % Figure 4 with the results on pubescence density at locus Ps
@@ -573,8 +545,8 @@ to our filtering parameters and not to limitations of the SV genotype calls per 
 \subsubsection*{Seed coat luster -- B locus}
 \label{sv-gwas-main-results-seed-coat-luster-b}
 
-Next, we conducted a GWAS analysis comparing dull and shiny seed coat
-phenotypes for the seed coat luster trait. Seed coat luster has been shown by
+We conducted a GWAS analysis comparing dull and shiny seed coat phenotypes for
+the seed coat luster trait. Seed coat luster has been shown by
 \cite{gijzen1999} to be largely caused by the deposition of a hydrophobic
 protein (HPS) at the seed surface. Copy number variation of this gene at the
 \textit{B} locus was later shown to explain variation in luster, although
@@ -594,6 +566,7 @@ CNV.
 
 \subsection*{Analysis of loci with unknown causal genes}
 \label{sv-gwas-results}
+
 In addition to analyzing loci for which the genes are already known, we were
 able to suggest candidate genes at loci for which the underlying genes are not
 known yet. 
@@ -602,43 +575,42 @@ known yet.
 \subsubsection*{Pod color -- \textit{L1} and \textit{L2} loci}
 \label{sv-gwas-main-results-pod-color-l1-l2}
 
-Both the \textit{L1} and the \textit{L2} loci for pod
-color have yet to be cloned. While \cite{he2015} proposed the gene
-Glyma.19g101700 as likely corresponding to \textit{L1} based on fine mapping
-and expression analysis, our results as well as those reported by
-\cite{bandillo2017} do not support this gene as a candidate due to its location
-$\sim$3 Mb away from GWAS signals. Our analyses based on
-\textit{k}-mers and Platypus found signals overlapping 14 and 6
-genes, respectively (Figures \ref{pod_color_all_manhattan},
+Both the \textit{L1} and the \textit{L2} loci for pod color have yet to be
+cloned. While \cite{he2015} proposed the gene Glyma.19g101700 as likely
+corresponding to \textit{L1} based on fine mapping and expression analysis, our
+results as well as those reported by \cite{bandillo2017} do not support this
+gene as a candidate due to its location $\sim$3 Mb away from GWAS signals. Our
+analyses based on \textit{k}-mers and SNPs found signals overlapping 14 and
+6 genes, respectively (Figures \ref{pod_color_all_manhattan},
 \ref{pod_color_all_L1_signal}). Of these, a MATE transporter (Glyma.19g120300)
 appears as a prime candidate as the most significant \emph{k}-mer was observed
 within its sequence and it is highly expressed in pods according to data hosted
 on SoyBase \citep{grant2010, severin2010}. Moreover, the role of some MATE
 proteins in transporting flavonoids has been demonstrated \citep{chen2015}.
 
-The signals found by Platypus and \emph{k}-mer analyses at the \textit{L2}
+The signals found by SNP- and \emph{k}-mer-based analyses at the \textit{L2}
 locus overlap 24 and 50 genes, respectively (Figures
 \ref{pod_color_all_manhattan}, \ref{pod_color_all_L2_signal}). Despite this
-somewhat high number, we noticed that the closest gene to the
-most significant \emph{k}-mer (Glyma.03g005800) is also a MATE transporter,
-similarly to our top candidate for \emph{L1}. This gene may therefore represent
-an interesting candidate for this locus for future studies.
+somewhat high number, we noticed that the closest gene to the most significant
+\emph{k}-mer (Glyma.03g005800) is also a MATE transporter, similarly to our top
+candidate for \emph{L1}. This gene may therefore represent an interesting
+candidate for this locus for future studies.
 
 % Pubescence form - Pa1 and Pa2 loci
 \subsubsection*{Pubescence form -- \textit{Pa1} and \textit{Pa2} loci}
 \label{sv-gwas-main-results-pubescence-form-pa1-pa2}
 
 The two known loci for pubescence form in soybean, \textit{Pa1} and
-\textit{Pa2}, have also not been cloned yet, although \cite{gilbert2017} has suggested
-Glyma.12g213900 as a candidate for \textit{Pa1} based on data published
-by \cite{bandillo2017}. This gene encodes a Myb transcription factor annotated
-as playing a role in trichome branching. Indeed, the most
-significant signals found by all three approaches were located near this gene
-(Figures \ref{pubescence-form-main-figure}a-b,
-\ref{pubescence_form_all_manhattan}, \ref{pubescence_form_all_Pa1_signal}).
-The analyses based on Platypus and \emph{k}-mers identified two highly
-significant non-synonymous SNPs in Glyma.12g213900 that were associated with appressed pubescence
-(Figures \ref{pubescence-form-main-figure}c-d, \ref{pubescence_form_all_Pa1_gene},
+\textit{Pa2}, have also not been cloned yet. Nevertheless, \cite{gilbert2017}
+has suggested Glyma.12g213900 as a candidate for \textit{Pa1} based on data
+published by \cite{bandillo2017}. This gene encodes a Myb transcription factor
+annotated as playing a role in trichome branching. Indeed, the most significant
+signals found by all three approaches were located near this gene (Figures
+\ref{pubescence-form-main-figure}a-b, \ref{pubescence_form_all_manhattan},
+\ref{pubescence_form_all_Pa1_signal}).  The analyses based on SNPs and
+\emph{k}-mers identified two highly significant non-synonymous SNPs in
+Glyma.12g213900 that were associated with appressed pubescence (Figures
+\ref{pubescence-form-main-figure}c-d, \ref{pubescence_form_all_Pa1_gene},
 \ref{pubescence_form_all_Pa1_kmers}). The alternative alleles for these two
 SNPs co-occurred together in our dataset and may represent causal variants at
 the \emph{Pa1} locus. The signals observed at the \emph{Pa2} locus were much
@@ -663,7 +635,7 @@ analyzed further.
 \end{figure}
 
 \begin{figure}
-	\contcaption{Results of SNP/indel- and \textit{k}-mer-based GWAS at the
+	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
 	\textit{Pa1} locus for pubescence form. (a) Genome-wide Manhattan plots.
 	Horizontal dotted lines indicate the significance
 	threshold whereas vertical dotted lines indicate the location of the
@@ -671,7 +643,7 @@ analyzed further.
 	The vertical dotted lines indicate the location of the
 	Glyma.12g213900 gene suggested as a candidate for this locus. The shaded gray
 	rectangles show the regions delimited by the top 1\% associations.
-	In the case of SNP/indels, blue points denote markers used in the
+	In the case of SNPs, blue points denote markers used in the
 	original analysis, whereas red points denote points that had originally
 	been pruned but whose \emph{p}-values were computed after signal
 	discovery.
@@ -690,7 +662,7 @@ analyzed further.
 
 We used corrected dry weight (CDW) as described by \cite{deronne2022} as a
 measure of horizontal resistance to \emph{P. sojae}. We found a strong signal
-overlapping the genomic region reported by these authors on Gm15 using all all GWAS
+overlapping the genomic region reported by these authors on Gm15 using all three GWAS
 approaches (Figure \ref{corrected_dry_weight_manhattan}). \cite{deronne2022}
 proposed Glyma.15g217100 as a candidate gene for explaining phenotypic
 variation at that locus based on a combination of functional annotation and
@@ -700,8 +672,8 @@ Glyma.15g217100, we found that this gene was located at the distal end of the si
 in a region with markers or \emph{k}-mers showing a weaker
 association (Figure \ref{corrected_dry_weight_cdwGm15_signal}). The
 large size of the observed signal means that the gene associated with the phenotype could
-be located almost anywhere in this region, however, we identified a particularly
-interesting region defined by the top 1\% associations in the Platypus
+be located almost anywhere in this region. However, we identified a particularly
+interesting region defined by the top 1\% associations in the SNP-based
 analysis. This region overlaps only three annotated genes and also contains the
 most significant \emph{k}-mer (Figure
 \ref{corrected_dry_weight_cdwGm15_signal}). One of the genes in this region is
@@ -715,22 +687,21 @@ candidate gene for explaining resistance to \emph{P. sojae} in this population.
 \label{sv-gwas-main-results-novel-loci}
 
 In addition to verifying known loci, we also observed potentially novel loci in
-the \textit{k}-mer GWAS analysis of stem termination and pod color.
-When comparing accessions
-with indeterminate and semi-determinate stem termination types, we observed
-previously undocumented signals on chromosomes Gm11, Gm16 and Gm18 in
-addition to the known \textit{Dt1} locus (Figure \ref{stem-termination-main-figure}a).
-Analysis of the pairwise LD between significant \textit{k}-mers found no
-LD between these signals, suggesting that they may represent \textit{bona fide}
-loci associated with stem termination type
-(Figure \ref{stem-termination-main-figure}b). Similarly, a \textit{k}-mer GWAS
-analysis comparing accessions with black and brown pods found a previously
-undocumented signal on chromosome Gm15. \textit{k}-mers at this new locus showed no LD with \textit{k}-mers
-at the known \textit{L1} locus and may therefore represent a distinct locus (Figures
-\ref{pod_color_blbr_manhattan}, \ref{pod_color_blbr_ld}). The observed signal overlaps a total of
-27 genes (Figure \ref{pod_color_blbr_pdcGm15_signal}), but none of those are
-annotated as having an obvious role in controlling pod color.
-
+the \textit{k}-mer GWAS analysis of stem termination and pod color.  When
+comparing accessions with indeterminate and semi-determinate stem termination
+types, we observed previously undocumented signals on chromosomes Gm11, Gm16
+and Gm18 in addition to the known \textit{Dt1} locus (Figure
+\ref{stem-termination-main-figure}a).  Analysis of the pairwise LD between
+significant \textit{k}-mers found no LD between these signals, suggesting that
+they may represent \textit{bona fide} loci associated with stem termination
+type (Figure \ref{stem-termination-main-figure}b). Similarly, a \textit{k}-mer
+GWAS analysis comparing accessions with black and brown pods found a previously
+undocumented signal on chromosome Gm15. \textit{k}-mers at this new locus
+showed no LD with \textit{k}-mers at the known \textit{L1} locus and may
+therefore represent a distinct locus (Figures \ref{pod_color_blbr_manhattan},
+\ref{pod_color_blbr_ld}). The observed signal overlaps a total of 27 genes
+(Figure \ref{pod_color_blbr_pdcGm15_signal}), but none of those are annotated
+as having an obvious role in controlling pod color.
 
 % Figure 6 with the results novel loci for stem termination type
 \begin{figure}
@@ -760,31 +731,31 @@ annotated as having an obvious role in controlling pod color.
 \label{sv-gwas-potential-kmers}
 
 One of the most striking results from the analyses presented above is the
-impressive performance of \emph{k}-mer-based GWAS compared to SNP/indel- and
-SV-based GWAS. The GWAS analyses using \emph{k}-mers identified
-the causal variant as the most significantly associated variant at four loci
-with various types of causal variants: \emph{W1} for flower color, \emph{Td}
-for pubescence color, \emph{G} for seed coat color, and \emph{Ps} for
-pubescence density (Table \ref{loci-table}). In comparison, this result was achieved by SV-based GWAS
-at the \textit{W1} locus only, and at none of the loci for SNP/indel-based GWAS.
+impressive performance of \emph{k}-mer-based GWAS compared to SNP- and SV-based
+GWAS. The GWAS analyses using \emph{k}-mers identified the causal variant as
+the most significantly associated variant at four loci with various types of
+causal variants: \emph{W1} for flower color, \emph{Td} for pubescence color,
+\emph{G} for seed coat color, and \emph{Ps} for pubescence density (Table
+\ref{loci-table}). In comparison, this result was achieved by SV-based GWAS at
+the \textit{W1} locus only, and at none of the loci for SNP-based GWAS.
 The \textit{k}-mer approach also systematically performed at least as well as
-the other three approaches in identifying signals overlapping known variants or genes
-(Table \ref{loci-table}). Moreover, whenever \textit{k}-mer-based GWAS did
-detect a signal, the region defined by the 1\% most significant \textit{k}-mers
-overlapped the known causal variant or gene. 
+the other two approaches in identifying signals overlapping known variants or
+genes (Table \ref{loci-table}). Moreover, whenever \textit{k}-mer-based GWAS
+did detect a signal, the region defined by the 1\% most significant
+\textit{k}-mers overlapped the known causal variant or gene. 
 
 Even in cases where the most significantly associated \emph{k}-mers did not
-pinpoint known causal variants, they were often located near
-those variants. For example, the most significantly associated \emph{k}-mers
-mapping to the \emph{T} locus for pubescence color were located in intronic sequences
-of the gene known to be associated with this locus.
-Similarly, the most significantly associated
-\emph{k}-mers at the \emph{B} locus for seed coat luster mapped within a
-genomic interval known to vary in copy number at that locus. In addition, the most
-significant \emph{k}-mers at the \emph{R} locus mapped just upstream of a
-homolog of the gene associated with the locus. Even though the \emph{k}-mer
-analysis did not identify the causal variants directly in those cases, it still
-provided a very strong starting point for candidate gene identification.
+pinpoint known causal variants, they were often located near those variants.
+For example, the most significantly associated \emph{k}-mers mapping to the
+\emph{T} locus for pubescence color were located in intronic sequences of the
+gene known to be associated with this locus.  Similarly, the most significantly
+associated \emph{k}-mers at the \emph{B} locus for seed coat luster mapped
+within a genomic interval known to vary in copy number at that locus. In
+addition, the most significant \emph{k}-mers at the \emph{R} locus mapped just
+upstream of a homolog of the gene associated with the locus. Even though the
+\emph{k}-mer analysis did not identify the causal variants directly in those
+cases, it still provided a very strong starting point for candidate gene
+identification.
 
 As would be expected of any GWAS analysis, the success of the \emph{k}-mer approach
 depends on the quality of the phenotypic data and the complexity of the genetic
@@ -799,7 +770,7 @@ genotypes at classical loci, and that the intermediate phenotype for seed coat
 luster is not always consistent across different environments. For qualitative
 traits, the numerical scale used to recode phenotypes for use in GWAS is somewhat
 arbitrary and may influence the final results. In the case of quantitative
-phenotypes, the usual limitations to the precision and stochastic variation of
+traits, the usual limitations to the precision and stochastic variation of
 phenotypic values will necessarily make the interpretation more difficult than
 for simple qualitative traits. Notwithstanding those limitations,
 \textit{k}-mer-based GWAS clearly performed better than any of the other
@@ -813,102 +784,98 @@ variant calling and genotyping, and therefore yields more accurate results.
 \label{limitations-of-kmers-GWAS}
 
 While we have have shown that using \emph{k}-mers for GWAS in soybean performed
-well compared to other GWAS methods, this
-approach does present some unique challenges and limitations. One obvious limitation
-is that using the presence/absence of \emph{k}-mers may not be appropriate in
-species where heterozygosity is common (i.e., most species other than inbred
-crops) as the \emph{k}-mers associated with the presence of both alleles will
-be observed at heterozygous loci. Moreover, although the presence/absence of
-\emph{k}-mers can detect variation independently of its type, some types of
-variation may be more difficult to detect than others.
-For example, copy number variation at a locus may not be
-detected from presence/absence alone if all copies are identical and occur in
-tandem, such that no \textit{k}-mer can differentiate between two copies and
-more. For similar reasons, \emph{k}-mers may also fail to capture variation
-occurring in repeated sequences. Alternative models based on \emph{k}-mer
-counts instead of presence/absence have been developed \citep{rahman2018,
-he2021} which may solve issues like these and broaden the scope of variants
-that can be identified from \emph{k}-mers.
+well compared to other GWAS methods, this approach does present some unique
+challenges and limitations. One obvious limitation is that using the
+presence/absence of \emph{k}-mers may not be appropriate in species where
+heterozygosity is common (i.e., most species other than inbred crops) as the
+\emph{k}-mers associated with the presence of both alleles will be observed at
+heterozygous loci. Moreover, although the presence/absence of \emph{k}-mers can
+detect variation independently of its type, some types of variation may be more
+difficult to detect than others.  For example, copy number variation at a locus
+may not be detected from presence/absence alone if all copies are identical and
+occur in tandem, such that no \textit{k}-mer can differentiate between two
+copies and more. For similar reasons, \emph{k}-mers may also fail to capture
+variation occurring in repeated sequences. Alternative models based on
+\emph{k}-mer counts instead of presence/absence have been developed
+\citep{rahman2018, he2021} which may solve issues like these and broaden the
+scope of variants that can be identified from \emph{k}-mers.
 
-The complexity of analyzing the results of \emph{k}-mer-based GWAS is
-another limitation of this approach. Although the method developed by
+The complexity of analyzing the results of \emph{k}-mer-based GWAS is another
+limitation of this approach. Although the method developed by
 \cite{voichek2020} is in itself relatively simple and computationally
 inexpensive, downstream analysis and interpretation of the output is
 challenging. Indeed, there are no state-of-the-art methods for identifying the
 putative genomic coordinates of a \emph{k}-mer, grouping significant
 \emph{k}-mers together into coherent signals, and linking them to biologically
-meaningful sequence variation. Going forward, mapping
-the \emph{k}-mers or reads to a graph-based genome \citep[using e.g. the vg
-toolkit;][]{siren2021} may represent an
-improvement to using a single linear genome.
-Grouping significant \emph{k}-mers by LD instead of by genomic
-position, as was done for some of the analyses in this paper, could prove
-useful in determining how many loci control a trait. In this study, we used an
-assembly-based approach similar to what others have previously done
-\citep[e.g.][]{voichek2020, rahman2018}. This approach allowed us to link
-\emph{k}-mers to their underlying variation for simple cases involving SNPs and
-indels, but we were unable to link significantly associated \emph{k}-mers to
-more challenging causal variants such as those explaining the \emph{I} or
-\emph{B} loci. In this context, developing approaches to systematically link
-significant \emph{k}-mers to the sequence variation that underlies their
-presence is much needed. Furthermore, finding ways to limit the number of spurious
-associations found for some traits, as was the case for flower color and
-pubescence color in our study, is also needed in order to obtain robust results.
+meaningful sequence variation. Going forward, mapping the \emph{k}-mers or
+reads to a graph-based genome \citep[e.g. using the vg toolkit;][]{siren2021}
+may represent an improvement to using a single linear genome.  Grouping
+significant \emph{k}-mers by LD instead of by genomic position, as was done for
+some of the analyses in this paper, could prove useful in determining how many
+loci control a trait. In this study, we used an assembly-based approach similar
+to what others have previously done \citep[e.g.][]{voichek2020, rahman2018}.
+This approach allowed us to link \emph{k}-mers to their underlying variation
+for simple cases involving SNPs and indels, but we were unable to link
+significantly associated \emph{k}-mers to more challenging causal variants such
+as those explaining the \emph{I} or \emph{B} loci. In this context, developing
+approaches to systematically link significant \emph{k}-mers to the sequence
+variation that underlies their presence is much needed. Furthermore, finding
+ways to limit the number of spurious associations found for some traits, as was
+the case for flower color and pubescence color in our study, is also needed in
+order to obtain robust results.
 
-In this work, we provide a set of tools enabling the downstream
-analysis of \emph{k}-mer-based GWAS. Most importantly, we developed the
-katcher program for retrieving all reads containing
-any of a set of significant \emph{k}-mers in a computationally efficient manner. Previous studies usually
-mapped \emph{k}-mers to a reference genome to identify their reference-based
-coordinates \citep[e.g.][]{voichek2020, he2021, rahman2018, tripodi2021}.
-However, while this approach may work for \emph{k}-mers that show little
-divergence from the reference, it might fail to identify the genomic location
-of \emph{k}-mers that diverge significantly or are not found at all in the
-reference. Moreover, it does not take into account the sequence context of the read where
-the \emph{k}-mer was found, which may provide valuable information for mapping
-purposes. Our approach avoids these pitfalls by instead systematically retrieving reads
-containing significant \emph{k}-mers, including those that did not map at all
-to the reference assembly. While we were able to position the most significant
-\emph{k}-mers on the reference sequence in our analyses, it may not be the case
-for highly variable species or if the causal variation at a locus results from
-a large novel insertion.
+In this work, we provide a set of tools enabling the downstream analysis of
+\emph{k}-mer-based GWAS. Most importantly, we developed the katcher program for
+retrieving all reads containing any of a set of significant \emph{k}-mers in a
+computationally efficient manner. Previous studies usually mapped \emph{k}-mers
+to a reference genome to identify their reference-based coordinates
+\citep[e.g.][]{voichek2020, he2021, rahman2018, tripodi2021}.  However, while
+this approach may work for \emph{k}-mers that show little divergence from the
+reference, it might fail to identify the genomic location of \emph{k}-mers that
+diverge significantly or are not found at all in the reference. Moreover, it
+does not take into account the sequence context of the read where the
+\emph{k}-mer was found, which may provide valuable information for mapping
+purposes. Our approach avoids these pitfalls by instead systematically
+retrieving reads containing significant \emph{k}-mers, including those that did
+not map at all to the reference assembly. While we were able to position the
+most significant \emph{k}-mers on the reference sequence in our analyses, it
+may not be the case for highly variable species or if the causal variation at a
+locus results from a large novel insertion.
 
 \subsection*{Use of SV genotypes for GWAS}
 \label{use-of-svs-for-gwas}
 
-In addition to \emph{k}-mers, we also assessed the use of SVs in GWAS analysis of soybean.
-Although we did find the causal variant as the most significantly associated SV
-at the \emph{W1} locus, results were otherwise rather inconclusive.
-Indeed, most of the other known or putative causal variants were SNPs or
-indels, and therefore were not represented in the SV datasets. At
-most loci where SVs are known to be the underlying causal variant (e.g.
-\emph{I}, \emph{B}, \emph{Ps}), the analyses based on SVs did not find the causal variants, most likely
-due to the difficulty of calling and genotyping such variants
-\citep{kosugi2019, lemay2022}. In the case of the \textit{Ps} locus, this limitation
-was due to a filtering step in our pipeline rather than to an inherent inability to
-properly call and genotype the causal variant.
+In addition to \emph{k}-mers, we also assessed the use of SVs in GWAS analysis
+of soybean.  Although we did find the causal variant as the most significantly
+associated SV at the \emph{W1} locus, results were otherwise rather
+inconclusive.  Indeed, most of the other known or putative causal variants were
+SNPs or indels, and therefore were not represented in the SV datasets. At most
+loci where SVs are known to be the underlying causal variant (e.g.  \emph{I},
+\emph{B}, \emph{Ps}), the analyses based on SVs did not find the causal
+variants, most likely due to the difficulty of calling and genotyping such
+variants \citep{kosugi2019, lemay2022}. In the case of the \textit{Ps} locus,
+this limitation was due to a filtering step in our pipeline rather than to an
+inherent inability to properly call and genotype the causal variant.
 
-Given the current performance of SV
-genotyping programs, it is not clear whether using SVs for GWAS provides any
-advantage over using \emph{k}-mer- or SNP-based GWAS, or a combination of both.
-Indeed, in the single case where the SV-based analyses identified the causal
-variant, the \emph{k}-mer-based GWAS identified it as well. Moreover,
-SNP/indel-based GWAS provided better guidance in delimiting the signals found
-at a given locus because of the much higher density of markers compared to SVs.
-The usefulness of SV-based GWAS compared to SNP-based
-GWAS will largely depend on whether SVs can represent variation that is not
-otherwise in LD with SNPs. In tomato, \cite{dominguez2020} found that most
-transposable element insertions associated with phenotypic variation in
-agronomic traits were not tagged by SNPs. On the other hand, in humans,
+Given the current performance of SV genotyping programs, it is not clear
+whether using SVs for GWAS provides any advantage over using \emph{k}-mer- or
+SNP-based GWAS, or a combination of both.  Indeed, in the single case where the
+SV-based analyses identified the causal variant, the \emph{k}-mer-based GWAS
+identified it as well. Moreover, SNP-based GWAS provided better guidance
+in delimiting the signals found at a given locus because of the much higher
+density of markers compared to SVs.  The usefulness of SV-based GWAS compared
+to SNP-based GWAS will largely depend on whether SVs can represent variation
+that is not otherwise in LD with SNPs. In tomato, \cite{dominguez2020} found
+that most transposable element insertions associated with phenotypic variation
+in agronomic traits were not tagged by SNPs. On the other hand, in humans,
 \cite{maretty2017} found that the majority of SVs were in high LD with SNPs. It
-is therefore likely that how well SVs can be tagged by SNPs will depend on
-the particular type of SV and on the species. A more
-efficient approach than SV-based GWAS may be to conduct \emph{k}-mer-based GWAS
-and only then link known SVs to significant \emph{k}-mers.
-Alternatively, \textit{k}-mer-based GWAS can be conducted specifically for
-\textit{k}-mers that are associated with SVs \citep{jayakodi2020}.
-Previous studies have
-obtained noteworthy results by using SVs for GWAS analyses \citep[e.g.][]{zhang2015, akakpo2020,
+is therefore likely that how well SVs can be tagged by SNPs will depend on the
+particular type of SV and on the species. A more efficient approach than
+SV-based GWAS may be to conduct \emph{k}-mer-based GWAS and only then link
+known SVs to significant \emph{k}-mers.  Alternatively, \textit{k}-mer-based
+GWAS can be conducted specifically for \textit{k}-mers that are associated with
+SVs \citep{jayakodi2020}.  Previous studies have obtained noteworthy results by
+using SVs for GWAS analyses \citep[e.g.][]{zhang2015, akakpo2020,
 dominguez2020}, however it would be worthwhile to see whether these results
 could be replicated using \emph{k}-mer-based GWAS.
 
@@ -916,24 +883,24 @@ could be replicated using \emph{k}-mer-based GWAS.
 
 In conclusion, we used SV-based and \emph{k}-mer-based GWAS to study ten
 qualitative traits and three quantitative traits in soybean cultivars and
-compared the results to traditional SNP/indel-based GWAS. While
-\emph{k}-mer-based GWAS proved to be a powerful approach in pinpointing the
-causal variation or genes associated with known loci, it is unclear whether
-conducting SV-based GWAS is worth the investment. In addition, we used the
-results from the \emph{k}-mer- and SNP-based GWAS to suggest candidate genes
-for a few classical loci that have yet to be cloned. Based on our results, we
-believe that an optimal workflow may involve conducting SNP and \emph{k}-mer
-GWAS in parallel to identify significant signals and candidate genes,
-potentially in combination with SV datasets. Given the large
-number of samples for which WGS data are now available in several species,
-applying \emph{k}-mer-based GWAS to leverage already existing sequencing and
-phenotypic data appears feasible and promising. As part of our work, we
-developed several computational tools that should help other researchers with the downstream
-analysis of a \emph{k}-mer-based GWAS results. However, much work
-remains to be done in developing state-of-the-art methods for the downstream
-analysis of significant \emph{k}-mers. In particular, better approaches are
-needed for linking \emph{k}-mers to sequence variation and moving from
-presence/absence-based methods to count-based methods.
+compared the results to traditional SNP-based GWAS. While \emph{k}-mer-based
+GWAS proved to be a powerful approach in pinpointing the causal variation or
+genes associated with known loci, it is unclear whether conducting SV-based
+GWAS is worth the investment. In addition, we used the results from the
+\emph{k}-mer- and SNP-based GWAS to suggest candidate genes for a few classical
+loci that have yet to be cloned. Based on our results, we believe that an
+optimal workflow may involve conducting SNP-based and \emph{k}-mer-based GWAS
+in parallel to identify significant signals and candidate genes, potentially in
+combination with SV datasets. Given the large number of samples for which WGS
+data are now available in several species, applying \emph{k}-mer-based GWAS to
+leverage already existing sequencing and phenotypic data appears feasible and
+promising.  As part of our work, we developed several computational tools that
+should help other researchers with the downstream analysis of
+\emph{k}-mer-based GWAS. However, much work remains to be done in
+developing state-of-the-art methods for the downstream analysis of significant
+\emph{k}-mers. In particular, better approaches are needed for linking
+\emph{k}-mers to sequence variation and moving from presence/absence-based
+methods to count-based methods.
 
 \section*{Methods}
 \label{sv-gwas-methods}
@@ -1168,14 +1135,14 @@ downstream to 50 kb upstream of significant signals and computed their
 \emph{p}-values by running GAPIT using the same parameters as noted above. The
 \emph{p}-values thus computed on markers that were initially left out were not
 used for initial signal discovery, but provided finer resolution when analyzing
-the results of the Platypus GWAS analyses. Indeed, some markers that had not
+the results of the SNP-based GWAS analyses. Indeed, some markers that had not
 been included in the original GWAS may be the causal variant or simply yield
 more significant \emph{p}-values than those initially used.
 
 To help with the interpretation of results and the identification of candidate
 genes, we defined regions of highly significant associations within each signal
 by delimiting a range of coordinates containing the top 5\% most significant
-associations (Paragraph) or 1\% most significant associations (Platypus
+associations (Paragraph) or 1\% most significant associations (SNPs/indels
 and \emph{k}-mers) found within the signal. In cases where such a fraction
 represented fewer than two markers or \emph{k}-mers, the highly significant
 region was simply delimited by the two most significant associations.

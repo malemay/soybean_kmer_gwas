@@ -57,7 +57,7 @@ draw_manhattan(list(platypus_gwide_manhattan, kmers_gwide_manhattan),
 	       sigline_regexp = "sigline_[23]",
 	       siglabel_regexp = "siglabel_[23]",
 	       label_pos = 0.01,
-	       labels = c("SNP/indels", "k-mers"),
+	       labels = c("SNPs/indels", "k-mers"),
 	       fontsize = 10)
 
 
@@ -67,7 +67,7 @@ pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
 draw_zoomed(list(platypus_zoomed_manhattan, kmers_zoomed_manhattan),
 	    label_pos = 0.01,
-	    labels = c("SNP/indels", "k-mers"),
+	    labels = c("SNPs/indels", "k-mers"),
 	    fontsize = 10)
 
 # Plotting the gene model along with p-values at this location
@@ -94,7 +94,7 @@ grid.draw(transcriptsGrob(genes = genes,
 seekViewport("main")
 pushViewport(viewport(layout.pos.row = 7, name = "zoomed_manhattan"))
 grid.text("(d)", x = 0.02, y = 0.95)
-draw_zoomed(list(platypus_gene_manhattan, kmers_gene_manhattan), c("SNP/indels", "k-mers"), fontsize = 10)
+draw_zoomed(list(platypus_gene_manhattan, kmers_gene_manhattan), c("SNPs/indels", "k-mers"), fontsize = 10)
 
 dev.off()
 

@@ -68,7 +68,7 @@ draw_manhattan(list(platypus_gwide_manhattan, kmers_gwide_manhattan),
 	       sigline_regexp = "sigline_1",
 	       siglabel_regexp = "siglabel_1",
 	       label_pos = 0.01,
-	       labels = c("SNP/indels", "k-mers"),
+	       labels = c("SNPs/indels", "k-mers"),
 	       fontsize = 10)
 
 
@@ -77,7 +77,7 @@ seekViewport("main")
 pushViewport(viewport(layout.pos.row = 3, name = "zoomed_manhattan"))
 grid.text("(b)", x = 0.02, y = 0.95)
 draw_zoomed(list(platypus_zoomed_manhattan, kmers_zoomed_manhattan),
-	    labels = c("SNP/indels", "k-mers"),
+	    labels = c("SNPs/indels", "k-mers"),
 	    label_pos = 0.01,
 	    fontsize = 10)
 
