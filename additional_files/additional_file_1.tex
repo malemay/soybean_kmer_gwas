@@ -126,26 +126,23 @@ comparison of high-quality genome assemblies.
 \label{sv-gwas-sv-genotyping-paragraph}
 
 We used Paragraph v. 2.4a \citep{chen2019}
-to generate a set of SV genotypes from the Illumina data of the 389 samples used in
-GWAS analyses.  The set of SVs used as input for Paragraph was generated using SVmerge by
+to generate a set of SV genotypes from the Illumina data of the 389 accessions.
+The set of SVs used as input for Paragraph was generated using SVmerge by
 merging variants discovered from the Illumina and ONT data with
 those discovered from the high-quality assemblies and svmu.
 Variants in this candidate set were prepared for input to Paragraph by first removing
 those closer than 150 bp (the maximum read length in our dataset) to any
 chromosome end and then padding the variant representation using a script written by
-\cite{hickey2020}. The latter step was necessary for the variants to be used
-as input to Paragraph.
+\cite{hickey2020}. 
 
-We ran Paragraph individually on each sample as recommended by the authors.
-We computed the average sequencing depth for each sample from the output of the
+We ran Paragraph individually on each sample as recommended by the authors.  We
+computed the average sequencing depth for each sample from the output of the
 \texttt{samtools coverage} command and used 20 times that value for the
 \texttt{-M} parameter of Paragraph.  We ran Paragraph using the
 \texttt{multigrmpy} command and merged the resulting VCF files using
 \texttt{bcftools merge} in order to get a  single genotype file for the whole
-population. Finally, we filtered the genotyped SVs by setting the genotype calls made
-from less than two reads to missing and by removing variants with a minor allele
-frequency < 0.02 or a proportion of missing data > 0.5. The resulting dataset
-of 186,306 called SVs was used for GWAS.
+population. The resulting genotype calls were filtered as described in the main
+text.
 
 \subsection*{Comparison of WGS and SoySNP50K genotypes}
 \label{annexe-sv-gwas-soysnp50k}
@@ -171,7 +168,7 @@ with < 90\% concordance between the two genotype datasets and removed them from
 the dataset. We also excluded an additional sample for which concordance was over 90\%
 but poor raw sequencing data quality (\%GC content) suggested contamination.
 The concordance between WGS data and SoySNP50K genotypes is included in
-Additional file 2 and shown in Figure \ref{concordance-histogram}.
+Additional file 3 and shown in Figure \ref{concordance-histogram}.
 
 \subsection*{Analysis of extremely low \textit{p}-values}
 \label{annexe-sv-gwas-pvalues}
@@ -189,7 +186,7 @@ the values represented on the Manhattan plots represent an upper bound on the
 \label{annexe-sv-gwas-detailed-results}
 
 This section describes results at additional loci that were not discussed in
-the main text. A summary of the signals found at all loci using all four
+the main text. A summary of the signals found at all loci using all three GWAS
 methods is presented in Table \ref{signals_table}.
 
 \subsection*{Flower color -- \textit{L1} locus}
@@ -298,7 +295,7 @@ significant signals. In addition, it also provided results that were most consis
 analysis previously done by \cite{bandillo2017}.
 
 The analysis detected signals at the \emph{B} locus as the sole classical locus
-using all four methods (see main text and Figure
+using all three methods (see main text and Figure
 \ref{seed_coat_luster_dullshiny_manhattan}).  All methods also detected signals
 overlapping the \emph{Hps} locus as defined by \cite{bandillo2017}, however
 results shown by \cite{gijzen2003} and our results suggest that \emph{Hps} and
@@ -380,8 +377,8 @@ a clear limitation to this GWAS given our relatively small sample size.
 		\item[b] Gene associated with the locus. A question mark following the identifier of the gene indicates that this is simply a candidate
 			that has yet to be confirmed. A dash indicates that no candidate has been suggested yet. We have only included candidate
 			genes that have been suggested in previous studies.
-		\item[c] Most significant -log\textsubscript{10}(\emph{p}) reported by Platypus at this locus. A dash indicates that no signal
-			was detected by Platypus at this locus. The same applies for other methods (Paragraph, \emph{k}-mers) in
+		\item[c] Most significant -log\textsubscript{10}(\emph{p}) reported from SNPs and indels at this locus. A dash indicates that no signal
+			was detected from SNPs and indels at this locus. The same applies for other methods (SVs, \emph{k}-mers) in
 			their respective columns.
 		\item[d] The \emph{p}-value at the W1 locus using the \emph{k}-mers method was so small that it was numerically equal
 			to zero. This value was therefore set to the -log\textsubscript{10} of the smallest value that could be represented
@@ -392,17 +389,17 @@ a clear limitation to this GWAS given our relatively small sample size.
 
 			\caption[Description of loci associated with the traits studied]%
 			{Description of loci associated with the traits studied and -log\textsubscript{10}(\emph{p}) of significant
-			signals detected in our study using four different genotypic datasets (Platypus, Paragraph, \emph{k}-mers).}\\
+			signals detected in our study using three different genotypic datasets (SNPs/indels, SVs, \emph{k}-mers).}\\
 			\label{signals_table}\\
 
 			\toprule
-			Trait & Locus & Chromosome & -log\textsubscript{10}(\emph{p})\tnote{a} & Gene\tnote{b} & Platypus\tnote{c} & Paragraph & \emph{k}-mers  & Study \\
+			Trait & Locus & Chromosome & -log\textsubscript{10}(\emph{p})\tnote{a} & Gene\tnote{b} & SNPs/indels\tnote{c} & SVs & \emph{k}-mers  & Study \\
 			\midrule \endfirsthead
 
 			\caption[]{Loci associated with the traits studied \emph{(continued)}}\\
 
 			\toprule
-			Trait & Locus & Chromosome & -log10(p) & Gene & Platypus & Paragraph & k-mers  & Study \\
+			Trait & Locus & Chromosome & -log10(p) & Gene & SNPs/indels & SVs & k-mers  & Study \\
 			\midrule
 			\endhead
 

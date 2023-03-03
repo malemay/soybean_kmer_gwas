@@ -85,10 +85,10 @@ signals_table$study <- NA_character_
 signals_table[signals_table$original_trait %in% c("stem_termination", "pubescence_color", "pubescence_form",
 						  "pubescence_density", "seed_coat_luster", "pod_color",
 						  "flower_color", "seed_coat_color",
-						  "hilum_color", "maturity_group"), "study"] <- "Bandillo et al. (2017)"
+						  "hilum_color", "maturity_group"), "study"] <- "\\cite{bandillo2017}"
 
-signals_table[signals_table$original_trait %in% c("oil", "protein"), "study"] <- "Bandillo et al. (2015)"
-signals_table[signals_table$original_trait == "corrected_dry_weight", "study"] <- "de Ronne et al. (2022)"
+signals_table[signals_table$original_trait %in% c("oil", "protein"), "study"] <- "\\cite{bandillo2015}"
+signals_table[signals_table$original_trait == "corrected_dry_weight", "study"] <- "\\cite{deronne2022}"
 signals_table[signals_table$locus %in% c("stGm11", "pcGm16", "pfGm04", "pfGm15",
 					 "sclGm09", "sclGm20", "pdcGm15", "stGm16", "stGm18"), "study"] <- "This study"
 

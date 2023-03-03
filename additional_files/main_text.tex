@@ -19,31 +19,28 @@ François Belzile\textsuperscript{1,2,3}
 
 \section*{Abstract}
 
-Genome-wide association studies (GWAS) are powerful statistical methods
-that detect associations between genotype and phenotype at genome scale. Despite
+Genome-wide association studies (GWAS) are powerful statistical methods that
+detect associations between genotype and phenotype at genome scale. Despite
 their power, GWAS frequently fail to pinpoint the causal variant or the gene
-controlling a trait at a given locus in crop species. Assessing genetic variants beyond
-single-nucleotide polymorphisms (SNPs) may alleviate this problem,
-for example by including structural variants (SVs) that may have a greater functional impact.
-In this study, we tested the potential
-of SV- and \emph{k}-mer-based GWAS in soybean by applying these methods to 13
-traits on which SNP-based GWAS had been performed previously.
-We assessed the performance of each GWAS approach based on results at loci for which
-the causal genes or variants were known from previous genetic studies. We found
-that \emph{k}-mer-based GWAS was the most versatile approach and the best at pinpointing
-causal variants or candidate genes based on the most significantly
-associated \emph{k}-mers. Given the traits that we analyzed, SV-based GWAS did not add any value
-compared to \textit{k}-mer-based GWAS and may not generally be worth the investment in time and
-computational resources required to discover and genotype such variants.
-Moreover, \textit{k}-mer-based analyses
-identified promising candidate genes for loci related
-to pod color, pubescence form, and resistance to the oomycete
-\textit{Phytophthora sojae}. Despite promising results,
-significant challenges remain regarding the downstream analysis of
-\emph{k}-mer-based GWAS, notably in associating significant \emph{k}-mers with
-sequence variation and ensuring that all variation types are adequately
-detected from \emph{k}-mer occurrence patterns. Together, our results suggest
-that coupling \emph{k}-mer- and SNP/indel-based GWAS may represent a
+controlling a trait at a given locus in crop species. Assessing genetic
+variants beyond single-nucleotide polymorphisms (SNPs) could alleviate this
+problem, for example by including structural variants (SVs).  In this study, we
+tested the potential of SV- and \emph{k}-mer-based GWAS in soybean by applying
+these methods to 13 traits.  We also performed conventional GWAS analysis based
+on SNPs and small indels for comparison.  We assessed the performance of each
+GWAS approach based on results at loci for which the causal genes or variants
+were known from previous genetic studies. We found that \emph{k}-mer-based GWAS
+was the most versatile approach and the best at pinpointing causal variants or
+candidate genes based on the most significantly associated \emph{k}-mers.
+Moreover, \textit{k}-mer-based analyses identified promising candidate genes
+for loci related to pod color, pubescence form, and resistance to the oomycete
+\textit{Phytophthora sojae}. In our dataset, SV-based GWAS did not add value
+compared to \textit{k}-mer-based GWAS and may not be worth the time and
+computational resources required to genotype SVs at population scale.  Despite
+promising results, significant challenges remain regarding the downstream
+analysis of \emph{k}-mer-based GWAS.  Notably, better methods are needed to
+associate significant \emph{k}-mers with sequence variation. Together, our
+results suggest that coupling \emph{k}-mer- and SNP/indel-based GWAS is a
 powerful approach for discovering candidate genes in crop species.
 
 \section*{Introduction}
@@ -82,26 +79,26 @@ have large phenotypic impacts by disrupting coding or regulatory sequences
 \citep{marroni2014}, and have been identified as causal variants in traits such
 as resistance to soybean cyst nematode \citep{cook2012}, aluminum tolerance in
 wheat \citep{maron2013}, and branching in maize \citep{studer2011}.  SVs have
-already been used in GWAS in studies with promising results
+already been used in GWAS with promising results
 \citep[e.g.][]{zhang2015, akakpo2020, dominguez2020, liu2020-pangenome}, but
-their inclusion in GWAS is the exception rather than the norm.
+their use in GWAS is the exception rather than the norm.
 
-Despite their phenotypic impact, SVs are still largely understudied compared to SNPs
-because of the difficulty of discovering and genotyping them with
-accuracy. Comprehensive detection of SVs requires a combination of several
-methods that often need to be tailored to the study species and data available
+Despite their phenotypic impact, SVs are still largely understudied compared to
+SNPs because discovering and genotyping them with accuracy is difficult.
+Comprehensive detection of SVs requires a combination of several methods that
+often need to be tailored to the study species and data available
 \citep{alkan2011, ho2020}. Even then, assessments of the performance of SV
 discovery and genotyping generally reveal subpar sensitivity and precision
 \citep[e.g.][]{cameron2019, chaisson2019, kosugi2019}. Moreover, despite recent
 improvements in computational approaches for genotyping SVs
-\citep[e.g.][]{siren2021, ebler2022}, such approaches remain relatively inaccurate
-compared to SNP genotyping workflows.
+\citep[e.g.][]{siren2021, ebler2022}, such approaches remain relatively
+inaccurate compared to SNP genotyping workflows.
 
 Alternative approaches that allow one to assess a large spectrum
 of variants in GWAS without genotyping SVs at population scale could be useful.
 \cite{voichek2020} developed a \emph{k}-mer-based GWAS approach that may
 represent such an alternative method. This approach relies on the presence or
-absence of \emph{k}-mers observed in sequence reads instead of genotypes for use in
+absence of \emph{k}-mers observed in sequence reads in place of variant genotypes for use in
 GWAS. Once a presence/absence table of \emph{k}-mers has been generated for the
 population under study, this table can be used in association analyses
 similarly to SNP or SV genotype calls. One advantage of using \emph{k}-mers is
@@ -109,22 +106,23 @@ that they can act as a molecular signature for any type of variant as long as
 these variants result in presence/absence of \emph{k}-mers of a given length.
 Another advantage is that \emph{k}-mers are not tied to a specific genomic
 location and can thus be used to query associations between genotype and
-phenotype at genomic locations that are not found in a reference genome.  A
+phenotype at genomic locations that are not included in a reference genome.  A
 few studies have applied this \emph{k}-mer-based GWAS approach
 \citep[e.g.][]{tripodi2021, colque2021} and other similar approaches have been
 developed \citep{rahman2018, he2021}, but similarly to the use of SVs in GWAS,
 such approaches have not been widely adopted yet.
 
 In this study, we assessed the potential of SV- and \emph{k}-mer-based GWAS in
-a major crop, soybean (\emph{Glycine max}).  In order to test these methods, we
-analyzed ten qualitative traits \citep{bandillo2017} and two quantitative
-traits \citep{bandillo2015} that have been previously studied using a SNP array
-developed for soybean \citep{song2013}. In addition, we analyzed a quantitative trait
-(horizontal resistance to \emph{Phytophthora sojae}) that has been previously
-studied using whole-genome sequencing (WGS) data \citep{deronne2022}.
-Since the underlying genes and causal variants are already known for several of
-these traits, they provide a good test case for the performance of GWAS methods.
-The objectives of our study were to:
+a major crop, soybean (\emph{Glycine max}). We also conducted conventional GWAS
+based on SNPs and indels. In order to test these methods, we analyzed ten
+qualitative traits \citep{bandillo2017} and two quantitative traits
+\citep{bandillo2015} that have been previously studied using a SNP array
+developed for soybean \citep{song2013}. In addition, we analyzed a quantitative
+trait (horizontal resistance to \emph{Phytophthora sojae}) that has been
+previously studied using whole-genome sequencing (WGS) data
+\citep{deronne2022}.  Since the underlying genes and causal variants are
+already known for several of these traits, they provide a good test case for
+the performance of GWAS methods.  The objectives of our study were to:
 
 \begin{enumerate}
 	\item Assess the potential of SV- and \emph{k}-mer-based GWAS approaches to
@@ -141,25 +139,26 @@ The objectives of our study were to:
 \section*{Results and discussion}
 \label{sv-gwas-results-discussion}
 
-We analyzed a total of 13 traits in a population of 363 \textit{G. max}
-accessions using three GWAS approaches that differed in the genotypes used. The
-first approach used SNP and indel genotypes called by Platypus. Despite both
-SNPs and indels being included in this approach, we will refer to this approach
-as SNP-based for simplicity. Our SV-based workflow used various sources of data
+We analyzed a total of 13 traits in a population of 363 resequenced \textit{G.
+max} accessions using three GWAS approaches that differed in the genotypes
+used. The first approach used SNP and indel genotypes called by Platypus.
+Despite both SNPs and indels being used, we will refer to this approach as
+SNP-based for simplicity. Our SV-based workflow used various sources of data
 for SV discovery and a single program (Paragraph) for genotyping SVs at
-population scale. Finally, the third GWAS approach relied on the
-presence/absence of \textit{k}-mers as genotypes.  Because of the large number
-of \textit{k}-mers analyzed, we only report results (e.g. in Manhattan plots)
+population scale from Illumina WGS data. Finally, the third GWAS approach
+relied on the presence/absence of \textit{k}-mers in the WGS data as genotypes.
+Because of the large number of \textit{k}-mers analyzed, we only report results
 for those that were considered significantly associated with traits of
 interest.
 
-Since two or three different GWAS analyses were conducted for some of the traits, a
-total of 22 GWAS analyses were performed using each of the three approaches.
-Given the large volume of data that this represents, we focus here on the
-most noteworthy results. Readers interested in results at loci that are not
-discussed here are referred to Additional file 1. In particular, Table \ref{signals_table} (Additional file 1)
-provides a summary of the \textit{p}-values obtained by each approach at each
-of the loci considered in this study.
+Since two or three different GWAS analyses were conducted for some of the
+traits, a total of 22 GWAS analyses were performed using each of the three
+approaches.  Given the large volume of data that this represents, we focus here
+on the most noteworthy results. Readers interested in results at loci that are
+not discussed here are referred to Additional file 1. In particular, Table
+\ref{signals_table} (Additional file 1) provides a summary of the
+\textit{p}-values obtained by each approach at each of the loci considered in
+this study.
 
 \subsection*{Loci with known genes or causal mutations}
 \label{sv-gwas-results-cloned-genes}
@@ -287,9 +286,9 @@ particular, the regions defined by the 1\% most associated variants
 identified by the SNP- and \textit{k}-mer-based approaches included
 Glyma.06g202300 (Additional file 1: Figure \ref{pubescence_color_all_T_signal}). While the most
 significant \textit{k}-mers did occur within the sequence of this gene, they
-did not correspond to the causal variant (Additional file 1: Figure
+did not correspond to the documented causal variant (Additional file 1: Figure
 \ref{pubescence_color_all_T_gene}d).  Still, the fourth and fifth most strongly
-associated \textit{k}-mers corresponded to the causal variant (Additional file 1: Figures
+associated \textit{k}-mers corresponded to this causal variant (Additional file 1: Figures
 \ref{pubescence_color_all_T_gene}d and \ref{pubescence_color_all_T_kmers}). We
 observed that not all accessions with gray pubescence harbored the deleted
 nucleotide (Additional file 1: Figure \ref{pubescence_color_all_T_kmers}c), which could indicate
@@ -314,7 +313,7 @@ identified a signal that overlapped Glyma.03g258700 (Figure
 \ref{pubescence_color_nogray_Td_signal}).  While the most significant
 \textit{k}-mer identified the causal variant documented at this locus
 \citep{yan2020}, it was the fourth most significantly associated variant for
-the SNP-based approach (Figure \ref{pubescence-color-main-figure}b-d,Additional file 1: Figure 
+the SNP-based approach (Figure \ref{pubescence-color-main-figure}b-d, Additional file 1: Figure 
 \ref{pubescence_color_nogray_Td_gene}).  Interestingly, some of the accessions
 bearing the haplotype associated with tawny pubescence displayed light tawny
 pubescence, suggesting that there may be more than one causal variant at this
@@ -505,7 +504,7 @@ results may be due to the presence of some unresolved sequence (a stretch of
 4,635 'N' nucleotides) over that interval in the reference sequence that we used.
 Because our SV filtering process removed any SV overlapping 'N' nucleotides in
 the reference, we reasoned that the CNV may have been found by our pipeline but
-filtered out later on. Indeed, found a 42.8-kb duplication corresponding
+filtered out later on. Indeed, we found a 42.8-kb duplication corresponding
 to the one described above among the genotype calls made by smoove. An association
 analysis of that single variant using GAPIT found a \textit{p}-value of 1.9e-23,
 which would have made it the most significant SV. In this particular case, the
@@ -653,7 +652,7 @@ analyzed further.
 	(d) Manhattan plots at the location of the Glyma.12g213900 gene.
 	Vertical lines indicate the location of two non-synonymous
 	SNPs associated with appressed pubescence, which may represent causal variants
-	at this locus. Panels (c) and (d) share the same axis.}
+	at this locus. Panels (c) and (d) share the same x-axis.}
 \end{figure}
 
 % Resistance to Phytophthora sojae
@@ -882,8 +881,8 @@ could be replicated using \emph{k}-mer-based GWAS.
 \section*{Conclusion}
 
 In conclusion, we used SV-based and \emph{k}-mer-based GWAS to study ten
-qualitative traits and three quantitative traits in soybean cultivars and
-compared the results to traditional SNP-based GWAS. While \emph{k}-mer-based
+qualitative traits and three quantitative traits in soybean and
+compared the results to conventional SNP-based GWAS. While \emph{k}-mer-based
 GWAS proved to be a powerful approach in pinpointing the causal variation or
 genes associated with known loci, it is unclear whether conducting SV-based
 GWAS is worth the investment. In addition, we used the results from the
@@ -892,7 +891,7 @@ loci that have yet to be cloned. Based on our results, we believe that an
 optimal workflow may involve conducting SNP-based and \emph{k}-mer-based GWAS
 in parallel to identify significant signals and candidate genes, potentially in
 combination with SV datasets. Given the large number of samples for which WGS
-data are now available in several species, applying \emph{k}-mer-based GWAS to
+data is now available in several species, applying \emph{k}-mer-based GWAS to
 leverage already existing sequencing and phenotypic data appears feasible and
 promising.  As part of our work, we developed several computational tools that
 should help other researchers with the downstream analysis of
@@ -964,8 +963,12 @@ approaches in the SV discovery step to generate a set of candidate variants:
 The SVs called using each of these approaches were merged using SVmerge
 \citep{wong2010} and the resulting set of candidate SVs was used for
 genotyping. We used Paragraph \citep{chen2019} to genotype the candidate SVs
-from the mapped Illumina reads for all accessions. Detailed methods regarding
-the SV discovery and genotyping steps can be found in Additional file 1.
+from the mapped Illumina reads for all accessions. We filtered the genotyped
+SVs by setting the genotype calls made from less than two reads to missing and
+by removing variants with a minor allele frequency < 0.02 or a proportion of
+missing data > 0.5. The resulting dataset of 186,306 genotyped SVs was used for
+GWAS. Detailed methods regarding the SV discovery and genotyping steps can be
+found in Additional file 1.
 
 \subsection*{Discovery and genotyping of SNPs and indels}
 \label{sv-gwas-snp-discovery}
@@ -978,7 +981,7 @@ indels from the raw output of Platypus were filtered to keep only those with:
 	\item \texttt{FILTER} field set to \texttt{PASS}
 	\item minor allele frequency (MAF) $\geq$ 0.02
 	\item fraction of missing genotypes $\leq$ 0.5
-	\item heterozygosity rate $\leq$ 0.2.
+	\item heterozygosity rate $\leq$ 0.2
 \end{enumerate}
 
 Moreover, we pruned the dataset using the \texttt{-\-indep-pairwise} option of
@@ -1054,7 +1057,7 @@ accession that exhibited an atypical GC content suggesting contamination.
 Following these filtering steps and the removal of HN019, 363 accessions
 remained for GWAS analyses. The concordance between WGS data and SoySNP50K
 genotypes is included in Additional file 3 and averaged 98.3\% among retained
-lines. The phenotypic data used in this study can be found in Additional file 4.
+lines (Additional file 1: Figure \ref{concordance-histogram}). The phenotypic data used in this study can be found in Additional file 4.
 
 \subsection*{GWAS analyses}
 \label{sv-gwas-gwas-methods}
@@ -1096,7 +1099,7 @@ downstream analyses.
 
 \emph{k}-mers are not intrinsically associated with a particular genomic region
 and a tailored analysis was therefore required to associate them with genomic
-coordinates. To do so, we queried the reads (in BAM format) of all accessions for matches
+coordinates. To do so, we queried the mapped reads (in BAM format) of all accessions for matches
 to significant \emph{k}-mers for a given trait. Because this is a
 computationally demanding operation (there were typically tens of thousands of
 significant \emph{k}-mers per trait), we developed a C program called katcher
@@ -1122,14 +1125,14 @@ identification of signals, analysis of genes located near significant
 \subsection*{Downstream analyses of significant association signals}
 \label{sv-gwas-methods-downstream}
 
-We used contiguous regions of significant associations, which we called
+We used contiguous regions of significant variants, which we called
 ``signals'', as a basis to compare our results with those obtained by previous
 studies and to query the genome for candidate genes. We defined the boundaries
 of those signals by grouping any significant markers or \emph{k}-mers that
 occurred within 250 kb of one another.  We did consider the length of deletions
-or \emph{k}-mers in defining the distance between significant associations.
+or \emph{k}-mers in defining the distance between significant variants.
 
-For the GWAS analyses computed from Platypus genotype calls, we retrieved all
+For the GWAS analyses computed from SNP/indel genotype calls, we retrieved all
 markers that had initially been pruned in a region ranging from 50 kb
 downstream to 50 kb upstream of significant signals and computed their
 \emph{p}-values by running GAPIT using the same parameters as noted above. The
@@ -1210,8 +1213,6 @@ GitHub (\url{https://github.com/malemay/gwask}).
 
 \section*{Additional files}
 \label{sv-gwas-additional-files}
-
-All additional files can be accessed on figshare \citep{kmer-gwas-figshare}.
 
 \begin{description}
 	\item[Additional file 1.pdf] Supplemental methods and results,

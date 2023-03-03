@@ -6,7 +6,7 @@ suppressMessages(library(gwask))
 trait <- commandArgs(trailingOnly = TRUE)[1]
 
 programs <- c("platypus", "paragraph", "kmers")
-program_labels <- c("Platypus", "Paragraph", "kmers")
+program_labels <- c("SNPs/indels", "SVs", "kmers")
 
 # Outputting to a PNG file
 png(paste0("figures/", trait, "_manhattan.png"), width = 9, height = 10, units = "in", res = 100)

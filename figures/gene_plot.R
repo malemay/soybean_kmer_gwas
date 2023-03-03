@@ -45,7 +45,7 @@ grid.newpage()
 grid.draw(output_grob)
 
 # Add labels for the panels
-grid.text(c("(a)", "(b) Platypus", "(c) Paragraph"),
+grid.text(c("(a)", "(b) SNPs/indels", "(c) SVs"),
 	  x = unit(0.09, "npc"),
 	  y = unit(c(0.993, 0.8725, 0.57), "npc"),
 	  hjust = 0,

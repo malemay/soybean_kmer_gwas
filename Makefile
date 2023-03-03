@@ -92,6 +92,7 @@ $(SDIR)/manuscript.pdf: $(SDIR)/manuscript.tex \
 	$(suptables) \
 	$(mainfigures) \
 	$(maintables) \
+	additional_files/references.bib \
 	$(SDIR)/variables.txt
 	cd $(SDIR) ; $(PDFLATEX) manuscript.tex ; $(BIBTEX) main_text ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) manuscript.tex ; $(PDFLATEX) manuscript.tex
 
