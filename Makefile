@@ -2,6 +2,13 @@ RSCRIPT := ~/.local/bin/Rscript --quiet
 PDFLATEX := ~/.local/texlive/2022/bin/x86_64-linux/pdflatex
 BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 
+# htslib/1.10.2
+# bcftools/1.8
+# bamaddrg/1.0
+# bwa/0.7.17
+# samtools/1.12
+# bbduk
+
 SDIR := additional_files
 
 # Creating a few variables for improving the readability of rules
@@ -464,4 +471,60 @@ figures/concordance_histogram.png: figures/concordance_histogram.R \
 	illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
 	$(RSCRIPT) $<
 
-# CHECKING THE GENOTYPES DERIVED FROM WGS TO SOYSNP50K
+# COMPARING THE GENOTYPES DERIVED FROM WGS TO SOYSNP50K
+illumina_data/soysnp50k_genotyping/gtcheck_results.tsv: illumina_data/soysnp50k_genotyping/gtcheck_analysis.R \
+	illumina_data/soysnp50k_genotyping/pi_ids.txt \
+	illumina_data/soysnp50k_genotyping/GTCHECK
+	$(RSCRIPT) $<
+
+illumina_data/soysnp50k_genotyping/pi_ids.txt illumina_data/soysnp50k_genotyping/read_groups.txt illumina_data/soysnp50k_genotyping/alleles.tsv.gz: \
+	illumina_data/soysnp50k_genotyping/prepare_files.sh \
+	phenotypic_data/phenotypic_data.csv \
+	illumina_data/soysnp50k_genotyping/soysnp50K_gmax_v4.vcf
+	$<
+
+illumina_data/soysnp50k_genotyping/soysnp50K_gmax_v4.vcf: illumina_data/soysnp50k_genotyping/convert_positions.R \
+	refgenome/Gmax_nuclv2_mit_chlp.fasta \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	illumina_data/soysnp50k_genotyping/soysnp50K_maf10.vcf
+	$(RSCRIPT) $<
+
+illumina_data/soysnp50k_genotyping/soysnp50K_maf10.vcf: illumina_data/soysnp50k_genotyping/filter_soysnp50k.sh \
+	phenotypic_data/phenotypic_data.csv \
+	external_data/soysnp50k_wm82.a2_41317.vcf.gz 
+	$<
+
+illumina_data/soysnp50k_genotyping/GTCHECK: illumina_data/soysnp50k_genotyping/mpileup_all.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING \
+	illumina_data/soysnp50k_genotyping/alleles.tsv.gz \
+	illumina_data/soysnp50k_genotyping/read_groups.txt \
+	illumina_data/soysnp50k_genotyping/pi_ids.txt \
+	illumina_data/soysnp50k_genotyping/soysnp50K_gmax_v4.vcf
+	$<
+
+#
+# ILLUMINA DATA PROCESSING --------------------------------------------------
+#
+illumina_data/merged_bams/ILLUMINA_BAM_MERGING: illumina_data/merge_bams.sh \
+	illumina_data/index_bams.sh \
+	utilities/srr_id_correspondence.txt \
+	illumina_data/BWA_ILLUMINA_MAPPING
+	illumina_data/merge_bams.sh ; illumina_data/index_bams.sh
+
+illumina_data/BWA_ILLUMINA_MAPPING: illumina_data/bwa_mapping.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/correct_sra_metadata.csv \
+	illumina_data/BBDUK_TRIMMING
+	$<
+
+illumina_data/BBDUK_TRIMMING: illumina_data/bbduk_trimming.sh \
+	utilities/correct_sra_metadata.csv \
+	external_data/adapters.fa \
+	illumina_data/RAW_DATA
+	$<
+
+# illumina_data/RAW_DATA:
+
+# PREPARING THE PHENOTYPIC DATA FOR GWAS
+# phenotypic_data/phenotypic_data.csv:

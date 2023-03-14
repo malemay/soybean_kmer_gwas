@@ -20,6 +20,7 @@ gwas_results/kmers
 gwas_results/platypus
 gwas_results/paragraph
 gwas_results/vg
+*gz
 illumina_data/merged_bams/
 kmers_table/kmers_table.names
 kmers_table/kmers_table.table
@@ -38,5 +39,9 @@ sv_genotyping/paragraph/manifest_files/*txt
 *rds
 *toc
 *tsv
+*vcf
 *vcf.gz
 *vcf.gz.tbi
+
+illumina_data/soysnp50k_genotyping/pi_ids.txt
+illumina_data/soysnp50k_genotyping/read_groups.txt
