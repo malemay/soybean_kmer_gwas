@@ -14,8 +14,7 @@ program <- commandArgs(trailingOnly = TRUE)[2]
 #----- ANALYSIS PARAMETERS
 gapwidth <- 5 * 10^6 # The distance at which signals overlapping the reference signal will be merged
 fractions <- c("platypus" = 0.01, # the fraction of top k-mers considered to be delimiting the top region
-	       "vg" = 0.05,       # depends on the approach used given the size of the datasets
-	       "paragraph" = 0.05,
+	       "paragraph" = 0.05, # depends on the approach used given the size of the datasets
 	       "kmers" = 0.01)
 top_fraction <- fractions[program]
 

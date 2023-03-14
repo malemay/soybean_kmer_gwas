@@ -48,13 +48,14 @@ supfigures := $(manhattanplots) \
 	figures/concordance_histogram.png
 
 # Creating variables for objects that are used in the interpretation of the results
-topgranges := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
+# We only create these tables for loci that have a corresponding signal plot
+topgranges := $(foreach prog,platypus paragraph kmers,$(shell grep '^[%]*\\signalplot' $(addfile) | sed -E 's/[%]*\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
 
-allgenes := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_all_genes.tsv))
+allgenes := $(foreach prog,platypus paragraph kmers,$(shell grep '^[%]*\\signalplot' $(addfile) | sed -E 's/[%]*\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo gwas_results/$(prog)/{}_all_genes.tsv))
 
-topgenes := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_genes.tsv))
+topgenes := $(foreach prog,platypus paragraph kmers,$(shell grep '^[%]*\\signalplot' $(addfile) | sed -E 's/[%]*\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo gwas_results/$(prog)/{}_top_genes.tsv))
 
-nearestgene := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_nearest_gene.tsv))
+nearestgene := $(foreach prog,platypus paragraph kmers,$(shell grep '^[%]*\\signalplot' $(addfile) | sed -E 's/[%]*\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo gwas_results/$(prog)/{}_nearest_gene.tsv))
 
 genetables := $(allgenes) $(topgenes) $(nearestgene)
 
@@ -123,21 +124,13 @@ $(SDIR)/supplemental_file_2.csv: utilities/correct_sra_metadata.csv utilities/sr
 $(SDIR)/supplemental_file_3.csv: utilities/srr_id_correspondence.txt illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
 $(SDIR)/supplemental_file_4.csv: phenotypic_data/phenotypic_data.csv
 
-# MAIN FIGURES
-#figures/%_main_figure.png: utilities/kmer_plot_ranges.txt \
-#	gwas_results/kmer_consensus/%_plotting_data.rds \
-#	gwas_results/kmer_consensus/%_difflist.rds \
-#	gwas_results/kmer_consensus/%_causal_gene.rds \
-#	gwas_results/kmer_consensus/%_phenodata.rds	 \
-#	$(txdb) \
-#	figures/main_figure_functions.R
-
+# MAIN FIGURES --------------------------------------------------
 figures/flower_color_W1_main_figure.png: figures/flower_color_main_figure.R \
 	utilities/kmer_plot_ranges.txt \
 	gwas_results/kmer_consensus/flower_color_W1_plotting_data.rds \
 	gwas_results/kmer_consensus/flower_color_W1_difflist.rds \
 	gwas_results/kmer_consensus/flower_color_W1_causal_gene.rds \
-	gwas_results/kmers/flower_color_W1_phenodata.rds	 \
+	gwas_results/kmers/flower_color_W1_phenodata.rds \
 	$(txdb) \
 	figures/main_figure_functions.R \
 	figures/grobs/paragraph_flower_color_manhattan.rds \
@@ -151,7 +144,7 @@ figures/pubescence_color_nogray_Td_main_figure.png: figures/pubescence_color_nog
 	gwas_results/kmer_consensus/pubescence_color_nogray_Td_plotting_data.rds \
 	gwas_results/kmer_consensus/pubescence_color_nogray_Td_difflist.rds \
 	gwas_results/kmer_consensus/pubescence_color_nogray_Td_causal_gene.rds \
-	gwas_results/kmers/pubescence_color_nogray_Td_phenodata.rds	 \
+	gwas_results/kmers/pubescence_color_nogray_Td_phenodata.rds \
 	$(txdb) \
 	figures/main_figure_functions.R \
 	figures/grobs/platypus_pubescence_color_nogray_manhattan.rds \
@@ -205,12 +198,6 @@ figures/stem_termination_sn_main_figure.png: figures/stem_termination_sn_main_fi
 	gwas_results/kmers/stem_termination_sn_gwas.rds
 	$(RSCRIPT) $<
 
-# Figure with concordance rates between WGS and SoySNP50K data
-figures/concordance_histogram.png: figures/concordance_histogram.R \
-	illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
-	$(RSCRIPT) $<
-
-#
 # SIGNALS --------------------------------------------------
 
 # This script prepares the reference signals GRanges object
@@ -255,7 +242,6 @@ gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gw
 tables/signals_table.csv: tables/signals_table.R \
 	$(signals_gr) \
 	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/platypus/{}_signal.rds) \
-	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/vg/{}_signal.rds) \
 	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/paragraph/{}_signal.rds) \
 	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/kmers/{}_signal.rds)
 	$(RSCRIPT) tables/signals_table.R
@@ -329,8 +315,8 @@ gwas_results/kmers/%_clustered_ld.txt: gwas_results/ld_analysis.R \
 
 # GWAS RESULTS --------------------------------------------------
 
-# Preparing the GWAS results for each of platypus, vg and paragraph
-$(foreach prog,platypus vg paragraph,$(eval gwas_results/$(prog)/%_gwas.rds: gwas_results/format_gwas_results.R \
+# Preparing the GWAS results for platypus paragraph
+$(foreach prog,platypus paragraph,$(eval gwas_results/$(prog)/%_gwas.rds: gwas_results/format_gwas_results.R \
 	$(refgen) \
 	filtered_variants/$(prog)/filtered_variants.vcf.gz \
 	gwas_results/$(prog)/%_gwas.csv \
@@ -347,7 +333,7 @@ gwas_results/kmers/%_gwas.rds: gwas_results/format_gwas_results.R \
 # SIGNALS --------------------------------------------------
 # Creating a GRanges object containing the signal(s) for all traits for each program but platypus
 # Also creating subsets of GWAS results that only overlap signals
-$(foreach prog,vg paragraph kmers,$(eval gwas_results/$(prog)/%_signal.rds gwas_results/$(prog)/%_gwas_subset.rds : gwas_results/find_signals.R \
+$(foreach prog,paragraph kmers,$(eval gwas_results/$(prog)/%_signal.rds gwas_results/$(prog)/%_gwas_subset.rds : gwas_results/find_signals.R \
 	gwas_results/$(prog)/%_gwas.rds \
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) gwas_results/find_signals.R $$* $(prog)))
@@ -364,7 +350,7 @@ gwas_results/platypus/%_signal.rds gwas_results/platypus/%_gwas_subset.rds : gwa
 
 # GENE ANALYSIS  --------------------------------------------------
 # Generating a GRanges object and tsv files for each locus
-$(foreach prog,platypus vg paragraph kmers,$(eval \
+$(foreach prog,platypus paragraph kmers,$(eval \
 	gwas_results/$(prog)/%_top_markers.rds gwas_results/$(prog)/%_all_genes.tsv \
 	gwas_results/$(prog)/%_top_genes.tsv gwas_results/$(prog)/%_nearest_gene.tsv : \
 	gwas_results/gene_analysis.R \
@@ -384,7 +370,7 @@ figures/%_manhattan.png: figures/manhattan_plot.R \
 	$(grobdir)/kmers_%_manhattan.rds
 	$(RSCRIPT) figures/manhattan_plot.R $*
 
-# Preparing the manhattan subplots for each of platypus, vg and paragraph
+# Preparing the manhattan subplots for platypus, paragraph and k-mers
 $(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan.rds: figures/manhattan_subplot.R \
 	$(signals_gr) \
 	gwas_results/$(prog)/%_gwas.rds \
@@ -409,7 +395,7 @@ figures/%_signal.png: figures/signal_plot.R \
 	$(grobdir)/kmers_%_signal.rds
 	$(RSCRIPT) figures/signal_plot.R $*
 
-# Preparing the signal subplots for each of platypus, vg and paragraph
+# Preparing the signal subplots for each of platypus, k-mers and paragraph
 $(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: figures/signal_subplot.R \
 	$(signals_gr) \
 	utilities/cnv_genes.txt \
@@ -430,7 +416,7 @@ figures/%_gene.png: figures/gene_plot.R \
 	$(grobdir)/kmers_%_gene.rds
 	$(RSCRIPT) figures/gene_plot.R $*
 
-# Preparing the gene subplots for each of platypus, vg and paragraph
+# Preparing the gene subplots for each of platypus, k-mers and paragraph
 $(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_gene.rds: figures/gene_subplot.R \
 	$(signals_gr) \
 	utilities/cnv_genes.txt \
@@ -477,4 +463,10 @@ $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} e
 	$(shell echo $(signal) | sed -E 's/[^_]+_gwas_locus/gwas_subset/') \
 	gwas_results/create_symlink.R ; \
 	$(RSCRIPT) gwas_results/create_symlink.R $$< $$@))
+
+
+# Figure with concordance rates between WGS and SoySNP50K data
+figures/concordance_histogram.png: figures/concordance_histogram.R \
+	illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
+	$(RSCRIPT) $<
 

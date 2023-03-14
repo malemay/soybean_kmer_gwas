@@ -18,7 +18,7 @@ if(program == "kmers") {
 	# For k-mers we simply copy the kmer_positions file to a new file
 	gwas_results <- readRDS(paste0("gwas_results/kmers/", trait, "_kmer_positions.rds"))
 
-} else if(program %in% c("platypus", "paragraph", "vg")) {
+} else if(program %in% c("platypus", "paragraph")) {
 	# Loading the results from the CSV file and formatting them as a GRanges object
 	gwas_results <- format_gapit_gwas(filename = paste0("gwas_results/", program, "/", trait, "_gwas.csv"),
 					  ref_fasta = refgenome,

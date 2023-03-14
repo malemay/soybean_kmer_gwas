@@ -99,12 +99,16 @@ check_overlap <- function(locus, approach, gene_list, trait_lookup) {
 	trait <- trait_lookup[locus]
 
 	# First we check whether the gene overlaps the top region
-	top_markers <- readRDS(paste0("gwas_results/", approach, "/", trait, "_top_markers.rds"))
-	if(overlapsAny(gene, top_markers)) return(3)
+	if(file.exists(paste0("gwas_results/", approach, "/", trait, "_top_markers.rds"))) {
+		top_markers <- readRDS(paste0("gwas_results/", approach, "/", trait, "_top_markers.rds"))
+		if(overlapsAny(gene, top_markers)) return(3)
+	}
 
 	# Next we check if there is any signal overlapping the gene/variant
-	signals <- readRDS(paste0("gwas_results/", approach, "/", trait, "_signal_locus.rds"))
-	if(overlapsAny(gene, signals)) return(2)
+	if(file.exists(paste0("gwas_results/", approach, "/", trait, "_signal_locus.rds"))) {
+		signals <- readRDS(paste0("gwas_results/", approach, "/", trait, "_signal_locus.rds"))
+		if(overlapsAny(gene, signals)) return(2)
+	}
 
 	return(1)
 }

@@ -3,7 +3,7 @@
 # Creating the symlinks from the main results in ~/sv_gwas/usda_lines/gwas to the local gwas_results directory
 
 # First for the three genotyping programs
-for i in platypus vg paragraph
+for i in platypus paragraph
 do
 	mkdir -p gwas_results/${i}
 	cd gwas_results/${i}
@@ -46,6 +46,4 @@ ln -s ~/sv_gwas/usda_lines/gwas/platypus/platypus_pruned.vcf.gz filtered_variant
 ln -s ~/sv_gwas/usda_lines/gwas/platypus/platypus_pruned.vcf.gz.tbi filtered_variants/platypus/filtered_variants.vcf.gz.tbi
 ln -s ~/sv_gwas/usda_lines/gwas/paragraph/paragraph_filtered.vcf.gz filtered_variants/paragraph/filtered_variants.vcf.gz
 ln -s ~/sv_gwas/usda_lines/gwas/paragraph/paragraph_filtered.vcf.gz.tbi filtered_variants/paragraph/filtered_variants.vcf.gz.tbi
-ln -s ~/sv_gwas/usda_lines/gwas/vg/vg_filtered.vcf.gz filtered_variants/vg/filtered_variants.vcf.gz
-ln -s ~/sv_gwas/usda_lines/gwas/vg/vg_filtered.vcf.gz.tbi filtered_variants/vg/filtered_variants.vcf.gz.tbi
 
