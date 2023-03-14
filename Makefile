@@ -11,6 +11,8 @@ signals_gr := utilities/all_signals.rds
 grobdir := figures/grobs
 addfile := additional_files/additional_file_1.tex
 
+maintables := tables/loci_table.csv
+
 suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/PUBESCENCE.COLOR_gwas_table.csv \
 	tables/SEED.COAT.COLOR_gwas_table.csv \
@@ -23,53 +25,60 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/MATURITY.GROUP_gwas_table.csv \
 	tables/signals_table.csv
 
-maintables := tables/loci_table.csv
+mainfigures := figures/flower_color_W1_main_figure.png \
+	figures/pubescence_color_nogray_Td_main_figure.png \
+	figures/seed_coat_color_greenyellow_G_main_figure.png \
+	figures/pubescence_density_Ps_main_figure.png \
+	figures/pubescence_form_all_Pa1_main_figure.png \
+	figures/stem_termination_sn_main_figure.png
 
 # Getting the LD png figures to generate dynamically from additional_files/additional_file_1.tex
 manhattanplots := $(shell grep '^[%]*\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/[%]*\\manhattanplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_manhattan.png)
-scaffoldplots := $(shell grep '^\\manhattanplot' $(addfile) | grep scaffolds | sed -E 's/\\manhattanplot\{(.*)\}/\1/' | xargs -I {} echo figures/{}_manhattan.png)
 ldplots := $(shell grep '^[%]*\\ldplot' $(addfile) | sed -E 's/[%]*\\ldplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_ld.png)
 geneplots := $(shell grep '^[%]*\\geneplot' $(addfile) | sed -E 's/[%]*\\geneplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_gene.png)
 kmerplots := $(shell grep '^[%]*\\kmerplot' $(addfile) | sed -E 's/[%]*\\kmerplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_kmers.png)
 signalplots := $(shell grep '^[%]*\\signalplot' $(addfile) | sed -E 's/[%]*\\signalplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_signal.png)
 
+# Grouping all the supplementary figures together
 supfigures := $(manhattanplots) \
 	$(signalplots) \
 	$(geneplots) \
 	$(kmerplots) \
-	$(scaffoldplots) \
 	$(ldplots) \
 	figures/concordance_histogram.png
 
-mainfigures := figures/flower_color_W1_main_figure.png figures/pubescence_color_nogray_Td_main_figure.png figures/seed_coat_color_greenyellow_G_main_figure.png \
-	figures/pubescence_density_Ps_main_figure.png figures/pubescence_form_all_Pa1_main_figure.png figures/stem_termination_sn_main_figure.png
+# Creating variables for objects that are used in the interpretation of the results
+topgranges := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
 
-topgranges := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_markers.rds))
+allgenes := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_all_genes.tsv))
 
-allgenes := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_all_genes.tsv))
+topgenes := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_genes.tsv))
 
-topgenes := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_top_genes.tsv))
-
-nearestgene := $(foreach prog,platypus vg paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_nearest_gene.tsv))
+nearestgene := $(foreach prog,platypus paragraph kmers,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/$(prog)/{}_nearest_gene.tsv))
 
 genetables := $(allgenes) $(topgenes) $(nearestgene)
 
 phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo gwas_results/kmers/{}_phenodata.rds)
 
 
-all: $(SDIR)/manuscript.pdf $(mainfigures) $(maintables) $(genetables) $(phenodata) $(SDIR)/supplemental_file_2.csv $(SDIR)/supplemental_file_3.csv $(SDIR)/supplemental_file_4.csv
-
-GENETABLES : $(genetables)
-SUPTABLES: $(suptables)
-SUPFIGURES: $(supfigures)
+# The first target of the Makefile
+# It generates the manuscript as well as the supplementary files, and data for interpretation
+all: $(SDIR)/manuscript.pdf \
+	$(genetables) $(phenodata) \
+	$(SDIR)/supplemental_file_2.csv \
+	$(SDIR)/supplemental_file_3.csv \
+	$(SDIR)/supplemental_file_4.csv
 
 # Making sure that intermediate files do not get deleted
-.PRECIOUS: $(grobdir)/platypus_%_manhattan.rds $(grobdir)/vg_%_manhattan.rds \
-	$(grobdir)/paragraph_%_manhattan.rds $(grobdir)/kmers_%_manhattan.rds \
-	$(grobdir)/platypus_%_signal.rds $(grobdir)/vg_%_signal.rds \
-	$(grobdir)/paragraph_%_signal.rds $(grobdir)/kmers_%_signal.rds \
-	$(grobdir)/platypus_%_gene.rds $(grobdir)/vg_%_gene.rds \
-	$(grobdir)/paragraph_%_gene.rds $(grobdir)/kmers_%_gene.rds \
+.PRECIOUS: $(grobdir)/platypus_%_manhattan.rds \
+	$(grobdir)/paragraph_%_manhattan.rds \
+	$(grobdir)/kmers_%_manhattan.rds \
+	$(grobdir)/platypus_%_signal.rds \
+	$(grobdir)/paragraph_%_signal.rds \
+	$(grobdir)/kmers_%_signal.rds \
+	$(grobdir)/platypus_%_gene.rds \
+	$(grobdir)/paragraph_%_gene.rds \
+	$(grobdir)/kmers_%_gene.rds \
 	gwas_results/kmers/%_threshold_5per.txt \
 	gwas_results/kmer_consensus/%_sequences.fa \
 	gwas_results/kmers/%_clustered_ld.txt \
@@ -79,8 +88,8 @@ SUPFIGURES: $(supfigures)
 # Adding some more intermediate files to .PRECIOUS
 $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval .PRECIOUS: $(signal)))
 $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_signal_locus.rds),$(eval .PRECIOUS: $(signal)))
-$(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_signal.rds))
-$(foreach prog,vg platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_gwas.rds))
+$(foreach prog,platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_signal.rds))
+$(foreach prog,platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/%_gwas.rds))
 
 .PRECIOUS : $(topgranges)
 
@@ -97,18 +106,21 @@ $(SDIR)/manuscript.pdf: $(SDIR)/manuscript.tex \
 	cd $(SDIR) ; $(PDFLATEX) manuscript.tex ; $(BIBTEX) main_text ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) manuscript.tex ; $(PDFLATEX) manuscript.tex
 
 # Creating the list of variables stored in additional_files/variables.txt, for retrival in additional file 1
-$(SDIR)/variables.txt: $(SDIR)/make_variables.R $(ldplots) phenotypic_data/phenotypic_data.csv utilities/trait_names.txt $(signals_gr)
+$(SDIR)/variables.txt: $(SDIR)/make_variables.R \
+	$(ldplots) \
+	phenotypic_data/phenotypic_data.csv \
+	utilities/trait_names.txt \
+	$(signals_gr)
 	$(RSCRIPT) $<
 
 # Creating the supplemental CSV files
 $(SDIR)/%.csv: $(SDIR)/%.R
 	$(RSCRIPT) $<
 
+# Additional dependencies for supplemental files
 $(SDIR)/supplemental_file_2.csv: utilities/correct_sra_metadata.csv utilities/srr_id_correspondence.txt
-
 # DEPENDENCIES on samtools stats and manifest files are missing for this rule
 $(SDIR)/supplemental_file_3.csv: utilities/srr_id_correspondence.txt illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
-
 $(SDIR)/supplemental_file_4.csv: phenotypic_data/phenotypic_data.csv
 
 # MAIN FIGURES
