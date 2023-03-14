@@ -33,7 +33,7 @@ mainfigures := figures/flower_color_W1_main_figure.png \
 	figures/stem_termination_sn_main_figure.png
 
 # Getting the LD png figures to generate dynamically from additional_files/additional_file_1.tex
-manhattanplots := $(shell grep '^[%]*\\manhattanplot' $(addfile) | grep -v scaffolds | sed -E 's/[%]*\\manhattanplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_manhattan.png)
+manhattanplots := $(shell grep '^[%]*\\manhattanplot' $(addfile) | sed -E 's/[%]*\\manhattanplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_manhattan.png)
 ldplots := $(shell grep '^[%]*\\ldplot' $(addfile) | sed -E 's/[%]*\\ldplot\{([a-zA-Z_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_ld.png)
 geneplots := $(shell grep '^[%]*\\geneplot' $(addfile) | sed -E 's/[%]*\\geneplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_gene.png)
 kmerplots := $(shell grep '^[%]*\\kmerplot' $(addfile) | sed -E 's/[%]*\\kmerplot\{([a-zA-Z0-9_]*)\}.*$$/\1/' | xargs -I {} echo figures/{}_kmers.png)
@@ -94,7 +94,7 @@ $(foreach prog,platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/
 
 .PRECIOUS : $(topgranges)
 
-# Compiling the Supplemental Data file from the .tex file
+# Compiling the manuscript and additional file 1 (in 1 pdf)
 $(SDIR)/manuscript.pdf: $(SDIR)/manuscript.tex \
 	$(SDIR)/main_text.tex \
 	$(SDIR)/additional_file_1.tex \
@@ -363,7 +363,7 @@ $(foreach prog,platypus paragraph kmers,$(eval \
 
 # MANHATTAN PLOTS --------------------------------------------------
 
-# This block assembles the four manhattan subplots for a given trait
+# This block assembles the three manhattan subplots for a given trait
 figures/%_manhattan.png: figures/manhattan_plot.R \
 	$(grobdir)/platypus_%_manhattan.rds \
 	$(grobdir)/paragraph_%_manhattan.rds \
@@ -378,15 +378,9 @@ $(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_manhattan.rd
 	gwas_results/$(prog)/%_threshold_5per.txt ; \
 	$(RSCRIPT) figures/manhattan_subplot.R $$* $(prog)))
 
-# Manhattan plots for unanchored scaffolds (for the k-mers only)
-figures/%_scaffolds_manhattan.png: figures/scaffolds_manhattan.R \
-	gwas_results/kmers/%_gwas.rds \
-	gwas_results/kmers/%_threshold_5per.txt
-	$(RSCRIPT) figures/scaffolds_manhattan.R $* kmers
-
 # SIGNAL PLOTS --------------------------------------------------
 
-# This block assembles the four signal subplots for a given locus
+# This block assembles the three signal subplots for a given locus
 figures/%_signal.png: figures/signal_plot.R \
 	$(signals_gr) \
 	$(txdb) \
@@ -407,7 +401,7 @@ $(foreach prog,platypus paragraph kmers,$(eval $(grobdir)/$(prog)_%_signal.rds: 
 
 # GENE PLOTS --------------------------------------------------
 
-# This block assembles the four gene subplots for a given locus
+# This block assembles the three gene subplots for a given locus
 figures/%_gene.png: figures/gene_plot.R \
 	$(signals_gr) \
 	$(txdb) \
@@ -465,8 +459,9 @@ $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} e
 	$(RSCRIPT) gwas_results/create_symlink.R $$< $$@))
 
 
-# Figure with concordance rates between WGS and SoySNP50K data
+# SUPPLEMENTAL FIGURE - HISTOGRAM of concordance results
 figures/concordance_histogram.png: figures/concordance_histogram.R \
 	illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
 	$(RSCRIPT) $<
 
+# CHECKING THE GENOTYPES DERIVED FROM WGS TO SOYSNP50K
