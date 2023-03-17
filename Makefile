@@ -521,10 +521,8 @@ illumina_data/BWA_ILLUMINA_MAPPING: illumina_data/bwa_mapping.sh \
 illumina_data/BBDUK_TRIMMING: illumina_data/bbduk_trimming.sh \
 	utilities/correct_sra_metadata.csv \
 	external_data/adapters.fa \
-	illumina_data/RAW_DATA
+	$(shell cut -d, -f1 utilities/correct_sra_metadata.csv | tail -n +2 | sed 's/"//g' | xargs -I {} echo "illumina_data/raw_fastq/{}_1.fastq.gz illumina_data/raw_fastq/{}_2.fastq.gz")
 	$<
-
-# illumina_data/RAW_DATA:
 
 # PREPARING THE PHENOTYPIC DATA FOR GWAS
 # phenotypic_data/phenotypic_data.csv:
