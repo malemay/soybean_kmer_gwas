@@ -17,3 +17,4 @@ do
 		--scratch-dir tmpdir/ -o ${i}_results
 done
 
+touch PARAGRAPH_GENOTYPING

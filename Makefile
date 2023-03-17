@@ -586,12 +586,46 @@ sv_genotyping/paragraph/PARAGRAPH_GENOTYPING: sv_genotyping/paragraph/paragraph_
 	sv_genotyping/paragraph/all_svs_padded.vcf
 	$<
 
-#sv_genotyping/paragraph/all_svs_padded.vcf:
+sv_genotyping/paragraph/all_svs_padded.vcf: sv_genotyping/paragraph/prepare_variants.sh \
+	variant_calling/merging/candidate_svs.vcf \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	sv_genotyping/paragraph/truncate_variants.awk \
+	sv_genotyping/paragraph/addMissingPaddingGmax4.py
+	$<
 
-#sv_genotyping/paragraph/MANIFEST_FILES:
+sv_genotyping/paragraph/MANIFEST_FILES: sv_genotyping/paragraph/manifest_files.R \
+	utilities/srr_id_correspondence.txt \
+	illumina_data/SAMTOOLS_COVERAGE \
+	illumina_data/SAMTOOLS_STATS
+	$(RSCRIPT) $<
 
+# Computing some coverage statistics to create the manifest files
+illumina_data/SAMTOOLS_COVERAGE: illumina_data/samtools_coverage.sh \
+	utilities/srr_id_correspondence.txt \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
+	$<
+
+# Computing some statistics to create the manifest files
+illumina_data/SAMTOOLS_STATS: illumina_data/samtools_stats.sh \
+	utilities/srr_id_correspondence.txt \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
+	$<
+
+# MERGING OF SVS CALLED USING VARIOUS TOOLS --------------------------------------------------
+
+# variant_calling/merging/candidate_svs.vcf:
+
+# CALLING SVS WITH ASMVAR --------------------------------------------------
+# CALLING SVS WITH SMOOVE --------------------------------------------------
+# CALLING SVS WITH MANTA --------------------------------------------------
+# CALLING SVS WITH SVABA --------------------------------------------------
+# CALLING SVS WITH WITH SVMU BASED ON DE NOVO ASSEMBLIES --------------------------------------------------
+# CALLING SVS WITH ASMVAR --------------------------------------------------
+
+# GWAS ANALYSIS WITH K-MERS --------------------------------------------------
 
 # filtered_variants/$(prog)/filtered_variants.vcf.gz:
+
 
 # PREPARING THE PHENOTYPIC DATA FOR GWAS
 # phenotypic_data/phenotypic_data.csv:
