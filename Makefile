@@ -539,9 +539,22 @@ gwas_results/platypus/%_gwas.csv: gwas_results/platypus/platypus_gwas.R \
 	variant_calling/platypus/platypus_formatted.hmp.txt
 	$(RSCRIPT) $< $*
 
+# Getting the thresholds for all traits for Platypus
 gwas_results/platypus/%_threshold_5per.txt: gwas_results/platypus/platypus_thresholds.R \
 	phenotypic_data/phenotypic_data.csv \
 	variant_calling/platypus/platypus_formatted.hmp.txt
+	$(RSCRIPT) $< $*
+
+# Computing the GWAS analyses for all traits for Paragraph
+gwas_results/paragraph/%_gwas.csv: gwas_results/paragraph/paragraph_gwas.R \
+	phenotypic_data/phenotypic_data.csv \
+	sv_genotyping/paragraph/paragraph_formatted.hmp.txt
+	$(RSCRIPT) $< $*
+
+# Getting the thresholds for all traits for Paragraph
+gwas_results/paragraph/%_threshold_5per.txt: gwas_results/paragraph/paragraph_thresholds.R \
+	phenotypic_data/phenotypic_data.csv \
+	sv_genotyping/paragraph/paragraph_formatted.hmp.txt
 	$(RSCRIPT) $< $*
 
 # SNP AND INDEL GENOTYPING AND FILTERING FOR GWAS --------------------------------------------------
@@ -555,6 +568,10 @@ variant_calling/platypus/platypus_all.vcf: variant_calling/platypus/platypus_cal
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
 	$<
+
+# SV GENOTYPING USING PARAGRAPH AND FILTERING
+
+# sv_genotyping/paragraph/paragraph_formatted.hmp.txt:
 
 # filtered_variants/$(prog)/filtered_variants.vcf.gz:
 
