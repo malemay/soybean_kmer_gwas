@@ -4,10 +4,17 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 
 # htslib/1.10.2
 # bcftools/1.8
+# bcftools/1.10
 # bamaddrg/1.0
 # bwa/0.7.17
 # samtools/1.12
 # bbduk
+# vcftools/0.1.16
+# plink/1.90b5.3
+# run_pipeline.pl (TASSEL)
+# python/2.7
+# htslib/1.8
+# platypus/0.8.1.1
 
 SDIR := additional_files
 
@@ -539,7 +546,16 @@ gwas_results/platypus/%_threshold_5per.txt: gwas_results/platypus/platypus_thres
 
 # SNP AND INDEL GENOTYPING AND FILTERING FOR GWAS --------------------------------------------------
 
-# gwas_results/platypus/platypus_formatted.hmp.txt
+variant_calling/platypus/platypus_formatted.hmp.txt: variant_calling/platypus/platypus_filtering.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
+	variant_calling/platypus/platypus_all.vcf
+	$<
+
+variant_calling/platypus/platypus_all.vcf: variant_calling/platypus/platypus_call.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
+	$<
+
 # filtered_variants/$(prog)/filtered_variants.vcf.gz:
 
 # PREPARING THE PHENOTYPIC DATA FOR GWAS
