@@ -15,6 +15,8 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # python/2.7
 # htslib/1.8
 # platypus/0.8.1.1
+# python/3.7
+# multigrmpy.py
 
 SDIR := additional_files
 
@@ -571,7 +573,23 @@ variant_calling/platypus/platypus_all.vcf: variant_calling/platypus/platypus_cal
 
 # SV GENOTYPING USING PARAGRAPH AND FILTERING
 
-# sv_genotyping/paragraph/paragraph_formatted.hmp.txt:
+# Filtering the Paragraph genotype calls and preparing them for input to GAPIT
+sv_genotyping/paragraph/paragraph_formatted.hmp.txt: sv_genotyping/paragraph/paragraph_filtering.sh \
+	utilities/srr_id_correspondence.txt \
+	sv_genotyping/paragraph/PARAGRAPH_GENOTYPING
+	$<
+
+sv_genotyping/paragraph/PARAGRAPH_GENOTYPING: sv_genotyping/paragraph/paragraph_genotyping.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	sv_genotyping/paragraph/MANIFEST_FILES \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING \
+	sv_genotyping/paragraph/all_svs_padded.vcf
+	$<
+
+#sv_genotyping/paragraph/all_svs_padded.vcf:
+
+#sv_genotyping/paragraph/MANIFEST_FILES:
+
 
 # filtered_variants/$(prog)/filtered_variants.vcf.gz:
 
