@@ -524,5 +524,23 @@ illumina_data/BBDUK_TRIMMING: illumina_data/bbduk_trimming.sh \
 	$(shell cut -d, -f1 utilities/correct_sra_metadata.csv | tail -n +2 | sed 's/"//g' | xargs -I {} echo "illumina_data/raw_fastq/{}_1.fastq.gz illumina_data/raw_fastq/{}_2.fastq.gz")
 	$<
 
+# COMPUTING GWAS ANALYSES --------------------------------------------------
+
+# Computing the GWAS analyses for all traits for Platypus
+gwas_results/platypus/%_gwas.csv: gwas_results/platypus/platypus_gwas.R \
+	phenotypic_data/phenotypic_data.csv \
+	variant_calling/platypus/platypus_formatted.hmp.txt
+	$(RSCRIPT) $< $*
+
+gwas_results/platypus/%_threshold_5per.txt: gwas_results/platypus/platypus_thresholds.R \
+	phenotypic_data/phenotypic_data.csv \
+	variant_calling/platypus/platypus_formatted.hmp.txt
+	$(RSCRIPT) $< $*
+
+# SNP AND INDEL GENOTYPING AND FILTERING FOR GWAS --------------------------------------------------
+
+# gwas_results/platypus/platypus_formatted.hmp.txt
+# filtered_variants/$(prog)/filtered_variants.vcf.gz:
+
 # PREPARING THE PHENOTYPIC DATA FOR GWAS
 # phenotypic_data/phenotypic_data.csv:
