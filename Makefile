@@ -12,6 +12,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # bwa/0.7.17
 # edlib-aligner
 # LAST
+# manta
 # mummer/3.23
 # samtools/1.8
 # samtools/1.12
@@ -706,8 +707,26 @@ variant_calling/smoove/all_samples.smoove.square.vcf.gz: variant_calling/smoove/
 	$<
 
 # CALLING SVS WITH MANTA --------------------------------------------------
-#
-# variant_calling/merging/manta_svmerged.clustered.vcf:
+
+# Merging the filtered variants called with Manta using SVmerge
+variant_calling/manta/manta_svmerged.clustered.vcf: variant_calling/manta/manta_svmerge.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/manta/manta_filtered.vcf
+	$<
+
+variant_calling/manta/manta_filtered.vcf: variant_calling/manta/manta_filter.sh \
+	variant_calling/manta/MANTA_CALLING \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/manta/ACO_header_line.txt \
+	scripts/extract_svs_50.awk
+	$<
+
+variant_calling/manta/MANTA_CALLING: variant_calling/manta/manta_call.sh \
+	variant_calling/manta/manta_config.txt \
+	variant_calling/manta/config_commands.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
+	$<
 
 # CALLING SVS WITH SVABA --------------------------------------------------
 #
