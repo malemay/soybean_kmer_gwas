@@ -15,6 +15,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # mummer/3.23
 # samtools/1.8
 # samtools/1.12
+# smoove
 # SOAPdenovo/2.04
 # SVmerge
 # bbduk
@@ -23,6 +24,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # run_pipeline.pl (TASSEL)
 # python/2.7
 # htslib/1.8
+# htslib/1.10.2
 # platypus/0.8.1.1
 # python/3.7
 # multigrmpy.py
@@ -662,6 +664,7 @@ variant_calling/asmvar/asmvar_svmerged.clustered.vcf: variant_calling/asmvar/asm
 	variant_calling/asmvar/asmvar_filtered.vcf
 	$<
 
+# Filtering the variants called from each sample with AsmVar and performing a first merge
 variant_calling/asmvar/asmvar_filtered.vcf: variant_calling/asmvar/asmvar_filter.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
@@ -671,6 +674,7 @@ variant_calling/asmvar/asmvar_filtered.vcf: variant_calling/asmvar/asmvar_filter
 	variant_calling/asmvar/ASMVAR_CALLING
 	$<
 
+# Assembling genomes with SOAPdenovo2, aligning them with LAST and calling variants with AsmVar
 variant_calling/asmvar/ASMVAR_CALLING: variant_calling/asmvar/asmvar_call.sh \
 	utilities/srr_id_correspondence.txt \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
@@ -679,8 +683,27 @@ variant_calling/asmvar/ASMVAR_CALLING: variant_calling/asmvar/asmvar_call.sh \
 	$<
 
 # CALLING SVS WITH SMOOVE --------------------------------------------------
-#
-# variant_calling/merging/smoove_svmerged.clustered.vcf:
+
+# Merging the variants called with smoove together
+variant_calling/smoove/smoove_svmerged.clustered.vcf: variant_calling/smoove/smoove_svmerge.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/smoove/smoove_filtered.vcf
+	$<
+
+variant_calling/smoove/smoove_filtered.vcf: variant_calling/smoove/smoove_filter.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
+	variant_calling/smoove/all_samples.smoove.square.vcf.gz \
+	variant_calling/smoove/ACO_header_line.txt \
+	scripts/extract_svs_50.awk
+	$<
+
+# Calling variants and genotyping them on the whole population with smoove
+variant_calling/smoove/all_samples.smoove.square.vcf.gz: variant_calling/smoove/smoove_call.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/srr_id_correspondence.txt \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
+	$<
 
 # CALLING SVS WITH MANTA --------------------------------------------------
 #
