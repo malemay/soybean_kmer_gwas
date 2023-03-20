@@ -3,15 +3,19 @@ PDFLATEX := ~/.local/texlive/2022/bin/x86_64-linux/pdflatex
 BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 
 # htslib/1.10.2
+# ASV_VariantDetector
 # bamaddrg/1.0
+# bayestypertools v. 1.5
 # bcftools/1.8
 # bcftools/1.10
 # bedtools/2.26.0
 # bwa/0.7.17
 # edlib-aligner
+# LAST
 # mummer/3.23
 # samtools/1.8
 # samtools/1.12
+# SOAPdenovo/2.04
 # SVmerge
 # bbduk
 # vcftools/0.1.16
@@ -27,6 +31,7 @@ SDIR := additional_files
 
 # Creating a few variables for improving the readability of rules
 txdb := refgenome/gmax_v4_genes.rds refgenome/gmax_v4_transcripts.rds refgenome/gmax_v4_exons.rds refgenome/gmax_v4_cds.rds
+gmax_db := refgenome/Gmax4_db.bck refgenome/Gmax4_db.des refgenome/Gmax4_db.prj refgenome/Gmax4_db.sds refgenome/Gmax4_db.ssp refgenome/Gmax4_db.suf refgenome/Gmax4_db.tis
 refgen := refgenome/Gmax_508_v4.0_mit_chlp.fasta
 signals_gr := utilities/all_signals.rds
 grobdir := figures/grobs
@@ -643,15 +648,35 @@ external_data/nanopore_svs/nanopore_svs.vcf: external_data/nanopore_svs/merge_sv
 
 variant_calling/merging/illumina.clustered.vcf: variant_calling/merging/merge_illumina_svs.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
-	variant_calling/merging/asmvar_svmerged.clustered.vcf \
-	variant_calling/merging/manta_svmerged.clustered.vcf \
-	variant_calling/merging/smoove_svmerged.clustered.vcf \
-	variant_calling/merging/svaba_svmerged.clustered.vcf
+	variant_calling/asmvar/asmvar_svmerged.clustered.vcf \
+	variant_calling/manta/manta_svmerged.clustered.vcf \
+	variant_calling/smoove/smoove_svmerged.clustered.vcf \
+	variant_calling/svaba/svaba_svmerged.clustered.vcf
 	$<
 
 # CALLING SVS WITH ASMVAR --------------------------------------------------
-#
-# variant_calling/merging/asmvar_svmerged.clustered.vcf:
+
+# Merging the variants called on all samples with AsmVar
+variant_calling/asmvar/asmvar_svmerged.clustered.vcf: variant_calling/asmvar/asmvar_svmerge.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/asmvar/asmvar_filtered.vcf
+	$<
+
+variant_calling/asmvar/asmvar_filtered.vcf: variant_calling/asmvar/asmvar_filter.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
+	scripts/add_svtype.awk \
+	scripts/extract_svs_50.awk \
+	variant_calling/asmvar/svtype_header_line.txt \
+	variant_calling/asmvar/ASMVAR_CALLING
+	$<
+
+variant_calling/asmvar/ASMVAR_CALLING: variant_calling/asmvar/asmvar_call.sh \
+	utilities/srr_id_correspondence.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	$(gmax_db) \
+	illumina_data/BBDUK_TRIMMING
+	$<
 
 # CALLING SVS WITH SMOOVE --------------------------------------------------
 #

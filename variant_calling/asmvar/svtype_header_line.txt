@@ -1,0 +1,1 @@
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">

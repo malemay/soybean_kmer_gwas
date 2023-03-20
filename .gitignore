@@ -31,6 +31,7 @@ kmers_table/kmers_table.table
 *pav_table_nodup.txt
 *pdf
 *png
+refgenome/Gmax4_db*
 refgenome/soybase_genome_annotation_v4.0_04-20-2021.txt
 *sa
 *significant_kmers.txt
