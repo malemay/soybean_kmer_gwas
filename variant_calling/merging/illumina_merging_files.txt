@@ -1,0 +1,4 @@
+asmvar_svmerged.clustered.vcf
+manta_svmerged.clustered.vcf
+smoove_svmerged.clustered.vcf
+svaba_svmerged.clustered.vcf

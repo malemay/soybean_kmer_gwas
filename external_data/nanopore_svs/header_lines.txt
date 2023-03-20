@@ -1,0 +1,2 @@
+##INFO=<ID=InitialIDs,Number=1,Type=String,Description="IDs of SVs that cluster with this SV">
+##INFO=<ID=ACO,Number=A,Type=String,Description="Allele call-set origin(s) (<call-set>:...)">

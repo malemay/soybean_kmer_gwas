@@ -3,11 +3,16 @@ PDFLATEX := ~/.local/texlive/2022/bin/x86_64-linux/pdflatex
 BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 
 # htslib/1.10.2
+# bamaddrg/1.0
 # bcftools/1.8
 # bcftools/1.10
-# bamaddrg/1.0
+# bedtools/2.26.0
 # bwa/0.7.17
+# edlib-aligner
+# mummer/3.23
+# samtools/1.8
 # samtools/1.12
+# SVmerge
 # bbduk
 # vcftools/0.1.16
 # plink/1.90b5.3
@@ -613,13 +618,57 @@ illumina_data/SAMTOOLS_STATS: illumina_data/samtools_stats.sh \
 
 # MERGING OF SVS CALLED USING VARIOUS TOOLS --------------------------------------------------
 
-# variant_calling/merging/candidate_svs.vcf:
+variant_calling/merging/candidate_svs.vcf: variant_calling/merging/merge_assembly_svs.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/merging/assembly_merging_files.txt \
+	variant_calling/merging/usda_svs.vcf \
+	variant_calling/merging/assembly_svs.vcf
+	$<
+
+variant_calling/merging/usda_svs.vcf: variant_calling/merging/merge_nanopore_svs.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/merging/illumina.clustered.vcf \
+	external_data/nanopore_svs/nanopore_svs.vcf \
+	variant_calling/merging/select_svs.R \
+	variant_calling/merging/nanopore_merging_files.txt
+	$<
+
+external_data/nanopore_svs/nanopore_svs.vcf: external_data/nanopore_svs/merge_svs.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	external_data/nanopore_svs/files.txt \
+	external_data/nanopore_svs/merge_realigned.R \
+	$(shell cat external_data/nanopore_svs/files.txt | xargs -I {} echo external_data/nanopore_svs/{}) \
+	external_data/nanopore_svs/header_lines.txt
+	$<
+
+variant_calling/merging/illumina.clustered.vcf: variant_calling/merging/merge_illumina_svs.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/merging/asmvar_svmerged.clustered.vcf \
+	variant_calling/merging/manta_svmerged.clustered.vcf \
+	variant_calling/merging/smoove_svmerged.clustered.vcf \
+	variant_calling/merging/svaba_svmerged.clustered.vcf
+	$<
 
 # CALLING SVS WITH ASMVAR --------------------------------------------------
+#
+# variant_calling/merging/asmvar_svmerged.clustered.vcf:
+
 # CALLING SVS WITH SMOOVE --------------------------------------------------
+#
+# variant_calling/merging/smoove_svmerged.clustered.vcf:
+
 # CALLING SVS WITH MANTA --------------------------------------------------
+#
+# variant_calling/merging/manta_svmerged.clustered.vcf:
+
 # CALLING SVS WITH SVABA --------------------------------------------------
+#
+# variant_calling/merging/svaba_svmerged.clustered.vcf:
+
 # CALLING SVS WITH WITH SVMU BASED ON DE NOVO ASSEMBLIES --------------------------------------------------
+#
+# variant_calling/merging/assembly_svs.vcf:
+
 # CALLING SVS WITH ASMVAR --------------------------------------------------
 
 # GWAS ANALYSIS WITH K-MERS --------------------------------------------------
