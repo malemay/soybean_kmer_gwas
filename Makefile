@@ -13,6 +13,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # bwa/0.7.17
 # delta-filter
 # edlib-aligner
+# extract_qname
 # filter_kmers
 # gemma_0_96
 # katcher
@@ -28,6 +29,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # samtools/1.13
 # smoove
 # SOAPdenovo/2.04
+# spades/3.15.4
 # SvABA
 # SVmerge
 # svmu
@@ -126,7 +128,8 @@ all: $(SDIR)/manuscript.pdf \
 	gwas_results/kmer_consensus/%_sequences.fa \
 	gwas_results/kmers/%_clustered_ld.txt \
 	cnv_analysis/hps_cnv_range.rds \
-	cnv_analysis/ps_cnv_range.rds
+	cnv_analysis/ps_cnv_range.rds \
+	gwas_results/kmers/%/katcher_results/KATCHER
 
 # Adding some more intermediate files to .PRECIOUS
 $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} echo gwas_results/%/{}_gwas_locus.rds),$(eval .PRECIOUS: $(signal)))
@@ -210,12 +213,12 @@ figures/seed_coat_color_greenyellow_G_main_figure.png: figures/seed_coat_color_g
 	$(RSCRIPT) $< seed_coat_color_greenyellow_G
 
 # Main figure for pubescence density
-# The mapped reads processed through katcher have yet to be included in this rule
 figures/pubescence_density_Ps_main_figure.png: figures/pubescence_density_main_figure.R \
 	figures/grobs/kmers_pubescence_density_manhattan.rds \
 	figures/grobs/kmers_pubescence_density_Ps_gene.rds \
 	figures/main_figure_functions.R \
 	phenotypic_data/phenotypic_data.csv \
+	gwas_results/kmers/pubescence_density/katcher_results/KATCHER \
 	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo illumina_data/merged_bams/{}_merged.bam) \
 	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo illumina_data/merged_bams/{}_merged.bam.bai) \
 	$(shell cut -d ' ' -f1 utilities/srr_id_correspondence.txt | xargs -I {} echo sv_genotyping/paragraph/manifest_files/{}_manifest.txt)
@@ -317,7 +320,7 @@ phenotypic_data/trait_names.rds: phenotypic_data/trait_names.R
 	$(RSCRIPT) phenotypic_data/trait_names.R
 
 # KMER HAPLOTYPE PLOTS --------------------------------------------------
-# Generating the k-mer plot from the consensus sequences (the k-mer p-values are missing from the list of dependencies)
+# Generating the k-mer plot from the consensus sequences
 figures/%_kmers.png gwas_results/kmers/%_phenodata.rds gwas_results/kmer_consensus/%_plotting_data.rds gwas_results/kmer_consensus/%_difflist.rds gwas_results/kmer_consensus/%_causal_gene.rds: figures/kmer_plot.R \
 	$(signals_gr) \
 	$(txdb) \
@@ -325,13 +328,15 @@ figures/%_kmers.png gwas_results/kmers/%_phenodata.rds gwas_results/kmer_consens
 	utilities/kmer_plot_ranges.txt \
 	phenotypic_data/trait_names.rds \
 	phenotypic_data/phenotypic_data.csv \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/kmers/{}/katcher_results/KATCHER) \
 	gwas_results/kmer_consensus/%_sequences.fa
 	$(RSCRIPT) figures/kmer_plot.R $*
 
 # Extracting the consensus sequences from significant k-mer assemblies for a given locus
-# The BWA alignment results are missing from the list of dependencies
 gwas_results/kmer_consensus/%_sequences.fa: gwas_results/gather_consensus.sh \
 	utilities/kmer_plot_ranges.txt \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING \
+	gwas_results/kmers/KMER_ASSEMBLIES \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	gwas_results/gather_consensus.sh $*
 
@@ -804,6 +809,14 @@ variant_calling/assemblies/MUMMER_ALIGNMENT: variant_calling/assemblies/mummer.s
 
 # GWAS ANALYSIS WITH K-MERS --------------------------------------------------
 
+# Creating the local assemblies of reads containing significant k-mers
+gwas_results/kmers/KMER_ASSEMBLIES: gwas_results/kmers/assemble_kmers.sh \
+	gwas_results/kmers/assembly_params.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/kmers/{}/katcher_results/KATCHER) \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
+	$<
+
 # Creating the .rds object with the filtered set of reads containing significant k-mers
 gwas_results/kmers/%_kmer_positions.rds: gwas_results/kmers/combine_reads.R \
 	gwas_results/kmers/%/katcher_results/KATCHER \
@@ -844,6 +857,8 @@ filtered_variants/platypus_gapit_kinship.rds filtered_variants/platypus_gapit_pc
 	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/platypus/{}_gwas.csv)
 	$(RSCRIPT) $<
 
-# PREPARING THE PHENOTYPIC DATA FOR GWAS
-# phenotypic_data/phenotypic_data.csv:
-#
+# Making the TXDB objects that we used for reference annotations
+$(txdb): refgenome/txdb_processing.R \
+	refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3
+	$(RSCRIPT) $<
+

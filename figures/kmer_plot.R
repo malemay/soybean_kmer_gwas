@@ -74,7 +74,7 @@ phenotypes[[usda_trait]] <- pheno_names_lookup[phenotypes[[usda_trait]]]
 phenotypes[[usda_trait]][is.na(phenotypes[[trait]])] <- NA
 
 # Reading the k-mers associated with that analysis and their p-values
-# DEPENDENCY: k-mer p-values
+# DEPENDENCY: k-mer p-values computed as part of the katcher script
 kmer_pvalues <- read_kmer_pvalues(kmer_file = paste0("gwas_results/kmer_data/", trait,
 						     "/katcher_results/pass_threshold_5per_sorted.txt"),
 				  max_kmers = max_kmers,

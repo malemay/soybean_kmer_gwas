@@ -11,6 +11,12 @@ phenotype=$1
 kmerdir=${phenotype}/katcher_results
 mkdir -p ${kmerdir}
 
+# Creating a symlink to the kmer_data directory
+mkdir -p ../kmer_data
+cd ../kmer_data
+ln -s ../kmers/${phenotype}
+cd ../kmers
+
 # First we extract only the k-mer sequence from the file of significantly associated k-mers,
 # sorted in decreasing order of significance
 # DEPENDENCY: gwas_results/kmers/KMER_GWAS

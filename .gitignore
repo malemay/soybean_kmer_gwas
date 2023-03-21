@@ -35,6 +35,7 @@ kmers_table/kmers_table.table
 *png
 refgenome/Gmax4_db*
 refgenome/soybase_genome_annotation_v4.0_04-20-2021.txt
+refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3
 *sa
 *significant_kmers.txt
 spurious_kmers_analysis/
