@@ -16,6 +16,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # filter_kmers
 # gemma_0_96
 # katcher
+# kmc
 # kmers_gwas.py
 # LAST
 # list_kmers
@@ -827,8 +828,15 @@ gwas_results/kmers/KMER_GWAS: gwas_results/kmers/kmer_gwas.R \
 	kmers_table/kmers_table.kinship
 	$(RSCRIPT) $<
 
-# kmers_table/kmers_table.table kmers_table/kmers_table.names:
-# kmers_table/kmers_table.kinship:
+kmers_table/kmers_table.table kmers_table/kmers_table.names: kmers_table/create_kmers_table.sh \
+	utilities/srr_id_correspondence.txt \
+	illumina_data/BBDUK_TRIMMING
+	$<
+
+kmers_table/kmers_table.kinship: kmers_table/kmer_kinship.sh \
+	kmers_table/kmers_table.names \
+	kmers_table/kmers_table.table
+	$<
 
 
 
