@@ -10,6 +10,7 @@ additional_files/variables.txt
 *clustered_ld.txt
 cnv_analysis/cnv_luster_gwas/
 *.csv
+!phenotypic_data/phenotypic_data.csv
 *.fa
 *fasta
 *.fai

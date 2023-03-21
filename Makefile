@@ -586,7 +586,8 @@ gwas_results/paragraph/%_threshold_5per.txt: gwas_results/paragraph/paragraph_th
 
 # SNP AND INDEL GENOTYPING AND FILTERING FOR GWAS --------------------------------------------------
 
-variant_calling/platypus/platypus_formatted.hmp.txt: variant_calling/platypus/platypus_filtering.sh \
+variant_calling/platypus/platypus_formatted.hmp.txt filtered_variants/platypus/filtered_variants.vcf.gz filtered_variants/platypus_full.vcf.gz: \
+	variant_calling/platypus/platypus_filtering.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
 	variant_calling/platypus/platypus_all.vcf
 	$<
@@ -599,7 +600,7 @@ variant_calling/platypus/platypus_all.vcf: variant_calling/platypus/platypus_cal
 # SV GENOTYPING USING PARAGRAPH AND FILTERING
 
 # Filtering the Paragraph genotype calls and preparing them for input to GAPIT
-sv_genotyping/paragraph/paragraph_formatted.hmp.txt: sv_genotyping/paragraph/paragraph_filtering.sh \
+sv_genotyping/paragraph/paragraph_formatted.hmp.txt filtered_variants/paragraph/filtered_variants.vcf.gz: sv_genotyping/paragraph/paragraph_filtering.sh \
 	utilities/srr_id_correspondence.txt \
 	sv_genotyping/paragraph/PARAGRAPH_GENOTYPING
 	$<
@@ -838,13 +839,11 @@ kmers_table/kmers_table.kinship: kmers_table/kmer_kinship.sh \
 	kmers_table/kmers_table.table
 	$<
 
-
-
-
-
-
-# filtered_variants/$(prog)/filtered_variants.vcf.gz:
-
+# Creating the files used for the GWAS analysis of pruned SNPs and indels found by Platypus
+filtered_variants/platypus_gapit_kinship.rds filtered_variants/platypus_gapit_pca.rds: filtered_variants/extract_kinship_pca.R \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/platypus/{}_gwas.csv)
+	$(RSCRIPT) $<
 
 # PREPARING THE PHENOTYPIC DATA FOR GWAS
 # phenotypic_data/phenotypic_data.csv:
+#

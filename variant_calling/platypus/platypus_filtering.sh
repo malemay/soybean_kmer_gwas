@@ -37,6 +37,10 @@ bcftools view --trim-alt-alleles -Ou platypus_hetfilter.vcf | \
 	awk '/^#/ {x+=1 ; print}
 	     !/^#/ {$3 = $3 "" NR - x; print}' OFS='\t' > platypus_maf02_missing50.vcf
 
+# Creating a bgzip-compressed version of this file in filtered_variants for GWAS computation of Platypus pruined markers
+bgzip -c platypus_maf02_missing50.vcf > ../../filtered_variants/platypus_full.vcf.gz
+tabix ../../filtered_variants/platypus_full.vcf.gz
+
 # Using plink to prune the set of SNPs with the following parameters:
 # - Processing 1,000 markers at a time
 # - Sliding window of 100 markers
@@ -47,6 +51,10 @@ plink --vcf platypus_maf02_missing50.vcf --allow-extra-chr --indep-pairwise 1000
 input_file=platypus_maf02_missing50.vcf
 pruned_snps=plink.prune.in
 vcftools --vcf $input_file --snps $pruned_snps --recode --stdout > platypus_pruned.vcf
+
+# Creating a bgzip-compressed version of this file in filtered_variants/platypus/ to retrieve the variants from their IDs
+bgzip -c platypus_pruned.vcf > ../../filtered_variants/platypus/filtered_variants.vcf.gz
+tabix ../../filtered_variants/platypus/filtered_variants.vcf.gz
 
 # Using gawk to recode the alleles
 # We also take this opportunity to remove markers that do not match chromosomes of the form Gm[0-9]{2}

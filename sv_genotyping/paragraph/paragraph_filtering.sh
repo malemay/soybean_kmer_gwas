@@ -28,6 +28,10 @@ tabix paragraph_svs.vcf.gz
 bcftools filter --exclude "FORMAT/DP < 2" --set-GTs . -Ou paragraph_svs.vcf.gz | \
 	bcftools filter --exclude "F_MISSING > 0.5" -Ou |
 	bcftools view --min-af 0.02:minor -Ov > paragraph_filtered.vcf
+
+# Creating a bgzip-compressed version of this file in filtered_variants/paragraph/ to retrieve the variants from their IDs
+bgzip -c paragraph_filtered.vcf > ../../filtered_variants/paragraph/filtered_variants.vcf.gz
+tabix ../../filtered_variants/paragraph/filtered_variants.vcf.gz
 	
 # Using gawk to recode the alleles
 awk 'BEGIN {OFS = "\t"} 
