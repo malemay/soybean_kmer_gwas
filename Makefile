@@ -4,6 +4,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 
 # htslib/1.10.2
 # ASV_VariantDetector
+# add_pvalues
 # bamaddrg/1.0
 # bayestypertools v. 1.5
 # bcftools/1.8
@@ -12,12 +13,18 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # bwa/0.7.17
 # delta-filter
 # edlib-aligner
+# filter_kmers
+# gemma_0_96
+# katcher
+# kmers_gwas.py
 # LAST
+# list_kmers
 # manta
 # mummer/3.23
 # nucmer
 # samtools/1.8
 # samtools/1.12
+# samtools/1.13
 # smoove
 # SOAPdenovo/2.04
 # SvABA
@@ -269,7 +276,7 @@ reference_signals/custom_signals.rds: reference_signals/format_custom_signals.R
 	$(RSCRIPT) reference_signals/format_custom_signals.R
 
 # Putting the k-mer 5% thresholds on the same scale as the thresholds for the other programs
-gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gwas_results/kmers/%_threshold_5per
+gwas_results/kmers/%_threshold_5per.txt: gwas_results/scale_kmer_thresholds.R gwas_results/kmers/KMER_GWAS
 	$(RSCRIPT) gwas_results/scale_kmer_thresholds.R $*
 
 # Generating the .csv file with data regarding which reference signals were found and their p-values
@@ -289,7 +296,6 @@ tables/loci_table.csv: tables/loci_table.R \
 	cnv_analysis/ps_cnv_range.rds \
 	$(signalplots)
 	$(RSCRIPT) $<
-
 
 # PHENOTYPIC DATA --------------------------------------------------
 
@@ -759,13 +765,15 @@ variant_calling/svaba/SVABA_CALLING: variant_calling/svaba/svaba_call.sh \
 	$<
 
 # CALLING SVS WITH WITH SVMU BASED ON DE NOVO ASSEMBLIES --------------------------------------------------
-#
+
+# Merging the SVs found for all genome assemblies
 variant_calling/assemblies/assembly_svs.vcf: variant_calling/assemblies/assembly_svmerge.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	variant_calling/assemblies/merging_files.txt \
 	variant_calling/assemblies/ASSEMBLY_FILTERING
 	$<
 
+# Converting from svmu's sv.txt to VCF format
 variant_calling/assemblies/ASSEMBLY_FILTERING: variant_calling/assemblies/assembly_filter.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	variant_calling/assemblies/assembly_samples.txt \
@@ -775,6 +783,7 @@ variant_calling/assemblies/ASSEMBLY_FILTERING: variant_calling/assemblies/assemb
 	variant_calling/assemblies/SVMU_CALLING
 	$<
 
+# Call variants from MuMMER alignments using svmu
 variant_calling/assemblies/SVMU_CALLING: variant_calling/assemblies/svmu_call.sh \
 	variant_calling/assemblies/assembly_samples.txt \
 	variant_calling/assemblies/MUMMER_ALIGNMENT \
@@ -783,6 +792,7 @@ variant_calling/assemblies/SVMU_CALLING: variant_calling/assemblies/svmu_call.sh
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	$<
 
+# Align whole-genome assemblies to the reference Williams82 genome v.4 using MuMMER
 variant_calling/assemblies/MUMMER_ALIGNMENT: variant_calling/assemblies/mummer.sh \
 	variant_calling/assemblies/assembly_samples.txt \
 	$(shell cut -d " " -f1 variant_calling/assemblies/assembly_samples.txt | xargs -I {} echo external_data/genome_assemblies/{}) \
@@ -790,9 +800,40 @@ variant_calling/assemblies/MUMMER_ALIGNMENT: variant_calling/assemblies/mummer.s
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	$<
 
-# CALLING SVS WITH ASMVAR --------------------------------------------------
-
 # GWAS ANALYSIS WITH K-MERS --------------------------------------------------
+
+# Creating the .rds object with the filtered set of reads containing significant k-mers
+gwas_results/kmers/%_kmer_positions.rds: gwas_results/kmers/combine_reads.R \
+	gwas_results/kmers/%/katcher_results/KATCHER \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai
+	$(RSCRIPT) $< $*
+
+# Running katcher for each of the traits
+gwas_results/kmers/%/katcher_results/KATCHER: gwas_results/kmers/katcher.sh \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING \
+	utilities/srr_id_correspondence.txt \
+	gwas_results/kmers/KMER_GWAS \
+	kmers_table/kmers_table.names \
+	kmers_table/kmers_table.table
+	$< $*
+
+# A target for running Voichek and Weigel's (2020) k-mer analysis
+gwas_results/kmers/KMER_GWAS: gwas_results/kmers/kmer_gwas.R \
+	utilities/trait_names.txt \
+	phenotypic_data/phenotypic_data.csv \
+	kmers_table/kmers_table.names \
+	kmers_table/kmers_table.table \
+	kmers_table/kmers_table.kinship
+	$(RSCRIPT) $<
+
+# kmers_table/kmers_table.table kmers_table/kmers_table.names:
+# kmers_table/kmers_table.kinship:
+
+
+
+
+
 
 # filtered_variants/$(prog)/filtered_variants.vcf.gz:
 

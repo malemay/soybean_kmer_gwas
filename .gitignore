@@ -20,6 +20,7 @@ gwas_results/kmer_data
 *gz
 *.hmp.txt
 illumina_data/merged_bams/
+*.kinship
 kmers_table/kmers_table.names
 kmers_table/kmers_table.table
 *lof
