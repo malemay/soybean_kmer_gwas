@@ -10,16 +10,20 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # bcftools/1.10
 # bedtools/2.26.0
 # bwa/0.7.17
+# delta-filter
 # edlib-aligner
 # LAST
 # manta
 # mummer/3.23
+# nucmer
 # samtools/1.8
 # samtools/1.12
 # smoove
 # SOAPdenovo/2.04
 # SvABA
 # SVmerge
+# svmu
+# svmutools
 # bbduk
 # vcftools/0.1.16
 # plink/1.90b5.3
@@ -631,7 +635,7 @@ variant_calling/merging/candidate_svs.vcf: variant_calling/merging/merge_assembl
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	variant_calling/merging/assembly_merging_files.txt \
 	variant_calling/merging/usda_svs.vcf \
-	variant_calling/merging/assembly_svs.vcf
+	variant_calling/assemblies/assembly_svs.vcf
 	$<
 
 variant_calling/merging/usda_svs.vcf: variant_calling/merging/merge_nanopore_svs.sh \
@@ -756,7 +760,35 @@ variant_calling/svaba/SVABA_CALLING: variant_calling/svaba/svaba_call.sh \
 
 # CALLING SVS WITH WITH SVMU BASED ON DE NOVO ASSEMBLIES --------------------------------------------------
 #
-# variant_calling/merging/assembly_svs.vcf:
+variant_calling/assemblies/assembly_svs.vcf: variant_calling/assemblies/assembly_svmerge.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/assemblies/merging_files.txt \
+	variant_calling/assemblies/ASSEMBLY_FILTERING
+	$<
+
+variant_calling/assemblies/ASSEMBLY_FILTERING: variant_calling/assemblies/assembly_filter.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/assemblies/assembly_samples.txt \
+	$(shell cut -d " " -f1 variant_calling/assemblies/assembly_samples.txt | xargs -I {} echo external_data/genome_assemblies/{}) \
+	$(shell cut -d " " -f1 variant_calling/assemblies/assembly_samples.txt | xargs -I {} echo external_data/genome_assemblies/{}.fai) \
+	variant_calling/assemblies/svmu_to_vcf.R \
+	variant_calling/assemblies/SVMU_CALLING
+	$<
+
+variant_calling/assemblies/SVMU_CALLING: variant_calling/assemblies/svmu_call.sh \
+	variant_calling/assemblies/assembly_samples.txt \
+	variant_calling/assemblies/MUMMER_ALIGNMENT \
+	$(shell cut -d " " -f1 variant_calling/assemblies/assembly_samples.txt | xargs -I {} echo external_data/genome_assemblies/{}) \
+	$(shell cut -d " " -f1 variant_calling/assemblies/assembly_samples.txt | xargs -I {} echo external_data/genome_assemblies/{}.fai) \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	$<
+
+variant_calling/assemblies/MUMMER_ALIGNMENT: variant_calling/assemblies/mummer.sh \
+	variant_calling/assemblies/assembly_samples.txt \
+	$(shell cut -d " " -f1 variant_calling/assemblies/assembly_samples.txt | xargs -I {} echo external_data/genome_assemblies/{}) \
+	$(shell cut -d " " -f1 variant_calling/assemblies/assembly_samples.txt | xargs -I {} echo external_data/genome_assemblies/{}.fai) \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	$<
 
 # CALLING SVS WITH ASMVAR --------------------------------------------------
 

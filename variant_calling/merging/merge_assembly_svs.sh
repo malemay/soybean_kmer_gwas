@@ -9,10 +9,12 @@
 # Setting the working directory
 cd variant_calling/merging/
 
+ln -s ../assemblies/assembly_svs.vcf
+
 # DEPENDENCY : refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta
 # DEPENDENCY: variant_calling/merging/assembly_merging_files.txt
 # DEPENDENCY: variant_calling/merging/usda_svs.vcf
-# DEPENDENCY: variant_calling/merging/assembly_svs.vcf
+# DEPENDENCY: variant_calling/assemblies/assembly_svs.vcf
 SVmerge -ref ../../refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	-fof assembly_merging_files.txt \
 	-prefix assembly_svmerged \
