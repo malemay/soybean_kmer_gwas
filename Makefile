@@ -18,6 +18,7 @@ BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 # samtools/1.12
 # smoove
 # SOAPdenovo/2.04
+# SvABA
 # SVmerge
 # bbduk
 # vcftools/0.1.16
@@ -729,8 +730,29 @@ variant_calling/manta/MANTA_CALLING: variant_calling/manta/manta_call.sh \
 	$<
 
 # CALLING SVS WITH SVABA --------------------------------------------------
-#
-# variant_calling/merging/svaba_svmerged.clustered.vcf:
+
+variant_calling/svaba/svaba_svmerged.clustered.vcf: variant_calling/svaba/svaba_svmerge.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	variant_calling/svaba/svaba_filtered.vcf
+	$<
+
+variant_calling/svaba/svaba_filtered.vcf: variant_calling/svaba/svaba_filter.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
+	utilities/srr_id_correspondence.txt \
+	variant_calling/svaba/convert_svaba.R \
+	scripts/svaba_process.R \
+	variant_calling/svaba/SVABA_CALLING \
+	variant_calling/svaba/annotate_svtype.awk \
+	variant_calling/svaba/ACO_header_line.txt \
+	scripts/extract_svs_50.awk
+	$<
+
+variant_calling/svaba/SVABA_CALLING: variant_calling/svaba/svaba_call.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/srr_id_correspondence.txt \
+	illumina_data/merged_bams/ILLUMINA_BAM_MERGING
+	$<
 
 # CALLING SVS WITH WITH SVMU BASED ON DE NOVO ASSEMBLIES --------------------------------------------------
 #

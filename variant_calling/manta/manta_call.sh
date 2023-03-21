@@ -18,3 +18,4 @@ seq 1 78 | parallel -j30 "
 cd manta_batch_{}
 ./runWorkflow.py -j 1 -g 10"
 
+touch MANTA_CALLING
