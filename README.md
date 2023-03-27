@@ -22,7 +22,7 @@ these programs may themselves have additional dependencies.  It is assumed that
 all these programs are found in your `$PATH` for the analyses to run properly.
 
 * [AsmVar](https://github.com/bioinformatics-centre/AsmVar)
-* [BBDuk](https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/bbduk-guide/)
+* [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)
 * [bamaddrg](https://github.com/ekg/bamaddrg)
 * [BayesTyperTools](https://github.com/bioinformatics-centre/BayesTyper)
 * [bwa](https://github.com/lh3/bwa)
@@ -81,23 +81,23 @@ to use the soybean reference genome instead of the human reference genome.
 
 * The assemblies of [Liu et al. (2020)](https://doi.org/10.1016/j.cell.2020.05.023)
   are available on the Genome Warehouse through Accession Number
-  [PRJCA002030](https: //ngdc.cncb.ac.cn/search/?dbId=gsa&q=PRJCA002030).
+  [PRJCA002030](https://ngdc.cncb.ac.cn/search/?dbId=gsa&q=PRJCA002030).
 
 * The assemblies of ZH13, W05 and Lee are available on
-  [SoyBase](https://soybase.org/ GlycineBlastPages/blast_descriptions.php).
+  [SoyBase](https://soybase.org/GlycineBlastPages/blast_descriptions.php).
 
-All these assemblies should be placed in external_data/genome_assemblies/
+All these assemblies should be placed in `external_data/genome_assemblies/`.
 
 ### Structural variants called from Oxford Nanopore data
 
 The SVs identified from Oxford Nanopore data by [Lemay et al. (2022)](https://doi.org/10.1186/s12915-022-01255-w)
-are [available on figshare](https://doi.org/10.6084/ m9.figshare.15127730.v1).
+are [available on figshare](https://doi.org/10.6084/m9.figshare.15127730.v1).
 These should be placed under `external_data/nanopore_svs/`.
 
 ### SoySNP50K calls
 
 SoySNP50K genotype calls are available from [SoyBase](https://soybase.org/snps/).
-These should be placed under external_data/soysnp50k_wm82.a2_41317.vcf.gz
+These should be placed under `external_data/soysnp50k_wm82.a2_41317.vcf.gz`.
 
 ### Reference data
 
@@ -124,7 +124,7 @@ Some of the intermediate datasets generated as part of this analysis are
 ### Other datasets
 
 * Reference Illumina adapters are distributed with BBDUK and should be placed
-  under external_data/adapters.fa.
+  under `external_data/adapters.fa`.
 
 * The *I* locus contig assembled by [Tuteja and Vodkin (2008)](https://doi.org/10.2135/cropsci2007.10.0542tpg)
   is available from [NCBI](https://www.ncbi.nlm.nih.gov/nuccore/EF623854)
