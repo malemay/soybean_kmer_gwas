@@ -2,49 +2,6 @@ RSCRIPT := ~/.local/bin/Rscript --quiet
 PDFLATEX := ~/.local/texlive/2022/bin/x86_64-linux/pdflatex
 BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
 
-# htslib/1.10.2
-# ASV_VariantDetector
-# add_pvalues
-# bamaddrg/1.0
-# bayestypertools v. 1.5
-# bcftools/1.8
-# bcftools/1.10
-# bedtools/2.26.0
-# bwa/0.7.17
-# delta-filter
-# edlib-aligner
-# extract_qname
-# filter_kmers
-# gemma_0_96
-# katcher
-# kmc
-# kmers_gwas.py
-# LAST
-# list_kmers
-# manta
-# mummer/3.23
-# nucmer
-# samtools/1.8
-# samtools/1.12
-# samtools/1.13
-# smoove
-# SOAPdenovo/2.04
-# spades/3.15.4
-# SvABA
-# SVmerge
-# svmu
-# svmutools
-# bbduk
-# vcftools/0.1.16
-# plink/1.90b5.3
-# run_pipeline.pl (TASSEL)
-# python/2.7
-# htslib/1.8
-# htslib/1.10.2
-# platypus/0.8.1.1
-# python/3.7
-# multigrmpy.py
-
 SDIR := additional_files
 
 # Creating a few variables for improving the readability of rules
