@@ -1,4 +1,4 @@
-\chapter*{Supplemental data}
+\chapter*{Supplemental data to ``\textit{k}-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean''}
 \label{supdata}
 
 % Format figure and table numbers to follow S1, S2, ...
@@ -11,6 +11,12 @@
 \DTLloaddb[noheader, keys={key,value}]{variables}{variables.txt}
 % Defining a new command to fetch the value from the key
 \newcommand{\getvar}[1]{\DTLfetch{variables}{key}{#1}{value}}
+
+% Turning page numbering off for the supplements
+\setcounter{page}{1}
+
+% List of authors
+\textbf{Authors}: Marc-André Lemay, Maxime de Ronne, Richard Bélanger, François Belzile
 
 % Detailed methods for some aspects of the paper
 \section*{Detailed methods}
