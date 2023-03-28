@@ -335,7 +335,7 @@ locus (Figure \ref{pubescence-color-main-figure}e).
 	Glyma.03g258700 gene associated with this locus. The shaded gray
 	rectangles show the regions delimited by the top 1\% associations.
 	In the case of SNPs, blue points denote markers used in the
-	original analysis, whereas red points denote points that had originally
+	original analysis, whereas red points denote markers that had originally
 	been pruned but whose \emph{p}-values were computed after signal
 	discovery.
 	(c) Gene model of Glyma.03g258700. Rectangles represent exons, colored
@@ -406,7 +406,7 @@ did not identify the causal variant given its type.
 	Glyma.01g198500 gene associated with this locus. The shaded gray
 	rectangles show the regions delimited by the top 1\% associations.
 	In the case of SNPs, blue points denote markers used in the
-	original analysis, whereas red points denote points that had originally
+	original analysis, whereas red points denote markers that had originally
 	been pruned but whose \emph{p}-values were computed after signal
 	discovery.
 	(c) Gene model of Glyma.01g198500. Rectangles represent exons, colored
@@ -476,7 +476,7 @@ previously documented by \cite{gillman2011} in our dataset (Additional file 1: F
 \ref{hilum_color_blackbrown_R_gene} and \ref{hilum_color_blackbrown_R_kmers}). 
 
 % Pubescence density - Ps locus
-\subsubsection*{Pubescence density -- Ps locus}
+\subsubsection*{Pubescence density -- \textit{Ps} locus}
 \label{sv-gwas-main-results-pubescence-density-ps}
 
 We conducted a GWAS analysis comparing accessions with normal and semi-sparse
@@ -498,9 +498,9 @@ CNV region may represent differences in sequence between the copies.
 
 The difference in size between the CNV reported by \cite{liu2020ps} and our
 results may be due to the presence of some unresolved sequence (a stretch of
-4,635 'N' nucleotides) over that interval in the reference sequence that we used.
-Because our SV filtering process removed any SV overlapping 'N' nucleotides in
-the reference, we reasoned that the CNV may have been found by our pipeline but
+4,635 N nucleotides) over that interval in the reference sequence that we used.
+Because our SV filtering process removed any alternate allele containing N nucleotides,
+we reasoned that the CNV may have been found by our pipeline but
 filtered out later on. Indeed, we found a 42.8-kb duplication corresponding
 to the one described above among the genotype calls made by smoove. An association
 analysis of that single variant using GAPIT found a \textit{p}-value of 1.9e-23,
@@ -538,7 +538,7 @@ to our filtering parameters and not to limitations of the SV genotype calls per 
 \end{figure}
 
 % Seed coat luster - B locus
-\subsubsection*{Seed coat luster -- B locus}
+\subsubsection*{Seed coat luster -- \textit{B} locus}
 \label{sv-gwas-main-results-seed-coat-luster-b}
 
 We conducted a GWAS analysis comparing dull and shiny seed coat phenotypes for
@@ -590,7 +590,7 @@ locus overlap 24 and 50 genes, respectively (Additional file 1: Figures
 somewhat high number, we noticed that the closest gene to the most significant
 \emph{k}-mer (Glyma.03g005800) is also a MATE transporter, similarly to our top
 candidate for \emph{L1}. This gene may therefore represent an interesting
-candidate for this locus for future studies.
+candidate at this locus for future studies.
 
 % Pubescence form - Pa1 and Pa2 loci
 \subsubsection*{Pubescence form -- \textit{Pa1} and \textit{Pa2} loci}
@@ -640,7 +640,7 @@ analyzed further.
 	Glyma.12g213900 gene suggested as a candidate for this locus. The shaded gray
 	rectangles show the regions delimited by the top 1\% associations.
 	In the case of SNPs, blue points denote markers used in the
-	original analysis, whereas red points denote points that had originally
+	original analysis, whereas red points denote markers that had originally
 	been pruned but whose \emph{p}-values were computed after signal
 	discovery.
 	(c) Gene model of Glyma.12g213900. Rectangles represent exons, colored
@@ -692,9 +692,10 @@ significant \textit{k}-mers found no LD between these signals, suggesting that
 they may represent \textit{bona fide} loci associated with stem termination
 type (Figure \ref{stem-termination-main-figure}b). Similarly, a \textit{k}-mer
 GWAS analysis comparing accessions with black and brown pods found a previously
-undocumented signal on chromosome Gm15. \textit{k}-mers at this new locus
+undocumented signal on chromosome Gm15 (Additional file 1: Figure \ref{pod_color_blbr_manhattan}).
+\textit{k}-mers at this new locus
 showed no LD with \textit{k}-mers at the known \textit{L1} locus and may
-therefore represent a distinct locus (Additional file 1: Figures \ref{pod_color_blbr_manhattan} and
+therefore represent a distinct locus (Additional file 1: Figure 
 \ref{pod_color_blbr_ld}). The observed signal overlaps a total of 27 genes
 (Additional file 1: Figure \ref{pod_color_blbr_pdcGm15_signal}), but none of those are annotated
 as having an obvious role in controlling pod color.
@@ -1165,7 +1166,7 @@ though they may not have matched a significant \emph{k}-mer in the first place.
 These read pairs were used for \emph{de novo} assembly with SPAdes v. 3.15.4
 \citep{spades} using the \texttt{--careful} parameter. The assemblies were done
 individually for each accession and then aligned to the Williams82 reference
-assembly using bwa mem with default parameters.  Aligned assembled sequences
+assembly using bwa-mem with default parameters.  Aligned assembled sequences
 that overlapped loci of interest were realigned using multiple sequence
 alignment with the MAFFT program v. 7.475 \citep{katoh2002} for identifying and
 visualizing the haplotypes at these loci. The identification of variants

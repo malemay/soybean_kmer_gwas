@@ -55,7 +55,7 @@ We filtered the SVs called by each tool to remove those meeting any of the follo
 	\item smaller than 50 bp or larger than 500 kb in size
 	\item located on unanchored scaffolds or organellar genomes
 	\item classified as unresolved breakends (\texttt{SVTYPE=BND})
-	\item containing at least one N in either the reference or alternate allele sequence
+	\item containing at least one N in the alternate allele sequence
 \end{itemize}
 
 Next, we converted all filtered variants to a sequence-explicit format using
@@ -111,7 +111,7 @@ program \citep{chakraborty2019} that we forked from the original repository
 memory usage.
 
 We used a set of tools that we assembled in an R package called svmutools
-\url{https://github.com/malemay/svmutools} to convert the svmu output to VCF
+(\url{https://github.com/malemay/svmutools}) to convert the svmu output to VCF
 format. We limited ourselves to processing deletions and insertions because of
 the complexity of resolving other types of variants from whole-genome
 assemblies.  Copy number variants and inversions called by svmu were therefore
@@ -153,7 +153,7 @@ flower color and seed coat color. Upon further analysis, we found that a
 mismatch between the sequencing data and the identity of the accession was the
 most probable cause of these discrepancies. In order to identify the samples
 for which this could be the case, we compared the genotypes of SNPs obtained
-from the SoySNP50K array \cite{song2013} to those predicted from the Illumina WGS
+from the SoySNP50K array \citep{song2013} to those predicted from the Illumina WGS
 data. We did this for the 385 samples that had a match in the GRIN database. Briefly, we
 retrieved SoySNP50K genotype calls from SoyBase \citep{grant2010} and extracted
 all SNPs with a MAF $\geq$ 0.1 in our population. We then translated the positions
@@ -270,7 +270,7 @@ its highly complex nature.
 
 None of the three GWAS analyses that we conducted on hilum color found signals
 at the \emph{W1} and \emph{O} loci studied by \cite{bandillo2017} (Figures
-\ref{hilum_color_all_manhattan}, \ref{hilum_color_blackbrown_manhattan},
+\ref{hilum_color_blackbrown_manhattan} \ref{hilum_color_all_manhattan},
 \ref{hilum_color_rbr_manhattan}).
 
 \subsection*{Pubescence density -- loci \textit{Pd1} and \textit{P1}}
