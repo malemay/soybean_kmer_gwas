@@ -2,7 +2,6 @@
 \label{kmer-gwas}
 
 Marc-André Lemay\textsuperscript{1,2,3},
-Jonas A. Sibbesen\textsuperscript{4},
 Maxime de Ronne\textsuperscript{1,2,3},
 Richard Bélanger\textsuperscript{1,2,3},
 François Belzile\textsuperscript{1,2,3}
@@ -12,8 +11,6 @@ François Belzile\textsuperscript{1,2,3}
 \textsuperscript{2} Institut de biologie intégrative et des systèmes, Université Laval, Québec, QC, Canada
 
 \textsuperscript{3} Centre de recherche et d’innovation sur les végétaux, Université Laval, Québec, QC, Canada
-
-\textsuperscript{4} Center for Health Data Science, University of Copenhagen, Denmark
 
 \clearpage
 
@@ -1261,11 +1258,16 @@ The following software used in this work is available on GitHub:
 	\item gwask R package used for processing the output of GAPIT and
 		\textit{k}-mer GWAS analyses, and for plotting:
 		\url{https://github.com/malemay/gwask}
+	\item Software for computing the LD between \textit{k}-mers
+		based on presence/absence: \url{https://github.com/malemay/kmers_ld}
 	\item Forked svmu version that was used for the analyses shown in this
-		paper: \url{https://github.com/malemay/svmutools}
+		paper: \url{https://github.com/malemay/svmu}
 	\item svmutools R package for converting the output of svmu to VCF
 		format: \url{https://github.com/malemay/svmutools}
 \end{itemize}
+
+The code associated with the results presented in this manuscript is archived
+on figshare \citep{kmer-gwas-code}.
 
 \section*{Funding}
 \label{sv-gwas-funding}
@@ -1286,19 +1288,21 @@ of the results, or manuscript writing.
 \section*{Authors' contributions}
 \label{sv-gwas-contributions}
 
-Conception and design of the study: MAL, JAS, MDR, RB, FB.
+Conception and design of the study: MAL, MDR, RB, FB.
 Phenotypic data acquisition (resistance to \textit{Phytophthora sojae}): MDR, RB.
 Data analysis: MAL.
-Data interpretation: MAL, JAS, FB.
+Data interpretation: MAL, FB.
 Software writing: MAL.
-Manuscript drafting: MAL, JAS, FB.
+Manuscript drafting: MAL, FB.
 All authors have revised the manuscript and approved its submission.
 
 \section*{Acknowledgements}
 \label{sv-gwas-acknowledgwments}
 
-We would like to thank Yoav Voichek for help regarding \textit{k}-mer GWAS
-analysis.  We also thank Brian Boyle and Martine Jean for valuable comments
+We would like to thank Jonas A. Sibbesen for providing very helpful comments
+on the methodology used and on a previous version of this manuscript.
+We also thank Yoav Voichek for help regarding \textit{k}-mer GWAS
+analysis as well as Brian Boyle and Martine Jean for valuable comments
 regarding the methodology. We are thankful to the Digital Research Alliance of
 Canada for using their high-performance computing servers.
 
