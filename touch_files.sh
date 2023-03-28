@@ -61,3 +61,9 @@ touch external_data/BAC77G7-a.fasta
 touch external_data/BAC77G7-a.fasta.fai
 touch refgenome/Gmax_nuclv2_mit_chlp.fasta
 touch external_data/soysnp50k_wm82.a2_41317.vcf.gz
+
+# Creating some directories
+mkdir -p filtered_variants/platypus/
+mkdir -p filtered_variants/paragraph/
+mkdir -p figures/grobs
+mkdir -p gwas_results/kmer_consensus
