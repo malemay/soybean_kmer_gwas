@@ -819,3 +819,6 @@ $(txdb): refgenome/txdb_processing.R \
 	refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3
 	$(RSCRIPT) $<
 
+list:
+	grep '^[^#$$[:space:]].*:[^=]' Makefile | awk '{gsub(/\$$\(SDIR\)/, "additional_files", $$0); print}' | cut -d ":" -f1 | grep -v % | grep -v PRECIOUS
+
