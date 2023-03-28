@@ -1,233 +1,391 @@
-\documentclass[12pt]{report}
+%% BioMed_Central_Tex_Template_v1.06
+%%                                      %
+%  bmc_article.tex            ver: 1.06 %
+%                                       %
 
-\usepackage[utf8]{inputenc} % declare encoding as utf8
-\usepackage[T1]{fontenc} % declare encoding as utf8
-\usepackage{graphicx} % to enable \includegraphics
-\usepackage{flafter} % to make sure floats appear after their position in text
-\usepackage{pdflscape} % allow some pages to be in landscape orientation
-\usepackage{layout} % for debugging purposes, looking at page layout
-\usepackage[margin=1in]{geometry} % leaves more space for text body
-\usepackage[hidelinks]{hyperref} % hyperlinks from list of figures/tables
-\usepackage[labelfont=bf]{caption} % format captions and make links go to figure instead of caption
-\usepackage{csvsimple} % read and display csv files as tables
-\usepackage{booktabs} % prettier tables
-\usepackage{threeparttable} % easy addition of footnotes below tables
-\usepackage{textcomp} % makes the \textdegree command available
-\usepackage{tocloft} % formatting the lists of tables and figures
-\usepackage{xcolor} % enable text coloring
-\usepackage{calc} % makes \widthof available to set the width of the last column
-\usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
-\usepackage{longtable} % allow tables to span more than one page
-\usepackage{threeparttablex} % threeparttable for longtable
-\usepackage{capt-of} % put caption on next page
-\usepackage{ccaption}
-\usepackage{listings}
-\usepackage{datatool} % allows fetching key-value pairs from a text file
-\usepackage[sectionbib]{natbib}
-\usepackage{chapterbib}
-\usepackage{setspace}
+%%% additional documentclass options:
+%  [doublespacing]
+%  [linenumbers]   - put the line numbers on margins
 
-% Remove indent for new paragraphs
-\setlength{\parindent}{0pt}
+%%% loading packages, author definitions
 
-% Adjust line spacing to 1.5
-\onehalfspacing
+%\documentclass[twocolumn]{bmcart}% uncomment this for twocolumn layout and comment line below
+\documentclass{bmcart}[doublespacing, linenumbers]
 
-% Setting the separator to use with datatool
-\DTLsetseparator{ = }
+%%% Load packages
+\usepackage{amsthm,amsmath}
+\RequirePackage[numbers]{natbib}
+%\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
+\RequirePackage{hyperref}
+\usepackage[utf8]{inputenc} %unicode support
+%\usepackage[applemac]{inputenc} %applemac support if unicode package fails
+%\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
-\graphicspath{ {../figures/} } % tell Latex to look for figures in figures/
+\def\includegraphic{}
+\def\includegraphics{}
 
-% Defining new environments as I will always want the figures centered
-\newenvironment{cfigure}
-	{\begin{figure} \centering}
-	{\end{figure}}
+%%% Put your definitions there:
+\startlocaldefs
+\endlocaldefs
 
-\newenvironment{lsfigure}
-	{\begin{landscape} \begin{figure} \centering}
-	{\end{figure} \end{landscape}}
-
-\setcounter{totalnumber}{1} % Allow a maximum of one float (table/figure) per page
-
-\setlength{\parskip}{2ex}
-
-% Defining a command to generate a table of phenotypic data for a single gwas
-\newcommand{\gwastableone}[2]{
-\begin{table}
-	\caption[Phenotypic data used for the GWAS analysis of #2]%
-	{Phenotype frequency and numerical coding of phenotypic data used for the GWAS analysis of #2.
-	``NA'' indicates a missing value in the source data.
-	Dashes indicate that this phenotype was not used in the GWAS analysis.}
-	\label{#1_gwas_table}
-
-	\centering
-	\begin{threeparttable}\small
-
-		\csvreader[head to column names,
-		/csv/separator=semicolon,
-		tabular = llc,
-		table head = \toprule Phenotype & Frequency & GWAS \\ \midrule,
-		table foot = \bottomrule]%
-		{../tables/#1_gwas_table.csv}%
-		{}%
-		{\Value & \Frequency & \GWASa}
-
-	\end{threeparttable}
-
-\end{table}
-\clearpage
-}
-
-
-% Defining a command to generate a table of phenotypic data for two gwas
-\newcommand{\gwastabletwo}[2]{
-\begin{table}
-	\caption[Phenotypic data used for the GWAS analyses of #2]%
-	{Phenotype frequency and numerical coding of phenotypic data used in two GWAS analyses of #2.
-	``NA'' indicates a missing value in the source data.
-	Dashes indicate that this phenotype was not used in the GWAS analysis.}
-	\label{#1_gwas_table}
-
-	\centering
-	\begin{threeparttable}\small
-
-		\csvreader[head to column names,
-		/csv/separator=semicolon,
-		tabular = llcc,
-		table head = \toprule Phenotype & Frequency & GWAS \#1 & GWAS \# 2\\ \midrule,
-		table foot = \bottomrule]%
-		{../tables/#1_gwas_table.csv}%
-		{}%
-		{\Value & \Frequency & \GWASa & \GWASb}
-
-	\end{threeparttable}
-
-\end{table}
-\clearpage
-}
-
-% Defining a command to generate a table of phenotypic data for three gwas
-\newcommand{\gwastablethree}[2]{
-\begin{table}
-	\caption[Phenotypic data used for the GWAS analyses of #2]%
-	{Phenotype frequency and numerical coding of phenotypic data used in three GWAS analyses of #2.
-	``NA'' indicates a missing value in the source data.
-	Dashes indicate that this phenotype was not used in the GWAS analysis.}
-	\label{#1_gwas_table}
-
-	\centering
-	\begin{threeparttable}\small
-
-		\csvreader[head to column names,
-		/csv/separator=semicolon,
-		tabular = llccc,
-		table head = \toprule Phenotype & Frequency & GWAS \#1 & GWAS \# 2 & GWAS \# 3\\ \midrule,
-		table foot = \bottomrule]%
-		{../tables/#1_gwas_table.csv}%
-		{}%
-		{\Value & \Frequency & \GWASa & \GWASb & \GWASc}
-
-	\end{threeparttable}
-
-\end{table}
-\clearpage
-}
-
-% Defining a command for manhattan plot figures
-\newcommand{\manhattanplot}[3]{
-\begin{cfigure}
-	\includegraphics[width = 5.8in]{#1_manhattan}
-	\caption[Manhattan plots for #2]{Manhattan plots generated from the GWAS analysis of #2 on #3 samples using three genotype datasets :
-	(a) Platypus (SNPs and indels), (b) Paragraph (SVs), (c) \emph{k}-mers presence/absence.
-	The x-axis shows the position along the reference assembly version 4 of Williams82.
-	Each point shows the $-\log_{10} (p)$ associated with a particular marker or \emph{k}-mer.
-	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
-	Vertical dotted lines indicate the position of signals associated with the trait.
-	Documented loci are colored according to whether they were found (green) or not (red) by a particular approach.
-	The ``Gm'' prefix has been left out of chromosome names for simplicity.
-	}
-	\label{#1_manhattan}
-\end{cfigure}
-
-\clearpage}
-
-% Defining a new command for signal plot figures
-\newcommand{\signalplot}[4]{
-\begin{cfigure}
-	\includegraphics[width = 5.8in]{#1_signal}
-	\caption[Zoomed-in Manhattan plots of the #3 locus]{Zoomed-in Manhattan plots of signals detected by the GWAS analysis of #2 at the #3 locus using three genotype datasets:
-	(b) Platypus (SNPs and indels), (c) Paragraph (SVs), (d) \emph{k}-mers presence/absence.
-	Panel (a) shows gene models over the genomic interval.
-	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
-	#4
-	Gray shaded rectangles indicate the region delimited by the top 5\% (SVs) or top 1\% (SNPs/indels and \emph{k}-mers) associations in the signal region.
-	In the case of SNPs/indels, blue points denote markers used in the original analysis, whereas red points denote markers that had originally been pruned but whose
-	\emph{p}-values were computed after signal discovery.
-	}
-	\label{#1_signal}
-\end{cfigure}
-
-\clearpage}
-
-% Defining a new command for gene plot figures
-\newcommand{\geneplot}[5]{
-\begin{cfigure}
-	\includegraphics[width = 5.8in]{#1_gene}
-	\caption[Zoomed-in Manhattan plots of the #3 locus gene]%
-	{Zoomed-in Manhattan plots generated from the GWAS analysis of #2 at the #4 associated with the #3 locus using three genotype datasets:
-	(b) Platypus (SNPs and indels), (c) Paragraph (SVs), (d) \emph{k}-mers presence/absence.
-	#5
-	Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
-	In the case of SNPs/indels, blue points denote markers used in the original analysis, whereas red points denote markers that had originally been pruned but whose
-	\emph{p}-values were computed after signal discovery.
-	Panel (a) shows gene models over the plotting interval.
-	Exons are represented by rectangles whereas introns are represented by horizontal lines.
-	Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
-	}
-	\label{#1_gene}
-\end{cfigure}
-
-\clearpage}
-
-% Defining a new command for k-mer plot figures
-\newcommand{\kmerplot}[5]{
-	\begin{cfigure}
-		\includegraphics[width = 5.8in]{#1_kmers}
-		\caption[Variants associated with significant \emph{k}-mers at the #3 locus]%
-		{Identification of #5 underlying significant \emph{k}-mers at the #2 gene associated with the #3 locus for #4.
-		(a) Gene model of #2. Exons are represented by rectangles whereas introns are represented by horizontal lines.
-		Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
-		The red rectangle identifies the region that is zoomed-in in panel (b).
-		(b) Nucleotide sequences of haplotypes observed in at least five samples across the dataset.
-		Individual nucleotides are colored according to the $-\log_{10}(p)$ of the most significant \emph{k}-mer overlapping them.
-		Dashes indicate gaps in haplotype sequence alignment whereas vertical lines indicate differences in sequence between two haplotypes.
-		(c) Contingency table of the phenotypes and haplotypes observed in the dataset. Haplotypes correspond to those shown in panel (b).}
-		\label{#1_kmers}
-	\end{cfigure}
-
-\clearpage}
-
-% Defining a new command for LD plot figures
-\newcommand{\ldplot}[3]{
-	\begin{cfigure}
-		\includegraphics[width = 5.8in]{#1_ld}
-		\caption[LD plot of significant \emph{k}-mers for #2]{Pairwise LD among #3 significant \emph{k}-mers identified for #2.
-		\emph{k}-mers are sorted along the y-axis according to their putative position along the reference assembly version 4 of Williams82,
-		as identified by ``Gm'' chromosome labels.
-		Sequences that lack a ``Gm'' label (top of the y-axis) represent unanchored scaffolds.
-		\emph{k}-mers are represented in the same order along the x- and y-axis.
-		The colored rectangles drawn below the x-axis represent the $-\log_{10} (p)$ of each \emph{k}-mer.}
-		\label{#1_ld}
-	\end{cfigure}
-
-\clearpage}
-
-% END OF PREAMBLE
-
+%%% Begin ...
 \begin{document}
 
-\include{main_text}
-\include{additional_file_1}
+%%% Start of article front matter
+\begin{frontmatter}
 
+\begin{fmbox}
+\dochead{Research}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{k-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean}
+
+\author[
+  addressref={aff1},                   % id's of addresses, e.g. {aff1,aff2}
+  email={marc-andre.lemay.2@ulaval.ca}   % email address
+]{\inits{M.A.L.}\fnm{Marc-André} \snm{Lemay}}
+
+\author[
+  addressref={aff1},
+  email={richard.belanger@fsaa.ulaval.ca}
+]{\inits{R.B.}\fnm{Richard} \snm{Bélanger}}
+
+\address[id=aff1]{%                           % unique id
+  \orgdiv{Département de phytologie},             % department, if any
+  \orgname{Université Laval},          % university, etc
+  \city{Québec},                              % city
+  \cny{QC, Canada}                                    % country
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter short notes here                   %%
+%%                                          %%
+%% Short notes will be after addresses      %%
+%% on first page.                           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\begin{artnotes}
+%%\note{Sample of title note}     % note to the article
+%\note[id=n1]{Equal contributor} % note, connected to author
+%\end{artnotes}
+
+\end{fmbox}% comment this for two column layout
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                           %%
+%% The Abstract begins here                  %%
+%%                                           %%
+%% Please refer to the Instructions for      %%
+%% authors on https://www.biomedcentral.com/ %%
+%% and include the section headings          %%
+%% accordingly for your article type.        %%
+%%                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstractbox}
+
+\begin{abstract} % abstract
+\parttitle{Background}
+Genome-wide association studies (GWAS) are powerful statistical methods that
+detect associations between genotype and phenotype at genome scale. Despite
+their power, GWAS frequently fail to pinpoint the causal variant or the gene
+controlling a trait at a given locus in crop species. Assessing genetic
+variants beyond single-nucleotide polymorphisms (SNPs) could alleviate this
+problem, for example by including structural variants (SVs).
+
+\parttitle{Results}
+In this study, we tested the potential of SV- and \emph{k}-mer-based GWAS in
+soybean by applying these methods to 13 traits.  We also performed
+conventional GWAS analysis based on SNPs and small indels for
+comparison.  We assessed the performance of each GWAS approach based on
+results at loci for which the causal genes or variants were known from
+previous genetic studies. We found that \emph{k}-mer-based GWAS was the
+most versatile approach and the best at pinpointing causal variants or
+candidate genes based on the most significantly associated
+\emph{k}-mers.  Moreover, \textit{k}-mer-based analyses identified
+promising candidate genes for loci related to pod color, pubescence
+form, and resistance to the oomycete \textit{Phytophthora sojae}. In
+our dataset, SV-based GWAS did not add value compared to
+\textit{k}-mer-based GWAS and may not be worth the time and
+computational resources required to genotype SVs at population scale.
+
+\parttitle{Conclusions}
+Despite promising results, significant challenges remain regarding the
+downstream analysis of \emph{k}-mer-based GWAS.  Notably, better
+methods are needed to associate significant \emph{k}-mers with sequence
+variation. Together, our results suggest that coupling \emph{k}-mer-
+and SNP/indel-based GWAS is a powerful approach for discovering
+candidate genes in crop species.
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The keywords begin here                  %%
+%%                                          %%
+%% Put each keyword in separate \kwd{}.     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{keyword}
+\kwd{Genome-wide association studies}
+\kwd{\textit{k}-mer GWAS}
+\kwd{Soybean genomics}
+\kwd{Crop genomics}
+\kwd{\textit{Phytophthora sojae}}
+\kwd{Structural variation}
+\end{keyword}
+
+% MSC classifications codes, if any
+%\begin{keyword}[class=AMS]
+%\kwd[Primary ]{}
+%\kwd{}
+%\kwd[; secondary ]{}
+%\end{keyword}
+
+\end{abstractbox}
+%
+%\end{fmbox}% uncomment this for two column layout
+
+\end{frontmatter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
+% <put your article body there>
+
+%%%%%%%%%%%%%%%%
+%% Background %%
+%%
+\section*{Background}
+Genome-wide association studies (GWAS) are analytical approaches that detect
+statistical associations between phenotypic observations for a trait of
+interest and the genotypes of variants distributed throughout the
+genome \cite{tam2019}. This approach has been used for over 15 years
+\cite{visscher2012} and has enabled significant advances in our understanding
+of the genetic architecture of traits involved in human health
+\cite[e.g.][]{wellcome2007gwas} and crop \cite{tibbs2021} and animal
+\cite{ma2019} production, among others.
+
+Despite their power and convenience for finding significantly associated loci,
+GWAS analyses frequently fail to pinpoint the gene(s) associated with a trait and
+the causal variant(s) involved \cite{tam2019}. One possible reason for this
+is that many GWAS analyses do not include the causal variant itself in their variant dataset
+\cite{tibbs2021}. This could be either because the analysis
+is restricted to a particular type of variant, such as single-nucleotide
+polymorphisms (SNPs), or because the set of markers/variants genotyped in the
+association panel is limited by the technology being used
+\cite[e.g.][]{bandillo2015, sonah2015}. Despite this limitation, variants
+located near the gene controlling the trait often do appear statistically
+associated with the phenotype through linkage disequilibrium (LD) with the
+causal variant \cite{korte2013}.  A typical workflow then involves the
+identification of candidate genes within the haplotype blocks defined by the
+statistically associated markers and follow-up functional analyses to confirm
+that a given gene controls the trait \cite[e.g.][]{wang2018, liu2020ps}.
+
+The inclusion of structural variants (SVs) as genotype data in GWAS may partly overcome
+this issue by providing a set of variants with a potentially high functional impact.
+SVs include any variant involving a difference of at least 50 nucleotides, such as
+deletions, insertions, or inversions \cite{ho2020}. Such variants are known to
+have large phenotypic impacts by disrupting coding or regulatory sequences
+\cite{marroni2014}, and have been identified as causal variants in traits such
+as resistance to soybean cyst nematode \cite{cook2012}, aluminum tolerance in
+wheat \cite{maron2013}, and branching in maize \cite{studer2011}.  SVs have
+already been used in GWAS with promising results
+\cite[e.g.][]{zhang2015, akakpo2020, dominguez2020, liu2020-pangenome}, but
+their use in GWAS is the exception rather than the norm.
+
+Despite their phenotypic impact, SVs are still largely understudied compared to
+SNPs because discovering and genotyping them with accuracy is difficult.
+Comprehensive detection of SVs requires a combination of several methods that
+often need to be tailored to the study species and data available
+\cite{alkan2011, ho2020}. Even then, assessments of the performance of SV
+discovery and genotyping generally reveal subpar sensitivity and precision
+\cite[e.g.][]{cameron2019, chaisson2019, kosugi2019}. Moreover, despite recent
+improvements in computational approaches for genotyping SVs
+\cite[e.g.][]{siren2021, ebler2022}, such approaches remain relatively
+inaccurate compared to SNP genotyping workflows.
+
+Alternative approaches that allow one to assess a large spectrum
+of variants in GWAS without genotyping SVs at population scale could be useful.
+\cite{voichek2020} developed a \emph{k}-mer-based GWAS approach that may
+represent such an alternative method. This approach relies on the presence or
+absence of \emph{k}-mers observed in sequence reads in place of variant genotypes for use in
+GWAS. Once a presence/absence table of \emph{k}-mers has been generated for the
+population under study, this table can be used in association analyses
+similarly to SNP or SV genotype calls. One advantage of using \emph{k}-mers is
+that they can act as a molecular signature for any type of variant as long as
+these variants result in presence/absence of \emph{k}-mers of a given length.
+Another advantage is that \emph{k}-mers are not tied to a specific genomic
+location and can thus be used to query associations between genotype and
+phenotype at genomic locations that are not included in a reference genome.  A
+few studies have applied this \emph{k}-mer-based GWAS approach
+\cite[e.g.][]{tripodi2021, colque2021} and other similar approaches have been
+developed \cite{rahman2018, he2021}, but similarly to the use of SVs in GWAS,
+such approaches have not been widely adopted yet.
+
+In this study, we assessed the potential of SV- and \emph{k}-mer-based GWAS in
+a major crop, soybean (\emph{Glycine max}). We also conducted conventional GWAS
+based on SNPs and indels. In order to test these methods, we analyzed ten
+qualitative traits \cite{bandillo2017} and two quantitative traits
+\cite{bandillo2015} that have been previously studied using a SNP array
+developed for soybean \cite{song2013}. In addition, we analyzed a quantitative
+trait (horizontal resistance to \emph{Phytophthora sojae}) that has been
+previously studied using whole-genome sequencing (WGS) data
+\cite{deronne2022}.  Since the underlying genes and causal variants are
+already known for several of these traits, they provide a good test case for
+the performance of GWAS methods.  The objectives of our study were to:
+
+\begin{enumerate}
+	\item Assess the potential of SV- and \emph{k}-mer-based GWAS approaches to
+		pinpoint genes and causal variants associated with loci whose
+		underlying genes or variants are already known.
+	\item Identify potential candidate genes and/or causal variants at loci
+		whose underlying genes or candidate variants are not yet known.
+	\item Develop a set of computational tools for the downstream analysis
+		of significantly associated \emph{k}-mers once these have been
+		identified.
+\end{enumerate}
+
+\section*{Results and discussion}
+Text for this section\ldots
+\subsection*{Sub-heading for section}
+Text for this sub-heading\ldots
+\subsubsection*{Sub-sub heading for section}
+Text for this sub-sub-heading\ldots
+\paragraph*{Sub-sub-sub heading for section}
+Text for this sub-sub-sub-heading\ldots
+
+\section*{Conclusions}
+
+\section*{Methods}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Backmatter begins here                   %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{backmatter}
+
+\section*{Acknowledgements}%% if any
+Text for this section\ldots
+
+\section*{Funding}%% if any
+Text for this section\ldots
+
+\section*{Abbreviations}%% if any
+Text for this section\ldots
+
+\section*{Availability of data and materials}%% if any
+Text for this section\ldots
+
+\section*{Ethics approval and consent to participate}%% if any
+Text for this section\ldots
+
+\section*{Competing interests}
+The authors declare that they have no competing interests.
+
+\section*{Consent for publication}%% if any
+Text for this section\ldots
+
+\section*{Authors' contributions}
+Text for this section \ldots
+
+\section*{Authors' information}%% if any
+Text for this section\ldots
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  Bmc_mathpys.bst  will be used to                       %%
+%%  create a .BBL file for submission.                     %%
+%%  After submission of the .TEX file,                     %%
+%%  you will be prompted to submit your .BBL file.         %%
+%%                                                         %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% if your bibliography is in bibtex format, use those commands:
+\bibliographystyle{vancouver} % Style BST file (bmc-mathphys, vancouver, spbasic).
+\bibliography{references}      % Bibliography file (usually '*.bib' )
+% for author-year bibliography (bmc-mathphys or spbasic)
+% a) write to bib file (bmc-mathphys only)
+% @settings{label, options="nameyear"}
+% b) uncomment next line
+%\nocite{label}
+
+% or include bibliography directly:
+% \begin{thebibliography}
+% \bibitem{b1}
+% \end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Figures                       %%
+%%                               %%
+%% NB: this is for captions and  %%
+%% Titles. All graphics must be  %%
+%% submitted separately and NOT  %%
+%% included in the Tex document  %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% Do not use \listoffigures as most will included as separate files
+
+\section*{Figures}
+  \begin{figure}[h!]
+  \caption{Sample figure title}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{Sample figure title}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Tables                        %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use of \listoftables is discouraged.
+%%
+\section*{Tables}
+\begin{table}[h!]
+\caption{Sample table title. This is where the description of the table should go}
+  \begin{tabular}{cccc}
+    \hline
+    & B1  &B2   & B3\\ \hline
+    A1 & 0.1 & 0.2 & 0.3\\
+    A2 & ... & ..  & .\\
+    A3 & ..  & .   & .\\ \hline
+  \end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Additional Files              %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Additional Files}
+  \subsection*{Additional file 1 --- Sample additional file title}
+    Additional file descriptions text (including details of how to
+    view the file, if it is in a non-standard format or the file extension).  This might
+    refer to a multi-page table or a figure.
+
+  \subsection*{Additional file 2 --- Sample additional file title}
+    Additional file descriptions text.
+
+\end{backmatter}
 \end{document}
-

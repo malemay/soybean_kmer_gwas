@@ -106,7 +106,7 @@ $(SDIR)/manuscript.pdf: $(SDIR)/manuscript.tex \
 	$(maintables) \
 	additional_files/references.bib \
 	$(SDIR)/variables.txt
-	cd $(SDIR) ; $(PDFLATEX) manuscript.tex ; $(BIBTEX) main_text ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) manuscript.tex ; $(PDFLATEX) manuscript.tex
+	cd $(SDIR) ; $(PDFLATEX) manuscript.tex ; $(BIBTEX) manuscript ; $(PDFLATEX) manuscript.tex ; $(PDFLATEX) manuscript.tex
 
 # Creating the list of variables stored in additional_files/variables.txt, for retrival in additional file 1
 $(SDIR)/variables.txt: $(SDIR)/make_variables.R \
