@@ -22,7 +22,6 @@
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
 % Packages added by M-A Lemay
-\usepackage{csvsimple} % read and display csv files as tables
 \usepackage{booktabs} % prettier tables
 \usepackage{threeparttable} % easy addition of footnotes below tables
 
@@ -119,22 +118,21 @@
 Genome-wide association studies (GWAS) are powerful statistical methods that
 detect associations between genotype and phenotype at genome scale. Despite
 their power, GWAS frequently fail to pinpoint the causal variant or the gene
-controlling a trait at a given locus in crop species. Assessing genetic
+controlling a given trait in crop species. Assessing genetic
 variants beyond single-nucleotide polymorphisms (SNPs) could alleviate this
 problem, for example by including structural variants (SVs).
 
 \parttitle{Results}
 In this study, we tested the potential of SV- and \emph{k}-mer-based GWAS in
 soybean by applying these methods to 13 traits.  We also performed
-conventional GWAS analysis based on SNPs and small indels for
-comparison.  We assessed the performance of each GWAS approach based on
+conventional GWAS analysis based on SNPs and small indels.  We assessed the performance of each GWAS approach based on
 results at loci for which the causal genes or variants were known from
 previous genetic studies. We found that \emph{k}-mer-based GWAS was the
 most versatile approach and the best at pinpointing causal variants or
 candidate genes based on the most significantly associated
 \emph{k}-mers.  Moreover, \textit{k}-mer-based analyses identified
 promising candidate genes for loci related to pod color, pubescence
-form, and resistance to the oomycete \textit{Phytophthora sojae}. In
+form, and resistance to \textit{Phytophthora sojae}. In
 our dataset, SV-based GWAS did not add value compared to
 \textit{k}-mer-based GWAS and may not be worth the time and
 computational resources required to genotype SVs at population scale.
@@ -1444,14 +1442,37 @@ All authors have revised the manuscript and approved its submission.
 	\footnotesize
 	\centering
 	\begin{threeparttable}
-
-		\csvreader[head to column names,
-		tabular = llllccc,
-		table head = \toprule Trait & Locus & Gene & Causal variant & SNPs\tnote{a} & SVs\tnote{b} & \textit{k}-mers \\ \midrule,
-		table foot = \bottomrule]%
-		{../tables/loci_table.csv}%
-		{}%
-		{\Trait & \Locus & \Gene & \Causal & \platypus & \paragraph & \kmers}
+		\begin{tabular}{llllccc}
+		\toprule Trait & Locus & Gene & Causal variant & SNPs\tnote{a} & SVs\tnote{b} & \textit{k}-mers \\ \midrule
+		Flower color & \textit{W1} & Glyma.13g072100 & 65-bp deletion \citep{zabala2007} & ** & *** & *** \\
+		Pubescence color & \textit{T} & Glyma.06g202300 & 1-bp deletion \citep{zabala2003} & ** & * & ** \\
+		Pubescence color & \textit{Td} & Glyma.03g258700 & SNP \citep{yan2020} & * & - & *** \\
+		Seed coat color & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \citep{tuteja2008} & ** & ** & ** \\
+		Seed coat color & \textit{G} & Glyma.01g198500 & SNP \citep{wang2018} & ** & ** & *** \\
+		Seed coat color\tnote{c} & \textit{T} & Glyma.06g202300 & 1-bp deletion \citep{zabala2003} & - & - & - \\
+		Seed coat color\tnote{c} & \textit{R} & Glyma.09g235100 & SNPs and indels \citep{gillman2011} & - & - & - \\
+		Stem termination type & \textit{Dt1} & Glyma.19g194300 & SNPs \citep{liu2010} & ** & * & ** \\
+		Stem termination type\tnote{c} & \textit{Dt2} & Glyma.18g273600 & SNPs \citep{ping2014} & - & - & - \\
+		Stem termination type\tnote{c} & \textit{E3} & Glyma.19g224200 & Various types \citep{tardivel2019} & - & - & - \\
+		Hilum color\tnote{c} & \textit{T} & Glyma.06g202300 & 1-bp deletion \citep{zabala2003} & ** & ** & ** \\
+		Hilum color\tnote{c} & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \citep{tuteja2008} & * & * & ** \\
+		Hilum color & \textit{R} & Glyma.09g235100 & SNPs and indels \citep{gillman2011} & * & - & ** \\
+		Hilum color\tnote{c} & \textit{W1} & Glyma.13g072100 & 65-bp deletion \citep{zabala2007} & - & - & - \\
+		Pubescence density & \textit{Ps} & Glyma.12g187200 & 25.6-kb CNV \citep{liu2020ps} & ** & ** & *** \\
+		Pubescence density\tnote{c} & \textit{Pd1} & Glyma.01g240100 & SNP \citep{liu2020ps} & - & - & - \\
+		Pubescence density\tnote{c} & \textit{P1} & Glyma.09g278000 & SNP \citep{liu2020ps} & - & - & - \\
+		Seed coat luster & \textit{B} & Duplicated HPS genes & CNV (several kb) \citep{gijzen2006} & ** & ** & ** \\
+		Seed coat luster\tnote{c} & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \citep{tuteja2008} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E1} & Glyma.06g207800 & Various types \citep{tardivel2019} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E2} & Glyma.10g221500 & Various types \citep{tardivel2019} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E3} & Glyma.19g224200 & Various types \citep{tardivel2019} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E4} & Glyma.20g090000 & Various types \citep{tardivel2019} & - & - & - \\
+		Oil\tnote{c} & \textit{oilGm20} & Glyma.20g085100 & 321-bp deletion \citep{fliege2022} & - & - & - \\
+		Oil\tnote{c} & \textit{oilGm15} & Glyma.15g049200 & SNPs and indels \citep{zhang2020} & - & - & - \\
+		Protein\tnote{c} & \textit{proGm20} & Glyma.20g085100 & 321-bp deletion \citep{fliege2022} & - & - & - \\
+		Protein\tnote{c} & \textit{proGm15} & Glyma.15g049200 & SNPs and indels \citep{zhang2020} & - & - & - \\
+		\bottomrule
+		\end{tabular}
 
 		\begin{tablenotes}
 		\item[a] SNPs and indels genotyped by Platypus
