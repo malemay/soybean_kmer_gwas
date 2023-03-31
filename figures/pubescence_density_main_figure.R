@@ -97,7 +97,7 @@ kmer_mapping_pos <- kmer_mapping_pos[kmer_mapping_pos$MAPQ > 0, ]
 kmer_hist_data <- (hist(kmer_mapping_pos$POS, breaks = 35, plot = FALSE))
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 5.8, units = "in", res = 200)
+png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 5.8, units = "in", res = 400)
 
 # Resetting the plotting page
 grid.newpage()

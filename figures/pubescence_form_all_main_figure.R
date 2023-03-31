@@ -41,7 +41,7 @@ exons <- readRDS("refgenome/gmax_v4_exons.rds")
 source("figures/main_figure_functions.R")
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 10, units = "in", res = 200)
+png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 10, units = "in", res = 400)
 
 # Resetting the plotting page
 grid.newpage()

@@ -33,7 +33,7 @@ names(kmer_positions) <- kmer_positions$kmer_canon
 gsorted_ld <- ld_sort(clustered_ld, kmer_positions, sort_param = "position")
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", trait, "_main_figure.png"), width = 6, height = 6.5, units = "in", res = 200)
+png(paste0("figures/", trait, "_main_figure.png"), width = 6, height = 6.5, units = "in", res = 400)
 
 # Resetting the plotting page
 grid.newpage()
