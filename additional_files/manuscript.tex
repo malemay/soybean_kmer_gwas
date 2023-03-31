@@ -24,6 +24,7 @@
 % Packages added by M-A Lemay
 \usepackage{booktabs} % prettier tables
 \usepackage{threeparttable} % easy addition of footnotes below tables
+\usepackage[T1]{fontenc}
 
 \def\includegraphic{}
 \def\includegraphics{}
@@ -756,7 +757,7 @@ identified it as well. Moreover, SNP-based GWAS provided better guidance
 in delimiting the signals found at a given locus because of the much higher
 density of markers compared to SVs.  The usefulness of SV-based GWAS compared
 to SNP-based GWAS will largely depend on whether SVs can represent variation
-that is not otherwise in LD with SNPs. In tomato, Domínguez et al. cite{dominguez2020} found
+that is not otherwise in LD with SNPs. In tomato, Domínguez et al. \cite{dominguez2020} found
 that most transposable element insertions associated with phenotypic variation
 in agronomic traits were not tagged by SNPs. On the other hand, in humans,
 Maretty et al. \cite{maretty2017} found that the majority of SVs were in high LD with SNPs. It
@@ -1028,7 +1029,7 @@ more significant \emph{p}-values than those initially used.
 To help with the interpretation of results and the identification of candidate
 genes, we defined regions of highly significant associations within each signal
 by delimiting a range of coordinates containing the top 5\% most significant
-associations (Paragraph) or 1\% most significant associations (SNPs/indels
+associations (SVs) or 1\% most significant associations (SNPs/indels
 and \emph{k}-mers) found within the signal. In cases where such a fraction
 represented fewer than two markers or \emph{k}-mers, the highly significant
 region was simply delimited by the two most significant associations.
@@ -1146,14 +1147,14 @@ of the results, or manuscript writing.
 \section*{Abbreviations}%% if any
 BAM: Binary alignment map format;
 CDW: corrected dry weight;
-CHS: chalcone synthas;
+CHS: chalcone synthase;
 CNV: copy number variant, copy number variation;
 GRIN: Germplasm Resources Information Network;
 GWAS: Genome-wide association study;
 HPS: Hydrophobic protein from soybean;
 LD: Linkage disequilibrium;
 MAF: Minor allele frequency;
-MATE: ultidrug and toxic compound extrusion;
+MATE: Multidrug and toxic compound extrusion;
 MLM: Mixed linear model;
 NCBI: National Center for Biotechnology Information;
 SNP: Single-nucleotide polymorphism;
