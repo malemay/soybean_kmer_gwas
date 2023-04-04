@@ -2,7 +2,7 @@
 
 %%% Load packages
 \usepackage{amsthm,amsmath}
-\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
+%\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
 \usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
 
@@ -14,6 +14,7 @@
 \usepackage{graphicx}
 \usepackage{ccaption}
 \usepackage[margin=1in]{geometry} % leaves more space for text body
+\usepackage[natbibapa]{apacite}
 
 \usepackage{lineno}
 \linenumbers
@@ -1319,8 +1320,8 @@ Writing -- review \& editing: MAL, MDR, RB, FB.
 
 \clearpage
 
-\bibliographystyle{genome_research}
-\bibliography{references}
+\bibliographystyle{apacite}
+\bibliography{references.bib}
 
 \clearpage
 
