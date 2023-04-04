@@ -1,121 +1,44 @@
-%% BioMed_Central_Tex_Template_v1.06
-%%                                      %
-%  bmc_article.tex            ver: 1.06 %
-%                                       %
-
-%%% additional documentclass options:
-%  [doublespacing]
-%  [linenumbers]   - put the line numbers on margins
-
-%%% loading packages, author definitions
-
-%\documentclass[twocolumn]{bmcart}% uncomment this for twocolumn layout and comment line below
-\documentclass[linenumbers,doublespacing]{bmcart}
+\documentclass{article}
 
 %%% Load packages
 \usepackage{amsthm,amsmath}
-\RequirePackage[numbers]{natbib}
-%\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
+\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
 \RequirePackage{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
-%\usepackage[applemac]{inputenc} %applemac support if unicode package fails
-%\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
 % Packages added by M-A Lemay
 \usepackage{booktabs} % prettier tables
 \usepackage{threeparttable} % easy addition of footnotes below tables
 \usepackage[T1]{fontenc}
+\usepackage{pdflscape}
 
-\def\includegraphic{}
-\def\includegraphics{}
+\usepackage{lineno}
+\linenumbers
 
-%%% Put your definitions there:
-\startlocaldefs
-\endlocaldefs
+\usepackage{setspace}
+\doublespacing
+
+\title{k-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean}
+\date{}
+
+\author{Marc-André Lemay\textsuperscript{1,2,3} \and
+Maxime de Ronne\textsuperscript{1,2,3} \and
+Richard Bélanger\textsuperscript{1,2,3} \and
+François Belzile\textsuperscript{1,2,3}}
 
 %%% Begin ...
 \begin{document}
 
-%%% Start of article front matter
-\begin{frontmatter}
+\maketitle
 
-\begin{fmbox}
-\dochead{Research}
+\textsuperscript{1} Département de phytologie, Université Laval, Québec, QC, Canada
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                          %%
-%% Enter the title of your article here     %%
-%%                                          %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textsuperscript{2} Institut de biologie intégrative et des systèmes, Université Laval, Québec, QC, Canada
 
-\title{k-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean}
+\textsuperscript{3} Centre de recherche et d’innovation sur les végétaux, Université Laval, Québec, QC, Canada
 
-\author[
-  addressref={aff1,aff2,aff3},                   % id's of addresses, e.g. {aff1,aff2}
-]{\inits{M.A.L.}\fnm{Marc-André} \snm{Lemay}}
-\author[
-  addressref={aff1,aff2,aff3},
-]{\inits{M.D.R.}\fnm{Maxime} \snm{de Ronne}}
-\author[
-  addressref={aff1,aff2,aff3},
-]{\inits{R.B.}\fnm{Richard} \snm{Bélanger}}
-\author[
-  addressref={aff1,aff2,aff3},
-  email={francois.belzile@fsaa.ulaval.ca}
-]{\inits{F.B.}\fnm{François} \snm{Belzile}}
+\section*{Abstract}
 
-\address[id=aff1]{%
-  \orgdiv{Département de phytologie},
-  \orgname{Université Laval},
-  \city{Québec},
-  \cny{QC, Canada}
-}
-
-\address[id=aff2]{%
-  \orgdiv{Institut de biologie intégrative et des systèmes},
-  \orgname{Université Laval},
-  \city{Québec},
-  \cny{QC, Canada}
-}
-
-\address[id=aff3]{%
-  \orgdiv{Centre de recherche et d’innovation sur les végétaux},
-  \orgname{Université Laval},
-  \city{Québec},
-  \cny{QC, Canada}
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                          %%
-%% Enter short notes here                   %%
-%%                                          %%
-%% Short notes will be after addresses      %%
-%% on first page.                           %%
-%%                                          %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\begin{artnotes}
-%%\note{Sample of title note}     % note to the article
-%\note[id=n1]{Equal contributor} % note, connected to author
-%\end{artnotes}
-
-\end{fmbox}% comment this for two column layout
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                           %%
-%% The Abstract begins here                  %%
-%%                                           %%
-%% Please refer to the Instructions for      %%
-%% authors on https://www.biomedcentral.com/ %%
-%% and include the section headings          %%
-%% accordingly for your article type.        %%
-%%                                           %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{abstractbox}
-
-\begin{abstract} % abstract
-\parttitle{Background}
 Genome-wide association studies (GWAS) are powerful statistical methods that
 detect associations between genotype and phenotype at genome scale. Despite
 their power, GWAS frequently fail to pinpoint the causal variant or the gene
@@ -123,7 +46,6 @@ controlling a given trait in crop species. Assessing genetic
 variants beyond single-nucleotide polymorphisms (SNPs) could alleviate this
 problem, for example by including structural variants (SVs).
 
-\parttitle{Results}
 In this study, we tested the potential of SV- and \emph{k}-mer-based GWAS in
 soybean by applying these methods to 13 traits.  We also performed
 conventional GWAS analysis based on SNPs and small indels.  We assessed the performance of each GWAS approach based on
@@ -138,7 +60,6 @@ our dataset, SV-based GWAS did not add value compared to
 \textit{k}-mer-based GWAS and may not be worth the time and
 computational resources required to genotype SVs at population scale.
 
-\parttitle{Conclusions}
 Despite promising results, significant challenges remain regarding the
 downstream analysis of \emph{k}-mer-based GWAS.  Notably, better
 methods are needed to associate significant \emph{k}-mers with sequence
@@ -146,44 +67,14 @@ variation. Together, our results suggest that coupling \emph{k}-mer-
 and SNP/indel-based GWAS is a powerful approach for discovering
 candidate genes in crop species.
 
-\end{abstract}
+\section*{Keywords}
+Genome-wide association studies
+\textit{k}-mer GWAS
+Soybean genomics
+Crop genomics
+\textit{Phytophthora sojae}
+Structural variation
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                          %%
-%% The keywords begin here                  %%
-%%                                          %%
-%% Put each keyword in separate \kwd{}.     %%
-%%                                          %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{keyword}
-\kwd{Genome-wide association studies}
-\kwd{\textit{k}-mer GWAS}
-\kwd{Soybean genomics}
-\kwd{Crop genomics}
-\kwd{\textit{Phytophthora sojae}}
-\kwd{Structural variation}
-\end{keyword}
-
-% MSC classifications codes, if any
-%\begin{keyword}[class=AMS]
-%\kwd[Primary ]{}
-%\kwd{}
-%\kwd[; secondary ]{}
-%\end{keyword}
-
-\end{abstractbox}
-%
-%\end{fmbox}% uncomment this for two column layout
-
-\end{frontmatter}
-
-%%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
-% <put your article body there>
-
-%%%%%%%%%%%%%%%%
-%% Background %%
-%%
 \section*{Background}
 Genome-wide association studies (GWAS) are analytical approaches that detect
 statistical associations between phenotypic observations for a trait of
@@ -1093,15 +984,6 @@ packages Biostrings v. 2.64.0 \citep{pages2022}, GenomicRanges v. 1.48.0
 analysis of GWAS results into a package called gwask which is available on
 GitHub (\url{https://github.com/malemay/gwask}).
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                          %%
-%% Backmatter begins here                   %%
-%%                                          %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{backmatter}
-
 \section*{Additional Files}
 
 \subsection*{Additional file 1 --- Additional file 1.pdf}
@@ -1225,48 +1107,8 @@ Software writing: MAL.
 Manuscript drafting: MAL, FB.
 All authors have revised the manuscript and approved its submission.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                  The Bibliography                       %%
-%%                                                         %%
-%%  Bmc_mathpys.bst  will be used to                       %%
-%%  create a .BBL file for submission.                     %%
-%%  After submission of the .TEX file,                     %%
-%%  you will be prompted to submit your .BBL file.         %%
-%%                                                         %%
-%%                                                         %%
-%%  Note that the displayed Bibliography will not          %%
-%%  necessarily be rendered by Latex exactly as specified  %%
-%%  in the online Instructions for Authors.                %%
-%%                                                         %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% if your bibliography is in bibtex format, use those commands:
-\bibliographystyle{vancouver} % Style BST file (bmc-mathphys, vancouver, spbasic).
-\bibliography{references}      % Bibliography file (usually '*.bib' )
-% for author-year bibliography (bmc-mathphys or spbasic)
-% a) write to bib file (bmc-mathphys only)
-% @settings{label, options="nameyear"}
-% b) uncomment next line
-%\nocite{label}
-
-% or include bibliography directly:
-% \begin{thebibliography}
-% \bibitem{b1}
-% \end{thebibliography}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                               %%
-%% Figures                       %%
-%%                               %%
-%% NB: this is for captions and  %%
-%% Titles. All graphics must be  %%
-%% submitted separately and NOT  %%
-%% included in the Tex document  %%
-%%                               %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%
-%% Do not use \listoffigures as most will included as separate files
+\bibliographystyle{genome_research}
+\bibliography{references}
 
 \section*{Figures}
 
@@ -1424,17 +1266,10 @@ All authors have revised the manuscript and approved its submission.
 \end{figure}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                               %%
-%% Tables                        %%
-%%                               %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Use of \listoftables is discouraged.
-%%
 \section*{Tables}
 
 % Table 1 with results on all loci with cloned genes
+\begin{landscape}
 \begin{table}[p]
 	\caption[Performance of three GWAS approaches at detecting causal genes/variants]%
 	{Performance of three GWAS approaches at detecting causal genes or variants at cloned loci.}
@@ -1487,6 +1322,7 @@ All authors have revised the manuscript and approved its submission.
 
 	\end{threeparttable}
 \end{table}
+\end{landscape}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               %%
@@ -1495,6 +1331,5 @@ All authors have revised the manuscript and approved its submission.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\end{backmatter}
 \end{document}
 
