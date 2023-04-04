@@ -178,7 +178,7 @@ and extracted paired-end reads using the fastq-dump command v. 2.9.6
 option \texttt{-\-split-3}.
 Reads that were not paired in the raw sequencing data were not used
 for downstream analyses.  The runs downloaded from the SRA and associated
-metadata are listed in Additional file 2.
+metadata are listed in Supplemental file 2.
 
 We first filtered the sequencing data for quality and the presence of sequencing
 adapters using bbduk from BBtools v. 38.25
@@ -195,7 +195,7 @@ individual SRA runs to the BAM files and merged the reads belonging to the same
 accession using bamaddrg
 \cite{bamaddrg}. We used the
 resulting BAM files for all downstream analyses requiring aligned reads.
-Metadata on mapping depth of aligned data can be found in Additional file 3.
+Metadata on mapping depth of aligned data can be found in Supplemental file 3.
 
 \subsection*{Discovery and genotyping of SVs}
 
@@ -229,7 +229,7 @@ SVs by setting the genotype calls made from less than two reads to missing and
 by removing variants with a minor allele frequency < 0.02 or a proportion of
 missing data > 0.5. The resulting dataset of 186,306 genotyped SVs was used for
 GWAS. Detailed methods regarding the SV discovery and genotyping steps can be
-found in Additional file 1.
+found in Supplemental file 1.
 
 \subsection*{Discovery and genotyping of SNPs and indels}
 
@@ -288,7 +288,7 @@ Bandillo et al. \cite{bandillo2017}.  For some traits, we conducted more than on
 using targeted subsets of the observed phenotypes in order to focus on specific
 loci. The phenotypes and numerical values used for all analyses as well as the
 number of observations in the dataset that we used for GWAS are listed in
-Tables S1 to S10 (Additional file 1).
+Supplemental Tables S1 to S10.
 
 We analyzed three quantitative traits in addition to the ten qualitative traits
 mentioned above. Seed oil and protein content were retrieved from the GRIN
@@ -309,13 +309,13 @@ phenotypes for some simple traits such as flower color and seed coat color, we
 suspected possible errors in the identity of some of the accessions. To
 investigate this, we compared the SNP genotypes derived from the SoySNP50K
 array and our WGS data at over 32,000 SNPs, and identified 24 accessions with <
-90\% concordance between the two genotype datasets (see Additional file 1 for
+90\% concordance between the two genotype datasets (see Supplemental file 1 for
 detailed methods). These samples were removed from the dataset in addition to another
 accession that exhibited an atypical GC content suggesting contamination.
 Following these filtering steps and the removal of HN019, 363 accessions
 remained for GWAS analyses. The concordance between WGS data and SoySNP50K
-genotypes is included in Additional file 3 and averaged 98.3\% among retained
-lines (Additional file 1: Figure S1). The phenotypic data used in this study can be found in Additional file 4.
+genotypes is included in Supplemental file 3 and averaged 98.3\% among retained
+lines (Supplemental Figure S1). The phenotypic data used in this study can be found in Supplemental file 4.
 
 \subsection*{GWAS analyses}
 
@@ -408,7 +408,7 @@ region was simply delimited by the two most significant associations.
 Because previous studies \citep{bandillo2015, bandillo2017} used assembly version 1 of
 Williams82, we converted the genomic coordinates of their signals to assembly version 4
 using the same method that we used for converting
-SoySNP50K positions (see Additional file 1). For the analysis of
+SoySNP50K positions (see Supplemental file 1). For the analysis of
 qualitative traits, we only compared our results to signals at named classical
 loci and ignored previously reported minor signals with \emph{p}-values that
 just barely made it above the significance threshold.
@@ -482,8 +482,8 @@ Since two or three different GWAS analyses were conducted for some of the
 traits, a total of 22 GWAS analyses were performed using each of the three
 approaches.  Given the large volume of data that this represents, we focus here
 on the most noteworthy results. Readers interested in results at loci that are
-not discussed here are referred to Additional file 1. In particular, Table
-S11 (Additional file 1) provides a summary of the
+not discussed here are referred to Supplemental file 1. In particular, Supplemental Table
+S11 provides a summary of the
 \textit{p}-values obtained by each approach at each of the loci considered in
 this study.
 
@@ -502,23 +502,23 @@ Glyma.13g\-072100 as associated with the \textit{W1} locus for flower color. In
 Williams82 and other accessions with white flowers, a 65-bp insertion into the
 third exon of the gene results in a premature stop codon that renders the
 F3’5’H enzyme non-functional and prevents pigmentation of the flower. All
-GWAS approaches detected a signal overlapping the gene at this locus (Additional file 1: Figures
+GWAS approaches detected a signal overlapping the gene at this locus (Supplemental Figures
 S2 and S3). The most
 significant SV and \textit{k}-mers corresponded to the known causal variant
-(Figure \ref{flower-color-main-figure}a-b and Additional file 1: S4c-d).
+(Figure \ref{flower-color-main-figure}a-b and Supplemental Figure S4c-d).
 In particular, the assembly of the reads containing the most significant \textit{k}-mers
 and the alignment of the resulting haplotypes showed that these \textit{k}-mers
 directly tagged the causal variant (Figure \ref{flower-color-main-figure}c-e).
 As the catalogue of variants analyzed by Platypus contains only SNPs and small
 indels, the causal variant could not be captured by this approach. Still, SNPs
 and indels located within the gene sequence were among the most significantly
-associated ones (Additional file 1: Figure S4b).
+associated ones (Supplemental Figure S4b).
 
 The \textit{k}-mer GWAS analysis also identified presumably spurious significant
-\textit{k}-mers scattered throughout the genome (Additional file 1: Figure
+\textit{k}-mers scattered throughout the genome (Supplemental Figure
 S2c). An analysis of the pairwise LD between a subset
 of those \textit{k}-mers showed that most \textit{k}-mers formed a single LD block
-linked to the \textit{W1} locus (Additional file 1: Figure S5). A small LD block
+linked to the \textit{W1} locus (Supplemental Figure S5). A small LD block
 occurred on chromosome Gm09, however it was in moderate LD with the one on chromosome
 Gm13 and therefore probably does not represent a separate locus.
 
@@ -540,22 +540,22 @@ concordance rate was below 90\%.
 Zabala and Vodkin \cite{zabala2003} identified Glyma.06g202300 as the gene associated with the
 \textit{T} locus for pubescence color and found a 1-bp deletion as a putative
 causal variant at this locus. For all three GWAS approaches, we found a signal
-overlapping this gene (Additional file 1: Figure S6). In
+overlapping this gene (Supplemental Figure S6). In
 particular, the regions defined by the 1\% most associated variants
 identified by the SNP- and \textit{k}-mer-based approaches included
-Glyma.06g202300 (Additional file 1: Figure S7). While the most
+Glyma.06g202300 (Supplemental Figure S7). While the most
 significant \textit{k}-mers did occur within the sequence of this gene, they
-did not correspond to the documented causal variant (Additional file 1: Figure
+did not correspond to the documented causal variant (Supplemental Figure
 S8d).  Still, the fourth and fifth most strongly
-associated \textit{k}-mers corresponded to this causal variant (Additional file 1: Figures
+associated \textit{k}-mers corresponded to this causal variant (Supplemental Figures
 S8d and S9). We
 observed that not all accessions with gray pubescence harbored the deleted
-nucleotide (Additional file 1: Figure S9c), which could indicate
+nucleotide (Supplemental Figure S9c), which could indicate
 either that other causal variants are resulting in a non-functional F3’H in
 this population, or that the causal variant lies elsewhere. As for SNP-based GWAS,
 the most significant variant within the sequence of Glyma.06g202300 was the
 causal variant, however it was not the most significantly associated variant
-overall (Additional file 1: Figures S7b and
+overall (Supplemental Figures S7b and
 S8b). SV-based GWAS did not detect the causal variant
 at this locus, as expected from its size.
 
@@ -567,11 +567,11 @@ and light tawny pubescence because the \textit{Td} locus is known to control
 these differences in color. Accordingly, we detected signals in this region
 using all three approaches, but only SNP- and \textit{k}-mer-based GWAS
 identified a signal that overlapped Glyma.03g258700 (Figure
-\ref{pubescence-color-main-figure}a-b, and Additional file 1: Figures S10 and
+\ref{pubescence-color-main-figure}a-b, and Supplemental Figures S10 and
 S11).  While the most significant
 \textit{k}-mer identified the causal variant documented at this locus
 \citep{yan2020}, it was the fourth most significantly associated variant for
-the SNP-based approach (Figure \ref{pubescence-color-main-figure}b-d, Additional file 1: Figure 
+the SNP-based approach (Figure \ref{pubescence-color-main-figure}b-d, Supplemental Figure 
 S12).  Interestingly, some of the accessions
 bearing the haplotype associated with tawny pubescence displayed light tawny
 pubescence, suggesting that there may be more than one causal variant at this
@@ -586,7 +586,7 @@ synthase (CHS) genes \citep[CHS1, CHS3 and CHS4;][]{tuteja2008}. The presence of
 this inverted duplication results in the silencing of all CHS genes in the seed
 coat specifically and thus in the absence of seed coat pigmentation
 \citep{tuteja2009}. While we did find signals overlapping this causal variant
-using all three GWAS approaches (Additional file 1: Figures S13 and
+using all three GWAS approaches (Supplemental Figures S13 and
 S14), none of the approaches identified
 it. This failure to detect the causal variant is likely due
 to its complexity, which makes it difficult to detect and genotype it. While it
@@ -599,13 +599,13 @@ linking \textit{k}-mers to sequence variation hindered our ability to do so.
 We conducted a second GWAS analysis contrasting accessions with yellow and
 green seed coats in order to target the \textit{G} locus. Accordingly, this
 analysis found strong signals overlapping the \emph{G} locus using all three
-approaches (Additional file 1: Figure S15).
+approaches (Supplemental Figure S15).
 Wang et al. \cite{wang2018} identified Glyma.01g198500 as the gene associated with
 this locus and found an A>G SNP affecting transcript splicing as the causal
 variant. Consistently with their results, we identified the two
 most significant \emph{k}-mers and the second most significant marker from the
 SNP-based analysis as corresponding to that causal variant (Figure
-\ref{seed-coat-color-main-figure} and Additional file 1: Figures
+\ref{seed-coat-color-main-figure} and Supplemental Figures
 S16 and
 S17). Unsurprisingly, SV-based GWAS
 did not identify the causal variant given its type.
@@ -615,19 +615,19 @@ did not identify the causal variant given its type.
 While all GWAS approaches found signals near the Glyma.19g194300 gene
 associated with the \textit{Dt1} locus for stem termination type, the SNP- and
 \textit{k}-mer-based analyses performed best since the region defined by their
-most highly associated markers (top 1\%) included the causal gene (Additional file 1: Figures
+most highly associated markers (top 1\%) included the causal gene (Supplemental Figures
 S18 and S19).
 We did identify one of the SNPs suggested as putative causal variants for this
 locus by Tian et al. \cite{tian2010} and Liu et al. \cite{liu2010}, however this SNP was only the
 135\textsuperscript{th} most associated marker found by Platypus and the
-12\textsuperscript{th} most associated \emph{k}-mer (Additional file 1: Figures
+12\textsuperscript{th} most associated \emph{k}-mer (Supplemental Figures
 S20 and S21).
 Our results are consistent with previous findings in suggesting that there is
 more than one causal variant at the \textit{Dt1} locus \citep{liu2010,
 tian2010}. Indeed, a few cultivars bearing the allele associated with
 \emph{dt1} showed indeterminate or semi-determinate phenotypes and some
 cultivars showed a determinate phenotype without bearing the allele associated
-with \emph{dt1} (Additional file 1: Figure S21c). The existence of
+with \emph{dt1} (Supplemental Figure S21c). The existence of
 several causal variants might explain why our analyses did not identify a
 causal variant more clearly.
 
@@ -637,13 +637,13 @@ We conducted a GWAS analysis that only compared accessions with black and brown
 hila in an attempt to detect stronger signals at the \textit{R} locus.  We
 accordingly detected a signal overlapping this locus using all approaches, but
 only SNP- and \textit{k}-mer-based GWAS detected signals overlapping the
-Glyma.09g235100 gene associated with \textit{R} (Additional file 1: Figures
+Glyma.09g235100 gene associated with \textit{R} (Supplemental Figures
 S22 and S23).
 Gillman et al. \cite{gillman2011} identified this R2R3 MYB transcription factor as the
 molecular basis for the \textit{R} locus and documented four different
 loss-of-function alleles linked to brown hilum color. Although our analyses did
 detect strong signals in the vicinity of this gene, the most associated markers
-were not located in the body of the gene (Additional file 1: Figure
+were not located in the body of the gene (Supplemental Figure
 S23).  Interestingly, the most significantly
 associated \emph{k}-mers detected by our analysis mapped 2 kb upstream of
 another gene (Glyma.09g234900) annotated as a MYB transcription factor and
@@ -656,7 +656,7 @@ Glyma.09g235100 is indeed the gene associated with the \emph{R} locus and that
 our failure to identify the most significantly associated \emph{k}-mers as
 causal variants is due to the coexistence of several variants that can cause
 loss of function at the \emph{R} locus.  Still, we observed two causal variants
-previously documented by Gillman et al. \cite{gillman2011} in our dataset (Additional file 1: Figures
+previously documented by Gillman et al. \cite{gillman2011} in our dataset (Supplemental Figures
 S24 and S25). 
 
 \subsubsection*{Pubescence density -- \textit{Ps} locus}
@@ -664,7 +664,7 @@ S24 and S25).
 We conducted a GWAS analysis comparing accessions with normal and semi-sparse
 pubes\-cence in order to detect loci associated with pubescence density. This analysis
 detected signals at the \textit{Ps} locus using all three approaches (Figure
-\ref{pubescence-density-main-figure}a-b and Additional file 1: Figures S26, S27
+\ref{pubescence-density-main-figure}a-b and Supplemental Figures S26, S27
 and S28). The causal
 variant at this recently cloned locus is a copy number variant (CNV) overlapping the
 Glyma.12g187200 gene, with higher copy number resulting in reduced pubescence \citep{liu2020ps}.
@@ -702,10 +702,10 @@ Using a sequencing depth-based analysis, we identified a 31-kb region spanning
 positions 9,386,109-9,417,431 on chromosome Gm15 that exhibited variation in
 copy number across accessions. This CNV overlapped four genes annotated as
 containing HPS domains and therefore likely represented the causal variant
-(Additional file 1: Figures S29 and
+(Supplemental Figures S29 and
 S30).  We found signals overlapping this
 CNV using all approaches, and the most significantly associated \textit{k}-mer
-was notably located within the CNV region (Additional file 1: Figures
+was notably located within the CNV region (Supplemental Figures
 S29 and
 S31). However, we were not able to
 directly link any of the variants or \textit{k}-mers identified to the causal
@@ -725,7 +725,7 @@ corresponding to \textit{L1} based on fine mapping and expression analysis, our
 results as well as those reported by Bandillo et al. \cite{bandillo2017} do not support this
 gene as a candidate due to its location $\sim$3 Mb away from GWAS signals. Our
 analyses based on \textit{k}-mers and SNPs found signals overlapping 14 and
-6 genes, respectively (Additional file 1: S32 and
+6 genes, respectively (Supplemental figures S32 and
 S33). Of these, a MATE transporter (Glyma.19g120300)
 appears as a prime candidate as the most significant \emph{k}-mer was observed
 within its sequence and it is highly expressed in pods according to data hosted
@@ -733,7 +733,7 @@ on SoyBase \citep{grant2010, severin2010}. Moreover, the role of some MATE
 proteins in transporting flavonoids has been demonstrated \citep{chen2015}.
 
 The signals found by SNP- and \emph{k}-mer-based analyses at the \textit{L2}
-locus overlap 24 and 50 genes, respectively (Additional file 1: Figures
+locus overlap 24 and 50 genes, respectively (Supplemental Figures
 S32 and S34). Despite this
 somewhat high number, we noticed that the closest gene to the most significant
 \emph{k}-mer (Glyma.03g005800) is also a MATE transporter, similarly to our top
@@ -749,22 +749,22 @@ has suggested Glyma.12g213900 as a candidate for \textit{Pa1} based on data
 published by Bandillo et al. \cite{bandillo2017}. This gene encodes a MYB transcription factor
 annotated as playing a role in trichome branching. Indeed, the most significant
 signals found by all three approaches were located near this gene (Figure
-\ref{pubescence-form-main-figure}a-b, and Additional file 1: Figures S35 and
+\ref{pubescence-form-main-figure}a-b, and Supplemental Figures S35 and
 S36).  The analyses based on SNPs and
 \emph{k}-mers identified two highly significant non-synonymous SNPs in
 Glyma.12g213900 that were associated with appressed pubescence (Figure
-\ref{pubescence-form-main-figure}c-d and Additional file 1: Figures S37 and
+\ref{pubescence-form-main-figure}c-d and Supplemental Figures S37 and
 S38). The alternative alleles for these two
 SNPs co-occurred together in our dataset and may represent causal variants at
 the \emph{Pa1} locus. The signals observed at the \emph{Pa2} locus were much
 weaker and the signal observed from the \emph{k}-mer GWAS overlapped a total of
-20 genes (Additional file 1: Figures S35 and
+20 genes (Supplemental Figures S35 and
 S39), none of which appeared obviously linked
 to pubescence form.
 
 A second GWAS analysis focused only on appressed and semi-appressed phenotypes
 with the objective of enhancing the signal at the \emph{Pa2} locus. However,
-this analysis only detected weak signals at the \emph{Pa1} locus (Additional file 1: Figure
+this analysis only detected weak signals at the \emph{Pa1} locus (Supplemental Figure
 S40) and its results were therefore not
 analyzed further.
 
@@ -773,19 +773,19 @@ analyzed further.
 We used corrected dry weight (CDW) as described by de Ronne et al. \cite{deronne2022} as a
 measure of horizontal resistance to \emph{P. sojae}. We found a strong signal
 overlapping the genomic region reported by these authors on Gm15 using all three GWAS
-approaches (Additional file 1: Figure S41). de Ronne et al. \cite{deronne2022}
+approaches (Supplemental Figure S41). de Ronne et al. \cite{deronne2022}
 proposed Glyma.15g217100 as a candidate gene for explaining phenotypic
 variation at that locus based on a combination of functional annotation and
 contrasting gene expression in resistant and susceptible lines four days after
 inoculation. Although the signals found by our analyses did overlap
 Glyma.15g217100, we found that this gene was located at the distal end of the signal
 in a region with markers or \emph{k}-mers showing a weaker
-association (Additional file 1: Figure S42). The
+association (Supplemental Figure S42). The
 large size of the observed signal means that the gene associated with the phenotype could
 be located almost anywhere in this region. However, we identified a particularly
 interesting region defined by the top 1\% associations in the SNP-based
 analysis. This region overlaps only three annotated genes and also contains the
-most significant \emph{k}-mer (Additional file 1: Figure
+most significant \emph{k}-mer (Supplemental Figure
 S42). One of the genes in this region is
 a calcium ion binding protein with an EF-hand domain (Glyma.15g217700).
 Given the important role played by calcium signaling in defense
@@ -804,12 +804,12 @@ significant \textit{k}-mers found no LD between these signals, suggesting that
 they may represent \textit{bona fide} loci associated with stem termination
 type (Figure \ref{stem-termination-main-figure}b). Similarly, a \textit{k}-mer
 GWAS analysis comparing accessions with black and brown pods found a previously
-undocumented signal on chromosome Gm15 (Additional file 1: Figure S43).
+undocumented signal on chromosome Gm15 (Supplemental Figure S43).
 \textit{k}-mers at this new locus
 showed no LD with \textit{k}-mers at the known \textit{L1} locus and may
-therefore represent a distinct locus (Additional file 1: Figure 
+therefore represent a distinct locus (Supplemental Figure 
 S44). The observed signal overlaps a total of 27 genes
-(Additional file 1: Figure S45), but none of those are annotated
+(Supplemental Figure S45), but none of those are annotated
 as having an obvious role in controlling pod color.
 
 \subsection*{Potential of \emph{k}-mer-based GWAS}
@@ -985,22 +985,22 @@ developing state-of-the-art methods for the downstream analysis of significant
 methods to count-based methods.
 
 
-\section*{Additional Files}
+\section*{Supplemental Files}
 
-\subsection*{Additional file 1 --- Additional file 1.pdf}
+\subsection*{Supplemental file 1 --- Supplemental file 1.pdf}
 Supplemental methods and results,
-including Tables S1 to S11
-and Figures S1 to S60 (PDF 12.9 MB)
+including Supplemental Tables S1 to S11
+and Supplemental Figures S1 to S60 (PDF 12.9 MB)
 
-\subsection*{Additional file 2 --- Additional file 2.csv}
+\subsection*{Supplemental file 2 --- Supplemental file 2.csv}
 Metadata on the sequencing runs retrieved
 from the Sequence Read Archive (SRA) (CSV 71 KB)
 
-\subsection*{Additional file 3 --- Additional file 3.csv}
+\subsection*{Supplemental file 3 --- Supplemental file 3.csv}
 Metadata on individual accessions following mapping
 and comparison to SoySNP50K data (CSV 36KB)
 
-\subsection*{Additional file 4 --- Additional file 4.csv}
+\subsection*{Supplemental file 4 --- Supplemental file 4.csv}
 Phenotypic dataset used for GWAS analyses (CSV 135 KB)
 
 \section*{Acknowledgements}%% if any
@@ -1051,7 +1051,7 @@ WGS: Whole-genome (re)sequencing
 Some of the datasets generated as part of this work are available on figshare
 \citep{kmer-gwas-figshare}.
 
-The Illumina sequencing data used for the analyses are listed in Additional file 2
+The Illumina sequencing data used for the analyses are listed in Supplemental file 2
 and available through NCBI BioProjects PRJNA257011 \cite{PRJNA257011}, PRJNA289660 \cite{PRJNA289660}
 and PRJNA639876 \cite{PRJNA639876}.
 
@@ -1314,7 +1314,7 @@ All authors have revised the manuscript and approved its submission.
 		\begin{tablenotes}
 		\item[a] SNPs and indels genotyped by Platypus
 		\item[b] SVs genotyped by Paragraph
-		\item[c] Locus not discussed in main text. See Additional file 1 for detailed results.
+		\item[c] Locus not discussed in main text. See Supplemental file 1 for detailed results.
 		\item[]- The approach detected no signal overlapping the gene.
 		\item[]* The signal found at this locus overlaps the gene.
 		\item[]** The region defined by the top 5\% (SVs) or 1\% (SNPs and \textit{k}-mers) variants overlaps the gene.
