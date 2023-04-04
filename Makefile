@@ -66,6 +66,7 @@ phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo g
 # The first target of the Makefile
 # It generates the manuscript as well as the supplementary files, and data for interpretation
 all: $(SDIR)/manuscript.pdf \
+	$(SDIR)/additional_file_1.pdf \
 	$(genetables) $(phenodata) \
 	$(SDIR)/supplemental_file_2.csv \
 	$(SDIR)/supplemental_file_3.csv \
@@ -96,17 +97,20 @@ $(foreach prog,platypus paragraph kmers,$(eval .PRECIOUS : gwas_results/$(prog)/
 
 .PRECIOUS : $(topgranges)
 
-# Compiling the manuscript and additional file 1 (in 1 pdf)
+# Compiling the manuscript
 $(SDIR)/manuscript.pdf: $(SDIR)/manuscript.tex \
-	$(SDIR)/main_text.tex \
-	$(SDIR)/additional_file_1.tex \
-	$(supfigures) \
-	$(suptables) \
 	$(mainfigures) \
 	$(maintables) \
+	additional_files/references.bib
+	cd $(SDIR) ; $(PDFLATEX) manuscript.tex ; $(BIBTEX) manuscript ; $(PDFLATEX) manuscript.tex ; $(PDFLATEX) manuscript.tex
+
+# Compiling Additional file 1
+$(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex \
+	$(supfigures) \
+	$(suptables) \
 	additional_files/references.bib \
 	$(SDIR)/variables.txt
-	cd $(SDIR) ; $(PDFLATEX) manuscript.tex ; $(BIBTEX) manuscript ; $(PDFLATEX) manuscript.tex ; $(PDFLATEX) manuscript.tex
+	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
 
 # Creating the list of variables stored in additional_files/variables.txt, for retrival in additional file 1
 $(SDIR)/variables.txt: $(SDIR)/make_variables.R \
