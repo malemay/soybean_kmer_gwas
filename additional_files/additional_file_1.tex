@@ -600,6 +600,16 @@ a clear limitation to this GWAS given our relatively small sample size.
 
 \clearpage
 
+\gwastableone{FLOWER.COLOR}{flower color}
+\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
+\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
+\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
+\gwastablethree{HILUM.COLOR}{hilum color}
+\gwastabletwo{POD.COLOR}{pod color}
+\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
+\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
+\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
+\gwastableone{MATURITY.GROUP}{maturity group}
 
 % Table with all signals
 \begin{landscape} \footnotesize
@@ -657,23 +667,23 @@ a clear limitation to this GWAS given our relatively small sample size.
 \end{landscape}
 \clearpage
 
-\gwastableone{FLOWER.COLOR}{flower color}
-\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
-\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
-\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
-\gwastablethree{HILUM.COLOR}{hilum color}
-\gwastabletwo{POD.COLOR}{pod color}
-\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
-\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
-\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
-\gwastableone{MATURITY.GROUP}{maturity group}
-
 
 % Supplemental figures
 \section*{Supplemental figures}
 \label{annexe-sv-gwas-figures}
 
 % Figures mentioned in the main text
+
+% Histogram with concordance rates
+\begin{cfigure}
+	\includegraphics[width = 6in]{concordance_histogram}
+	\caption{Histogram of concordance rates between genotypes derived from WGS data and SoySNP50K genotypes for 385 soybean accessions.
+	The vertical line indicates the 0.9 concordance threshold that was used for filtering out mismatching samples.}
+	\label{concordance-histogram}
+\end{cfigure}
+
+\clearpage
+
 % Figures for flower color
 \manhattanplot{flower_color}{flower color}{\getvar{flower_color_nsamples}}
 \signalplot{flower_color_W1}{flower color}{\emph{W1}}%
@@ -769,17 +779,6 @@ The shaded gray rectangles show the boundaries of the causal CNV.}
 \signalplot{pod_color_blbr_pdcGm15}{pod color (second GWAS)}{newly suggested \emph{pdcGm15}}{}
 
 % Figures mentioned only in supplemental data
-
-% Histogram with concordance rates
-\begin{cfigure}
-	\includegraphics[width = 6in]{concordance_histogram}
-	\caption{Histogram of concordance rates between genotypes derived from WGS data and SoySNP50K genotypes for 385 soybean accessions.
-	The vertical line indicates the 0.9 concordance threshold that was used for filtering out mismatching samples.}
-	\label{concordance-histogram}
-
-\end{cfigure}
-
-\clearpage
 
 % Flower color
 
