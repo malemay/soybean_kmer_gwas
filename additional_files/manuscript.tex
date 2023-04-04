@@ -3,7 +3,7 @@
 %%% Load packages
 \usepackage{amsthm,amsmath}
 \RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
-\RequirePackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
 
 % Packages added by M-A Lemay
@@ -21,13 +21,13 @@
 \usepackage{setspace}
 \doublespacing
 
-\title{k-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean}
+\title{\textit{k}-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean}
 \date{}
 
 \author{Marc-André Lemay\textsuperscript{1,2,3} \and
 Maxime de Ronne\textsuperscript{1,2,3} \and
 Richard Bélanger\textsuperscript{1,2,3} \and
-François Belzile\textsuperscript{1,2,3}}
+François Belzile\textsuperscript{1,2,3,*}}
 
 %%% Begin ...
 \begin{document}
@@ -40,6 +40,42 @@ François Belzile\textsuperscript{1,2,3}}
 
 \textsuperscript{3} Centre de recherche et d’innovation sur les végétaux, Université Laval, Québec, QC, Canada
 
+\textsuperscript{*} Corresponding author: francois.belzile@fsaa.ulaval.ca
+
+\clearpage
+
+\section*{Core ideas}
+
+\begin{itemize}
+	\item We compared SNP-, SV- and \textit{k}-mer-based GWAS approaches
+		on 13 traits using a population of 363 cultivated soybean lines.
+	\item \textit{k}-mer-based GWAS performed better than the other two approaches
+		at pinpointing causal variants and genes.
+	\item We developed computational tools to facilitate the downstream analysis
+		of \textit{k}-mer-based GWAS.
+	\item Performing SV-based GWAS in soybean may not be worth the investment
+		of time and computational resources.
+\end{itemize}
+
+\section*{Abbreviations}
+BAM, Binary alignment map format;
+CDW, corrected dry weight;
+CHS, chalcone synthase;
+CNV, copy number variant, copy number variation;
+GRIN, Germplasm Resources Information Network;
+GWAS, Genome-wide association study;
+HPS, Hydrophobic protein from soybean;
+LD, Linkage disequilibrium;
+MAF, Minor allele frequency;
+MATE, Multidrug and toxic compound extrusion;
+MLM, Mixed linear model;
+NCBI, National Center for Biotechnology Information;
+SNP, Single-nucleotide polymorphism;
+SRA, Sequence Read Archive;
+SV, Structural variant, structural variation;
+VCF, Variant call format;
+WGS, Whole-genome (re)sequencing
+
 \section*{Abstract}
 
 Genome-wide association studies (GWAS) are powerful statistical methods that
@@ -48,7 +84,6 @@ their power, GWAS frequently fail to pinpoint the causal variant or the gene
 controlling a given trait in crop species. Assessing genetic
 variants beyond single-nucleotide polymorphisms (SNPs) could alleviate this
 problem, for example by including structural variants (SVs).
-
 In this study, we tested the potential of SV- and \emph{k}-mer-based GWAS in
 soybean by applying these methods to 13 traits.  We also performed
 conventional GWAS analysis based on SNPs and small indels.  We assessed the performance of each GWAS approach based on
@@ -62,7 +97,6 @@ form, and resistance to \textit{Phytophthora sojae}. In
 our dataset, SV-based GWAS did not add value compared to
 \textit{k}-mer-based GWAS and may not be worth the time and
 computational resources required to genotype SVs at population scale.
-
 Despite promising results, significant challenges remain regarding the
 downstream analysis of \emph{k}-mer-based GWAS.  Notably, better
 methods are needed to associate significant \emph{k}-mers with sequence
@@ -70,13 +104,7 @@ variation. Together, our results suggest that coupling \emph{k}-mer-
 and SNP/indel-based GWAS is a powerful approach for discovering
 candidate genes in crop species.
 
-\section*{Keywords}
-Genome-wide association studies
-\textit{k}-mer GWAS
-Soybean genomics
-Crop genomics
-\textit{Phytophthora sojae}
-Structural variation
+\clearpage
 
 \section*{Background}
 Genome-wide association studies (GWAS) are analytical approaches that detect
@@ -167,6 +195,8 @@ the performance of GWAS methods.  The objectives of our study were to:
 		of significantly associated \emph{k}-mers once these have been
 		identified.
 \end{enumerate}
+
+\clearpage
 
 \section*{Methods}
 
@@ -466,6 +496,8 @@ packages Biostrings v. 2.64.0 \citep{pages2022}, GenomicRanges v. 1.48.0
 \citep{obenchain2014}.  We gathered several functions used for the downstream
 analysis of GWAS results into a package called gwask which is available on
 GitHub (\url{https://github.com/malemay/gwask}).
+
+\clearpage
 
 \section*{Results and discussion}
 
@@ -1148,6 +1180,8 @@ using SVs for GWAS analyses \citep[e.g.][]{zhang2015, akakpo2020,
 dominguez2020}, however it would be worthwhile to see whether these results
 could be replicated using \emph{k}-mer-based GWAS.
 
+\clearpage
+
 \section*{Conclusions}
 
 In conclusion, we used SV-based and \emph{k}-mer-based GWAS to study ten
@@ -1171,26 +1205,9 @@ developing state-of-the-art methods for the downstream analysis of significant
 \emph{k}-mers to sequence variation and moving from presence/absence-based
 methods to count-based methods.
 
+\clearpage
 
-\section*{Supplemental Files}
-
-\subsection*{Supplemental file 1 --- Supplemental file 1.pdf}
-Supplemental methods and results,
-including Supplemental Tables S1 to S11
-and Supplemental Figures S1 to S60 (PDF 12.9 MB)
-
-\subsection*{Supplemental file 2 --- Supplemental file 2.csv}
-Metadata on the sequencing runs retrieved
-from the Sequence Read Archive (SRA) (CSV 71 KB)
-
-\subsection*{Supplemental file 3 --- Supplemental file 3.csv}
-Metadata on individual accessions following mapping
-and comparison to SoySNP50K data (CSV 36KB)
-
-\subsection*{Supplemental file 4 --- Supplemental file 4.csv}
-Phenotypic dataset used for GWAS analyses (CSV 135 KB)
-
-\section*{Acknowledgements}%% if any
+\section*{Acknowledgments}
 
 We would like to thank Jonas A. Sibbesen for providing very helpful comments
 on the methodology used and on a previous version of this manuscript.
@@ -1199,39 +1216,33 @@ analysis as well as Brian Boyle and Martine Jean for valuable comments
 regarding the methodology. We are thankful to the Digital Research Alliance of
 Canada for using their high-performance computing servers.
 
-\section*{Funding}%% if any
+\section*{Conflict of interest}
+The authors declare no conflict of interest.
 
-This work was supported by the SoyaGen grant (\url{https://www.soyagen.ca})
-awarded to F. Belzile and R. Bélanger, and funded by Génome Québec, Genome
-Canada, the government of Canada, the Ministère de l'Économie, Science et
-Innovation du Québec, Semences Prograin Inc., Syngenta Canada Inc., Sevita
-Genetics, Coop Fédérée, Grain Farmers of Ontario, Saskatchewan Pulse Growers,
-Manitoba Pulse \& Soybean Growers, the Canadian Field Crop Research Alliance
-and Producteurs de grains du Québec. M-A. Lemay has been supported by a NSERC
-Canada Vanier Graduate Scholarship, a FRQNT doctoral B2X scholarship, a NSERC
-Michael Smith Foreign Study Supplement, and a scholarship from the
-AgroPhytoSciences NSERC CREATE Training Program. None of the funding bodies
-were involved in study design, data acquisition, data analysis, interpretation
-of the results, or manuscript writing.
+\section*{ORCID}
 
-\section*{Abbreviations}%% if any
-BAM: Binary alignment map format;
-CDW: corrected dry weight;
-CHS: chalcone synthase;
-CNV: copy number variant, copy number variation;
-GRIN: Germplasm Resources Information Network;
-GWAS: Genome-wide association study;
-HPS: Hydrophobic protein from soybean;
-LD: Linkage disequilibrium;
-MAF: Minor allele frequency;
-MATE: Multidrug and toxic compound extrusion;
-MLM: Mixed linear model;
-NCBI: National Center for Biotechnology Information;
-SNP: Single-nucleotide polymorphism;
-SRA: Sequence Read Archive;
-SV: Structural variant, structural variation;
-VCF: Variant call format;
-WGS: Whole-genome (re)sequencing
+\begin{description}
+	\item[Marc-André Lemay] \url{https://orcid.org/0000-0003-2484-8447}
+	\item[Maxime de Ronne] \url{https://orcid.org/0000-0003-4062-3512}
+	\item[Richard Bélanger] \url{https://orcid.org/0000-0001-8549-975X}
+	\item[François Belzile] \url{https://orcid.org/0000-0001-6893-4529}
+\end{description}
+
+\section*{Supplemental material}
+
+\begin{description}
+	\item[Supplemental file 1.pdf] Supplemental methods and results, including
+		Supplemental Tables S1 to S11 and Supplemental Figures S1 to
+		S60.
+
+	\item[Supplemental file 2.csv] Metadata on the sequencing runs retrieved
+		from the Sequence Read Archive (SRA).
+
+	\item[Supplemental file 3.csv] Metadata on individual accessions following
+		mapping and comparison to SoySNP50K data.
+
+	\item[Supplemental file 4.csv] Phenotypic dataset used for GWAS analyses.
+\end{description}
 
 \section*{Availability of data and materials}
 
@@ -1277,30 +1288,45 @@ The following software used in this work is available on GitHub:
 The code associated with the results presented in this manuscript is archived
 on figshare \citep{kmer-gwas-code}.
 
-\section*{Ethics approval and consent to participate}%% if any
-Not applicable.
+\section*{Funding}%% if any
 
-\section*{Competing interests}
-The authors declare that they have no competing interests.
+This work was supported by the SoyaGen grant (\url{https://www.soyagen.ca})
+awarded to F. Belzile and R. Bélanger, and funded by Génome Québec, Genome
+Canada, the government of Canada, the Ministère de l'Économie, Science et
+Innovation du Québec, Semences Prograin Inc., Syngenta Canada Inc., Sevita
+Genetics, Coop Fédérée, Grain Farmers of Ontario, Saskatchewan Pulse Growers,
+Manitoba Pulse \& Soybean Growers, the Canadian Field Crop Research Alliance
+and Producteurs de grains du Québec. M-A. Lemay has been supported by a NSERC
+Canada Vanier Graduate Scholarship, a FRQNT doctoral B2X scholarship, a NSERC
+Michael Smith Foreign Study Supplement, and a scholarship from the
+AgroPhytoSciences NSERC CREATE Training Program. None of the funding bodies
+were involved in study design, data acquisition, data analysis, interpretation
+of the results, or manuscript writing.
 
-\section*{Consent for publication}%% if any
-Not applicable.
-
-\section*{Authors' contributions}
-Conception and design of the study: MAL, MDR, RB, FB.
-Phenotypic data acquisition (resistance to \textit{Phytophthora sojae}): MDR, RB.
-Data analysis: MAL.
+\section*{Author contributions}
+Conceptualization: MAL, MDR, RB, FB.
+Data curation: MAL, MDR.
+Methodology: MAL, FB.
+Investigation: MAL, MDR.
+Formal analysis: MAL.
+Funding acquisition: RB, FB.
 Data interpretation: MAL, FB.
-Software writing: MAL.
-Manuscript drafting: MAL, FB.
-All authors have revised the manuscript and approved its submission.
+Software: MAL.
+Supervision: RB, FB.
+Visualization: MAL.
+Writing -- original draft: MAL, FB.
+Writing -- review \& editing: MAL, MDR, RB, FB.
+
+\clearpage
 
 \bibliographystyle{genome_research}
 \bibliography{references}
 
+\clearpage
+
+\section*{Tables}
 
 % Table 1 with results on all loci with cloned genes
-\section*{Tables}
 \begin{landscape}
 \begin{table}
 	\caption[Performance of three GWAS approaches at detecting causal genes/variants]%
