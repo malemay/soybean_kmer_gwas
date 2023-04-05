@@ -13,7 +13,7 @@
 \usepackage{graphicx}
 \usepackage{ccaption}
 \usepackage[margin=1in]{geometry} % leaves more space for text body
-\usepackage[natbibapa]{apacite}
+\usepackage{apacite}
 
 \usepackage{lineno}
 \linenumbers
@@ -106,54 +106,54 @@ GWAS is a powerful approach for discovering candidate genes in crop species.
 Genome-wide association studies (GWAS) are analytical approaches that detect
 statistical associations between phenotypic observations for a trait of
 interest and the genotypes of variants distributed throughout the
-genome \citep{tam2019}. This approach has been used for over 15 years
-\citep{visscher2012} and has enabled significant advances in our understanding
+genome \shortcite{tam2019}. This approach has been used for over 15 years
+\shortcite{visscher2012} and has enabled significant advances in our understanding
 of the genetic architecture of traits involved in human health
-\citep[e.g.][]{wellcome2007gwas} and crop \citep{tibbs2021} and animal
-\citep{ma2019} production, among others.
+\shortcite<e.g.>[]{wellcome2007gwas} and crop \shortcite{tibbs2021} and animal
+\shortcite{ma2019} production, among others.
 
 Despite their power and convenience for finding significantly associated loci,
 GWAS analyses frequently fail to pinpoint the gene(s) associated with a trait and
-the causal variant(s) involved \citep{tam2019}. One possible reason for this
+the causal variant(s) involved \shortcite{tam2019}. One possible reason for this
 is that many GWAS analyses do not include the causal variant itself in their variant dataset
-\citep{tibbs2021}. This could be either because the analysis
+\shortcite{tibbs2021}. This could be either because the analysis
 is restricted to a particular type of variant, such as single-nucleotide
 polymorphisms (SNPs), or because the set of markers/variants genotyped in the
 association panel is limited by the technology being used
-\citep[e.g.][]{bandillo2015, sonah2015}. Despite this limitation, variants
+\shortcite<e.g.>[]{bandillo2015, sonah2015}. Despite this limitation, variants
 located near the gene controlling the trait often do appear statistically
 associated with the phenotype through linkage disequilibrium (LD) with the
-causal variant \citep{korte2013}.  A typical workflow then involves the
+causal variant \shortcite{korte2013}.  A typical workflow then involves the
 identification of candidate genes within the haplotype blocks defined by the
 statistically associated markers and follow-up functional analyses to confirm
-that a given gene controls the trait \citep[e.g.][]{wang2018, liu2020ps}.
+that a given gene controls the trait \shortcite<e.g.>[]{wang2018, liu2020ps}.
 
 The inclusion of structural variants (SVs) as genotype data in GWAS may partly overcome
 this issue by providing a set of variants with a potentially high functional impact.
 SVs include any variant involving a difference of at least 50 nucleotides, such as
-deletions, insertions, or inversions \citep{ho2020}. Such variants are known to
+deletions, insertions, or inversions \shortcite{ho2020}. Such variants are known to
 have large phenotypic impacts by disrupting coding or regulatory sequences
-\citep{marroni2014}, and have been identified as causal variants in traits such
-as resistance to soybean cyst nematode \citep{cook2012}, aluminum tolerance in
-wheat \citep{maron2013}, and branching in maize \citep{studer2011}.  SVs have
+\shortcite{marroni2014}, and have been identified as causal variants in traits such
+as resistance to soybean cyst nematode \shortcite{cook2012}, aluminum tolerance in
+wheat \shortcite{maron2013}, and branching in maize \shortcite{studer2011}.  SVs have
 already been used in GWAS with promising results
-\citep[e.g.][]{zhang2015, akakpo2020, dominguez2020, liu2020-pangenome}, but
+\shortcite<e.g.>[]{zhang2015, akakpo2020, dominguez2020, liu2020-pangenome}, but
 their use in GWAS is the exception rather than the norm.
 
 Despite their phenotypic impact, SVs are still largely understudied compared to
 SNPs because discovering and genotyping them with accuracy is difficult.
 Comprehensive detection of SVs requires a combination of several methods that
 often need to be tailored to the study species and data available
-\citep{alkan2011, ho2020}. Even then, assessments of the performance of SV
+\shortcite{alkan2011, ho2020}. Even then, assessments of the performance of SV
 discovery and genotyping generally reveal subpar sensitivity and precision
-\citep[e.g.][]{cameron2019, chaisson2019, kosugi2019}. Moreover, despite recent
+\shortcite<e.g.>[]{cameron2019, chaisson2019, kosugi2019}. Moreover, despite recent
 improvements in computational approaches for genotyping SVs
-\citep[e.g.][]{siren2021, ebler2022}, such approaches remain relatively
+\shortcite<e.g.>[]{siren2021, ebler2022}, such approaches remain relatively
 inaccurate compared to SNP genotyping workflows.
 
 Alternative approaches that allow one to assess a large spectrum
 of variants in GWAS without genotyping SVs at population scale could be useful.
-\cite{voichek2020} developed a \emph{k}-mer-based GWAS approach that may
+\shortciteA{voichek2020} developed a \emph{k}-mer-based GWAS approach that may
 represent such an alternative method. This approach relies on the presence or
 absence of \emph{k}-mers observed in sequence reads in place of variant genotypes for use in
 GWAS. Once a presence/absence table of \emph{k}-mers has been generated for the
@@ -165,19 +165,19 @@ Another advantage is that \emph{k}-mers are not tied to a specific genomic
 location and can thus be used to query associations between genotype and
 phenotype at genomic locations that are not included in a reference genome.  A
 few studies have applied this \emph{k}-mer-based GWAS approach
-\citep[e.g.][]{tripodi2021, colque2021} and other similar approaches have been
-developed \citep{rahman2018, he2021}, but similarly to the use of SVs in GWAS,
+\shortcite<e.g.>[]{tripodi2021, colque2021} and other similar approaches have been
+developed \shortcite{rahman2018, he2021}, but similarly to the use of SVs in GWAS,
 such approaches have not been widely adopted yet.
 
 In this study, we assessed the potential of SV- and \emph{k}-mer-based GWAS in
 a major crop, soybean (\emph{Glycine max}). We also conducted conventional GWAS
 based on SNPs and indels. In order to test these methods, we analyzed ten
-qualitative traits \citep{bandillo2017} and two quantitative traits
-\citep{bandillo2015} that have been previously studied using a SNP array
-developed for soybean \citep{song2013}. In addition, we analyzed a quantitative
+qualitative traits \shortcite{bandillo2017} and two quantitative traits
+\shortcite{bandillo2015} that have been previously studied using a SNP array
+developed for soybean \shortcite{song2013}. In addition, we analyzed a quantitative
 trait (horizontal resistance to \emph{Phytophthora sojae}) that has been
 previously studied using whole-genome sequencing (WGS) data
-\citep{deronne2022}.  Since the underlying genes and causal variants are
+\shortcite{deronne2022}.  Since the underlying genes and causal variants are
 already known for several of these traits, they provide a good test case for
 the performance of GWAS methods.  The objectives of our study were to:
 
@@ -200,8 +200,8 @@ the performance of GWAS methods.  The objectives of our study were to:
 
 We selected 389 inbred \emph{G. max} accessions based on the availability of
 Illumina WGS data and phenotypic data for resistance to the oomycete \emph{P.
-sojae} \citep{deronne2022}.  We identified 741 SRA runs corresponding to
-Illumina paired-end sequencing data for those 389 accessions \citep[data from][]{zhou2015, valliyodan2016, fang2017, bayer2021}
+sojae} \shortcite{deronne2022}.  We identified 741 SRA runs corresponding to
+Illumina paired-end sequencing data for those 389 accessions \shortcite<data from>[]{zhou2015, valliyodan2016, fang2017, bayer2021}
 and extracted paired-end reads using the fastq-dump command v. 2.9.6
 (\citeauthor{sratoolkit}) with the
 option \texttt{-\-split-3}.
@@ -213,13 +213,13 @@ We first filtered the sequencing data for quality and the presence of sequencing
 adapters using bbduk from BBtools v. 38.25
 (\citeauthor{bbtools}). Reads
 were then mapped to the reference assembly version 4 of \emph{G. max}
-cultivar Williams82 \citep{valliyodan2019} concatenated with chloroplast
-and mitochondrion sequences obtained from SoyBase \citep{grant2010}. We used
-bwa-mem v. 0.7.17-r1188 \citep{li2009-bwa} with default parameters to map the
+cultivar Williams82 \shortcite{valliyodan2019} concatenated with chloroplast
+and mitochondrion sequences obtained from SoyBase \shortcite{grant2010}. We used
+bwa-mem v. 0.7.17-r1188 \shortcite{li2009-bwa} with default parameters to map the
 reads in paired-end mode. Reads that were left unpaired following adapter- and
 quality-trimming were aligned separately in single-end mode with bwa-mem and
 merged with mapped paired-end reads using samtools \texttt{merge}
-v. 1.12 \citep{li2009-samtools}.  We then added read groups identifying
+v. 1.12 \shortcite{li2009-samtools}.  We then added read groups identifying
 individual SRA runs to the BAM files and merged the reads belonging to the same
 accession using bamaddrg
 (\citeauthor{bamaddrg}). We used the
@@ -237,22 +237,22 @@ approaches in the SV discovery step to generate a set of candidate variants:
 \begin{itemize}
 	\item We used Illumina WGS data from the 389 accessions mentioned above
 		to call SVs in the population following a pipeline outlined
-		by \cite{lemay2022}. In brief, we combined information from
-		the SV calling programs AsmVar \citep{liu2015}, Manta \citep{chen2016},
-		smoove \citep{pedersen2019} and SvABA \citep{wala2018} to generate
+		by \shortciteA{lemay2022}. In brief, we combined information from
+		the SV calling programs AsmVar \shortcite{liu2015}, Manta \shortcite{chen2016},
+		smoove \shortcite{pedersen2019} and SvABA \shortcite{wala2018} to generate
 		a set of candidate SVs from the mapped Illumina data.
-	\item We used SVs discovered by \cite{lemay2022} from Oxford Nanopore
+	\item We used SVs discovered by \shortciteA{lemay2022} from Oxford Nanopore
 		sequencing data of 17 Canadian soybean cultivars.
 	\item We called SVs from 26 high-quality genome assemblies published by
-		\cite{liu2020-pangenome}, as well as that of the cultivar Zhonghuang 13 (ZH13),
+		\shortciteA{liu2020-pangenome}, as well as that of the cultivar Zhonghuang 13 (ZH13),
 		\textit{G. soja} accession W05, and \textit{G. max} cultivar Lee.
-		We used methods similar to those of \cite{liu2020-pangenome} to call
+		We used methods similar to those of \shortciteA{liu2020-pangenome} to call
 		SVs from the comparison of these assemblies to that of Williams82.
 \end{itemize}
 
 The SVs called using each of these approaches were merged using SVmerge
-\citep{wong2010} and the resulting set of candidate SVs was used for
-genotyping. We used Paragraph \citep{chen2019} to genotype the candidate SVs
+\shortcite{wong2010} and the resulting set of candidate SVs was used for
+genotyping. We used Paragraph \shortcite{chen2019} to genotype the candidate SVs
 from the mapped Illumina reads for all accessions. We filtered the genotyped
 SVs by setting the genotype calls made from less than two reads to missing and
 by removing variants with a minor allele frequency < 0.02 or a proportion of
@@ -262,7 +262,7 @@ found in Supplemental file 1.
 
 \subsection*{Discovery and genotyping of SNPs and indels}
 
-We used Platypus v. 0.8.1.1 \citep{rimmer2014} to call SNPs and indels from the
+We used Platypus v. 0.8.1.1 \shortcite{rimmer2014} to call SNPs and indels from the
 mapped reads of the 389 accessions. The 21.1 M SNPs and
 indels from the raw output of Platypus were filtered to keep only those with:
 
@@ -274,7 +274,7 @@ indels from the raw output of Platypus were filtered to keep only those with:
 \end{enumerate}
 
 Moreover, we pruned the dataset using the \texttt{-\-indep-pairwise} option of
-PLINK v. 1.90b5.3 \citep{purcell2007} with a window of 1,000 markers, a
+PLINK v. 1.90b5.3 \shortcite{purcell2007} with a window of 1,000 markers, a
 step of 100 markers and an $r^2$ LD threshold of 0.9. This pruning step was
 implemented to reduce the computational requirements of the GWAS analysis by
 removing co-segregating markers. Markers located on unanchored scaffolds were
@@ -283,13 +283,13 @@ SNPs and 151,570 indels.
 
 \subsection*{Computing the presence/absence table of \emph{k}-mers}
 
-We used the approach outlined by \cite{voichek2020} for \emph{k}-mer-based GWAS
+We used the approach outlined by \shortciteA{voichek2020} for \emph{k}-mer-based GWAS
 and their recommendations on the
 associated GitHub page (v. 0.2-beta, \url{https://github.com/voichek/kmersGWAS}) to generate
 a presence/absence \emph{k}-mer table for use in GWAS.  The first step of
 the approach involved counting all \emph{k}-mers of length 31 (31-mers) present
 in the trimmed (FASTQ) reads for each accession using KMC3 v. 3.2.1
-\citep{kokot2017}. \emph{k}-mers were counted twice, the first time using their
+\shortcite{kokot2017}. \emph{k}-mers were counted twice, the first time using their
 canonized form (the first of either the observed \textit{k}-mer or its reverse
 complement in lexicographical order) and the second time using the observed
 \emph{k}-mers themselves (non-canonized form). The two sets of \textit{k}-mers
@@ -304,7 +304,7 @@ computation of kinship and GWAS.
 
 \subsection*{Phenotypic data}
 
-We analyzed ten qualitative traits previously studied by \cite{bandillo2017}: flower
+We analyzed ten qualitative traits previously studied by \shortciteA{bandillo2017}: flower
 color, pubescence color, seed coat color, stem termination type, hilum color,
 pod color, pubescence form, pubescence density, seed coat luster, and maturity
 group.  We obtained phenotypic data for these traits from the GRIN database
@@ -313,7 +313,7 @@ using the PI identifiers of the 389 accessions used.  Four out of the 389
 accessions did not match the GRIN database and were therefore not used for the
 analysis of qualitative traits. The phenotypes of qualitative traits were recoded
 to numerical values for GWAS analysis following methods similar to those of
-\cite{bandillo2017}.  For some traits, we conducted more than one GWAS analysis
+\shortciteA{bandillo2017}.  For some traits, we conducted more than one GWAS analysis
 using targeted subsets of the observed phenotypes in order to focus on specific
 loci. The phenotypes and numerical values used for all analyses as well as the
 number of observations in the dataset that we used for GWAS are listed in
@@ -324,9 +324,9 @@ mentioned above. Seed oil and protein content were retrieved from the GRIN
 database. In cases where more than one value was listed for a given accession,
 we computed the average of those values and used it for GWAS analyses. As a third quantitative trait, we
 used the horizontal resistance to the oomycete \textit{P. sojae} (corrected dry
-weight, CDW) as recently assessed in a hydroponic assay \citep{deronne2022}.
+weight, CDW) as recently assessed in a hydroponic assay \shortcite{deronne2022}.
 Our analysis included 340 accessions whose phenotypic data
-was already published by \cite{deronne2022} as well as 49 additional accessions for
+was already published by \shortciteA{deronne2022} as well as 49 additional accessions for
 which sequencing data was not yet available when their study was conducted.
 Because of ambiguity regarding the identity of one of the accessions (HN019), this accession
 was dropped from all GWAS analyses. Similarly to seed oil and
@@ -348,19 +348,19 @@ lines (Supplemental Figure S1). The phenotypic data used in this study can be fo
 
 \subsection*{GWAS analyses}
 
-We used the GAPIT3 R package v. 3.1.0 \citep{wang2021} for conducting GWAS on
+We used the GAPIT3 R package v. 3.1.0 \shortcite{wang2021} for conducting GWAS on
 the SNP/indel and SV datasets described above. SVs and indels required some additional
 preprocessing steps to make variant
-representation suitable for downstream analyses \citep{lemay2022gwas}. Briefly, we recoded all
+representation suitable for downstream analyses \shortcite{lemay2022gwas}. Briefly, we recoded all
 variants as SNPs prior to converting the VCF files to Hapmap diploid format
-using the TASSEL command-line tools \citep{bradbury2007}; variant IDs enabled
+using the TASSEL command-line tools \shortcite{bradbury2007}; variant IDs enabled
 retrieval of the proper metadata for each variant after GWAS.
 
 We ran GAPIT using a mixed linear model (MLM) with 9 principal components and the VanRaden
 algorithm for computing the kinship matrix. We used an MLM model for
 consistency with the statistical model used by the \textit{k}-mer-based
 approach.  We used a randomization approach to determine the 5\% family-wise
-error-rate threshold for each GWAS analysis as described by \cite{voichek2020}.
+error-rate threshold for each GWAS analysis as described by \shortciteA{voichek2020}.
 To compute this threshold, we permuted the phenotypic observations 100 times
 and computed a GWAS on these permuted phenotypes to obtain a distribution of
 top \emph{p}-values under the null hypothesis. The fifth most significant of
@@ -369,10 +369,10 @@ inference, i.e. markers with \emph{p}-values lower than this threshold were
 considered significant.
 
 We conducted GWAS based on \emph{k}-mers using the method developed by
-\cite{voichek2020}. In brief, the
+\shortciteA{voichek2020}. In brief, the
 analysis was conducted in two steps. The first step used an approximate model
 to identify 1 million potentially significant \emph{k}-mers. These were then used in
-the second step as input to an exact model implemented in GEMMA \citep{zhou2012}, resulting
+the second step as input to an exact model implemented in GEMMA \shortcite{zhou2012}, resulting
 in a \emph{p}-value for each \emph{k}-mer. We
 used the kinship computed from the \emph{k}-mers to correct for relatedness
 between accessions. The program automatically outputs a list of \emph{k}-mers
@@ -389,7 +389,7 @@ to significant \emph{k}-mers for a given trait. Because this is a
 computationally demanding operation (there were typically tens of thousands of
 significant \emph{k}-mers per trait), we developed a C program called katcher
 (\url{https://github.com/malemay/katcher}) that
-uses the htslib library \citep{bonfield2021} for efficient reading and
+uses the htslib library \shortcite{bonfield2021} for efficient reading and
 writing of BAM files. katcher and its associated utilities allow for efficient
 retrieval and annotation of mapped reads containing any \emph{k}-mer from a set
 of interest.
@@ -434,7 +434,7 @@ and \emph{k}-mers) found within the signal. In cases where such a fraction
 represented fewer than two markers or \emph{k}-mers, the highly significant
 region was simply delimited by the two most significant associations.
 
-Because previous studies \citep{bandillo2015, bandillo2017} used assembly version 1 of
+Because previous studies \shortcite{bandillo2015, bandillo2017} used assembly version 1 of
 Williams82, we converted the genomic coordinates of their signals to assembly version 4
 using the same method that we used for converting
 SoySNP50K positions (see Supplemental file 1). For the analysis of
@@ -449,11 +449,11 @@ identifying the variants associated with a given set of \emph{k}-mers. In
 addition to the reads themselves, we also retrieved their paired reads even
 though they may not have matched a significant \emph{k}-mer in the first place.
 These read pairs were used for \emph{de novo} assembly with SPAdes v. 3.15.4
-\citep{spades} using the \texttt{--careful} parameter. The assemblies were done
+\shortcite{spades} using the \texttt{--careful} parameter. The assemblies were done
 individually for each accession and then aligned to the Williams82 reference
 assembly using bwa-mem with default parameters.  Aligned assembled sequences
 that overlapped loci of interest were realigned using multiple sequence
-alignment with the MAFFT program v. 7.475 \citep{katoh2002} for identifying and
+alignment with the MAFFT program v. 7.475 \shortcite{katoh2002} for identifying and
 visualizing the haplotypes at these loci. The identification of variants
 supported by significant \textit{k}-mers was based entirely on visual analysis
 of haplotype alignments. We only considered haplotypes occurring at least five
@@ -485,11 +485,11 @@ significant locations.
 \label{sv-gwas-software-used}
 
 Unless otherwise noted, all analyses were conducted using R v. 4.2.0
-\citep{r2022} and Bioconductor v. 3.15 \citep{huber2015}. We used Bioconductor
-packages Biostrings v. 2.64.0 \citep{pages2022}, GenomicRanges v. 1.48.0
-\citep{lawrence2013}, Rsamtools v. 2.12.0 \citep{rsamtools2022}, rtracklayer v.
-1.56.0 \citep{lawrence2009} and VariantAnnotation v. 1.42.1
-\citep{obenchain2014}.  We gathered several functions used for the downstream
+\shortcite{r2022} and Bioconductor v. 3.15 \shortcite{huber2015}. We used Bioconductor
+packages Biostrings v. 2.64.0 \shortcite{pages2022}, GenomicRanges v. 1.48.0
+\shortcite{lawrence2013}, Rsamtools v. 2.12.0 \shortcite{rsamtools2022}, rtracklayer v.
+1.56.0 \shortcite{lawrence2009} and VariantAnnotation v. 1.42.1
+\shortcite{obenchain2014}.  We gathered several functions used for the downstream
 analysis of GWAS results into a package called gwask which is available on
 GitHub (\url{https://github.com/malemay/gwask}).
 
@@ -528,7 +528,7 @@ a summary of the results discussed below.
 
 \subsubsection*{Flower color -- \textit{W1} locus}
 
-\cite{zabala2007} identified the flavonoid 3’5’-hydroxylase (F3’5’H) gene
+\shortciteA{zabala2007} identified the flavonoid 3’5’-hydroxylase (F3’5’H) gene
 Glyma.13g\-072100 as associated with the \textit{W1} locus for flower color. In
 Williams82 and other accessions with white flowers, a 65-bp insertion into the
 third exon of the gene results in a premature stop codon that renders the
@@ -598,7 +598,7 @@ concordance rate was below 90\%.
 
 \subsubsection*{Pubescence color -- \textit{T} locus}
 
-\cite{zabala2003} identified Glyma.06g202300 as the gene associated with the
+\shortciteA{zabala2003} identified Glyma.06g202300 as the gene associated with the
 \textit{T} locus for pubescence color and found a 1-bp deletion as a putative
 causal variant at this locus. For all three GWAS approaches, we found a signal
 overlapping this gene (Supplemental Figure S6). In
@@ -631,7 +631,7 @@ identified a signal that overlapped Glyma.03g258700 (Figure
 \ref{pubescence-color-main-figure}a-b, and Supplemental Figures S10 and
 S11).  While the most significant
 \textit{k}-mer identified the causal variant documented at this locus
-\citep{yan2020}, it was the fourth most significantly associated variant for
+\shortcite{yan2020}, it was the fourth most significantly associated variant for
 the SNP-based approach (Figure \ref{pubescence-color-main-figure}b-d, Supplemental Figure 
 S12).  Interestingly, some of the accessions
 bearing the haplotype associated with tawny pubescence displayed light tawny
@@ -677,10 +677,10 @@ locus (Figure \ref{pubescence-color-main-figure}e).
 % Seed coat color - I locus
 The causal variant at the \textit{I} locus for seed coat color is a complex SV
 that takes the form of a 10.91-kb inverted duplication of three chalcone
-synthase (CHS) genes \citep[CHS1, CHS3 and CHS4;][]{tuteja2008}. The presence of
+synthase (CHS) genes \shortcite<CHS1, CHS3 and CHS4;>[]{tuteja2008}. The presence of
 this inverted duplication results in the silencing of all CHS genes in the seed
 coat specifically and thus in the absence of seed coat pigmentation
-\citep{tuteja2009}. While we did find signals overlapping this causal variant
+\shortcite{tuteja2009}. While we did find signals overlapping this causal variant
 using all three GWAS approaches (Supplemental Figures S13 and
 S14), none of the approaches identified
 it. This failure to detect the causal variant is likely due
@@ -695,7 +695,7 @@ We conducted a second GWAS analysis contrasting accessions with yellow and
 green seed coats in order to target the \textit{G} locus. Accordingly, this
 analysis found strong signals overlapping the \emph{G} locus using all three
 approaches (Supplemental Figure S15).
-\cite{wang2018} identified Glyma.01g198500 as the gene associated with
+\shortciteA{wang2018} identified Glyma.01g198500 as the gene associated with
 this locus and found an A>G SNP affecting transcript splicing as the causal
 variant. Consistently with their results, we identified the two
 most significant \emph{k}-mers and the second most significant marker from the
@@ -747,12 +747,12 @@ associated with the \textit{Dt1} locus for stem termination type, the SNP- and
 most highly associated markers (top 1\%) included the causal gene (Supplemental Figures
 S18 and S19).
 We did identify one of the SNPs suggested as putative causal variants for this
-locus by \cite{tian2010} and \cite{liu2010}, however this SNP was only the
+locus by \shortciteA{tian2010} and \shortciteA{liu2010}, however this SNP was only the
 135\textsuperscript{th} most associated marker found by Platypus and the
 12\textsuperscript{th} most associated \emph{k}-mer (Supplemental Figures
 S20 and S21).
 Our results are consistent with previous findings in suggesting that there is
-more than one causal variant at the \textit{Dt1} locus \citep{liu2010,
+more than one causal variant at the \textit{Dt1} locus \shortcite{liu2010,
 tian2010}. Indeed, a few cultivars bearing the allele associated with
 \emph{dt1} showed indeterminate or semi-determinate phenotypes and some
 cultivars showed a determinate phenotype without bearing the allele associated
@@ -768,7 +768,7 @@ accordingly detected a signal overlapping this locus using all approaches, but
 only SNP- and \textit{k}-mer-based GWAS detected signals overlapping the
 Glyma.09g235100 gene associated with \textit{R} (Supplemental Figures
 S22 and S23).
-\cite{gillman2011} identified this R2R3 MYB transcription factor as the
+\shortciteA{gillman2011} identified this R2R3 MYB transcription factor as the
 molecular basis for the \textit{R} locus and documented four different
 loss-of-function alleles linked to brown hilum color. Although our analyses did
 detect strong signals in the vicinity of this gene, the most associated markers
@@ -778,14 +778,14 @@ associated \emph{k}-mers detected by our analysis mapped 2 kb upstream of
 another gene (Glyma.09g234900) annotated as a MYB transcription factor and
 putatively involved in the regulation of anthocyanin biosynthesis. This gene as
 well as Glyma.09g235100 and two others are part of a tandem array of four R2R3
-MYB genes considered as candidates by \cite{gillman2011}, and of which
+MYB genes considered as candidates by \shortciteA{gillman2011}, and of which
 Glyma.09g235100 was the only one expressed in the seed coat. Given the
-convincing evidence provided by \cite{gillman2011}, it is most likely that
+convincing evidence provided by \shortciteA{gillman2011}, it is most likely that
 Glyma.09g235100 is indeed the gene associated with the \emph{R} locus and that
 our failure to identify the most significantly associated \emph{k}-mers as
 causal variants is due to the coexistence of several variants that can cause
 loss of function at the \emph{R} locus.  Still, we observed two causal variants
-previously documented by \cite{gillman2011} in our dataset (Supplemental Figures
+previously documented by \shortciteA{gillman2011} in our dataset (Supplemental Figures
 S24 and S25). 
 
 \subsubsection*{Pubescence density -- \textit{Ps} locus}
@@ -796,11 +796,11 @@ detected signals at the \textit{Ps} locus using all three approaches (Figure
 \ref{pubescence-density-main-figure}a-b and Supplemental Figures S26, S27
 and S28). The causal
 variant at this recently cloned locus is a copy number variant (CNV) overlapping the
-Glyma.12g187200 gene, with higher copy number resulting in reduced pubescence \citep{liu2020ps}.
+Glyma.12g187200 gene, with higher copy number resulting in reduced pubescence \shortcite{liu2020ps}.
 We identified a region of $\sim$42 kb that varied in copy number across
 the population and was associated with the trait (Figure
 \ref{pubescence-density-main-figure}c), and therefore possibly corresponded to the
-25.6-kb region identified as the causal CNV by \cite{liu2020ps}. We found that
+25.6-kb region identified as the causal CNV by \shortciteA{liu2020ps}. We found that
 reads containing the most significantly associated \textit{k}-mer mapped to either of the two ends
 of the CNV (Figure \ref{pubescence-density-main-figure}d). This suggests that
 the most associated \textit{k}-mer is indeed linked to the CNV
@@ -837,7 +837,7 @@ CNV region may represent differences in sequence between the copies.
 \end{figure}
 
 
-The difference in size between the CNV reported by \cite{liu2020ps} and our
+The difference in size between the CNV reported by \shortciteA{liu2020ps} and our
 results may be due to the presence of some unresolved sequence (a stretch of
 4,635 N nucleotides) over that interval in the reference sequence that we used.
 Because our SV filtering process removed any alternate allele containing N nucleotides,
@@ -853,10 +853,10 @@ to our filtering parameters and not to limitations of the SV genotype calls per 
 
 We conducted a GWAS analysis comparing dull and shiny seed coat phenotypes for
 the seed coat luster trait. Seed coat luster has been shown by
-\cite{gijzen1999} to be largely caused by the deposition of a hydrophobic
+\shortciteA{gijzen1999} to be largely caused by the deposition of a hydrophobic
 protein (HPS) at the seed surface. Copy number variation of this gene at the
 \textit{B} locus was later shown to explain variation in luster, although
-sequence variation in the HPS sequence may also play a role \citep{gijzen2006}.
+sequence variation in the HPS sequence may also play a role \shortcite{gijzen2006}.
 Using a sequencing depth-based analysis, we identified a 31-kb region spanning
 positions 9,386,109-9,417,431 on chromosome Gm15 that exhibited variation in
 copy number across accessions. This CNV overlapped four genes annotated as
@@ -879,17 +879,17 @@ known yet.
 \subsubsection*{Pod color -- \textit{L1} and \textit{L2} loci}
 
 Both the \textit{L1} and the \textit{L2} loci for pod color have yet to be
-cloned. While \cite{he2015} proposed the gene Glyma.19g101700 as likely
+cloned. While \shortciteA{he2015} proposed the gene Glyma.19g101700 as likely
 corresponding to \textit{L1} based on fine mapping and expression analysis, our
-results as well as those reported by \cite{bandillo2017} do not support this
+results as well as those reported by \shortciteA{bandillo2017} do not support this
 gene as a candidate due to its location $\sim$3 Mb away from GWAS signals. Our
 analyses based on \textit{k}-mers and SNPs found signals overlapping 14 and
 6 genes, respectively (Supplemental figures S32 and
 S33). Of these, a MATE transporter (Glyma.19g120300)
 appears as a prime candidate as the most significant \emph{k}-mer was observed
 within its sequence and it is highly expressed in pods according to data hosted
-on SoyBase \citep{grant2010, severin2010}. Moreover, the role of some MATE
-proteins in transporting flavonoids has been demonstrated \citep{chen2015}.
+on SoyBase \shortcite{grant2010, severin2010}. Moreover, the role of some MATE
+proteins in transporting flavonoids has been demonstrated \shortcite{chen2015}.
 
 The signals found by SNP- and \emph{k}-mer-based analyses at the \textit{L2}
 locus overlap 24 and 50 genes, respectively (Supplemental Figures
@@ -903,9 +903,9 @@ candidate at this locus for future studies.
 \label{sv-gwas-main-results-pubescence-form-pa1-pa2}
 
 The two known loci for pubescence form in soybean, \textit{Pa1} and
-\textit{Pa2}, have also not been cloned yet. Nevertheless, \cite{gilbert2017}
+\textit{Pa2}, have also not been cloned yet. Nevertheless, \shortciteA{gilbert2017}
 has suggested Glyma.12g213900 as a candidate for \textit{Pa1} based on data
-published by \cite{bandillo2017}. This gene encodes a MYB transcription factor
+published by \shortciteA{bandillo2017}. This gene encodes a MYB transcription factor
 annotated as playing a role in trichome branching. Indeed, the most significant
 signals found by all three approaches were located near this gene (Figure
 \ref{pubescence-form-main-figure}a-b, and Supplemental Figures S35 and
@@ -960,10 +960,10 @@ analyzed further.
 
 \subsubsection*{Resistance to \textit{P. sojae}}
 
-We used corrected dry weight (CDW) as described by \cite{deronne2022} as a
+We used corrected dry weight (CDW) as described by \shortciteA{deronne2022} as a
 measure of horizontal resistance to \emph{P. sojae}. We found a strong signal
 overlapping the genomic region reported by these authors on Gm15 using all three GWAS
-approaches (Supplemental Figure S41). \cite{deronne2022}
+approaches (Supplemental Figure S41). \shortciteA{deronne2022}
 proposed Glyma.15g217100 as a candidate gene for explaining phenotypic
 variation at that locus based on a combination of functional annotation and
 contrasting gene expression in resistant and susceptible lines four days after
@@ -979,7 +979,7 @@ most significant \emph{k}-mer (Supplemental Figure
 S42). One of the genes in this region is
 a calcium ion binding protein with an EF-hand domain (Glyma.15g217700).
 Given the important role played by calcium signaling in defense
-responses \citep{zhang2014}, we suggest Glyma.15g217700 as an interesting
+responses \shortcite{zhang2014}, we suggest Glyma.15g217700 as an interesting
 candidate gene for explaining resistance to \emph{P. sojae} in this population.
 
 \subsubsection*{Novel loci for stem termination and pod color}
@@ -1063,7 +1063,7 @@ architecture of the trait. It is clear that the loci for which the
 \emph{Ps}) have a simple genetic architecture and phenotypes that can be easily
 determined. For other traits, challenges in determining accurate phenotypes may
 result in a decreased ability to identify causal variants or genes. For
-example, \cite{bandillo2017} noted that observed phenotypes for stem
+example, \shortciteA{bandillo2017} noted that observed phenotypes for stem
 termination type in the GRIN database may not correspond to the expected
 genotypes at classical loci, and that the intermediate phenotype for seed coat
 luster is not always consistent across different environments. For qualitative
@@ -1095,23 +1095,23 @@ occur in tandem, such that no \textit{k}-mer can differentiate between two
 copies and more. For similar reasons, \emph{k}-mers may also fail to capture
 variation occurring in repeated sequences. Alternative models based on
 \emph{k}-mer counts instead of presence/absence have been developed
-\citep{rahman2018, he2021} which may solve issues like these and broaden the
+\shortcite{rahman2018, he2021} which may solve issues like these and broaden the
 scope of variants that can be identified from \emph{k}-mers.
 
 The complexity of analyzing the results of \emph{k}-mer-based GWAS is another
 limitation of this approach. Although the method developed by
-\cite{voichek2020} is in itself relatively simple and computationally
+\shortciteA{voichek2020} is in itself relatively simple and computationally
 inexpensive, downstream analysis and interpretation of the output is
 challenging. Indeed, there are no state-of-the-art methods for identifying the
 putative genomic coordinates of a \emph{k}-mer, grouping significant
 \emph{k}-mers together into coherent signals, and linking them to biologically
 meaningful sequence variation. Going forward, mapping the \emph{k}-mers or
-reads to a graph-based genome \citep[e.g. using the vg toolkit;][]{siren2021}
+reads to a graph-based genome \shortcite<e.g. using the vg toolkit;>[]{siren2021}
 may represent an improvement to using a single linear genome.  Grouping
 significant \emph{k}-mers by LD instead of by genomic position, as was done for
 some of the analyses in this paper, could prove useful in determining how many
 loci control a trait. In this study, we used an assembly-based approach similar
-to what others have previously done \citep[e.g.][]{voichek2020, rahman2018}.
+to what others have previously done \shortcite<e.g.>[]{voichek2020, rahman2018}.
 This approach allowed us to link \emph{k}-mers to their underlying variation
 for simple cases involving SNPs and indels, but we were unable to link
 significantly associated \emph{k}-mers to more challenging causal variants such
@@ -1127,7 +1127,7 @@ In this work, we provide a set of tools enabling the downstream analysis of
 retrieving all reads containing any of a set of significant \emph{k}-mers in a
 computationally efficient manner. Previous studies usually mapped \emph{k}-mers
 to a reference genome to identify their reference-based coordinates
-\citep[e.g.][]{voichek2020, he2021, rahman2018, tripodi2021}.  However, while
+\shortcite<e.g.>[]{voichek2020, he2021, rahman2018, tripodi2021}.  However, while
 this approach may work for \emph{k}-mers that show little divergence from the
 reference, it might fail to identify the genomic location of \emph{k}-mers that
 diverge significantly or are not found at all in the reference. Moreover, it
@@ -1150,7 +1150,7 @@ SNPs or indels, and therefore were not represented in the SV datasets. At most
 loci where SVs are known to be the underlying causal variant (e.g.  \emph{I},
 \emph{B}, \emph{Ps}), the analyses based on SVs did not find the causal
 variants, most likely due to the difficulty of calling and genotyping such
-variants \citep{kosugi2019, lemay2022}. In the case of the \textit{Ps} locus,
+variants \shortcite{kosugi2019, lemay2022}. In the case of the \textit{Ps} locus,
 this limitation was due to a filtering step in our pipeline rather than to an
 inherent inability to properly call and genotype the causal variant.
 
@@ -1162,17 +1162,17 @@ identified it as well. Moreover, SNP-based GWAS provided better guidance
 in delimiting the signals found at a given locus because of the much higher
 density of markers compared to SVs.  The usefulness of SV-based GWAS compared
 to SNP-based GWAS will largely depend on whether SVs can represent variation
-that is not otherwise in LD with SNPs. In tomato, \cite{dominguez2020} found
+that is not otherwise in LD with SNPs. In tomato, \shortciteA{dominguez2020} found
 that most transposable element insertions associated with phenotypic variation
 in agronomic traits were not tagged by SNPs. On the other hand, in humans,
-\cite{maretty2017} found that the majority of SVs were in high LD with SNPs. It
+\shortciteA{maretty2017} found that the majority of SVs were in high LD with SNPs. It
 is therefore likely that how well SVs can be tagged by SNPs will depend on the
 particular type of SV and on the species. A more efficient approach than
 SV-based GWAS may be to conduct \emph{k}-mer-based GWAS and only then link
 known SVs to significant \emph{k}-mers.  Alternatively, \textit{k}-mer-based
 GWAS can be conducted specifically for \textit{k}-mers that are associated with
-SVs \citep{jayakodi2020}.  Previous studies have obtained noteworthy results by
-using SVs for GWAS analyses \citep[e.g.][]{zhang2015, akakpo2020,
+SVs \shortcite{jayakodi2020}.  Previous studies have obtained noteworthy results by
+using SVs for GWAS analyses \shortcite<e.g.>[]{zhang2015, akakpo2020,
 dominguez2020}, however it would be worthwhile to see whether these results
 could be replicated using \emph{k}-mer-based GWAS.
 
@@ -1243,25 +1243,25 @@ The authors declare no conflict of interest.
 \section*{Data availability}
 
 Some of the datasets generated as part of this work are available on figshare
-\citep{kmer-gwas-figshare}.
+\shortcite{kmer-gwas-figshare}.
 
 The Illumina sequencing data used for the analyses are listed in Supplemental file 2
 and available through NCBI BioProjects \citeauthor{PRJNA257011}, \citeauthor{PRJNA289660}
 and \citeauthor{PRJNA639876}.
 
-The high-quality assemblies generated by \cite{liu2020-pangenome} are available
+The high-quality assemblies generated by \shortciteA{liu2020-pangenome} are available
 on the Genome Warehouse through Accession Number \citeauthor{PRJCA002030}.
 
 The assemblies of ZH13, W05 and Lee are available on SoyBase
 (\url{https://soybase.org/GlycineBlastPages/blast_descriptions.php}).
 
-The \textit{I} locus contig assembled by \cite{tuteja2008} is available from
+The \textit{I} locus contig assembled by \shortciteA{tuteja2008} is available from
 NCBI (\url{https://www.ncbi.nlm.nih.gov/nuccore/EF623854}).
 
 SoySNP50K genotype calls are available from SoyBase (\url{https://soybase.org/snps/}).
 
-The SVs identified from Oxford Nanopore data by \cite{lemay2022} are available
-on figshare \citep{soybean-sv-figshare}.
+The SVs identified from Oxford Nanopore data by \shortciteA{lemay2022} are available
+on figshare \shortcite{soybean-sv-figshare}.
 
 The following software used in this work is available on GitHub:
 
@@ -1282,7 +1282,7 @@ The following software used in this work is available on GitHub:
 \end{itemize}
 
 The code associated with the results presented in this manuscript is archived
-on figshare \citep{kmer-gwas-code}.
+on figshare \shortcite{kmer-gwas-code}.
 
 \section*{Funding information}
 
@@ -1334,33 +1334,33 @@ Writing -- review \& editing: MAL, MDR, RB, FB.
 	\begin{threeparttable}
 		\begin{tabular}{llllccc}
 		\toprule Trait & Locus & Gene & Causal variant & SNPs\tnote{a} & SVs\tnote{b} & \textit{k}-mers \\ \midrule
-		Flower color & \textit{W1} & Glyma.13g072100 & 65-bp deletion \citep{zabala2007} & ** & *** & *** \\
-		Pubescence color & \textit{T} & Glyma.06g202300 & 1-bp deletion \citep{zabala2003} & ** & * & ** \\
-		Pubescence color & \textit{Td} & Glyma.03g258700 & SNP \citep{yan2020} & * & - & *** \\
-		Seed coat color & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \citep{tuteja2008} & ** & ** & ** \\
-		Seed coat color & \textit{G} & Glyma.01g198500 & SNP \citep{wang2018} & ** & ** & *** \\
-		Seed coat color\tnote{c} & \textit{T} & Glyma.06g202300 & 1-bp deletion \citep{zabala2003} & - & - & - \\
-		Seed coat color\tnote{c} & \textit{R} & Glyma.09g235100 & SNPs and indels \citep{gillman2011} & - & - & - \\
-		Stem termination type & \textit{Dt1} & Glyma.19g194300 & SNPs \citep{liu2010} & ** & * & ** \\
-		Stem termination type\tnote{c} & \textit{Dt2} & Glyma.18g273600 & SNPs \citep{ping2014} & - & - & - \\
-		Stem termination type\tnote{c} & \textit{E3} & Glyma.19g224200 & Various types \citep{tardivel2019} & - & - & - \\
-		Hilum color\tnote{c} & \textit{T} & Glyma.06g202300 & 1-bp deletion \citep{zabala2003} & ** & ** & ** \\
-		Hilum color\tnote{c} & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \citep{tuteja2008} & * & * & ** \\
-		Hilum color & \textit{R} & Glyma.09g235100 & SNPs and indels \citep{gillman2011} & * & - & ** \\
-		Hilum color\tnote{c} & \textit{W1} & Glyma.13g072100 & 65-bp deletion \citep{zabala2007} & - & - & - \\
-		Pubescence density & \textit{Ps} & Glyma.12g187200 & 25.6-kb CNV \citep{liu2020ps} & ** & ** & *** \\
-		Pubescence density\tnote{c} & \textit{Pd1} & Glyma.01g240100 & SNP \citep{liu2020ps} & - & - & - \\
-		Pubescence density\tnote{c} & \textit{P1} & Glyma.09g278000 & SNP \citep{liu2020ps} & - & - & - \\
-		Seed coat luster & \textit{B} & Duplicated HPS genes & CNV (several kb) \citep{gijzen2006} & ** & ** & ** \\
-		Seed coat luster\tnote{c} & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \citep{tuteja2008} & - & - & - \\
-		Maturity group\tnote{c} & \textit{E1} & Glyma.06g207800 & Various types \citep{tardivel2019} & - & - & - \\
-		Maturity group\tnote{c} & \textit{E2} & Glyma.10g221500 & Various types \citep{tardivel2019} & - & - & - \\
-		Maturity group\tnote{c} & \textit{E3} & Glyma.19g224200 & Various types \citep{tardivel2019} & - & - & - \\
-		Maturity group\tnote{c} & \textit{E4} & Glyma.20g090000 & Various types \citep{tardivel2019} & - & - & - \\
-		Oil\tnote{c} & \textit{oilGm20} & Glyma.20g085100 & 321-bp deletion \citep{fliege2022} & - & - & - \\
-		Oil\tnote{c} & \textit{oilGm15} & Glyma.15g049200 & SNPs and indels \citep{zhang2020} & - & - & - \\
-		Protein\tnote{c} & \textit{proGm20} & Glyma.20g085100 & 321-bp deletion \citep{fliege2022} & - & - & - \\
-		Protein\tnote{c} & \textit{proGm15} & Glyma.15g049200 & SNPs and indels \citep{zhang2020} & - & - & - \\
+		Flower color & \textit{W1} & Glyma.13g072100 & 65-bp deletion \shortcite{zabala2007} & ** & *** & *** \\
+		Pubescence color & \textit{T} & Glyma.06g202300 & 1-bp deletion \shortcite{zabala2003} & ** & * & ** \\
+		Pubescence color & \textit{Td} & Glyma.03g258700 & SNP \shortcite{yan2020} & * & - & *** \\
+		Seed coat color & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \shortcite{tuteja2008} & ** & ** & ** \\
+		Seed coat color & \textit{G} & Glyma.01g198500 & SNP \shortcite{wang2018} & ** & ** & *** \\
+		Seed coat color\tnote{c} & \textit{T} & Glyma.06g202300 & 1-bp deletion \shortcite{zabala2003} & - & - & - \\
+		Seed coat color\tnote{c} & \textit{R} & Glyma.09g235100 & SNPs and indels \shortcite{gillman2011} & - & - & - \\
+		Stem termination type & \textit{Dt1} & Glyma.19g194300 & SNPs \shortcite{liu2010} & ** & * & ** \\
+		Stem termination type\tnote{c} & \textit{Dt2} & Glyma.18g273600 & SNPs \shortcite{ping2014} & - & - & - \\
+		Stem termination type\tnote{c} & \textit{E3} & Glyma.19g224200 & Various types \shortcite{tardivel2019} & - & - & - \\
+		Hilum color\tnote{c} & \textit{T} & Glyma.06g202300 & 1-bp deletion \shortcite{zabala2003} & ** & ** & ** \\
+		Hilum color\tnote{c} & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \shortcite{tuteja2008} & * & * & ** \\
+		Hilum color & \textit{R} & Glyma.09g235100 & SNPs and indels \shortcite{gillman2011} & * & - & ** \\
+		Hilum color\tnote{c} & \textit{W1} & Glyma.13g072100 & 65-bp deletion \shortcite{zabala2007} & - & - & - \\
+		Pubescence density & \textit{Ps} & Glyma.12g187200 & 25.6-kb CNV \shortcite{liu2020ps} & ** & ** & *** \\
+		Pubescence density\tnote{c} & \textit{Pd1} & Glyma.01g240100 & SNP \shortcite{liu2020ps} & - & - & - \\
+		Pubescence density\tnote{c} & \textit{P1} & Glyma.09g278000 & SNP \shortcite{liu2020ps} & - & - & - \\
+		Seed coat luster & \textit{B} & Duplicated HPS genes & CNV (several kb) \shortcite{gijzen2006} & ** & ** & ** \\
+		Seed coat luster\tnote{c} & \textit{I} & CHS gene cluster & 10.9-kb inversion/duplication \shortcite{tuteja2008} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E1} & Glyma.06g207800 & Various types \shortcite{tardivel2019} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E2} & Glyma.10g221500 & Various types \shortcite{tardivel2019} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E3} & Glyma.19g224200 & Various types \shortcite{tardivel2019} & - & - & - \\
+		Maturity group\tnote{c} & \textit{E4} & Glyma.20g090000 & Various types \shortcite{tardivel2019} & - & - & - \\
+		Oil\tnote{c} & \textit{oilGm20} & Glyma.20g085100 & 321-bp deletion \shortcite{fliege2022} & - & - & - \\
+		Oil\tnote{c} & \textit{oilGm15} & Glyma.15g049200 & SNPs and indels \shortcite{zhang2020} & - & - & - \\
+		Protein\tnote{c} & \textit{proGm20} & Glyma.20g085100 & 321-bp deletion \shortcite{fliege2022} & - & - & - \\
+		Protein\tnote{c} & \textit{proGm15} & Glyma.15g049200 & SNPs and indels \shortcite{zhang2020} & - & - & - \\
 		\bottomrule
 		\end{tabular}
 

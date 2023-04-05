@@ -23,7 +23,7 @@
 \usepackage{ccaption}
 \usepackage{listings}
 \usepackage{datatool} % allows fetching key-value pairs from a text file
-\usepackage[natbibapa]{apacite}
+\usepackage{apacite}
 \usepackage{setspace}
 
 \title{Supplementary material to ``\textit{k}-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean''}
@@ -257,19 +257,19 @@ François Belzile}
 
 We used the Illumina whole-genome sequencing (WGS) data from the 389 selected \emph{G. max} accessions
 for SV discovery using methods similar to those described by
-\cite{lemay2022}.  Briefly, we used four different SV discovery programs or
+\shortciteA{lemay2022}.  Briefly, we used four different SV discovery programs or
 pipelines: 
 
 \begin{enumerate}
 
-\item We used AsmVar \citep[version of 2015-04-16, ][]{liu2015} to call SVs
+\item We used AsmVar \shortcite<version of 2015-04-16, >[]{liu2015} to call SVs
 	from \emph{de novo} assemblies generated with SOAPdenovo2 v. 2.04
-		\citep{luo2012} and aligned to the reference genome using LAST
-		v. 1047 \citep{kielbasa2011}.
-\item We ran Manta v. 1.6.0 \citep{chen2016} in randomly selected batches: 77 batches of
+		\shortcite{luo2012} and aligned to the reference genome using LAST
+		v. 1047 \shortcite{kielbasa2011}.
+\item We ran Manta v. 1.6.0 \shortcite{chen2016} in randomly selected batches: 77 batches of
 	5 samples and 1 batch of 4 samples. We used the candidate SVs
 		identified from each of the batches for downstream analyses.
-\item We used smoove v. 0.2.4 \citep{pedersen2019} to obtain a dataset of candidate SVs
+\item We used smoove v. 0.2.4 \shortcite{pedersen2019} to obtain a dataset of candidate SVs
 	using the following sequence of commands:
 	\texttt{smoove call}, \texttt{smoove merge}, \texttt{smoove
 		genotype} and \texttt{smoove paste}.
@@ -277,7 +277,7 @@ pipelines:
 		to obtain candidate variants due to a reproducible
 		error (segmentation fault) when running \texttt{smoove
 		call}.
-	\item We used SvABA v. 1.1.3 \citep{wala2018} to call SVs from each of the
+	\item We used SvABA v. 1.1.3 \shortcite{wala2018} to call SVs from each of the
 	samples separately. We classified the SVs called as breakends by SvABA
 		as either deletions, duplications or inversions, and converted
 		them to explicit sequence using a custom R script. Variants
@@ -295,11 +295,11 @@ We filtered the SVs called by each tool to remove those meeting any of the follo
 \end{itemize}
 
 Next, we converted all filtered variants to a sequence-explicit format using
-\texttt{bayesTyperTools convertAllele} \citep{sibbesen2018} and normalized them
-using bcftools \texttt{norm} v. 1.10.2-105 \citep{li2009-samtools}.
+\texttt{bayesTyperTools convertAllele} \shortcite{sibbesen2018} and normalized them
+using bcftools \texttt{norm} v. 1.10.2-105 \shortcite{li2009-samtools}.
 
 A single VCF file was generated from the variants called using Illumina data by
-running SVmerge \citep{wong2010} in two steps. In the first step, we merged
+running SVmerge \shortcite{wong2010} in two steps. In the first step, we merged
 very similar variants among the ones called by the same tool using a
 sliding window of 5 bp. Next, we used the output of the first merging steps
 for all four tools and merged similar variants across the four datasets using
@@ -311,7 +311,7 @@ resulted in a computationally intractable number of pairwise comparisons.
 \label{sv-gwas-sv-discovery-ont}
 
 We used SVs discovered among 17 Canadian soybean cultivars sequenced using
-Oxford Nano\-pore Technologies (ONT) by \cite{lemay2022} as an additional
+Oxford Nano\-pore Technologies (ONT) by \shortciteA{lemay2022} as an additional
 source of candidate SVs. Although this set of cultivars does not overlap the
 ones analyzed in this study, it is likely that many of the SVs occurring
 in Canadian germplasm also occur in the germplasm used for this study given that modern soybean
@@ -329,20 +329,20 @@ likely to be more precise given the higher basecalling accuracy.
 In addition to Illumina data from 389 accessions, we also used
 high-quality genome assemblies of 29 \emph{G. max} or \emph{Glycine soja}
 accessions to call SVs. We
-retrieved 26 high-quality genomes assembled by \cite{liu2020-pangenome} as well
+retrieved 26 high-quality genomes assembled by \shortciteA{liu2020-pangenome} as well
 as the genome of the cultivar Zhonghuang 13 (ZH13) from the Genome Warehouse
 repository (\url{https://ngdc.cncb.ac.cn/gwh/}). Furthermore, we retrieved the genomes
 of \emph{G. soja} accession W05 and \emph{G. max} cultivar Lee from SoyBase
-\citep{grant2010}.
+\shortcite{grant2010}.
 
-We used methods based on \cite{liu2020-pangenome} to call SVs from the
+We used methods based on \shortciteA{liu2020-pangenome} to call SVs from the
 genome assemblies.  First, we used the nucmer program of the MUMmer suite of
-tools v. 4.0.0rc1 \citep{marcais2018} with option \texttt{-c 1000} to align
+tools v. 4.0.0rc1 \shortcite{marcais2018} with option \texttt{-c 1000} to align
 each of the assemblies to the Williams82 assembly. Next, we used the
 delta-filter program of the MUMmer suite to keep only one-to-one alignments
 between any genome and the Williams82 reference using the \texttt{-1} option.
 The filtered alignments were used to call SVs with a version of the svmu
-program \citep{chakraborty2019} that we forked from the original repository
+program \shortcite{chakraborty2019} that we forked from the original repository
 (\url{https://github.com/malemay/svmu}) in order to improve execution time and
 memory usage.
 
@@ -361,7 +361,7 @@ comparison of high-quality genome assemblies.
 \subsection*{Genotyping structural variation using Paragraph}
 \label{sv-gwas-sv-genotyping-paragraph}
 
-We used Paragraph v. 2.4a \citep{chen2019}
+We used Paragraph v. 2.4a \shortcite{chen2019}
 to generate a set of SV genotypes from the Illumina data of the 389 accessions.
 The set of SVs used as input for Paragraph was generated using SVmerge by
 merging variants discovered from the Illumina and ONT data with
@@ -369,7 +369,7 @@ those discovered from the high-quality assemblies and svmu.
 Variants in this candidate set were prepared for input to Paragraph by first removing
 those closer than 150 bp (the maximum read length in our dataset) to any
 chromosome end and then padding the variant representation using a script written by
-\cite{hickey2020}. 
+\shortciteA{hickey2020}. 
 
 We ran Paragraph individually on each sample as recommended by the authors.  We
 computed the average sequencing depth for each sample from the output of the
@@ -389,9 +389,9 @@ flower color and seed coat color. Upon further analysis, we found that a
 mismatch between the sequencing data and the identity of the accession was the
 most probable cause of these discrepancies. In order to identify the samples
 for which this could be the case, we compared the genotypes of SNPs obtained
-from the SoySNP50K array \citep{song2013} to those predicted from the Illumina WGS
+from the SoySNP50K array \shortcite{song2013} to those predicted from the Illumina WGS
 data. We did this for the 385 samples that had a match in the GRIN database. Briefly, we
-retrieved SoySNP50K genotype calls from SoyBase \citep{grant2010} and extracted
+retrieved SoySNP50K genotype calls from SoyBase \shortcite{grant2010} and extracted
 all SNPs with a MAF $\geq$ 0.1 in our population. We then translated the positions
 of these SNPs from assembly version 2 to assembly version 4 of Williams by
 finding exact matches of 41-bp sequences surrounding the SNP positions. The
@@ -428,14 +428,14 @@ methods is presented in Table \ref{signals_table}.
 \subsection*{Flower color -- \textit{L1} locus}
 \label{annexe-sv-gwas-flower-color-l1}
 
-In addition to the \textit{W1} locus, \cite{bandillo2017} reported a signal for
+In addition to the \textit{W1} locus, \shortciteA{bandillo2017} reported a signal for
 flower color near the \textit{L1} locus.  None of the GWAS approaches that we
 tested found a signal for flower color near this locus (Figure
 \ref{flower_color_manhattan}). This result is unsurprising as W1 is the major
 contributor to flower color in soybean, whereas the \textit{L1} locus
 (typically associated with pod color) was detected with a much less significant
 \textit{p}-value (see Table \ref{signals_table}) and only conjectured as
-associated with flower color by \cite{bandillo2017}.
+associated with flower color by \shortciteA{bandillo2017}.
 
 \subsection*{Pubescence color -- locus on chromosome Gm16}
 \label{annexe-sv-gwas-pubescence-color-gm16}
@@ -471,7 +471,7 @@ locus (Table \ref{STEM.TERMINATION.TYPE_gwas_table}).  However, this was
 unsuccessful using all three GWAS approaches (Figure
 \ref{stem_termination_sn_manhattan}). Similarly, we failed to detect signals at
 the \textit{E3} locus, which is more commonly associated with maturity but was
-mentioned as associated with stem termination type by \cite{bandillo2017}.
+mentioned as associated with stem termination type by \shortciteA{bandillo2017}.
 
 % Hilum color - T locus
 \subsection*{Hilum color -- \textit{T} locus}
@@ -505,7 +505,7 @@ its highly complex nature.
 \label{sv-gwas-hilum-color}
 
 None of the three GWAS analyses that we conducted on hilum color found signals
-at the \emph{W1} and \emph{O} loci studied by \cite{bandillo2017} (Figures
+at the \emph{W1} and \emph{O} loci studied by \shortciteA{bandillo2017} (Figures
 \ref{hilum_color_blackbrown_manhattan} \ref{hilum_color_all_manhattan},
 \ref{hilum_color_rbr_manhattan}).
 
@@ -515,7 +515,7 @@ at the \emph{W1} and \emph{O} loci studied by \cite{bandillo2017} (Figures
 Our GWAS analysis on pubescence density did not detect any signals at the
 \emph{Pd1} and \emph{P1} (Figure \ref{pubescence_density_manhattan}). Our
 failure to detect these loci is likely due to our small population size
-compared to \cite{bandillo2017} and to the smaller contribution of those loci
+compared to \shortciteA{bandillo2017} and to the smaller contribution of those loci
 to pubescence density in our population.
 
 \subsection*{Seed coat luster -- loci \textit{Hps}, \textit{B?} and \textit{I}}
@@ -528,21 +528,21 @@ We performed three different GWAS analyses on seed coat luster (Table
 \ref{seed_coat_luster_dullshiny_manhattan}), we chose to focus on the
 GWAS contrasting the dull and shiny phenotypes as it yielded the most
 significant signals. In addition, it also provided results that were most consistent with the
-analysis previously done by \cite{bandillo2017}.
+analysis previously done by \shortciteA{bandillo2017}.
 
 The analysis detected signals at the \emph{B} locus as the sole classical locus
 using all three methods (see main text and Figure
 \ref{seed_coat_luster_dullshiny_manhattan}).  All methods also detected signals
-overlapping the \emph{Hps} locus as defined by \cite{bandillo2017}, however
-results shown by \cite{gijzen2003} and our results suggest that \emph{Hps} and
+overlapping the \emph{Hps} locus as defined by \shortciteA{bandillo2017}, however
+results shown by \shortciteA{gijzen2003} and our results suggest that \emph{Hps} and
 \emph{B} are the same locus. 
 
 Apparent signals on chromosomes Gm20 and Gm09 (which may correspond to the B?
-locus reported by \cite{bandillo2017}) were also detected, but analysis of the
+locus reported by \shortciteA{bandillo2017}) were also detected, but analysis of the
 LD patterns between \emph{k}-mers suggested that these signals are most likely
 in LD with the \emph{B} locus (Figure \ref{seed_coat_luster_dullshiny_ld}).
 
-\cite{bandillo2017} mentioned the \textit{I} locus as possibly associated
+\shortciteA{bandillo2017} mentioned the \textit{I} locus as possibly associated
 with seed coat luster, however we did not find evidence for such an association
 in our dataset.
 
@@ -572,21 +572,21 @@ any signals.
 We conducted a GWAS analysis on seed oil content using data obtained from the
 GRIN database. While several seed oil content quantitative trait loci (QTL)
 have been reported due to high interest in this trait for soybean breeding
-\citep{chaudhary2015}, we focused on two major QTL on chromosomes Gm15 and Gm20.
+\shortcite{chaudhary2015}, we focused on two major QTL on chromosomes Gm15 and Gm20.
 These loci have often been reported in \emph{G. max} and were notably observed by
-\cite{bandillo2015} on a collection of USDA lines using SoySNP50K chip
+\shortciteA{bandillo2015} on a collection of USDA lines using SoySNP50K chip
 genotypes and GRIN phenotypic data. We identified a signal located on
 chromosome Gm15 using the \emph{k}-mer approach only (Figure
 \ref{oil_manhattan}). Although this signal did not overlap with the coordinates
-found by \cite{bandillo2017}, it was located only 2 kb away from it and 30 kb
+found by \shortciteA{bandillo2017}, it was located only 2 kb away from it and 30 kb
 away from Glyma.15g049200, the sugar transporter gene identified by
-\cite{zhang2020} as associated with that locus. Therefore, the significantly
+\shortciteA{zhang2020} as associated with that locus. Therefore, the significantly
 associated \emph{k}-mers were not linked to the causal variation at that locus.
 
 Similarly to seed oil content, we conducted a GWAS on seed protein content
 using data obtained from the GRIN database. As is generally the case in
 soybean given the negative correlation between seed oil and protein content,
-the two major QTL considered above and reported by \cite{bandillo2015} for seed
+the two major QTL considered above and reported by \shortciteA{bandillo2015} for seed
 oil content are also major QTL for seed protein content. However, none of the
 approaches detected a signal at this locus (Figure \ref{protein_manhattan}).
 
