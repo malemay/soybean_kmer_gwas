@@ -1,0 +1,835 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc} % declare encoding as utf8
+\usepackage[T1]{fontenc} % declare encoding as utf8
+\usepackage{graphicx} % to enable \includegraphics
+\usepackage{flafter} % to make sure floats appear after their position in text
+\usepackage{pdflscape} % allow some pages to be in landscape orientation
+\usepackage{layout} % for debugging purposes, looking at page layout
+\usepackage[margin=1in]{geometry} % leaves more space for text body
+\usepackage[hidelinks]{hyperref} % hyperlinks from list of figures/tables
+\usepackage[labelfont=bf]{caption} % format captions and make links go to figure instead of caption
+\usepackage{csvsimple} % read and display csv files as tables
+\usepackage{booktabs} % prettier tables
+\usepackage{threeparttable} % easy addition of footnotes below tables
+\usepackage{textcomp} % makes the \textdegree command available
+\usepackage{tocloft} % formatting the lists of tables and figures
+\usepackage{xcolor} % enable text coloring
+\usepackage{calc} % makes \widthof available to set the width of the last column
+\usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
+\usepackage{longtable} % allow tables to span more than one page
+\usepackage{threeparttablex} % threeparttable for longtable
+\usepackage{capt-of} % put caption on next page
+\usepackage{ccaption}
+\usepackage{listings}
+\usepackage{datatool} % allows fetching key-value pairs from a text file
+\usepackage{apacite}
+\usepackage{setspace}
+
+\title{Supplementary material to ``\textit{k}-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean''}
+\date{}
+
+\author{Marc-André Lemay \and
+Maxime de Ronne \and
+Richard Bélanger \and
+François Belzile}
+
+% Remove indent for new paragraphs
+\setlength{\parindent}{0pt}
+
+% Adjust line spacing to 1.5
+\onehalfspacing
+
+% Setting the separator to use with datatool
+\DTLsetseparator{ = }
+\graphicspath{ {../figures/} } % tell Latex to look for figures in figures/
+
+% Defining new environments as I will always want the figures centered
+\newenvironment{cfigure}
+{\begin{figure} \centering}
+{\end{figure}}
+
+\newenvironment{lsfigure}
+{\begin{landscape} \begin{figure} \centering}
+{\end{figure} \end{landscape}}
+
+\setcounter{totalnumber}{1} % Allow a maximum of one float (table/figure) per page
+
+\setlength{\parskip}{2ex}
+
+% Defining a command to generate a table of phenotypic data for a single gwas
+\newcommand{\gwastableone}[2]{
+	\begin{table}
+		\caption[Phenotypic data used for the GWAS analysis of #2]%
+		{Phenotype frequency and numerical coding of phenotypic data used for the GWAS analysis of #2.
+		``NA'' indicates a missing value in the source data.
+		Dashes indicate that this phenotype was not used in the GWAS analysis.}
+		\label{#1_gwas_table}
+
+		\centering
+		\begin{threeparttable}\small
+
+			\csvreader[head to column names,
+			/csv/separator=semicolon,
+			tabular = llc,
+			table head = \toprule Phenotype & Frequency & GWAS \\ \midrule,
+			table foot = \bottomrule]%
+			{../tables/#1_gwas_table.csv}%
+			{}%
+			{\Value & \Frequency & \GWASa}
+
+		\end{threeparttable}
+
+	\end{table}
+	\clearpage
+}
+
+% Defining a command to generate a table of phenotypic data for two gwas
+\newcommand{\gwastabletwo}[2]{
+	\begin{table}
+		\caption[Phenotypic data used for the GWAS analyses of #2]%
+		{Phenotype frequency and numerical coding of phenotypic data used in two GWAS analyses of #2.
+		``NA'' indicates a missing value in the source data.
+		Dashes indicate that this phenotype was not used in the GWAS analysis.}
+		\label{#1_gwas_table}
+
+		\centering
+		\begin{threeparttable}\small
+
+			\csvreader[head to column names,
+			/csv/separator=semicolon,
+			tabular = llcc,
+			table head = \toprule Phenotype & Frequency & GWAS \#1 & GWAS \# 2\\ \midrule,
+			table foot = \bottomrule]%
+			{../tables/#1_gwas_table.csv}%
+			{}%
+			{\Value & \Frequency & \GWASa & \GWASb}
+
+		\end{threeparttable}
+
+	\end{table}
+	\clearpage
+}
+
+% Defining a command to generate a table of phenotypic data for three gwas
+\newcommand{\gwastablethree}[2]{
+	\begin{table}
+		\caption[Phenotypic data used for the GWAS analyses of #2]%
+		{Phenotype frequency and numerical coding of phenotypic data used in three GWAS analyses of #2.
+		``NA'' indicates a missing value in the source data.
+		Dashes indicate that this phenotype was not used in the GWAS analysis.}
+		\label{#1_gwas_table}
+
+		\centering
+		\begin{threeparttable}\small
+
+			\csvreader[head to column names,
+			/csv/separator=semicolon,
+			tabular = llccc,
+			table head = \toprule Phenotype & Frequency & GWAS \#1 & GWAS \# 2 & GWAS \# 3\\ \midrule,
+			table foot = \bottomrule]%
+			{../tables/#1_gwas_table.csv}%
+			{}%
+			{\Value & \Frequency & \GWASa & \GWASb & \GWASc}
+
+		\end{threeparttable}
+
+	\end{table}
+	\clearpage
+}
+
+% Defining a command for manhattan plot figures
+\newcommand{\manhattanplot}[3]{
+	\begin{cfigure}
+		\includegraphics[width = 5.8in]{#1_manhattan}
+		\caption[Manhattan plots for #2]{Manhattan plots generated from the GWAS analysis of #2 on #3 samples using three genotype datasets :
+		(a) Platypus (SNPs and indels), (b) Paragraph (SVs), (c) \emph{k}-mers presence/absence.
+		The x-axis shows the position along the reference assembly version 4 of Williams82.
+		Each point shows the $-\log_{10} (p)$ associated with a particular marker or \emph{k}-mer.
+		Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
+		Vertical dotted lines indicate the position of signals associated with the trait.
+		Documented loci are colored according to whether they were found (green) or not (red) by a particular approach.
+		The ``Gm'' prefix has been left out of chromosome names for simplicity.
+		}
+		\label{#1_manhattan}
+	\end{cfigure}
+
+	\clearpage}
+
+% Defining a new command for signal plot figures
+\newcommand{\signalplot}[4]{
+	\begin{cfigure}
+		\includegraphics[width = 5.8in]{#1_signal}
+		\caption[Zoomed-in Manhattan plots of the #3 locus]{Zoomed-in Manhattan plots of signals detected by the GWAS analysis of #2 at the #3 locus using three genotype datasets:
+		(b) Platypus (SNPs and indels), (c) Paragraph (SVs), (d) \emph{k}-mers presence/absence.
+		Panel (a) shows gene models over the genomic interval.
+		Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
+		#4
+		Gray shaded rectangles indicate the region delimited by the top 5\% (SVs) or top 1\% (SNPs/indels and \emph{k}-mers) associations in the signal region.
+		In the case of SNPs/indels, blue points denote markers used in the original analysis, whereas red points denote markers that had originally been pruned but whose
+		\emph{p}-values were computed after signal discovery.
+		}
+		\label{#1_signal}
+	\end{cfigure}
+
+	\clearpage}
+
+% Defining a new command for gene plot figures
+\newcommand{\geneplot}[5]{
+	\begin{cfigure}
+		\includegraphics[width = 5.8in]{#1_gene}
+		\caption[Zoomed-in Manhattan plots of the #3 locus gene]%
+		{Zoomed-in Manhattan plots generated from the GWAS analysis of #2 at the #4 associated with the #3 locus using three genotype datasets:
+		(b) Platypus (SNPs and indels), (c) Paragraph (SVs), (d) \emph{k}-mers presence/absence.
+		#5
+		Horizontal dotted lines indicate the 5\% family-wise error-rate significance threshold determined from a randomization approach.
+		In the case of SNPs/indels, blue points denote markers used in the original analysis, whereas red points denote markers that had originally been pruned but whose
+		\emph{p}-values were computed after signal discovery.
+		Panel (a) shows gene models over the plotting interval.
+		Exons are represented by rectangles whereas introns are represented by horizontal lines.
+		Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
+		}
+		\label{#1_gene}
+	\end{cfigure}
+
+	\clearpage}
+
+% Defining a new command for k-mer plot figures
+\newcommand{\kmerplot}[5]{
+	\begin{cfigure}
+		\includegraphics[width = 5.8in]{#1_kmers}
+		\caption[Variants associated with significant \emph{k}-mers at the #3 locus]%
+		{Identification of #5 underlying significant \emph{k}-mers at the #2 gene associated with the #3 locus for #4.
+		(a) Gene model of #2. Exons are represented by rectangles whereas introns are represented by horizontal lines.
+		Coding sequences are shown in blue and the direction of transcription is indicated by arrows.
+		The red rectangle identifies the region that is zoomed-in in panel (b).
+		(b) Nucleotide sequences of haplotypes observed in at least five samples across the dataset.
+		Individual nucleotides are colored according to the $-\log_{10}(p)$ of the most significant \emph{k}-mer overlapping them.
+		Dashes indicate gaps in haplotype sequence alignment whereas vertical lines indicate differences in sequence between two haplotypes.
+		(c) Contingency table of the phenotypes and haplotypes observed in the dataset. Haplotypes correspond to those shown in panel (b).}
+		\label{#1_kmers}
+	\end{cfigure}
+
+	\clearpage}
+
+% Defining a new command for LD plot figures
+\newcommand{\ldplot}[3]{
+	\begin{cfigure}
+		\includegraphics[width = 5.8in]{#1_ld}
+		\caption[LD plot of significant \emph{k}-mers for #2]{Pairwise LD among #3 significant \emph{k}-mers identified for #2.
+		\emph{k}-mers are sorted along the y-axis according to their putative position along the reference assembly version 4 of Williams82,
+		as identified by ``Gm'' chromosome labels.
+		Sequences that lack a ``Gm'' label (top of the y-axis) represent unanchored scaffolds.
+		\emph{k}-mers are represented in the same order along the x- and y-axis.
+		The colored rectangles drawn below the x-axis represent the $-\log_{10} (p)$ of each \emph{k}-mer.}
+		\label{#1_ld}
+	\end{cfigure}
+
+	\clearpage}
+
+% END OF PREAMBLE
+
+\begin{document}
+
+
+\maketitle
+
+% Format figure and table numbers to follow S1, S2, ...
+\renewcommand\thefigure{S\arabic{figure}} 
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\renewcommand\thetable{S\arabic{table}} 
+
+% Reading the contents of the variables.txt file first
+\DTLloaddb[noheader, keys={key,value}]{variables}{variables.txt}
+% Defining a new command to fetch the value from the key
+\newcommand{\getvar}[1]{\DTLfetch{variables}{key}{#1}{value}}
+
+% Turning page numbering off for the supplements
+\setcounter{page}{1}
+
+% Detailed methods for some aspects of the paper
+\section*{Detailed methods}
+\label{annexe-sv-gwas-detailed-methods}
+
+\subsection*{Discovery of structural variation from Illumina data}
+\label{sv-gwas-sv-discovery-illumina}
+
+We used the Illumina whole-genome sequencing (WGS) data from the 389 selected \emph{G. max} accessions
+for SV discovery using methods similar to those described by
+\shortciteA{lemay2022}.  Briefly, we used four different SV discovery programs or
+pipelines: 
+
+\begin{enumerate}
+
+\item We used AsmVar \shortcite<version of 2015-04-16, >[]{liu2015} to call SVs
+	from \emph{de novo} assemblies generated with SOAPdenovo2 v. 2.04
+		\shortcite{luo2012} and aligned to the reference genome using LAST
+		v. 1047 \shortcite{kielbasa2011}.
+\item We ran Manta v. 1.6.0 \shortcite{chen2016} in randomly selected batches: 77 batches of
+	5 samples and 1 batch of 4 samples. We used the candidate SVs
+		identified from each of the batches for downstream analyses.
+\item We used smoove v. 0.2.4 \shortcite{pedersen2019} to obtain a dataset of candidate SVs
+	using the following sequence of commands:
+	\texttt{smoove call}, \texttt{smoove merge}, \texttt{smoove
+		genotype} and \texttt{smoove paste}.
+		For three (3) of the 389 samples, we were unable
+		to obtain candidate variants due to a reproducible
+		error (segmentation fault) when running \texttt{smoove
+		call}.
+	\item We used SvABA v. 1.1.3 \shortcite{wala2018} to call SVs from each of the
+	samples separately. We classified the SVs called as breakends by SvABA
+		as either deletions, duplications or inversions, and converted
+		them to explicit sequence using a custom R script. Variants
+		called as indels by SvABA were used as is for downstream
+		analyses.
+\end{enumerate}
+
+We filtered the SVs called by each tool to remove those meeting any of the following conditions:
+
+\begin{itemize}
+	\item smaller than 50 bp or larger than 500 kb in size
+	\item located on unanchored scaffolds or organellar genomes
+	\item classified as unresolved breakends (\texttt{SVTYPE=BND})
+	\item containing at least one N in the alternate allele sequence
+\end{itemize}
+
+Next, we converted all filtered variants to a sequence-explicit format using
+\texttt{bayesTyperTools convertAllele} \shortcite{sibbesen2018} and normalized them
+using bcftools \texttt{norm} v. 1.10.2-105 \shortcite{li2009-samtools}.
+
+A single VCF file was generated from the variants called using Illumina data by
+running SVmerge \shortcite{wong2010} in two steps. In the first step, we merged
+very similar variants among the ones called by the same tool using a
+sliding window of 5 bp. Next, we used the output of the first merging steps
+for all four tools and merged similar variants across the four datasets using
+a sliding window of 15 bp. This approach was used because a
+sliding window of 15 bp on the outputs of all tools without pre-merging
+resulted in a computationally intractable number of pairwise comparisons.
+
+\subsection*{Discovery of structural variation from Oxford Nanopore sequencing data}
+\label{sv-gwas-sv-discovery-ont}
+
+We used SVs discovered among 17 Canadian soybean cultivars sequenced using
+Oxford Nano\-pore Technologies (ONT) by \shortciteA{lemay2022} as an additional
+source of candidate SVs. Although this set of cultivars does not overlap the
+ones analyzed in this study, it is likely that many of the SVs occurring
+in Canadian germplasm also occur in the germplasm used for this study given that modern soybean
+cultivars are derived from a rather small set of progenitors. We merged the SVs detected in the
+long-read (ONT) data with the ones discovered in the short-read (Illumina) data
+using SVmerge and systematically favored SVs discovered by Illumina whenever
+SVs from the two sets were to be merged.  Our rationale for favoring variants
+discovered from the Illumina data was that whenever both technologies discover
+the same variants, the breakpoints of SVs discovered from Illumina data are
+likely to be more precise given the higher basecalling accuracy.
+
+\subsection*{Discovery of structural variation from high-quality assemblies}
+\label{sv-gwas-sv-discovery-assembly}
+
+In addition to Illumina data from 389 accessions, we also used
+high-quality genome assemblies of 29 \emph{G. max} or \emph{Glycine soja}
+accessions to call SVs. We
+retrieved 26 high-quality genomes assembled by \shortciteA{liu2020-pangenome} as well
+as the genome of the cultivar Zhonghuang 13 (ZH13) from the Genome Warehouse
+repository (\url{https://ngdc.cncb.ac.cn/gwh/}). Furthermore, we retrieved the genomes
+of \emph{G. soja} accession W05 and \emph{G. max} cultivar Lee from SoyBase
+\shortcite{grant2010}.
+
+We used methods based on \shortciteA{liu2020-pangenome} to call SVs from the
+genome assemblies.  First, we used the nucmer program of the MUMmer suite of
+tools v. 4.0.0rc1 \shortcite{marcais2018} with option \texttt{-c 1000} to align
+each of the assemblies to the Williams82 assembly. Next, we used the
+delta-filter program of the MUMmer suite to keep only one-to-one alignments
+between any genome and the Williams82 reference using the \texttt{-1} option.
+The filtered alignments were used to call SVs with a version of the svmu
+program \shortcite{chakraborty2019} that we forked from the original repository
+(\url{https://github.com/malemay/svmu}) in order to improve execution time and
+memory usage.
+
+We used a set of tools that we assembled in an R package called svmutools
+(\url{https://github.com/malemay/svmutools}) to convert the svmu output to VCF
+format. We limited ourselves to processing deletions and insertions because of
+the complexity of resolving other types of variants from whole-genome
+assemblies.  Copy number variants and inversions called by svmu were therefore
+excluded from downstream analyses. The
+resulting set of variants was filtered to remove those smaller than 50 bp or larger than 500
+kb and those with any N in either the reference or alternate allele sequence.
+Finally, we normalized the VCF files using \texttt{bcftools norm} and merged
+them using SVmerge to obtain a single file with variants discovered through
+comparison of high-quality genome assemblies.
+
+\subsection*{Genotyping structural variation using Paragraph}
+\label{sv-gwas-sv-genotyping-paragraph}
+
+We used Paragraph v. 2.4a \shortcite{chen2019}
+to generate a set of SV genotypes from the Illumina data of the 389 accessions.
+The set of SVs used as input for Paragraph was generated using SVmerge by
+merging variants discovered from the Illumina and ONT data with
+those discovered from the high-quality assemblies and svmu.
+Variants in this candidate set were prepared for input to Paragraph by first removing
+those closer than 150 bp (the maximum read length in our dataset) to any
+chromosome end and then padding the variant representation using a script written by
+\shortciteA{hickey2020}. 
+
+We ran Paragraph individually on each sample as recommended by the authors.  We
+computed the average sequencing depth for each sample from the output of the
+\texttt{samtools coverage} command and used 20 times that value for the
+\texttt{-M} parameter of Paragraph.  We ran Paragraph using the
+\texttt{multigrmpy} command and merged the resulting VCF files using
+\texttt{bcftools merge} in order to get a  single genotype file for the whole
+population. The resulting genotype calls were filtered as described in the main
+text.
+
+\subsection*{Comparison of WGS and SoySNP50K genotypes}
+\label{annexe-sv-gwas-soysnp50k}
+When we first analyzed the results from the GWAS analysis on all 389 samples,
+we found discrepancies between the haplotypes at some loci and the expected
+phenotype that should correspond to that haplotype for simple traits such as
+flower color and seed coat color. Upon further analysis, we found that a
+mismatch between the sequencing data and the identity of the accession was the
+most probable cause of these discrepancies. In order to identify the samples
+for which this could be the case, we compared the genotypes of SNPs obtained
+from the SoySNP50K array \shortcite{song2013} to those predicted from the Illumina WGS
+data. We did this for the 385 samples that had a match in the GRIN database. Briefly, we
+retrieved SoySNP50K genotype calls from SoyBase \shortcite{grant2010} and extracted
+all SNPs with a MAF $\geq$ 0.1 in our population. We then translated the positions
+of these SNPs from assembly version 2 to assembly version 4 of Williams by
+finding exact matches of 41-bp sequences surrounding the SNP positions. The
+32,852 SNPs for which unambiguous positions could be found on genome assembly
+version 4 were genotyped from the mapped WGS reads using \texttt{bcftools
+mpileup} and \texttt{bcftools call}. We then used \texttt{bcftools gtcheck} to
+compute the concordance between the WGS genotype calls and the
+SoySNP50K genotype dataset. We identified 24 samples
+with < 90\% concordance between the two genotype datasets and removed them from
+the dataset. We also excluded an additional sample for which concordance was over 90\%
+but poor raw sequencing data quality (\%GC content) suggested contamination.
+The concordance between WGS data and SoySNP50K genotypes is included in
+Supplemental file 3 and shown in Figure \ref{concordance-histogram}.
+
+\subsection*{Analysis of extremely low \textit{p}-values}
+\label{annexe-sv-gwas-pvalues}
+
+For one trait (flower color), the significance of some \emph{k}-mers was so
+high that their \emph{p}-values were numerically equal to 0. In order to
+compute $-\log_{10} (p)$ for visualization in Manhattan plots in these cases,
+we set the \emph{p}-value to the smallest numerical value that could be
+represented using R on our machine (2.225074e-308). In this particular case,
+the values represented on the Manhattan plots represent an upper bound on the
+\emph{p}-value and not an exact value.
+
+% Detailed results that are not meant to fit the main paper
+\section*{Supplemental results}
+\label{annexe-sv-gwas-detailed-results}
+
+This section describes results at additional loci that were not discussed in
+the main text. A summary of the signals found at all loci using all three GWAS
+methods is presented in Table \ref{signals_table}.
+
+\subsection*{Flower color -- \textit{L1} locus}
+\label{annexe-sv-gwas-flower-color-l1}
+
+In addition to the \textit{W1} locus, \shortciteA{bandillo2017} reported a signal for
+flower color near the \textit{L1} locus.  None of the GWAS approaches that we
+tested found a signal for flower color near this locus (Figure
+\ref{flower_color_manhattan}). This result is unsurprising as W1 is the major
+contributor to flower color in soybean, whereas the \textit{L1} locus
+(typically associated with pod color) was detected with a much less significant
+\textit{p}-value (see Table \ref{signals_table}) and only conjectured as
+associated with flower color by \shortciteA{bandillo2017}.
+
+\subsection*{Pubescence color -- locus on chromosome Gm16}
+\label{annexe-sv-gwas-pubescence-color-gm16}
+
+In addition to the \textit{T} locus, the first GWAS analysis conducted on pubescence color
+revealed a second locus on chromosome Gm16
+(Figure \ref{pubescence_color_all_manhattan}). Upon closer analysis, this locus
+appeared to be in strong LD with \emph{k}-mers mapping to chromosome Gm01 and
+most importantly in moderate LD with the \emph{T} locus (Figure
+\ref{pubescence_color_all_ld}), which suggests that this does not represent an
+independent locus controlling pubescence color. This interpretation is also
+supported by the fact that the signal at that locus only spans about 10 kb on
+chromosome Gm16.
+
+\subsection*{Seed coat color -- loci \textit{T}, \textit{O} and \textit{R}}
+\label{annexe-sv-gwas-seed-coat-color-t-o}
+
+In addition to the \textit{I} and \textit{G} loci, the \textit{k}-mer-based
+GWAS analysis of five different seed coat color phenotypes (first GWAS in Table
+\ref{SEED.COAT.COLOR_gwas_table}) detected weak signals overlapping the
+\emph{T} and \emph{O} loci (Figure \ref{seed_coat_color_all_manhattan}c).
+However, we interpreted those results as chance associations given the low
+\textit{p}-value associated with the \emph{T} locus and the proximity of the
+\emph{O} locus to the \emph{I} locus. None of the three GWAS approaches detected
+a signal overlapping the \textit{R} locus.
+
+\subsection*{Stem termination type -- loci \textit{Dt2} and \textit{E3}}
+\label{sv-gwas-stem-termination}
+
+We performed a GWAS analysis comparing only semi-determinate and indeterminate
+stem termination phenotypes in an attempt to detect signals at the \emph{Dt2}
+locus (Table \ref{STEM.TERMINATION.TYPE_gwas_table}).  However, this was
+unsuccessful using all three GWAS approaches (Figure
+\ref{stem_termination_sn_manhattan}). Similarly, we failed to detect signals at
+the \textit{E3} locus, which is more commonly associated with maturity but was
+mentioned as associated with stem termination type by \shortciteA{bandillo2017}.
+
+% Hilum color - T locus
+\subsection*{Hilum color -- \textit{T} locus}
+\label{annexe-sv-gwas-results-hilum-color-t}
+
+The \textit{T} locus discussed in the main text for pubescence color is also a determining
+locus for hilum color. We detected signals overlapping the corresponding gene
+using all approaches (Figures \ref{hilum_color_all_manhattan},
+\ref{hilum_color_all_T_signal}). The regions defined by the top 5\% (SVs)
+and top 1\% (SNPs and \textit{k}-mers) variants included
+the Glyma.06g202300 gene associated with this locus. Similarly to what we
+observed for the analysis of the \textit{T} locus based on pubescence color, we
+did identify the documented causal variant at this locus using the Platypus and
+\textit{k}-mer analyses, although these variants were not the most
+significantly associated overall (Figures \ref{hilum_color_all_T_gene},
+\ref{hilum_color_all_T_kmers}).
+
+% Hilum color - I locus
+\subsection*{Hilum color -- \textit{I} locus}
+\label{annexe-sv-gwas-results-hilum-color-i}
+
+Similarly, the \textit{I} locus discussed in the main text for its effect on seed coat
+color also controls hilum color and we detected signals overlapping the
+associated inverted duplication using all approaches (Figures
+\ref{hilum_color_all_manhattan}, \ref{hilum_color_all_I_signal}). However,
+as was the case for the effect of \textit{I} on seed coat color, we were
+not able to link any of the variants identified to the causal variation given
+its highly complex nature.
+
+\subsection*{Hilum color -- loci \textit{W1} and \textit{O}}
+\label{sv-gwas-hilum-color}
+
+None of the three GWAS analyses that we conducted on hilum color found signals
+at the \emph{W1} and \emph{O} loci studied by \shortciteA{bandillo2017} (Figures
+\ref{hilum_color_blackbrown_manhattan} \ref{hilum_color_all_manhattan},
+\ref{hilum_color_rbr_manhattan}).
+
+\subsection*{Pubescence density -- loci \textit{Pd1} and \textit{P1}}
+\label{sv-gwas-pubescence-density}
+
+Our GWAS analysis on pubescence density did not detect any signals at the
+\emph{Pd1} and \emph{P1} (Figure \ref{pubescence_density_manhattan}). Our
+failure to detect these loci is likely due to our small population size
+compared to \shortciteA{bandillo2017} and to the smaller contribution of those loci
+to pubescence density in our population.
+
+\subsection*{Seed coat luster -- loci \textit{Hps}, \textit{B?} and \textit{I}}
+\label{sv-gwas-seed-coat-luster}
+
+We performed three different GWAS analyses on seed coat luster (Table
+\ref{SEED.COAT.LUSTER_gwas_table}). Since all three analyses yielded similar results
+(Figure \ref{seed_coat_luster_all_manhattan},
+\ref{seed_coat_luster_nointermediate_manhattan} and
+\ref{seed_coat_luster_dullshiny_manhattan}), we chose to focus on the
+GWAS contrasting the dull and shiny phenotypes as it yielded the most
+significant signals. In addition, it also provided results that were most consistent with the
+analysis previously done by \shortciteA{bandillo2017}.
+
+The analysis detected signals at the \emph{B} locus as the sole classical locus
+using all three methods (see main text and Figure
+\ref{seed_coat_luster_dullshiny_manhattan}).  All methods also detected signals
+overlapping the \emph{Hps} locus as defined by \shortciteA{bandillo2017}, however
+results shown by \shortciteA{gijzen2003} and our results suggest that \emph{Hps} and
+\emph{B} are the same locus. 
+
+Apparent signals on chromosomes Gm20 and Gm09 (which may correspond to the B?
+locus reported by \shortciteA{bandillo2017}) were also detected, but analysis of the
+LD patterns between \emph{k}-mers suggested that these signals are most likely
+in LD with the \emph{B} locus (Figure \ref{seed_coat_luster_dullshiny_ld}).
+
+\shortciteA{bandillo2017} mentioned the \textit{I} locus as possibly associated
+with seed coat luster, however we did not find evidence for such an association
+in our dataset.
+
+\subsection*{Pubescence form -- additional loci}
+\label{sv-gwas-pubesence-form}
+
+The first GWAS analysis on pubescence form found signals on chromosomes Gm04
+and Gm15 with SNPs and \emph{k}-mers (Figure
+\ref{pubescence_form_all_manhattan}). However, upon further analysis of LD
+patterns, they appeared to be linked to the \emph{Pa1} locus (Figure
+\ref{pubescence_form_all_ld}).
+
+
+\subsection*{Maturity group}
+\label{annexe-sv-gwas-maturity}
+
+We did not detect any signals associated with maturity using our dataset
+(Figure \ref{maturity_group_manhattan}). The use of maturity group as a proxy
+for time to maturity instead of the number of days, combined with the limited
+phenotypic variation of this trait in this collection of accessions (Table
+\ref{MATURITY.GROUP_gwas_table}), likely explains our failure to detect
+any signals.
+
+\subsection*{Seed oil and protein content}
+\label{sv-gwas-seed-oil-protein-content}
+
+We conducted a GWAS analysis on seed oil content using data obtained from the
+GRIN database. While several seed oil content quantitative trait loci (QTL)
+have been reported due to high interest in this trait for soybean breeding
+\shortcite{chaudhary2015}, we focused on two major QTL on chromosomes Gm15 and Gm20.
+These loci have often been reported in \emph{G. max} and were notably observed by
+\shortciteA{bandillo2015} on a collection of USDA lines using SoySNP50K chip
+genotypes and GRIN phenotypic data. We identified a signal located on
+chromosome Gm15 using the \emph{k}-mer approach only (Figure
+\ref{oil_manhattan}). Although this signal did not overlap with the coordinates
+found by \shortciteA{bandillo2017}, it was located only 2 kb away from it and 30 kb
+away from Glyma.15g049200, the sugar transporter gene identified by
+\shortciteA{zhang2020} as associated with that locus. Therefore, the significantly
+associated \emph{k}-mers were not linked to the causal variation at that locus.
+
+Similarly to seed oil content, we conducted a GWAS on seed protein content
+using data obtained from the GRIN database. As is generally the case in
+soybean given the negative correlation between seed oil and protein content,
+the two major QTL considered above and reported by \shortciteA{bandillo2015} for seed
+oil content are also major QTL for seed protein content. However, none of the
+approaches detected a signal at this locus (Figure \ref{protein_manhattan}).
+
+Our failure to detect signals overlapping the known genes at these two loci for
+oil and protein is probably due to the fact that the oil and protein content
+data that we used for GWAS were not obtained from orthogonal trials, which was
+a clear limitation to this GWAS given our relatively small sample size. 
+
+\clearpage
+
+% Supplemental tables
+\section*{Supplemental tables}
+\label{annexe-sv-gwas-tables}
+
+\clearpage
+
+\gwastableone{FLOWER.COLOR}{flower color}
+\gwastabletwo{PUBESCENCE.COLOR}{pubescence color}
+\gwastabletwo{SEED.COAT.COLOR}{seed coat color}
+\gwastabletwo{STEM.TERMINATION.TYPE}{stem termination type}
+\gwastablethree{HILUM.COLOR}{hilum color}
+\gwastabletwo{POD.COLOR}{pod color}
+\gwastabletwo{PUBESCENCE.FORM}{pubescence form}
+\gwastableone{PUBESCENCE.DENSITY}{pubescence density}
+\gwastablethree{SEED.COAT.LUSTER}{seed coat luster}
+\gwastableone{MATURITY.GROUP}{maturity group}
+
+% Table with all signals
+\begin{landscape} \footnotesize
+	\begin{ThreePartTable}
+
+		\begin{TableNotes}
+		\item[a] Most significant -log\textsubscript{10}(\emph{p}) previously reported at this locus by the study in the Study column
+		\item[b] Gene associated with the locus. A question mark following the identifier of the gene indicates that this is simply a candidate
+			that has yet to be confirmed. A dash indicates that no candidate has been suggested yet. We have only included candidate
+			genes that have been suggested in previous studies.
+		\item[c] Most significant -log\textsubscript{10}(\emph{p}) reported from SNPs and indels at this locus. A dash indicates that no signal
+			was detected from SNPs and indels at this locus. The same applies for other methods (SVs, \emph{k}-mers) in
+			their respective columns.
+		\item[d] The \emph{p}-value at the W1 locus using the \emph{k}-mers method was so small that it was numerically equal
+			to zero. This value was therefore set to the -log\textsubscript{10} of the smallest value that could be represented
+			in R using our machine.
+		\end{TableNotes}
+
+		\begin{longtable}{llcclcccl}
+
+			\caption[Description of loci associated with the traits studied]%
+			{Description of loci associated with the traits studied and -log\textsubscript{10}(\emph{p}) of significant
+			signals detected in our study using three different genotype datasets (SNPs/indels, SVs, \emph{k}-mers).}\\
+			\label{signals_table}\\
+
+			\toprule
+			Trait & Locus & Chromosome & -log\textsubscript{10}(\emph{p})\tnote{a} & Gene\tnote{b} & SNPs/indels\tnote{c} & SVs & \emph{k}-mers  & Study \\
+			\midrule \endfirsthead
+
+			\caption[]{Loci associated with the traits studied \emph{(continued)}}\\
+
+			\toprule
+			Trait & Locus & Chromosome & -log10(p) & Gene & SNPs/indels & SVs & k-mers  & Study \\
+			\midrule
+			\endhead
+
+			\bottomrule
+			Continued on next page \\
+			\endfoot
+
+			\bottomrule \insertTableNotes
+			\endlastfoot
+			\csvreader[head to column names,
+			late after line=\\,
+			late after last line=,
+			before reading={\catcode`\#=12},
+			after reading={\catcode`\#=6},
+			/csv/separator=semicolon]%
+			{../tables/signals_table.csv}{}{\Trait & \Locus & \Chromosome & \Pvalues & \Gene & \Platypus & \Paragraph & \Kmers & \Study}
+
+		\end{longtable}
+
+	\end{ThreePartTable}
+
+\end{landscape}
+\clearpage
+
+
+% Supplemental figures
+\section*{Supplemental figures}
+\label{annexe-sv-gwas-figures}
+
+% Figures mentioned in the main text
+
+% Histogram with concordance rates
+\begin{cfigure}
+	\includegraphics[width = 6in]{concordance_histogram}
+	\caption{Histogram of concordance rates between genotypes derived from WGS data and SoySNP50K genotypes for 385 soybean accessions.
+	The vertical line indicates the 0.9 concordance threshold that was used for filtering out mismatching samples.}
+	\label{concordance-histogram}
+\end{cfigure}
+
+\clearpage
+
+% Figures for flower color
+\manhattanplot{flower_color}{flower color}{\getvar{flower_color_nsamples}}
+\signalplot{flower_color_W1}{flower color}{\emph{W1}}%
+{Vertical dotted lines indicate the location of the \getvar{flower_color_W1_gene} gene associated with the locus.}
+\geneplot{flower_color_W1}{flower color}{\emph{W1}}{\getvar{flower_color_W1_gene} gene}%
+{Vertical dotted lines in panels (c) and (d) indicate the location of the causal SV at this locus.}
+\ldplot{flower_color}{flower color}{\getvar{flower_color_ldkmers}}
+%\kmerplot{flower_color_W1}
+
+% Figures for pubescence color
+\manhattanplot{pubescence_color_all}{pubescence color (first GWAS)}{\getvar{pubescence_color_all_nsamples}}
+\signalplot{pubescence_color_all_T}{pubescence color (first GWAS)}{\emph{T}}%
+{Vertical dotted lines indicate the location of the \getvar{pubescence_color_all_T_gene} gene associated with the locus.}
+\geneplot{pubescence_color_all_T}{pubescence color (first GWAS)}{\emph{T}}{\getvar{pubescence_color_all_T_gene} gene}%
+{Vertical dotted lines in panels (b) and (d) indicate the location of the causal indel at this locus.}
+\kmerplot{pubescence_color_all_T}{\getvar{pubescence_color_all_T_gene}}{\emph{T}}{pubescence color (first GWAS)}{a causal indel}
+
+\manhattanplot{pubescence_color_nogray}{pubescence color (second GWAS)}{\getvar{pubescence_color_nogray_nsamples}}
+\signalplot{pubescence_color_nogray_Td}{pubescence color (second GWAS)}{\emph{Td}}%
+{Vertical dotted lines indicate the location of the \getvar{pubescence_color_nogray_Td_gene} gene associated with the locus.}
+\geneplot{pubescence_color_nogray_Td}{pubescence color (second GWAS)}{\emph{Td}}{\getvar{pubescence_color_nogray_Td_gene} gene}%
+{Vertical dotted lines in panels (b) and (d) indicate the location of the causal SNP at this locus.}
+%\kmerplot{pubescence_color_nogray_Td}
+
+% Figures for seed coat color
+\manhattanplot{seed_coat_color_all}{seed coat color (first GWAS)}{\getvar{seed_coat_color_all_nsamples}}
+\signalplot{seed_coat_color_all_I}{seed coat color (first GWAS)}{\emph{I}}%
+{Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
+
+\manhattanplot{seed_coat_color_greenyellow}{seed coat color (second GWAS)}{\getvar{seed_coat_color_greenyellow_nsamples}}
+\signalplot{seed_coat_color_greenyellow_G}{seed coat color (second GWAS)}{\emph{G}}%
+{Vertical dotted lines indicate the location of the \getvar{seed_coat_color_greenyellow_G_gene} gene associated with the locus.}
+\geneplot{seed_coat_color_greenyellow_G}{seed coat color (second GWAS)}{\emph{G}}{\getvar{seed_coat_color_greenyellow_G_gene} gene}%
+{Vertical dotted lines in panels (b) and (d) indicate the location of the causal SNP at this locus.}
+%\kmerplot{seed_coat_color_greenyellow_G}
+
+% Figures for stem termination
+\manhattanplot{stem_termination_all}{stem termination type (first GWAS)}{\getvar{stem_termination_all_nsamples}}
+\signalplot{stem_termination_all_Dt1}{stem termination type (first GWAS)}{\emph{Dt1}}%
+{Vertical dotted lines indicate the location of the \getvar{stem_termination_all_Dt1_gene} gene associated with the locus.}
+\geneplot{stem_termination_all_Dt1}{stem termination type (first GWAS)}{\emph{Dt1}}{\getvar{stem_termination_all_Dt1_gene} gene}%
+{Vertical dotted lines in panels (b) and (d) indicate the location of a causal SNP at this locus.}
+\kmerplot{stem_termination_all_Dt1}{\getvar{stem_termination_all_Dt1_gene}}{\emph{Dt1}}{stem termination type (first GWAS)}{a causal SNP}
+
+
+% Figures for hilum color
+\manhattanplot{hilum_color_blackbrown}{hilum color (second GWAS)}{\getvar{hilum_color_blackbrown_nsamples}}
+\signalplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}%
+{Vertical dotted lines indicate the location of the \getvar{hilum_color_blackbrown_R_gene} gene associated with the locus.}
+\geneplot{hilum_color_blackbrown_R}{hilum color (second GWAS)}{\emph{R}}{\getvar{hilum_color_blackbrown_R_gene} gene}%
+{Vertical dotted lines indicate the location an indel (panels b and d) and a SNP (panel d) that are putatively causal at this locus.}
+\kmerplot{hilum_color_blackbrown_R}{\getvar{hilum_color_blackbrown_R_gene}}{\emph{R}}{hilum color (second GWAS)}{a SNP and an indel that are putatively causal}
+
+% Figures for pubescence density
+\manhattanplot{pubescence_density}{pubescence density}{\getvar{pubescence_density_nsamples}}
+\signalplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}%
+{Vertical dotted lines indicate the boundaries of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene associated with the locus.}
+\geneplot{pubescence_density_Ps}{pubescence density}{\emph{Ps}}{location of the causal CNV overlapping the \getvar{pubescence_density_Ps_gene} gene.}%
+{The vertical dotted line in panel (d) indicates the location of the most significant \emph{k}-mer, which is associated with the causal CNV at this locus.
+The shaded gray rectangles show the boundaries of the causal CNV.}
+
+% Figures for seed coat luster
+\signalplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}%
+{Vertical dotted lines indicate the boundaries of the causal CNV associated with the locus.}
+\geneplot{seed_coat_luster_dullshiny_B}{seed coat luster (third GWAS)}{\emph{B}}{location of the causal CNV}%
+{The shaded gray rectangles show the boundaries of the causal CNV.}
+\manhattanplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_nsamples}}
+
+% Figures for pod color
+\manhattanplot{pod_color_all}{pod color (first GWAS)}{\getvar{pod_color_all_nsamples}}
+\signalplot{pod_color_all_L1}{pod color (first GWAS)}{\emph{L1}}{}
+\signalplot{pod_color_all_L2}{pod color (first GWAS)}{\emph{L2}}{}
+
+% Figures for pubescence form
+\manhattanplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_nsamples}}
+\signalplot{pubescence_form_all_Pa1}{pubescence form (first GWAS)}{\emph{Pa1}}%
+{Vertical dotted lines indicate the location of the \getvar{pubescence_form_all_Pa1_gene} gene that we suggest as a candidate for this locus.}
+\geneplot{pubescence_form_all_Pa1}{pubescence form (first GWAS)}{\emph{Pa1}}{\getvar{pubescence_form_all_Pa1_gene} candidate gene putatively}%
+{Vertical dotted lines in panels (b) and (d) indicate the location of two highly significant non-synonymous SNPs at this gene.}
+\kmerplot{pubescence_form_all_Pa1}{\getvar{pubescence_form_all_Pa1_gene} candidate}{\emph{Pa1}}{pubescence form (first GWAS)}{a non-synonymous SNP}
+\signalplot{pubescence_form_all_Pa2}{pubescence form (first GWAS)}{\emph{Pa2}}{}
+\manhattanplot{pubescence_form_noerect}{pubescence form (second GWAS)}{\getvar{pubescence_form_noerect_nsamples}}
+
+% Figures for corrected dry weight
+\manhattanplot{corrected_dry_weight}{corrected dry weight (resistance to \emph{P. sojae})}{\getvar{corrected_dry_weight_nsamples}}
+\signalplot{corrected_dry_weight_cdwGm15}{corrected dry weight (resistance to \emph{P. sojae})}{\emph{cdwGm15}}%
+{Vertical dotted lines indicate the location of the \getvar{corrected_dry_weight_cdwGm15_gene} gene suggested by de Ronne et al. (2022) as associated with the locus.}
+%\ldplot{corrected_dry_weight}
+
+% Figures for novel loci
+\manhattanplot{pod_color_blbr}{pod color (second GWAS)}{\getvar{pod_color_blbr_nsamples}}
+\ldplot{pod_color_blbr}{pod color (second GWAS)}{\getvar{pod_color_blbr_ldkmers}}
+\signalplot{pod_color_blbr_pdcGm15}{pod color (second GWAS)}{newly suggested \emph{pdcGm15}}{}
+
+% Figures mentioned only in supplemental data
+
+% Flower color
+
+% Pubescence color
+\ldplot{pubescence_color_all}{pubescence color (first GWAS)}{\getvar{pubescence_color_all_ldkmers}}
+
+% Stem termination
+\manhattanplot{stem_termination_sn}{stem termination type (second GWAS)}{\getvar{stem_termination_sn_nsamples}}
+%\ldplot{stem_termination_sn}
+
+% Hilum color
+\manhattanplot{hilum_color_all}{hilum color (first GWAS)}{\getvar{hilum_color_all_nsamples}}
+\signalplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}%
+{Vertical dotted lines indicate the location of the \getvar{hilum_color_all_T_gene} gene associated with the locus.}
+\geneplot{hilum_color_all_T}{hilum color (first GWAS)}{\emph{T}}{\getvar{hilum_color_all_T_gene} gene}%
+{Vertical dotted lines in panels (b) and (d) indicate the location of the causal indel at this locus.}
+\kmerplot{hilum_color_all_T}{\getvar{hilum_color_all_T_gene}}{\emph{T}}{hilum color (first GWAS)}{a causal indel}
+\signalplot{hilum_color_all_I}{hilum color (first GWAS)}{\emph{I}}%
+{Vertical dotted lines indicate the boundaries of the tandem duplication/inversion identified as the causal variant at this locus.}
+
+\manhattanplot{hilum_color_rbr}{hilum color (third GWAS)}{\getvar{hilum_color_rbr_nsamples}}
+
+% Pod color
+
+% Pubescence density
+
+% Seed coat luster
+\manhattanplot{seed_coat_luster_all}{seed coat luster (first GWAS)}{\getvar{seed_coat_luster_all_nsamples}}
+\manhattanplot{seed_coat_luster_nointermediate}{seed coat luster (second GWAS)}{\getvar{seed_coat_luster_nointermediate_nsamples}}
+
+\ldplot{seed_coat_luster_dullshiny}{seed coat luster (third GWAS)}{\getvar{seed_coat_luster_dullshiny_ldkmers}}
+
+% Pubescence form
+\ldplot{pubescence_form_all}{pubescence form (first GWAS)}{\getvar{pubescence_form_all_ldkmers}}
+
+
+% Figures for maturity group
+\manhattanplot{maturity_group}{maturity group}{\getvar{maturity_group_nsamples}}
+
+% Figures for oil
+\manhattanplot{oil}{seed oil content}{\getvar{oil_nsamples}}
+
+% Figures for protein
+\manhattanplot{protein}{seed protein content}{\getvar{protein_nsamples}}
+
+% Bibliography
+\bibliographystyle{apacite}              % style de la bibliographie
+\bibliography{references}                   % production de la bibliographie
+
+\end{document}
+

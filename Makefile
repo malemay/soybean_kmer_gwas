@@ -1,6 +1,7 @@
 RSCRIPT := ~/.local/bin/Rscript --quiet
 PDFLATEX := ~/.local/texlive/2022/bin/x86_64-linux/pdflatex
 BIBTEX := ~/.local/texlive/2022/bin/x86_64-linux/bibtex
+LATEXDIFF := ~/.local/texlive/2022/bin/x86_64-linux/latexdiff
 
 SDIR := additional_files
 
@@ -66,6 +67,7 @@ phenodata := $(shell cut -f1 utilities/kmer_plot_ranges.txt | xargs -I {} echo g
 # The first target of the Makefile
 # It generates the manuscript as well as the supplementary files, and data for interpretation
 all: $(SDIR)/manuscript.pdf \
+	$(SDIR)/manuscript_tc.pdf \
 	$(SDIR)/additional_file_1.pdf \
 	$(genetables) $(phenodata) \
 	$(SDIR)/supplemental_file_2.csv \
@@ -111,6 +113,13 @@ $(SDIR)/additional_file_1.pdf: $(SDIR)/additional_file_1.tex \
 	additional_files/references.bib \
 	$(SDIR)/variables.txt
 	cd $(SDIR) ; $(PDFLATEX) additional_file_1.tex ; $(BIBTEX) additional_file_1 ; $(PDFLATEX) additional_file_1.tex ; $(PDFLATEX) additional_file_1.tex
+
+# Compiling the diff version of the manuscript
+$(SDIR)/manuscript_tc.pdf: $(SDIR)/manuscript_tc.tex $(SDIR)/manuscript.pdf
+	cd $(SDIR) ; $(PDFLATEX) manuscript_tc.tex ; $(BIBTEX) manuscript_tc ; $(PDFLATEX) manuscript_tc.tex ; $(PDFLATEX) manuscript_tc.tex
+
+$(SDIR)/manuscript_tc.tex: $(SDIR)/manuscript.tex $(SDIR)/submitted_manuscript.tex
+	$(LATEXDIFF) $(SDIR)/submitted_manuscript.tex $(SDIR)/manuscript.tex > $(SDIR)/manuscript_tc.tex
 
 # Creating the list of variables stored in additional_files/variables.txt, for retrival in additional file 1
 $(SDIR)/variables.txt: $(SDIR)/make_variables.R \
