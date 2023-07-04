@@ -142,7 +142,8 @@ François Belzile}
 \newcommand{\manhattanplot}[3]{
 	\begin{cfigure}
 		\includegraphics[width = 6.5in]{#1_manhattan}
-		\caption[Manhattan plots for #2]{Manhattan plots generated from the GWAS analysis of #2 on #3 samples using three genotype datasets :
+		\caption[Manhattan plots for #2]{Manhattan plots and associated Q-Q plots
+		generated from the GWAS analysis of #2 on #3 samples using three genotype datasets :
 		(a) Platypus (SNPs and indels), (b) Paragraph (SVs), (c) \emph{k}-mers presence/absence.
 		The x-axis shows the position along the reference assembly version 4 of Williams82.
 		Each point shows the $-\log_{10} (p)$ associated with a particular marker or \emph{k}-mer.
@@ -150,6 +151,7 @@ François Belzile}
 		Vertical dotted lines indicate the position of signals associated with the trait.
 		Documented loci are colored according to whether they were found (green) or not (red) by a particular approach.
 		The ``Gm'' prefix has been left out of chromosome names for simplicity.
+		The dashed red line in Q-Q plots represents the identity line ($y = x$)
 		}
 		\label{#1_manhattan}
 	\end{cfigure}

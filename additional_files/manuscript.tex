@@ -199,8 +199,8 @@ the performance of GWAS methods.  The objectives of our study were to:
 \subsection*{Sample selection and processing of sequencing data}
 
 We selected 389 inbred \emph{G. max} accessions based on the availability of
-Illumina WGS data and phenotypic data for resistance to the oomycete \emph{P.
-sojae} \shortcite{deronne2022}.  We identified 741 SRA runs corresponding to
+phenotypic data for resistance to the oomycete \emph{P.
+sojae} \shortcite{deronne2022} and matching Illumina WGS data. We identified 741 SRA runs corresponding to
 Illumina paired-end sequencing data for those 389 accessions \shortcite<data from>[]{zhou2015, valliyodan2016, fang2017, bayer2021}
 and extracted paired-end reads using the fastq-dump command v. 2.9.6
 (\citeauthor{sratoolkit}) with the
@@ -279,7 +279,9 @@ step of 100 markers and an $r^2$ LD threshold of 0.9. This pruning step was
 implemented to reduce the computational requirements of the GWAS analysis by
 removing co-segregating markers. Markers located on unanchored scaffolds were
 also removed. The resulting dataset was used for GWAS and comprised 773,060
-SNPs and 151,570 indels.
+SNPs and 151,570 indels. Pruned markers were still used for GWAS at targeted
+loci when filtered markers identified significant associations (more details
+in the section describing the analysis of significant signals).
 
 \subsection*{Computing the presence/absence table of \emph{k}-mers}
 
@@ -289,7 +291,9 @@ associated GitHub page (v. 0.2-beta, \url{https://github.com/voichek/kmersGWAS})
 a presence/absence \emph{k}-mer table for use in GWAS.  The first step of
 the approach involved counting all \emph{k}-mers of length 31 (31-mers) present
 in the trimmed (FASTQ) reads for each accession using KMC3 v. 3.2.1
-\shortcite{kokot2017}. \emph{k}-mers were counted twice, the first time using their
+\shortcite{kokot2017}. We selected $k = 31$ based on demonstrated performance in previously
+published studies \shortcite{rahman2018, voichek2020, he2021}.
+\emph{k}-mers were counted twice, the first time using their
 canonized form (the first of either the observed \textit{k}-mer or its reverse
 complement in lexicographical order) and the second time using the observed
 \emph{k}-mers themselves (non-canonized form). The two sets of \textit{k}-mers
@@ -299,8 +303,9 @@ and non-canonized form in at least 20\% of the accessions in which they are foun
 We then generated a table indicating the presence or absence of each
 \emph{k}-mer in all accessions. This table was used to compute a kinship
 table for use in GWAS and was also used directly as input genotypes for the
-GWAS analyses. We used \emph{k}-mers with a MAF $\geq$ 0.02 for both the
-computation of kinship and GWAS.
+GWAS analyses. We used all \emph{k}-mers with a MAF $\geq$ 0.02 as input genotypes
+for both the computation of kinship and GWAS analysis. The total number of \textit{k}-mers
+in this filtered table was 637,605,529.
 
 \subsection*{Phenotypic data}
 
@@ -356,8 +361,12 @@ variants as SNPs prior to converting the VCF files to Hapmap diploid format
 using the TASSEL command-line tools \shortcite{bradbury2007}; variant IDs enabled
 retrieval of the proper metadata for each variant after GWAS.
 
-We ran GAPIT using a mixed linear model (MLM) with 9 principal components and the VanRaden
-algorithm for computing the kinship matrix. We used an MLM model for
+We ran GAPIT using a mixed linear model (MLM) with nine principal components and the VanRaden
+algorithm for computing the kinship matrix. We chose to use nine principal components
+based on previous work by \shortciteA{deronne2022} using the same population.
+Principal components and kinship were computed
+on the fly by the GAPIT function itself from the provided inputs, i.e. based on SNPs/indels
+or on SVs depending on the analysis. We used an MLM model for
 consistency with the statistical model used by the \textit{k}-mer-based
 approach.  We used a randomization approach to determine the 5\% family-wise
 error-rate threshold for each GWAS analysis as described by \shortciteA{voichek2020}.
@@ -403,7 +412,9 @@ the position where this \emph{k}-mer was most often observed in
 the dataset. Moreover, we limited the analysis to reads with a minimum mapping
 quality of 20 and to \emph{k}-mers that were observed at least 10 times in at
 least one accession. The latter was done to remove spurious \emph{k}-mers that may originate
-from sequencing errors. All downstream analyses (Manhattan plots,
+from sequencing errors. Filtering based on mapping quality also removed all reads that
+mapped to multiple locations because bwa assigns a mapping quality of 0 to such reads.
+All downstream analyses (Manhattan plots,
 identification of signals, analysis of genes located near significant
 \emph{k}-mers, etc.) used this processed set of significant \emph{k}-mers.
 
@@ -1097,6 +1108,10 @@ variation occurring in repeated sequences. Alternative models based on
 \emph{k}-mer counts instead of presence/absence have been developed
 \shortcite{rahman2018, he2021} which may solve issues like these and broaden the
 scope of variants that can be identified from \emph{k}-mers.
+Nevertheless, \shortciteA{voichek2020} demonstrated that 98.9\% of known translocations and
+inversions as well as 99.6\% of known insertions/deletions in \textit{Arabidopsis thaliana}
+could be tagged by unique 31-mers. It is therefore likely that the vast majority
+of variants can be detected through the presence/absence of \textit{k}-mers.
 
 The complexity of analyzing the results of \emph{k}-mer-based GWAS is another
 limitation of this approach. Although the method developed by
@@ -1167,7 +1182,9 @@ that most transposable element insertions associated with phenotypic variation
 in agronomic traits were not tagged by SNPs. On the other hand, in humans,
 \shortciteA{maretty2017} found that the majority of SVs were in high LD with SNPs. It
 is therefore likely that how well SVs can be tagged by SNPs will depend on the
-particular type of SV and on the species. A more efficient approach than
+particular type of SV and on the species. Until more robust SV calling and genotyping
+methods are developed or advances in sequencing technology result in more
+trustworthy SV datasets, a more efficient approach than
 SV-based GWAS may be to conduct \emph{k}-mer-based GWAS and only then link
 known SVs to significant \emph{k}-mers.  Alternatively, \textit{k}-mer-based
 GWAS can be conducted specifically for \textit{k}-mers that are associated with
