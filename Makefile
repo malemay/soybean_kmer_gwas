@@ -47,7 +47,8 @@ supfigures := $(manhattanplots) \
 	$(geneplots) \
 	$(kmerplots) \
 	$(ldplots) \
-	figures/concordance_histogram.png
+	figures/concordance_histogram.png \
+	figures/seqdepth.png
 
 # Creating variables for objects that are used in the interpretation of the results
 # We only create these tables for loci that have a corresponding signal plot
@@ -478,6 +479,13 @@ $(foreach signal,$(shell cut -d "," -f1 utilities/signal_ids.txt | xargs -I {} e
 # SUPPLEMENTAL FIGURE - HISTOGRAM of concordance results
 figures/concordance_histogram.png: figures/concordance_histogram.R \
 	illumina_data/soysnp50k_genotyping/gtcheck_results.tsv
+	$(RSCRIPT) $<
+
+# SUPPLEMENTAL FIGURE - Proportion of genome covered by one read as a function of sequencing depth
+figures/seqdepth.png: figures/seqdepth_figure.R \
+	phenotypic_data/phenotypic_data.csv \
+	sv_genotyping/paragraph/MANIFEST_FILES \
+	illumina_data/SAMTOOLS_STATS
 	$(RSCRIPT) $<
 
 # COMPARING THE GENOTYPES DERIVED FROM WGS TO SOYSNP50K

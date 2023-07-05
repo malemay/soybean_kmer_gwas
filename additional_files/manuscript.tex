@@ -300,6 +300,8 @@ complement in lexicographical order) and the second time using the observed
 were then combined and filtered by
 keeping only those seen in at least 5 accessions, and observed in both canonized
 and non-canonized form in at least 20\% of the accessions in which they are found.
+Only \textit{k}-mers that occurred twice in a given sample were considered to
+reduce the impact of sequencing errors.
 We then generated a table indicating the presence or absence of each
 \emph{k}-mer in all accessions. This table was used to compute a kinship
 table for use in GWAS and was also used directly as input genotypes for the
@@ -1094,24 +1096,62 @@ variant calling and genotyping, and therefore yields more accurate results.
 
 While we have have shown that using \emph{k}-mers for GWAS in soybean performed
 well compared to other GWAS methods, this approach does present some unique
-challenges and limitations. One obvious limitation is that using the
-presence/absence of \emph{k}-mers may not be appropriate in species where
-heterozygosity is common (i.e., most species other than inbred crops) as the
-\emph{k}-mers associated with the presence of both alleles will be observed at
-heterozygous loci. Moreover, although the presence/absence of \emph{k}-mers can
-detect variation independently of its type, some types of variation may be more
-difficult to detect than others.  For example, copy number variation at a locus
-may not be detected from presence/absence alone if all copies are identical and
-occur in tandem, such that no \textit{k}-mer can differentiate between two
-copies and more. For similar reasons, \emph{k}-mers may also fail to capture
-variation occurring in repeated sequences. Alternative models based on
-\emph{k}-mer counts instead of presence/absence have been developed
-\shortcite{rahman2018, he2021} which may solve issues like these and broaden the
-scope of variants that can be identified from \emph{k}-mers.
-Nevertheless, \shortciteA{voichek2020} demonstrated that 98.9\% of known translocations and
-inversions as well as 99.6\% of known insertions/deletions in \textit{Arabidopsis thaliana}
-could be tagged by unique 31-mers. It is therefore likely that the vast majority
-of variants can be detected through the presence/absence of \textit{k}-mers.
+challenges and limitations. One of these challenges is the
+interpretation of \textit{k}-mer-based GWAS given the greater possibility
+of false positive associations than in conventional GWAS approaches. In this
+study, we noticed apparently spurious associations with \textit{k}-mers
+scattered throughout the genome were common. This was especially the case for
+highly significant loci whose signal spanned several megabases such as \textit{W}
+and \textit{T}. A look at the Q-Q plots derived from \textit{k}-mer-based GWAS
+showed that these usually had the same shape as the Q-Q plots derived from SNP-
+and SV-based GWAS, suggesting that population structure was properly controlled.
+We believe that a more likely culprit for these spurious associations is the
+difficulty in linking \textit{k}-mers to genomic coordinates. At loci that
+span a large interval, it is indeed be highly likely that some of the \textit{k}-mers
+coming from the region map elsewhere in the genome. This interpretation is supported
+by the fact that the LD between presumably spurious \textit{k}-mers and
+\textit{k}-mers from target loci was generally high (e.g. Figures S5 and S47).
+Overall, the risk of false association due to population structure and the identification
+of an appropriate significance threshold seems well controlled, but work remains
+to be done in reducing the occurrence of spurious associations.
+
+There are obvious limitations to the relying on the presence/absence of
+\emph{k}-mers for GWAS. For example, this approach may not be appropriate in
+species where heterozygosity is common (i.e., most species other than inbred
+crops) as the \emph{k}-mers associated with the presence of both alleles will
+be observed at heterozygous loci. Moreover, although the presence/absence of
+\emph{k}-mers can detect variation independently of its type, some types of
+variation may be more difficult to detect than others.  For example, copy
+number variation at a locus may not be detected from presence/absence alone if
+all copies are identical and occur in tandem, such that no \textit{k}-mer can
+differentiate between two copies and more. For similar reasons, \emph{k}-mers
+may also fail to capture variation occurring in repeated sequences. Alternative
+models based on \emph{k}-mer counts instead of presence/absence have been
+developed \shortcite{rahman2018, he2021} which may solve issues like these and
+broaden the scope of variants that can be identified from \emph{k}-mers.
+Nevertheless, \shortciteA{voichek2020} demonstrated that 98.9\% of known
+translocations and inversions as well as 99.6\% of known insertions/deletions
+in \textit{Arabidopsis thaliana} could be tagged by unique 31-mers. It is
+therefore likely that the vast majority of variants can be detected through the
+presence/absence of \textit{k}-mers.
+
+In addition to the link between \textit{k}-mer presence/absence and sequence
+variation, one may wonder to what extent errors may occur in declaring the
+presence or absence of a \textit{k}-mer based on Illumina WGS data. If we
+neglect the possibility of contamination, the most likely error would be to
+declare a \textit{k}-mer as absent simply because sequencing depth was
+insufficient. In this study, we declared \textit{k}-mers as present
+based on a minimum of two occurrences. Therefore, a \textit{k}-mer may be
+wrongly declared as absent if it is observed only once or not at all.  To
+quantify this error, we compared the number of times that a given position was
+observed only once in a sample to the average sequencing depth of that sample.
+We found that most samples with a sequencing depth between 10 and 20X had
+a proportion of only 0.5 to 1.5\% of positions covered by only one read.
+Therefore, the risk of falsely declaring a \textit{k}-mer as absent from
+our dataset was low, and in any case much lower than typical error rates
+involved in calling and genoyping SVs \shortcite<e.g.>[]{kosugi2019, ebler2022}.
+The robustness of \textit{k}-mer presence/absence to sequencing depth is also
+demonstrated by \shortciteA{gaurav2022}.
 
 The complexity of analyzing the results of \emph{k}-mer-based GWAS is another
 limitation of this approach. Although the method developed by
