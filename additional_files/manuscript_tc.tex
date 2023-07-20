@@ -1,7 +1,7 @@
 \documentclass{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL additional_files/submitted_manuscript.tex   Tue Jun 13 12:04:45 2023
-%DIF ADD additional_files/manuscript.tex             Thu Jul  6 19:08:39 2023
+%DIF ADD additional_files/manuscript.tex             Thu Jul 20 13:23:35 2023
 
 %%% Load packages
 \usepackage{amsthm,amsmath}
@@ -186,8 +186,10 @@ GWAS is a powerful approach for discovering candidate genes in crop species.
 
 \clearpage
 
-\section*{Introduction}
-Genome-wide association studies (GWAS) are analytical approaches that detect
+\DIFdelbegin \section*{\DIFdel{Introduction}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \section{\DIFadd{Introduction}}
+\DIFaddend Genome-wide association studies (GWAS) are analytical approaches that detect
 statistical associations between phenotypic observations for a trait of
 interest and the genotypes of variants distributed throughout the
 genome \shortcite{tam2019}. This approach has been used for over 15 years
@@ -278,9 +280,15 @@ the performance of GWAS methods.  The objectives of our study were to:
 
 \clearpage
 
-\section*{Materials and methods}
+\DIFdelbegin \section*{\DIFdel{Materials and methods}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \section{\DIFadd{Materials and methods}}
+\DIFaddend 
 
-\subsection*{Sample selection and processing of sequencing data}
+\DIFdelbegin \subsection*{\DIFdel{Sample selection and processing of sequencing data}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Sample selection and processing of sequencing data}}
+\DIFaddend 
 
 We selected 389 inbred \emph{G. max} accessions based on the availability of
 \DIFdelbegin \DIFdel{Illumina WGS data and }\DIFdelend phenotypic data for resistance to the oomycete \emph{P.
@@ -310,7 +318,10 @@ accession using bamaddrg
 resulting BAM files for all downstream analyses requiring aligned reads.
 Metadata on mapping depth of aligned data can be found in Supplemental file 3.
 
-\subsection*{Discovery and genotyping of SVs}
+\DIFdelbegin \subsection*{\DIFdel{Discovery and genotyping of SVs}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Discovery and genotyping of SVs}}
+\DIFaddend 
 
 Our SV analysis pipeline consisted of separate SV discovery and genotyping steps.
 The \emph{discovery} step identified a set of candidate SVs using various methods,
@@ -344,7 +355,10 @@ missing data > 0.5. The resulting dataset of 186,306 genotyped SVs was used for
 GWAS. Detailed methods regarding the SV discovery and genotyping steps can be
 found in Supplemental file 1.
 
-\subsection*{Discovery and genotyping of SNPs and indels}
+\DIFdelbegin \subsection*{\DIFdel{Discovery and genotyping of SNPs and indels}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Discovery and genotyping of SNPs and indels}}
+\DIFaddend 
 
 We used Platypus v. 0.8.1.1 \shortcite{rimmer2014} to call SNPs and indels from the
 mapped reads of the 389 accessions. The 21.1 M SNPs and
@@ -368,7 +382,11 @@ loci where filtered markers identified significant associations (more details
 in the section describing the analysis of significant signals).
 }\DIFaddend 
 
-\subsection*{Computing the presence/absence table of \emph{k}-mers}
+\DIFdelbegin \subsection*{\DIFdel{Computing the presence/absence table of }\emph{\DIFdel{k}}%DIFAUXCMD
+\DIFdel{-mers}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Computing the presence/absence table of }\emph{\DIFadd{k}}\DIFadd{-mers}}
+\DIFaddend 
 
 We used the approach outlined by \shortciteA{voichek2020} for \emph{k}-mer-based GWAS
 and their recommendations on the
@@ -398,7 +416,10 @@ GWAS analyses. We used \DIFaddbegin \DIFadd{all }\DIFaddend \emph{k}-mers with a
 in this filtered table was 637,605,529.
 }\DIFaddend 
 
-\subsection*{Phenotypic data}
+\DIFdelbegin \subsection*{\DIFdel{Phenotypic data}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Phenotypic data}}
+\DIFaddend 
 
 We analyzed ten qualitative traits previously studied by \shortciteA{bandillo2017}: flower
 color, pubescence color, seed coat color, stem termination type, hilum color,
@@ -442,7 +463,10 @@ remained for GWAS analyses. The concordance between WGS data and SoySNP50K
 genotypes is included in Supplemental file 3 and averaged 98.3\% among retained
 lines (Supplemental Figure S1). The phenotypic data used in this study can be found in Supplemental file 4.
 
-\subsection*{GWAS analyses}
+\DIFdelbegin \subsection*{\DIFdel{GWAS analyses}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{GWAS analyses}}
+\DIFaddend 
 
 We used the GAPIT3 R package v. 3.1.0 \shortcite{wang2021} for conducting GWAS on
 the SNP/indel and SV datasets described above. SVs and indels required some additional
@@ -482,7 +506,11 @@ that passed a 5\% family-wise error-rate threshold determined by a
 randomization approach, which we considered significant for the purposes of
 downstream analyses.
 
-\subsection*{Analysis of significant \emph{k}-mers}
+\DIFdelbegin \subsection*{\DIFdel{Analysis of significant }\emph{\DIFdel{k}}%DIFAUXCMD
+\DIFdel{-mers}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Analysis of significant }\emph{\DIFadd{k}}\DIFadd{-mers}}
+\DIFaddend 
 
 \emph{k}-mers are not intrinsically associated with a particular genomic region
 and a tailored analysis was therefore required to associate them with genomic
@@ -511,7 +539,10 @@ mapped to multiple locations because bwa assigns a mapping quality of 0 to such 
 identification of signals, analysis of genes located near significant
 \emph{k}-mers, etc.) used this processed set of significant \emph{k}-mers.
 
-\subsection*{Downstream analyses of significant association signals}
+\DIFdelbegin \subsection*{\DIFdel{Downstream analyses of significant association signals}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Downstream analyses of significant association signals}}
+\DIFaddend 
 
 We used contiguous regions of significant variants, which we called
 ``signals'', as a basis to compare our results with those obtained by previous
@@ -546,7 +577,11 @@ qualitative traits, we only compared our results to signals at named classical
 loci and ignored previously reported minor signals with \emph{p}-values that
 just barely made it above the significance threshold.
 
-\subsection*{Linking significant \emph{k}-mers to variants}
+\DIFdelbegin \subsection*{\DIFdel{Linking significant }\emph{\DIFdel{k}}%DIFAUXCMD
+\DIFdel{-mers to variants}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Linking significant }\emph{\DIFadd{k}}\DIFadd{-mers to variants}}
+\DIFaddend 
 
 We used the reads retrieved by katcher and an assembly-based approach for
 identifying the variants associated with a given set of \emph{k}-mers. In
@@ -567,7 +602,11 @@ succeeded for a very low number of accessions (26). In this case, we instead use
 consensus sequences from the reads aligned with bwa for comparing the
 haplotypes across accessions. 
 
-\subsection*{Computation of LD between \emph{k}-mers}
+\DIFdelbegin \subsection*{\DIFdel{Computation of LD between }\emph{\DIFdel{k}}%DIFAUXCMD
+\DIFdel{-mers}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Computation of LD between }\emph{\DIFadd{k}}\DIFadd{-mers}}
+\DIFaddend 
 
 In some cases, the analysis of \emph{k}-mers revealed signals at previously
 undocumented loci or found a very large number of associations throughout the
@@ -585,8 +624,10 @@ number of \emph{k}-mers matching a given chromosome or scaffold such that
 \emph{k}-mers were sampled from the whole genome and not simply from the most
 significant locations.
 
-\subsection*{Software used}
-\label{sv-gwas-software-used}
+\DIFdelbegin \subsection*{\DIFdel{Software used}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Software used}}
+\DIFaddend \label{sv-gwas-software-used}
 
 Unless otherwise noted, all analyses were conducted using R v. 4.2.0
 \shortcite{r2022} and Bioconductor v. 3.15 \shortcite{huber2015}. We used Bioconductor
@@ -599,7 +640,10 @@ GitHub (\url{https://github.com/malemay/gwask}).
 
 \clearpage
 
-\section*{Results and discussion}
+\DIFdelbegin \section*{\DIFdel{Results and discussion}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \section{\DIFadd{Results and discussion}}
+\DIFaddend 
 
 We analyzed a total of 13 traits in a population of 363 resequenced \textit{G.
 max} accessions using three GWAS approaches that differed in the genotypes
@@ -624,15 +668,22 @@ this study. \DIFaddbegin \DIFadd{Supplemental Table S12 also shows some results 
 analyses.
 }\DIFaddend 
 
-\subsection*{Loci with known genes or causal variants}
+\DIFdelbegin \subsection*{\DIFdel{Loci with known genes or causal variants}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Loci with known genes or causal variants}}
+\DIFaddend 
 
 We first wanted to assess the performance of the various GWAS
 approaches by analyzing the results at loci for which the genes have
 already been cloned. These loci provide interesting test cases because
-the expected results (causal genes or variants) are known. Table \ref{loci-table} shows
+the expected results (causal genes or variants) are known. Table \DIFdelbegin \DIFdel{\ref{loci-table} }\DIFdelend \DIFaddbegin \DIFadd{1 }\DIFaddend shows
 a summary of the results discussed below.
 
-\subsubsection*{Flower color -- \textit{W1} locus}
+\DIFdelbegin \subsubsection*{\DIFdel{Flower color -- }\textit{\DIFdel{W1}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Flower color -- }\textit{\DIFadd{W1}} \DIFadd{locus}}
+\DIFaddend 
 
 \shortciteA{zabala2007} identified the flavonoid 3’5’-hydroxylase (F3’5’H) gene
 Glyma.13g\-072100 as associated with the \textit{W1} locus for flower color. In
@@ -642,46 +693,54 @@ F3’5’H enzyme non-functional and prevents pigmentation of the flower. All
 GWAS approaches detected a signal overlapping the gene at this locus (Supplemental Figures
 S2 and S3). The most
 significant SV and \textit{k}-mers corresponded to the known causal variant
-(Figure \ref{flower-color-main-figure}a-b and Supplemental Figure S4c-d).
+(Figure \DIFdelbegin \DIFdel{\ref{flower-color-main-figure}a-b }\DIFdelend \DIFaddbegin \DIFadd{1a-b }\DIFaddend and Supplemental Figure S4c-d).
 In particular, the assembly of the reads containing the most significant \textit{k}-mers
 and the alignment of the resulting haplotypes showed that these \textit{k}-mers
-directly tagged the causal variant (Figure \ref{flower-color-main-figure}c-e).
+directly tagged the causal variant (Figure \DIFdelbegin \DIFdel{\ref{flower-color-main-figure}c-e}\DIFdelend \DIFaddbegin \DIFadd{1c-e}\DIFaddend ).
 As the catalogue of variants analyzed by Platypus contains only SNPs and small
 indels, the causal variant could not be captured by this approach. Still, SNPs
 and indels located within the gene sequence were among the most significantly
 associated ones (Supplemental Figure S4b).
 
-% Figure 1
-\begin{figure}
-	\centering
-	\includegraphics[width = 5in]{flower_color_W1_main_figure.png}
-	\caption{(Caption on the following page.)}
-	\label{flower-color-main-figure}
-\end{figure}
 
-\begin{figure}
-	\contcaption{Results of SV- and \textit{k}-mer-based GWAS at the
-	\textit{W1} locus for flower color. (a) Genome-wide Manhattan plots.
-	Horizontal dotted lines indicate the significance
-	threshold whereas vertical dotted lines indicate the location of the
-	\textit{W1} locus. (b) Zoomed-in Manhattan plots at the \textit{W1} locus.
-	The vertical dotted lines indicate the location of the
-	Glyma.13g072100 gene associated with this locus. The shaded gray
-	rectangles show the regions delimited by the top 5\% (SVs) and
-	1\% (\textit{k}-mers) associations.  (c) Gene model of Glyma.13g072100.
-	Rectangles represent exons, colored rectangles represent coding
-	sequences, and arrows indicate the direction of transcription. The red
-	rectangle highlights the region shown in panel (d). (d) Pairwise
-	alignment of the two haplotype sequences in the population at the
-	\textit{W1} locus. Nucleotides are
-	colored according to the \textit{p}-value of the most significant
-	\textit{k}-mer overlapping them. Vertical dotted lines between haplotypes
-	indicate sequence differences, whereas dashes indicate gaps in the
-	alignment. (e) Contingency table of the phenotypes and haplotypes found
-	in the population at the \textit{W1} locus.}
-\end{figure}
+%DIF <  Figure 1
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\centering
+%DIFDELCMD < 	\includegraphics[width = 5in]{flower_color_W1_main_figure.png}
+%DIFDELCMD < 	%%%
+%DIFDELCMD < \caption{%
+{%DIFAUXCMD
+\DIFdelFL{(Caption on the following page.)}}
+	%DIFAUXCMD
+%DIFDELCMD < \label{flower-color-main-figure}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
 
-The \textit{k}-mer GWAS analysis also identified presumably spurious significant
+%DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\contcaption{Results of SV- and \textit{k}-mer-based GWAS at the
+%DIFDELCMD < 	\textit{W1} locus for flower color. (a) Genome-wide Manhattan plots.
+%DIFDELCMD < 	Horizontal dotted lines indicate the significance
+%DIFDELCMD < 	threshold whereas vertical dotted lines indicate the location of the
+%DIFDELCMD < 	\textit{W1} locus. (b) Zoomed-in Manhattan plots at the \textit{W1} locus.
+%DIFDELCMD < 	The vertical dotted lines indicate the location of the
+%DIFDELCMD < 	Glyma.13g072100 gene associated with this locus. The shaded gray
+%DIFDELCMD < 	rectangles show the regions delimited by the top 5\% (SVs) and
+%DIFDELCMD < 	1\% (\textit{k}-mers) associations.  (c) Gene model of Glyma.13g072100.
+%DIFDELCMD < 	Rectangles represent exons, colored rectangles represent coding
+%DIFDELCMD < 	sequences, and arrows indicate the direction of transcription. The red
+%DIFDELCMD < 	rectangle highlights the region shown in panel (d). (d) Pairwise
+%DIFDELCMD < 	alignment of the two haplotype sequences in the population at the
+%DIFDELCMD < 	\textit{W1} locus. Nucleotides are
+%DIFDELCMD < 	colored according to the \textit{p}-value of the most significant
+%DIFDELCMD < 	\textit{k}-mer overlapping them. Vertical dotted lines between haplotypes
+%DIFDELCMD < 	indicate sequence differences, whereas dashes indicate gaps in the
+%DIFDELCMD < 	alignment. (e) Contingency table of the phenotypes and haplotypes found
+%DIFDELCMD < 	in the population at the \textit{W1} locus.}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend The \textit{k}-mer GWAS analysis also identified presumably spurious significant
 \textit{k}-mers scattered throughout the genome (Supplemental Figure
 S2c). An analysis of the pairwise LD between a subset
 of those \textit{k}-mers showed that most \textit{k}-mers formed a single LD block
@@ -702,7 +761,11 @@ concordance between genotype calls made from WGS data and the SoySNP50K array
 for all samples (see the Methods) and excluded 24 accessions for which the
 concordance rate was below 90\%.
 
-\subsubsection*{Pubescence color -- \textit{T} locus}
+\DIFdelbegin \subsubsection*{\DIFdel{Pubescence color -- }\textit{\DIFdel{T}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Pubescence color -- }\textit{\DIFadd{T}} \DIFadd{locus}}
+\DIFaddend 
 
 \shortciteA{zabala2003} identified Glyma.06g202300 as the gene associated with the
 \textit{T} locus for pubescence color and found a 1-bp deletion as a putative
@@ -726,7 +789,11 @@ overall (Supplemental Figures S7b and
 S8b). SV-based GWAS did not detect the causal variant
 at this locus, as expected from its size.
 
-\subsubsection*{Pubescence color -- \textit{Td} locus}
+\DIFdelbegin \subsubsection*{\DIFdel{Pubescence color -- }\textit{\DIFdel{Td}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Pubescence color -- }\textit{\DIFadd{Td}} \DIFadd{locus}}
+\DIFaddend 
 
 % Pubescence color - Td locus
 We conducted a separate GWAS analysis contrasting only accessions with tawny
@@ -734,53 +801,66 @@ and light tawny pubescence because the \textit{Td} locus is known to control
 these differences in color. Accordingly, we detected signals in this region
 using all three approaches, but only SNP- and \textit{k}-mer-based GWAS
 identified a signal that overlapped Glyma.03g258700 (Figure
-\ref{pubescence-color-main-figure}a-b, and Supplemental Figures S10 and
+\DIFdelbegin \DIFdel{\ref{pubescence-color-main-figure}a-b}\DIFdelend \DIFaddbegin \DIFadd{2a-b}\DIFaddend , and Supplemental Figures S10 and
 S11).  While the most significant
 \textit{k}-mer identified the causal variant documented at this locus
 \shortcite{yan2020}, it was the fourth most significantly associated variant for
-the SNP-based approach (Figure \ref{pubescence-color-main-figure}b-d, Supplemental Figure 
+the SNP-based approach (Figure \DIFdelbegin \DIFdel{\ref{pubescence-color-main-figure}b-d}\DIFdelend \DIFaddbegin \DIFadd{2b-d}\DIFaddend , Supplemental Figure 
 S12).  Interestingly, some of the accessions
 bearing the haplotype associated with tawny pubescence displayed light tawny
 pubescence, suggesting that there may be more than one causal variant at this
-locus (Figure \ref{pubescence-color-main-figure}e).
+locus (Figure \DIFdelbegin \DIFdel{\ref{pubescence-color-main-figure}e}\DIFdelend \DIFaddbegin \DIFadd{2e}\DIFaddend ).
 
-% Figure 2
-\begin{figure}
-	\centering
-	\includegraphics[width = 5in]{pubescence_color_nogray_Td_main_figure.png}
-	\caption{(Caption on the following page.)}
-	\label{pubescence-color-main-figure}
-\end{figure}
+%DIF <  Figure 2
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\centering
+%DIFDELCMD < 	\includegraphics[width = 5in]{pubescence_color_nogray_Td_main_figure.png}
+%DIFDELCMD < 	%%%
+%DIFDELCMD < \caption{%
+{%DIFAUXCMD
+\DIFdelFL{(Caption on the following page.)}}
+	%DIFAUXCMD
+%DIFDELCMD < \label{pubescence-color-main-figure}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Seed coat color - }\textit{\DIFadd{I}} \DIFadd{locus}}
+\DIFaddend 
 
-\begin{figure}
-	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
-	\textit{Td} locus for pubescence color. (a) Genome-wide Manhattan plots.
-	Horizontal dotted lines indicate the significance
-	threshold whereas vertical dotted lines indicate the location of the
-	\textit{Td} locus. (b) Zoomed-in Manhattan plots at the \textit{Td} locus.
-	The vertical dotted lines indicate the location of the
-	Glyma.03g258700 gene associated with this locus. The shaded gray
-	rectangles show the regions delimited by the top 1\% associations.
-	In the case of SNPs, blue points denote markers used in the
-	original analysis, whereas red points denote markers that had originally
-	been pruned but whose \emph{p}-values were computed after signal
-	discovery.
-	(c) Gene model of Glyma.03g258700. Rectangles represent exons, colored
-	rectangles represent coding sequences, and the arrow indicates the
-	direction of transcription. The red rectangle highlights the region
-	shown in panel (d). (d) Pairwise alignment of the two haplotype
-	sequences in the population at the \textit{Td} locus. Nucleotides are
-	colored according to the
-	\textit{p}-value of the most significant \textit{k}-mer overlapping
-	them. The vertical dotted line between haplotypes indicates the location of
-	the causal SNP at this locus. (e) Contingency table of
-	the phenotypes and haplotypes found in the population at the
-	\textit{Td} locus.}
-\end{figure}
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
+%DIFDELCMD < 	\textit{Td} locus for pubescence color. (a) Genome-wide Manhattan plots.
+%DIFDELCMD < 	Horizontal dotted lines indicate the significance
+%DIFDELCMD < 	threshold whereas vertical dotted lines indicate the location of the
+%DIFDELCMD < 	\textit{Td} locus. (b) Zoomed-in Manhattan plots at the \textit{Td} locus.
+%DIFDELCMD < 	The vertical dotted lines indicate the location of the
+%DIFDELCMD < 	Glyma.03g258700 gene associated with this locus. The shaded gray
+%DIFDELCMD < 	rectangles show the regions delimited by the top 1\% associations.
+%DIFDELCMD < 	In the case of SNPs, blue points denote markers used in the
+%DIFDELCMD < 	original analysis, whereas red points denote markers that had originally
+%DIFDELCMD < 	been pruned but whose \emph{p}-values were computed after signal
+%DIFDELCMD < 	discovery.
+%DIFDELCMD < 	(c) Gene model of Glyma.03g258700. Rectangles represent exons, colored
+%DIFDELCMD < 	rectangles represent coding sequences, and the arrow indicates the
+%DIFDELCMD < 	direction of transcription. The red rectangle highlights the region
+%DIFDELCMD < 	shown in panel (d). (d) Pairwise alignment of the two haplotype
+%DIFDELCMD < 	sequences in the population at the \textit{Td} locus. Nucleotides are
+%DIFDELCMD < 	colored according to the
+%DIFDELCMD < 	\textit{p}-value of the most significant \textit{k}-mer overlapping
+%DIFDELCMD < 	them. The vertical dotted line between haplotypes indicates the location of
+%DIFDELCMD < 	the causal SNP at this locus. (e) Contingency table of
+%DIFDELCMD < 	the phenotypes and haplotypes found in the population at the
+%DIFDELCMD < 	\textit{Td} locus.}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
 
-\subsubsection*{Seed coat color - \textit{I} locus}
+%DIFDELCMD < %%%
+\subsubsection*{\DIFdel{Seed coat color - }\textit{\DIFdel{I}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+%DIFDELCMD < 
 
-% Seed coat color - I locus
+%DIFDELCMD < %%%
+\DIFdelend % Seed coat color - I locus
 The causal variant at the \textit{I} locus for seed coat color is a complex SV
 that takes the form of a 10.91-kb inverted duplication of three chalcone
 synthase (CHS) genes \shortcite<CHS1, CHS3 and CHS4;>[]{tuteja2008}. The presence of
@@ -795,7 +875,11 @@ is likely that at least some of the significantly associated \textit{k}-mers
 actually are derived from this causal variant, the lack of systematic methods for
 linking \textit{k}-mers to sequence variation hindered our ability to do so.
 
-\subsubsection*{Seed coat color - \textit{G} locus}
+\DIFdelbegin \subsubsection*{\DIFdel{Seed coat color - }\textit{\DIFdel{G}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Seed coat color - }\textit{\DIFadd{G}} \DIFadd{locus}}
+\DIFaddend 
 
 We conducted a second GWAS analysis contrasting accessions with yellow and
 green seed coats in order to target the \textit{G} locus. Accordingly, this
@@ -806,48 +890,62 @@ this locus and found an A>G SNP affecting transcript splicing as the causal
 variant. Consistently with their results, we identified the two
 most significant \emph{k}-mers and the second most significant marker from the
 SNP-based analysis as corresponding to that causal variant (Figure
-\ref{seed-coat-color-main-figure} and Supplemental Figures
+\DIFdelbegin \DIFdel{\ref{seed-coat-color-main-figure} }\DIFdelend \DIFaddbegin \DIFadd{3 }\DIFaddend and Supplemental Figures
 S16 and
 S17). Unsurprisingly, SV-based GWAS
 did not identify the causal variant given its type.
 
-% Figure 3 with the results on pubescence color at locus G
-\begin{figure}
-	\centering
-	\includegraphics[width = 5in]{seed_coat_color_greenyellow_G_main_figure.png}
-	\caption{(Caption on the following page.)}
-	\label{seed-coat-color-main-figure}
-\end{figure}
 
-\begin{figure}
-	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
-	\textit{G} locus for seed coat color. (a) Genome-wide Manhattan plots.
-	Horizontal dotted lines indicate the significance
-	threshold whereas vertical dotted lines indicate the location of the
-	\textit{G} locus. (b) Zoomed-in Manhattan plots at the \textit{G} locus.
-	The vertical dotted lines indicate the location of the
-	Glyma.01g198500 gene associated with this locus. The shaded gray
-	rectangles show the regions delimited by the top 1\% associations.
-	In the case of SNPs, blue points denote markers used in the
-	original analysis, whereas red points denote markers that had originally
-	been pruned but whose \emph{p}-values were computed after signal
-	discovery.
-	(c) Gene model of Glyma.01g198500. Rectangles represent exons, colored
-	rectangles represent coding sequences, and the arrows indicate the
-	direction of transcription. The red rectangle highlights the region
-	shown in panel (d). (d) Pairwise alignment of the two haplotype
-	sequences in the population at the \textit{G} locus. Nucleotides are
-	colored according to the
-	\textit{p}-value of the most significant \textit{k}-mer overlapping
-	them. The vertical dotted line between haplotypes indicates the location of
-	the causal SNP at this locus. (e) Contingency table of
-	the phenotypes and haplotypes found in the population at the
-	\textit{G} locus.}
-\end{figure}
+%DIF <  Figure 3 with the results on pubescence color at locus G
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\centering
+%DIFDELCMD < 	\includegraphics[width = 5in]{seed_coat_color_greenyellow_G_main_figure.png}
+%DIFDELCMD < 	%%%
+%DIFDELCMD < \caption{%
+{%DIFAUXCMD
+\DIFdelFL{(Caption on the following page.)}}
+	%DIFAUXCMD
+%DIFDELCMD < \label{seed-coat-color-main-figure}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Stem termination type - }\textit{\DIFadd{Dt1}} \DIFadd{locus}}
+\DIFaddend 
 
-\subsubsection*{Stem termination type - \textit{Dt1} locus}
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
+%DIFDELCMD < 	\textit{G} locus for seed coat color. (a) Genome-wide Manhattan plots.
+%DIFDELCMD < 	Horizontal dotted lines indicate the significance
+%DIFDELCMD < 	threshold whereas vertical dotted lines indicate the location of the
+%DIFDELCMD < 	\textit{G} locus. (b) Zoomed-in Manhattan plots at the \textit{G} locus.
+%DIFDELCMD < 	The vertical dotted lines indicate the location of the
+%DIFDELCMD < 	Glyma.01g198500 gene associated with this locus. The shaded gray
+%DIFDELCMD < 	rectangles show the regions delimited by the top 1\% associations.
+%DIFDELCMD < 	In the case of SNPs, blue points denote markers used in the
+%DIFDELCMD < 	original analysis, whereas red points denote markers that had originally
+%DIFDELCMD < 	been pruned but whose \emph{p}-values were computed after signal
+%DIFDELCMD < 	discovery.
+%DIFDELCMD < 	(c) Gene model of Glyma.01g198500. Rectangles represent exons, colored
+%DIFDELCMD < 	rectangles represent coding sequences, and the arrows indicate the
+%DIFDELCMD < 	direction of transcription. The red rectangle highlights the region
+%DIFDELCMD < 	shown in panel (d). (d) Pairwise alignment of the two haplotype
+%DIFDELCMD < 	sequences in the population at the \textit{G} locus. Nucleotides are
+%DIFDELCMD < 	colored according to the
+%DIFDELCMD < 	\textit{p}-value of the most significant \textit{k}-mer overlapping
+%DIFDELCMD < 	them. The vertical dotted line between haplotypes indicates the location of
+%DIFDELCMD < 	the causal SNP at this locus. (e) Contingency table of
+%DIFDELCMD < 	the phenotypes and haplotypes found in the population at the
+%DIFDELCMD < 	\textit{G} locus.}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
 
-While all GWAS approaches found signals near the Glyma.19g194300 gene
+%DIFDELCMD < %%%
+\subsubsection*{\DIFdel{Stem termination type - }\textit{\DIFdel{Dt1}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend While all GWAS approaches found signals near the Glyma.19g194300 gene
 associated with the \textit{Dt1} locus for stem termination type, the SNP- and
 \textit{k}-mer-based analyses performed best since the region defined by their
 most highly associated markers (top 1\%) included the causal gene (Supplemental Figures
@@ -866,7 +964,11 @@ with \emph{dt1} (Supplemental Figure S21c). The existence of
 several causal variants might explain why our analyses did not identify a
 causal variant more clearly.
 
-\subsubsection*{Hilum color -- \textit{R} locus}
+\DIFdelbegin \subsubsection*{\DIFdel{Hilum color -- }\textit{\DIFdel{R}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Hilum color -- }\textit{\DIFadd{R}} \DIFadd{locus}}
+\DIFaddend 
 
 We conducted a GWAS analysis that only compared accessions with black and brown
 hila in an attempt to detect stronger signals at the \textit{R} locus.  We
@@ -894,56 +996,75 @@ loss of function at the \emph{R} locus.  Still, we observed two causal variants
 previously documented by \shortciteA{gillman2011} in our dataset (Supplemental Figures
 S24 and S25). 
 
-\subsubsection*{Pubescence density -- \textit{Ps} locus}
+\DIFdelbegin \subsubsection*{\DIFdel{Pubescence density -- }\textit{\DIFdel{Ps}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Pubescence density -- }\textit{\DIFadd{Ps}} \DIFadd{locus}}
+\DIFaddend 
 
 We conducted a GWAS analysis comparing accessions with normal and semi-sparse
 pubes\-cence in order to detect loci associated with pubescence density. This analysis
 detected signals at the \textit{Ps} locus using all three approaches (Figure
-\ref{pubescence-density-main-figure}a-b and Supplemental Figures S26, S27
+\DIFdelbegin \DIFdel{\ref{pubescence-density-main-figure}a-b }\DIFdelend \DIFaddbegin \DIFadd{4a-b }\DIFaddend and Supplemental Figures S26, S27
 and S28). The causal
 variant at this recently cloned locus is a copy number variant (CNV) overlapping the
 Glyma.12g187200 gene, with higher copy number resulting in reduced pubescence \shortcite{liu2020ps}.
 We identified a region of $\sim$42 kb that varied in copy number across
 the population and was associated with the trait (Figure
-\ref{pubescence-density-main-figure}c), and therefore possibly corresponded to the
+\DIFdelbegin \DIFdel{\ref{pubescence-density-main-figure}c}\DIFdelend \DIFaddbegin \DIFadd{4c}\DIFaddend ), and therefore possibly corresponded to the
 25.6-kb region identified as the causal CNV by \shortciteA{liu2020ps}. We found that
 reads containing the most significantly associated \textit{k}-mer mapped to either of the two ends
-of the CNV (Figure \ref{pubescence-density-main-figure}d). This suggests that
+of the CNV (Figure \DIFdelbegin \DIFdel{\ref{pubescence-density-main-figure}d}\DIFdelend \DIFaddbegin \DIFadd{4d}\DIFaddend ). This suggests that
 the most associated \textit{k}-mer is indeed linked to the CNV
 that is causal at this locus, while \textit{k}-mers within the
 CNV region may represent differences in sequence between the copies.
 
-% Figure 4 with the results on pubescence density at locus Ps
-\begin{figure}
-	\centering
-	\includegraphics[width = 6in]{pubescence_density_Ps_main_figure.png}
-	\caption[Results of \textit{k}-mer-based GWAS at the
-	\textit{Ps} locus for pubescence density.]{Results of \textit{k}-mer-based GWAS at the
-	\textit{Ps} locus for pubescence density.
-	(a) Genome-wide Manhattan plot showing the location of significant \textit{k}-mers. The
+
+%DIF <  Figure 4 with the results on pubescence density at locus Ps
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\centering
+%DIFDELCMD < 	\includegraphics[width = 6in]{pubescence_density_Ps_main_figure.png}
+%DIFDELCMD < 	%%%
+%DIFDELCMD < \caption[Results of \textit{k}-mer-based GWAS at the
+%DIFDELCMD < 	\textit{Ps} locus for pubescence density.]{%
+{%DIFAUXCMD
+\DIFdelFL{Results of }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mer-based GWAS at the
+	}\textit{\DIFdelFL{Ps}} %DIFAUXCMD
+\DIFdelFL{locus for pubescence density.
+	(a) Genome-wide Manhattan plot showing the location of significant }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mers. The
 	horizontal dotted line indicates the significance threshold whereas the
-	vertical dotted line indicates the location of the \textit{Ps} locus.
-	(b) Zoomed-in Manhattan plot at the \textit{Ps} locus. The
+	vertical dotted line indicates the location of the }\textit{\DIFdelFL{Ps}} %DIFAUXCMD
+\DIFdelFL{locus.
+	(b) Zoomed-in Manhattan plot at the }\textit{\DIFdelFL{Ps}} %DIFAUXCMD
+\DIFdelFL{locus. The
 	vertical dotted line indicates the location of the most significant
-	\textit{k}-mer. The shaded gray area shows the location of the causal CNV.
+	}\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mer. The shaded gray area shows the location of the causal CNV.
 	(c) Estimated copy number (sequencing depth at position divided by
 	accession average sequencing depth) of accessions with normal and
-	semi-sparse pubescence at the \textit{Ps} locus. Solid lines represent
+	semi-sparse pubescence at the }\textit{\DIFdelFL{Ps}} %DIFAUXCMD
+\DIFdelFL{locus. Solid lines represent
 	the median copy number across 73 (semi-sparse pubescence) and 180
 	accessions (normal pubescence) computed using a 100-bp sliding window.
 	Shaded areas outline the first and third quartiles. The start and end
 	of the CNV region can be clearly inferred from the divergence between
 	the copy number of accessions with contrasting pubescence.
 	(d) Histogram showing the location of 1,169 mapped reads containing the
-	most significant \textit{k}-mer in accessions with semi-sparse pubescence.
-	Reads containing this \textit{k}-mer map to either end of the CNV
+	most significant }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mer in accessions with semi-sparse pubescence.
+	Reads containing this }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mer map to either end of the CNV
 	region, suggesting that they are associated with this variant. Panels
-	(b), (c) and (d) share the same x-axis.}
-	\label{pubescence-density-main-figure}
-\end{figure}
+	(b), (c) and (d) share the same x-axis.}}
+	%DIFAUXCMD
+%DIFDELCMD < \label{pubescence-density-main-figure}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
 
-
-The difference in size between the CNV reported by \shortciteA{liu2020ps} and our
+%DIFDELCMD < %%%
+\DIFdelend The difference in size between the CNV reported by \shortciteA{liu2020ps} and our
 results may be due to the presence of some unresolved sequence (a stretch of
 4,635 N nucleotides) over that interval in the reference sequence that we used.
 Because our SV filtering process removed any alternate allele containing N nucleotides,
@@ -955,7 +1076,11 @@ which would have made it the most significant SV. In this particular case, the
 failure of the SV-based GWAS analysis to find identify the causal variant was due
 to our filtering parameters and not to limitations of the SV genotype calls per se.
 
-\subsubsection*{Seed coat luster -- \textit{B} locus}
+\DIFdelbegin \subsubsection*{\DIFdel{Seed coat luster -- }\textit{\DIFdel{B}} %DIFAUXCMD
+\DIFdel{locus}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Seed coat luster -- }\textit{\DIFadd{B}} \DIFadd{locus}}
+\DIFaddend 
 
 We conducted a GWAS analysis comparing dull and shiny seed coat phenotypes for
 the seed coat luster trait. Seed coat luster has been shown by
@@ -976,13 +1101,21 @@ S31). However, we were not able to
 directly link any of the variants or \textit{k}-mers identified to the causal
 CNV.
 
-\subsection*{Analysis of loci with unknown causal genes}
+\DIFdelbegin \subsection*{\DIFdel{Analysis of loci with unknown causal genes}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Analysis of loci with unknown causal genes}}
+\DIFaddend 
 
 In addition to analyzing loci for which the genes are already known, we were
 able to suggest candidate genes at loci for which the underlying genes are not
 known yet. 
 
-\subsubsection*{Pod color -- \textit{L1} and \textit{L2} loci}
+\DIFdelbegin \subsubsection*{\DIFdel{Pod color -- }\textit{\DIFdel{L1}} %DIFAUXCMD
+\DIFdel{and }\textit{\DIFdel{L2}} %DIFAUXCMD
+\DIFdel{loci}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Pod color -- }\textit{\DIFadd{L1}} \DIFadd{and }\textit{\DIFadd{L2}} \DIFadd{loci}}
+\DIFaddend 
 
 Both the \textit{L1} and the \textit{L2} loci for pod color have yet to be
 cloned. While \shortciteA{he2015} proposed the gene Glyma.19g101700 as likely
@@ -1005,8 +1138,12 @@ somewhat high number, we noticed that the closest gene to the most significant
 candidate for \emph{L1}. This gene may therefore represent an interesting
 candidate at this locus for future studies.
 
-\subsubsection*{Pubescence form -- \textit{Pa1} and \textit{Pa2} loci}
-\label{sv-gwas-main-results-pubescence-form-pa1-pa2}
+\DIFdelbegin \subsubsection*{\DIFdel{Pubescence form -- }\textit{\DIFdel{Pa1}} %DIFAUXCMD
+\DIFdel{and }\textit{\DIFdel{Pa2}} %DIFAUXCMD
+\DIFdel{loci}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Pubescence form -- }\textit{\DIFadd{Pa1}} \DIFadd{and }\textit{\DIFadd{Pa2}} \DIFadd{loci}}
+\DIFaddend \label{sv-gwas-main-results-pubescence-form-pa1-pa2}
 
 The two known loci for pubescence form in soybean, \textit{Pa1} and
 \textit{Pa2}, have also not been cloned yet. Nevertheless, \shortciteA{gilbert2017}
@@ -1014,11 +1151,11 @@ has suggested Glyma.12g213900 as a candidate for \textit{Pa1} based on data
 published by \shortciteA{bandillo2017}. This gene encodes a MYB transcription factor
 annotated as playing a role in trichome branching. Indeed, the most significant
 signals found by all three approaches were located near this gene (Figure
-\ref{pubescence-form-main-figure}a-b, and Supplemental Figures S35 and
+\DIFdelbegin \DIFdel{\ref{pubescence-form-main-figure}a-b}\DIFdelend \DIFaddbegin \DIFadd{5a-b}\DIFaddend , and Supplemental Figures S35 and
 S36).  The analyses based on SNPs and
 \emph{k}-mers identified two highly significant non-synonymous SNPs in
 Glyma.12g213900 that were associated with appressed pubescence (Figure
-\ref{pubescence-form-main-figure}c-d and Supplemental Figures S37 and
+\DIFdelbegin \DIFdel{\ref{pubescence-form-main-figure}c-d }\DIFdelend \DIFaddbegin \DIFadd{5c-d }\DIFaddend and Supplemental Figures S37 and
 S38). The alternative alleles for these two
 SNPs co-occurred together in our dataset and may represent causal variants at
 the \emph{Pa1} locus. The signals observed at the \emph{Pa2} locus were much
@@ -1027,44 +1164,55 @@ weaker and the signal observed from the \emph{k}-mer GWAS overlapped a total of
 S39), none of which appeared obviously linked
 to pubescence form.
 
-% Figure 5 with the results on pubescence form at locus Pa1
-\begin{figure}
-	\centering
-	\includegraphics[width = 5in]{pubescence_form_all_Pa1_main_figure.png}
-	\caption{(Caption on the following page.)}
-	\label{pubescence-form-main-figure}
-\end{figure}
 
-\begin{figure}
-	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
-	\textit{Pa1} locus for pubescence form. (a) Genome-wide Manhattan plots.
-	Horizontal dotted lines indicate the significance
-	threshold whereas vertical dotted lines indicate the location of the
-	\textit{Pa1} and \textit{Pa2} loci. (b) Zoomed-in Manhattan plots at the \textit{Pa1} locus.
-	The vertical dotted lines indicate the location of the
-	Glyma.12g213900 gene suggested as a candidate for this locus. The shaded gray
-	rectangles show the regions delimited by the top 1\% associations.
-	In the case of SNPs, blue points denote markers used in the
-	original analysis, whereas red points denote markers that had originally
-	been pruned but whose \emph{p}-values were computed after signal
-	discovery.
-	(c) Gene model of Glyma.12g213900. Rectangles represent exons, colored
-	rectangles represent coding sequences, and the arrows indicate the
-	direction of transcription.
-	(d) Manhattan plots at the location of the Glyma.12g213900 gene.
-	Vertical lines indicate the location of two non-synonymous
-	SNPs associated with appressed pubescence, which may represent causal variants
-	at this locus. Panels (c) and (d) share the same x-axis.}
-\end{figure}
+%DIF <  Figure 5 with the results on pubescence form at locus Pa1
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\centering
+%DIFDELCMD < 	\includegraphics[width = 5in]{pubescence_form_all_Pa1_main_figure.png}
+%DIFDELCMD < 	%%%
+%DIFDELCMD < \caption{%
+{%DIFAUXCMD
+\DIFdelFL{(Caption on the following page.)}}
+	%DIFAUXCMD
+%DIFDELCMD < \label{pubescence-form-main-figure}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
 
+%DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\contcaption{Results of SNP- and \textit{k}-mer-based GWAS at the
+%DIFDELCMD < 	\textit{Pa1} locus for pubescence form. (a) Genome-wide Manhattan plots.
+%DIFDELCMD < 	Horizontal dotted lines indicate the significance
+%DIFDELCMD < 	threshold whereas vertical dotted lines indicate the location of the
+%DIFDELCMD < 	\textit{Pa1} and \textit{Pa2} loci. (b) Zoomed-in Manhattan plots at the \textit{Pa1} locus.
+%DIFDELCMD < 	The vertical dotted lines indicate the location of the
+%DIFDELCMD < 	Glyma.12g213900 gene suggested as a candidate for this locus. The shaded gray
+%DIFDELCMD < 	rectangles show the regions delimited by the top 1\% associations.
+%DIFDELCMD < 	In the case of SNPs, blue points denote markers used in the
+%DIFDELCMD < 	original analysis, whereas red points denote markers that had originally
+%DIFDELCMD < 	been pruned but whose \emph{p}-values were computed after signal
+%DIFDELCMD < 	discovery.
+%DIFDELCMD < 	(c) Gene model of Glyma.12g213900. Rectangles represent exons, colored
+%DIFDELCMD < 	rectangles represent coding sequences, and the arrows indicate the
+%DIFDELCMD < 	direction of transcription.
+%DIFDELCMD < 	(d) Manhattan plots at the location of the Glyma.12g213900 gene.
+%DIFDELCMD < 	Vertical lines indicate the location of two non-synonymous
+%DIFDELCMD < 	SNPs associated with appressed pubescence, which may represent causal variants
+%DIFDELCMD < 	at this locus. Panels (c) and (d) share the same x-axis.}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
 
-A second GWAS analysis focused only on appressed and semi-appressed phenotypes
+%DIFDELCMD < %%%
+\DIFdelend A second GWAS analysis focused only on appressed and semi-appressed phenotypes
 with the objective of enhancing the signal at the \emph{Pa2} locus. However,
 this analysis only detected weak signals at the \emph{Pa1} locus (Supplemental Figure
 S40) and its results were therefore not
 analyzed further.
 
-\subsubsection*{Resistance to \textit{P. sojae}}
+\DIFdelbegin \subsubsection*{\DIFdel{Resistance to }\textit{\DIFdel{P. sojae}}%DIFAUXCMD
+}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Resistance to }\textit{\DIFadd{P. sojae}}}
+\DIFaddend 
 
 We used corrected dry weight (CDW) as described by \shortciteA{deronne2022} as a
 measure of horizontal resistance to \emph{P. sojae}. We found a strong signal
@@ -1088,17 +1236,20 @@ Given the important role played by calcium signaling in defense
 responses \shortcite{zhang2014}, we suggest Glyma.15g217700 as an interesting
 candidate gene for explaining resistance to \emph{P. sojae} in this population.
 
-\subsubsection*{Novel loci for stem termination and pod color}
+\DIFdelbegin \subsubsection*{\DIFdel{Novel loci for stem termination and pod color}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsubsection{\DIFadd{Novel loci for stem termination and pod color}}
+\DIFaddend 
 
 In addition to verifying known loci, we also observed potentially novel loci in
 the \textit{k}-mer GWAS analysis of stem termination and pod color.  When
 comparing accessions with indeterminate and semi-determinate stem termination
 types, we observed previously undocumented signals on chromosomes Gm11, Gm16
 and Gm18 in addition to the known \textit{Dt1} locus (Figure
-\ref{stem-termination-main-figure}a).  Analysis of the pairwise LD between
+\DIFdelbegin \DIFdel{\ref{stem-termination-main-figure}a}\DIFdelend \DIFaddbegin \DIFadd{6a}\DIFaddend ).  Analysis of the pairwise LD between
 significant \textit{k}-mers found no LD between these signals, suggesting that
 they may represent \textit{bona fide} loci associated with stem termination
-type (Figure \ref{stem-termination-main-figure}b). \DIFaddbegin \DIFadd{We note that the signal newly
+type (Figure \DIFdelbegin \DIFdel{\ref{stem-termination-main-figure}b). }\DIFdelend \DIFaddbegin \DIFadd{6b). We note that the signal newly
 identified on Gm18 is located 5 Mb away from the already documented }\textit{\DIFadd{Dt2}}
 \DIFadd{locus and may therefore correspond to that locus.
 }\DIFaddend Similarly, a \textit{k}-mer
@@ -1111,44 +1262,66 @@ S44). The observed signal overlaps a total of 27 genes
 (Supplemental Figure S45), but none of those are annotated
 as having an obvious role in controlling pod color.
 
-% Figure 6 with the results novel loci for stem termination type
-\begin{figure}
-	\centering
-	\includegraphics[width = 6in]{stem_termination_sn_main_figure.png}
-	\caption[Detection of novel signals for stem termination type
-	using a \textit{k}-mer GWAS analysis contrasting accessions with
-	indeterminate and semi-determinate stems]{Detection of novel signals for stem termination type
-	using a \textit{k}-mer-based GWAS analysis contrasting accessions with
+
+%DIF <  Figure 6 with the results novel loci for stem termination type
+\DIFdelbegin %DIFDELCMD < \begin{figure}
+%DIFDELCMD < 	\centering
+%DIFDELCMD < 	\includegraphics[width = 6in]{stem_termination_sn_main_figure.png}
+%DIFDELCMD < 	%%%
+%DIFDELCMD < \caption[Detection of novel signals for stem termination type
+%DIFDELCMD < 	using a \textit{k}-mer GWAS analysis contrasting accessions with
+%DIFDELCMD < 	indeterminate and semi-determinate stems]{%
+{%DIFAUXCMD
+\DIFdelFL{Detection of novel signals for stem termination type
+	using a }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mer-based GWAS analysis contrasting accessions with
 	indeterminate and semi-determinate stems.
-	(a) Genome-wide Manhattan plot showing the location of significant \textit{k}-mers.
+	(a) Genome-wide Manhattan plot showing the location of significant }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mers.
 	The horizontal dotted line indicates the significance threshold
-	whereas vertical dotted lines indicate the location of the \textit{Dt1}
-	classical locus as well as three new loci of interest (\textit{stGm11},
-	\textit{stGm16}, and \textit{stGm18}).
-	(b) Pairwise LD between the 162 significant \textit{k}-mers identified.
-	\textit{k}-mers are sorted along the axes according to their
+	whereas vertical dotted lines indicate the location of the }\textit{\DIFdelFL{Dt1}}
+	%DIFAUXCMD
+\DIFdelFL{classical locus as well as three new loci of interest (}\textit{\DIFdelFL{stGm11}}%DIFAUXCMD
+\DIFdelFL{,
+	}\textit{\DIFdelFL{stGm16}}%DIFAUXCMD
+\DIFdelFL{, and }\textit{\DIFdelFL{stGm18}}%DIFAUXCMD
+\DIFdelFL{).
+	(b) Pairwise LD between the 162 significant }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mers identified.
+	}\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mers are sorted along the axes according to their
 	putative position on the reference assembly version 4 of Williams82.
-	\textit{k}-mers are
+	}\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mers are
 	represented in the same order along the x- and y-axis. The blue
 	rectangles below the x-axis represent the
-	-log\textsubscript{10}(\textit{p}) of each \textit{k}-mer.}
-	\label{stem-termination-main-figure}
-\end{figure}
+	-log\textsubscript{10}(}\textit{\DIFdelFL{p}}%DIFAUXCMD
+\DIFdelFL{) of each }\textit{\DIFdelFL{k}}%DIFAUXCMD
+\DIFdelFL{-mer.}}
+	%DIFAUXCMD
+%DIFDELCMD < \label{stem-termination-main-figure}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Potential of }\emph{\DIFadd{k}}\DIFadd{-mer-based GWAS}}
+\DIFaddend 
 
+\DIFdelbegin \subsection*{\DIFdel{Potential of }\emph{\DIFdel{k}}%DIFAUXCMD
+\DIFdel{-mer-based GWAS}}
+%DIFAUXCMD
+%DIFDELCMD < 
 
-\subsection*{Potential of \emph{k}-mer-based GWAS}
-
-One of the most striking results from the analyses presented above is the
+%DIFDELCMD < %%%
+\DIFdelend One of the most striking results from the analyses presented above is the
 impressive performance of \emph{k}-mer-based GWAS compared to SNP- and SV-based
 GWAS. The GWAS analyses using \emph{k}-mers identified the causal variant as
 the most significantly associated variant at four loci with various types of
 causal variants: \emph{W1} for flower color, \emph{Td} for pubescence color,
 \emph{G} for seed coat color, and \emph{Ps} for pubescence density (Table
-\ref{loci-table}). In comparison, this result was achieved by SV-based GWAS at
+\DIFdelbegin \DIFdel{\ref{loci-table}}\DIFdelend \DIFaddbegin \DIFadd{1}\DIFaddend ). In comparison, this result was achieved by SV-based GWAS at
 the \textit{W1} locus only, and at none of the loci for SNP-based GWAS.
 The \textit{k}-mer approach also systematically performed at least as well as
 the other two approaches in identifying signals overlapping known variants or
-genes (Table \ref{loci-table}). Moreover, whenever \textit{k}-mer-based GWAS
+genes (Table \DIFdelbegin \DIFdel{\ref{loci-table}}\DIFdelend \DIFaddbegin \DIFadd{1}\DIFaddend ). Moreover, whenever \textit{k}-mer-based GWAS
 did detect a signal, the region defined by the 1\% most significant
 \textit{k}-mers overlapped the known causal variant or gene. 
 
@@ -1188,7 +1361,11 @@ Moreover, it is likely that the simpler workflow that results from using
 \textit{k}-mer presence/absence avoids some of the errors introduced during
 variant calling and genotyping, and therefore yields more accurate results.
 
-\subsection*{Limitations and challenges of \emph{k}-mer-based GWAS}
+\DIFdelbegin \subsection*{\DIFdel{Limitations and challenges of }\emph{\DIFdel{k}}%DIFAUXCMD
+\DIFdel{-mer-based GWAS}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Limitations and challenges of }\emph{\DIFadd{k}}\DIFadd{-mer-based GWAS}}
+\DIFaddend 
 
 While we have have shown that using \emph{k}-mers for GWAS in soybean performed
 well compared to other GWAS methods, this approach does present some unique
@@ -1304,7 +1481,10 @@ most significant \emph{k}-mers on the reference sequence in our analyses, it
 may not be the case for highly variable species or if the causal variation at a
 locus results from a large novel insertion.
 
-\subsection*{Use of SV genotypes for GWAS}
+\DIFdelbegin \subsection*{\DIFdel{Use of SV genotypes for GWAS}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Use of SV genotypes for GWAS}}
+\DIFaddend 
 
 In addition to \emph{k}-mers, we also assessed the use of SVs in GWAS analysis
 of soybean.  Although we did find the causal variant as the most significantly
@@ -1331,9 +1511,9 @@ that most transposable element insertions associated with phenotypic variation
 in agronomic traits were not tagged by SNPs. On the other hand, in humans,
 \shortciteA{maretty2017} found that the majority of SVs were in high LD with SNPs. It
 is therefore likely that how well SVs can be tagged by SNPs will depend on the
-particular type of SV and on the species. \DIFdelbegin \DIFdel{A }\DIFdelend \DIFaddbegin \DIFadd{Until more robust SV calling and genotyping
+particular type of SV and on the species. \DIFdelbegin \DIFdel{A more }\DIFdelend \DIFaddbegin \DIFadd{Until more robust SV calling and genotyping
 methods are developed or advances in sequencing technology result in more
-trustworthy SV datasets, a }\DIFaddend more efficient approach than
+trustworthy SV datasets, a more }\DIFaddend efficient approach than
 SV-based GWAS may be to conduct \emph{k}-mer-based GWAS and only then link
 known SVs to significant \emph{k}-mers.  Alternatively, \textit{k}-mer-based
 GWAS can be conducted specifically for \textit{k}-mers that are associated with
@@ -1344,7 +1524,10 @@ could be replicated using \emph{k}-mer-based GWAS.
 
 \clearpage
 
-\section*{Conclusions}
+\DIFdelbegin \section*{\DIFdel{Conclusions}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \section{\DIFadd{Conclusions}}
+\DIFaddend 
 
 In conclusion, we used SV-based and \emph{k}-mer-based GWAS to study ten
 qualitative traits and three quantitative traits in soybean and
@@ -1394,8 +1577,8 @@ The authors declare no conflict of interest.
 
 \begin{description}
 	\item[Supplemental file 1.pdf] Supplemental methods and results, including
-		Supplemental Tables S1 to S11 and Supplemental Figures S1 to
-		S60.
+		Supplemental Tables S1 to \DIFdelbegin \DIFdel{S11 }\DIFdelend \DIFaddbegin \DIFadd{S12 }\DIFaddend and Supplemental Figures S1 to
+		\DIFdelbegin \DIFdel{S60}\DIFdelend \DIFaddbegin \DIFadd{S61}\DIFaddend .
 
 	\item[Supplemental file 2.csv] Metadata on the sequencing runs retrieved
 		from the Sequence Read Archive (SRA).
@@ -1485,6 +1668,127 @@ Writing -- review \& editing: MAL, MDR, RB, FB.
 \bibliography{references.bib}
 
 \clearpage
+\DIFaddbegin 
+
+
+\section*{\DIFadd{Figure captions}}
+
+%DIF >  Figure 1
+\DIFadd{Figure 1: Results of SV- and }\textit{\DIFadd{k}}\DIFadd{-mer-based GWAS at the }\textit{\DIFadd{W1}} \DIFadd{locus
+for flower color. (a) Genome-wide Manhattan plots.  Horizontal dotted lines
+indicate the significance threshold whereas vertical dotted lines indicate the
+location of the }\textit{\DIFadd{W1}} \DIFadd{locus.  (b) Zoomed-in Manhattan plots at the
+}\textit{\DIFadd{W1}} \DIFadd{locus.  The vertical dotted lines indicate the location of the
+Glyma.13g072100 gene associated with this locus. The shaded gray rectangles
+show the regions delimited by the top 5\% (SVs) and 1\% (}\textit{\DIFadd{k}}\DIFadd{-mers)
+associations.  (c) Gene model of Glyma.13g072100.  Rectangles represent exons,
+colored rectangles represent coding sequences, and arrows indicate the
+direction of transcription. The red rectangle highlights the region shown in
+panel (d). (d) Pairwise alignment of the two haplotype sequences in the
+population at the }\textit{\DIFadd{W1}} \DIFadd{locus. Nucleotides are colored according to the
+}\textit{\DIFadd{p}}\DIFadd{-value of the most significant }\textit{\DIFadd{k}}\DIFadd{-mer overlapping them.
+Vertical dotted lines between haplotypes indicate sequence differences, whereas
+dashes indicate gaps in the alignment. (e) Contingency table of the phenotypes
+and haplotypes found in the population at the }\textit{\DIFadd{W1}} \DIFadd{locus.
+}
+
+%DIF >  Figure 2
+\DIFadd{Figure 2: Results of SNP- and }\textit{\DIFadd{k}}\DIFadd{-mer-based GWAS at the }\textit{\DIFadd{Td}}
+\DIFadd{locus for pubescence color. (a) Genome-wide Manhattan plots.  Horizontal dotted
+lines indicate the significance threshold whereas vertical dotted lines
+indicate the location of the }\textit{\DIFadd{Td}} \DIFadd{locus. (b) Zoomed-in Manhattan plots
+at the }\textit{\DIFadd{Td}} \DIFadd{locus.  The vertical dotted lines indicate the location of
+the Glyma.03g258700 gene associated with this locus. The shaded gray rectangles
+show the regions delimited by the top 1\% associations.  In the case of SNPs,
+blue points denote markers used in the original analysis, whereas red points
+denote markers that had originally been pruned but whose }\emph{\DIFadd{p}}\DIFadd{-values were
+computed after signal discovery.  (c) Gene model of Glyma.03g258700. Rectangles
+represent exons, colored rectangles represent coding sequences, and the arrow
+indicates the direction of transcription. The red rectangle highlights the
+region shown in panel (d). (d) Pairwise alignment of the two haplotype
+sequences in the population at the }\textit{\DIFadd{Td}} \DIFadd{locus. Nucleotides are colored
+according to the }\textit{\DIFadd{p}}\DIFadd{-value of the most significant }\textit{\DIFadd{k}}\DIFadd{-mer
+overlapping them. The vertical dotted line between haplotypes indicates the
+location of the causal SNP at this locus. (e) Contingency table of the
+phenotypes and haplotypes found in the population at the }\textit{\DIFadd{Td}} \DIFadd{locus.
+}
+
+%DIF >  Figure 3 with the results on pubescence color at locus G
+\DIFadd{Figure 3: Results of SNP- and }\textit{\DIFadd{k}}\DIFadd{-mer-based GWAS at the }\textit{\DIFadd{G}} \DIFadd{locus
+for seed coat color. (a) Genome-wide Manhattan plots.  Horizontal dotted lines
+indicate the significance threshold whereas vertical dotted lines indicate the
+location of the }\textit{\DIFadd{G}} \DIFadd{locus. (b) Zoomed-in Manhattan plots at the
+}\textit{\DIFadd{G}} \DIFadd{locus.  The vertical dotted lines indicate the location of the
+Glyma.01g198500 gene associated with this locus. The shaded gray rectangles
+show the regions delimited by the top 1\% associations.  In the case of SNPs,
+blue points denote markers used in the original analysis, whereas red points
+denote markers that had originally been pruned but whose }\emph{\DIFadd{p}}\DIFadd{-values were
+computed after signal discovery.  (c) Gene model of Glyma.01g198500. Rectangles
+represent exons, colored rectangles represent coding sequences, and the arrows
+indicate the direction of transcription. The red rectangle highlights the
+region shown in panel (d). (d) Pairwise alignment of the two haplotype
+sequences in the population at the }\textit{\DIFadd{G}} \DIFadd{locus. Nucleotides are colored
+according to the }\textit{\DIFadd{p}}\DIFadd{-value of the most significant }\textit{\DIFadd{k}}\DIFadd{-mer
+overlapping them. The vertical dotted line between haplotypes indicates the
+location of the causal SNP at this locus. (e) Contingency table of the
+phenotypes and haplotypes found in the population at the }\textit{\DIFadd{G}} \DIFadd{locus.
+}
+
+%DIF >  Figure 4 with the results on pubescence density at locus Ps
+\DIFadd{Figure 4: Results of }\textit{\DIFadd{k}}\DIFadd{-mer-based GWAS at the }\textit{\DIFadd{Ps}} \DIFadd{locus for
+pubescence density.  (a) Genome-wide Manhattan plot showing the location of
+significant }\textit{\DIFadd{k}}\DIFadd{-mers. The horizontal dotted line indicates the
+significance threshold whereas the vertical dotted line indicates the location
+of the }\textit{\DIFadd{Ps}} \DIFadd{locus.  (b) Zoomed-in Manhattan plot at the }\textit{\DIFadd{Ps}}
+\DIFadd{locus. The vertical dotted line indicates the location of the most significant
+}\textit{\DIFadd{k}}\DIFadd{-mer. The shaded gray area shows the location of the causal CNV.  (c)
+Estimated copy number (sequencing depth at position divided by accession
+average sequencing depth) of accessions with normal and semi-sparse pubescence
+at the }\textit{\DIFadd{Ps}} \DIFadd{locus. Solid lines represent the median copy number across
+73 (semi-sparse pubescence) and 180 accessions (normal pubescence) computed
+using a 100-bp sliding window.  Shaded areas outline the first and third
+quartiles. The start and end of the CNV region can be clearly inferred from the
+divergence between the copy number of accessions with contrasting pubescence.
+(d) Histogram showing the location of 1,169 mapped reads containing the most
+significant }\textit{\DIFadd{k}}\DIFadd{-mer in accessions with semi-sparse pubescence.  Reads
+containing this }\textit{\DIFadd{k}}\DIFadd{-mer map to either end of the CNV region, suggesting
+that they are associated with this variant. Panels (b), (c) and (d) share the
+same x-axis.
+}
+
+%DIF >  Figure 5 with the results on pubescence form at locus Pa1
+\DIFadd{Figure 5: Results of SNP- and }\textit{\DIFadd{k}}\DIFadd{-mer-based GWAS at the }\textit{\DIFadd{Pa1}}
+\DIFadd{locus for pubescence form. (a) Genome-wide Manhattan plots.  Horizontal dotted
+lines indicate the significance threshold whereas vertical dotted lines
+indicate the location of the }\textit{\DIFadd{Pa1}} \DIFadd{and }\textit{\DIFadd{Pa2}} \DIFadd{loci. (b) Zoomed-in
+Manhattan plots at the }\textit{\DIFadd{Pa1}} \DIFadd{locus.  The vertical dotted lines indicate
+the location of the Glyma.12g213900 gene suggested as a candidate for this
+locus. The shaded gray rectangles show the regions delimited by the top 1\%
+associations.  In the case of SNPs, blue points denote markers used in the
+original analysis, whereas red points denote markers that had originally been
+pruned but whose }\emph{\DIFadd{p}}\DIFadd{-values were computed after signal discovery.  (c)
+Gene model of Glyma.12g213900. Rectangles represent exons, colored rectangles
+represent coding sequences, and the arrows indicate the direction of
+transcription.  (d) Manhattan plots at the location of the Glyma.12g213900
+gene.  Vertical lines indicate the location of two non-synonymous SNPs
+associated with appressed pubescence, which may represent causal variants at
+this locus. Panels (c) and (d) share the same x-axis.
+}
+
+%DIF >  Figure 6 with the results novel loci for stem termination type
+\DIFadd{Figure 6: Detection of novel signals for stem termination type using a
+}\textit{\DIFadd{k}}\DIFadd{-mer-based GWAS analysis contrasting accessions with indeterminate
+and semi-determinate stems.  (a) Genome-wide Manhattan plot showing the
+location of significant }\textit{\DIFadd{k}}\DIFadd{-mers.  The horizontal dotted line indicates
+the significance threshold whereas vertical dotted lines indicate the location
+of the }\textit{\DIFadd{Dt1}} \DIFadd{classical locus as well as three new loci of interest
+(}\textit{\DIFadd{stGm11}}\DIFadd{, }\textit{\DIFadd{stGm16}}\DIFadd{, and }\textit{\DIFadd{stGm18}}\DIFadd{).  (b) Pairwise LD
+between the 162 significant }\textit{\DIFadd{k}}\DIFadd{-mers identified.  }\textit{\DIFadd{k}}\DIFadd{-mers are
+sorted along the axes according to their putative position on the reference
+assembly version 4 of Williams82.  }\textit{\DIFadd{k}}\DIFadd{-mers are represented in the same
+order along the x- and y-axis. The blue rectangles below the x-axis represent
+the -log\textsubscript{10}(}\textit{\DIFadd{p}}\DIFadd{) of each }\textit{\DIFadd{k}}\DIFadd{-mer.
+}\DIFaddend 
 
 \section*{Tables}
 

@@ -55,7 +55,7 @@ cov_vector <- parallel::mclapply(bam_files, function(x, grange) {
 													     which = grange))
 					 coverage_rle <- grange_coverage[grange]
 					 as.numeric(coverage_rle[[1]]) },
-					 grange = cnv_range, mc.cores = 30)
+					 grange = cnv_range, mc.cores = 40030)
 
 normalized_cov <- mapply(function(x, y) x / y, x = cov_vector, y = average_cov)
 
@@ -97,7 +97,7 @@ kmer_mapping_pos <- kmer_mapping_pos[kmer_mapping_pos$MAPQ > 0, ]
 kmer_hist_data <- (hist(kmer_mapping_pos$POS, breaks = 35, plot = FALSE))
 
 # Drawing the figure in a PNG device
-png(paste0("figures/", locus, "_main_figure.png"), width = 6, height = 5.8, units = "in", res = 400)
+tiff(paste0("figures/", locus, "_main_figure.tiff"), width = 6, height = 5.8, units = "in", res = 400, compress = "lzw")
 
 # Resetting the plotting page
 grid.newpage()

@@ -45,6 +45,7 @@ sv_genotyping/paragraph/manifest_files/*txt
 *rds
 *threshold_5per.txt
 *threshold_5per
+*.tiff
 *toc
 *tsv
 *vcf
