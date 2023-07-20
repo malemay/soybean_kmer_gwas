@@ -25,7 +25,8 @@ suptables := tables/FLOWER.COLOR_gwas_table.csv \
 	tables/PUBESCENCE.DENSITY_gwas_table.csv \
 	tables/SEED.COAT.LUSTER_gwas_table.csv \
 	tables/MATURITY.GROUP_gwas_table.csv \
-	tables/signals_table.csv
+	tables/signals_table.csv \
+	tables/kmer_count_table.csv
 
 mainfigures := figures/flower_color_W1_main_figure.png \
 	figures/pubescence_color_nogray_Td_main_figure.png \
@@ -270,6 +271,13 @@ tables/loci_table.csv: tables/loci_table.R \
 	cnv_analysis/hps_cnv_range.rds \
 	cnv_analysis/ps_cnv_range.rds \
 	$(signalplots)
+	$(RSCRIPT) $<
+
+# A csv file with the number of k-mers found per GWAS analysis
+tables/kmer_count_table.csv: tables/kmer_count_table.R \
+	gwas_results/kmers/KMER_GWAS \
+	$(shell cat utilities/trait_names.txt | xargs -I {} echo gwas_results/kmers/{}_signal.rds) \
+	utilities/all_signals.rds
 	$(RSCRIPT) $<
 
 # PHENOTYPIC DATA --------------------------------------------------

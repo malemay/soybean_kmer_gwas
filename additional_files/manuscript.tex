@@ -280,7 +280,7 @@ implemented to reduce the computational requirements of the GWAS analysis by
 removing co-segregating markers. Markers located on unanchored scaffolds were
 also removed. The resulting dataset was used for GWAS and comprised 773,060
 SNPs and 151,570 indels. Pruned markers were still used for GWAS at targeted
-loci when filtered markers identified significant associations (more details
+loci where filtered markers identified significant associations (more details
 in the section describing the analysis of significant signals).
 
 \subsection*{Computing the presence/absence table of \emph{k}-mers}
@@ -300,8 +300,8 @@ complement in lexicographical order) and the second time using the observed
 were then combined and filtered by
 keeping only those seen in at least 5 accessions, and observed in both canonized
 and non-canonized form in at least 20\% of the accessions in which they are found.
-Only \textit{k}-mers that occurred twice in a given sample were considered to
-reduce the impact of sequencing errors.
+To reduce the potential impact of sequencing errors, only \textit{k}-mers that
+occurred at least twice in a given sample were considered.
 We then generated a table indicating the presence or absence of each
 \emph{k}-mer in all accessions. This table was used to compute a kinship
 table for use in GWAS and was also used directly as input genotypes for the
@@ -529,7 +529,8 @@ on the most noteworthy results. Readers interested in results at loci that are
 not discussed here are referred to Supplemental file 1. In particular, Supplemental Table
 S11 provides a summary of the
 \textit{p}-values obtained by each approach at each of the loci considered in
-this study.
+this study. Supplemental Table S12 also shows some results specific to \textit{k}-mer-based
+analyses.
 
 \subsection*{Loci with known genes or causal variants}
 
@@ -1005,7 +1006,10 @@ and Gm18 in addition to the known \textit{Dt1} locus (Figure
 \ref{stem-termination-main-figure}a).  Analysis of the pairwise LD between
 significant \textit{k}-mers found no LD between these signals, suggesting that
 they may represent \textit{bona fide} loci associated with stem termination
-type (Figure \ref{stem-termination-main-figure}b). Similarly, a \textit{k}-mer
+type (Figure \ref{stem-termination-main-figure}b). We note that the signal newly
+identified on Gm18 is located 5 Mb away from the already documented \textit{Dt2}
+locus and may therefore correspond to that locus.
+Similarly, a \textit{k}-mer
 GWAS analysis comparing accessions with black and brown pods found a previously
 undocumented signal on chromosome Gm15 (Supplemental Figure S43).
 \textit{k}-mers at this new locus
@@ -1099,23 +1103,26 @@ well compared to other GWAS methods, this approach does present some unique
 challenges and limitations. One of these challenges is the
 interpretation of \textit{k}-mer-based GWAS given the greater possibility
 of false positive associations than in conventional GWAS approaches. In this
-study, we noticed apparently spurious associations with \textit{k}-mers
-scattered throughout the genome were common. This was especially the case for
-highly significant loci whose signal spanned several megabases such as \textit{W}
-and \textit{T}. A look at the Q-Q plots derived from \textit{k}-mer-based GWAS
-showed that these usually had the same shape as the Q-Q plots derived from SNP-
+study, we noticed that spurious associations, appearing as \textit{k}-mers
+scattered throughout the genome, were common. This was especially the case for
+traits with highly significant signals that spanned several megabases, such as flower color
+and pubescence color (Supplemental Table S12). Q-Q plots derived from \textit{k}-mer-based GWAS
+generally displayed the same shape as the Q-Q plots derived from SNP-
 and SV-based GWAS, suggesting that population structure was properly controlled.
+Despite the very large number of tests conducted, the approach developed by
+\shortciteA{voichek2020} for setting significance thresholds and controlling
+for population structure therefore appears appropriate.
 We believe that a more likely culprit for these spurious associations is the
 difficulty in linking \textit{k}-mers to genomic coordinates. At loci that
-span a large interval, it is indeed be highly likely that some of the \textit{k}-mers
-coming from the region map elsewhere in the genome. This interpretation is supported
+span a large interval, it is indeed highly likely that some of the \textit{k}-mers
+coming from the target region will map elsewhere in the genome. This interpretation is supported
 by the fact that the LD between presumably spurious \textit{k}-mers and
-\textit{k}-mers from target loci was generally high (e.g. Figures S5 and S47).
-Overall, the risk of false association due to population structure and the identification
-of an appropriate significance threshold seems well controlled, but work remains
-to be done in reducing the occurrence of spurious associations.
+\textit{k}-mers from target loci was generally high (e.g. Supplemental Figures S5 and S47).
+Until further work resolves these issues, we recommend users of
+\textit{k}-mer-based GWAS to assess their results critically and to be aware
+that spurious associations are likely to occur.
 
-There are obvious limitations to the relying on the presence/absence of
+There are obvious limitations to relying on the presence/absence of
 \emph{k}-mers for GWAS. For example, this approach may not be appropriate in
 species where heterozygosity is common (i.e., most species other than inbred
 crops) as the \emph{k}-mers associated with the presence of both alleles will
@@ -1135,23 +1142,22 @@ in \textit{Arabidopsis thaliana} could be tagged by unique 31-mers. It is
 therefore likely that the vast majority of variants can be detected through the
 presence/absence of \textit{k}-mers.
 
-In addition to the link between \textit{k}-mer presence/absence and sequence
-variation, one may wonder to what extent errors may occur in declaring the
+A related problem is the extent to which errors may occur in declaring the
 presence or absence of a \textit{k}-mer based on Illumina WGS data. If we
 neglect the possibility of contamination, the most likely error would be to
 declare a \textit{k}-mer as absent simply because sequencing depth was
 insufficient. In this study, we declared \textit{k}-mers as present
 based on a minimum of two occurrences. Therefore, a \textit{k}-mer may be
 wrongly declared as absent if it is observed only once or not at all.  To
-quantify this error, we compared the number of times that a given position was
+quantify this error, we compared the number of positions that were
 observed only once in a sample to the average sequencing depth of that sample.
 We found that most samples with a sequencing depth between 10 and 20X had
-a proportion of only 0.5 to 1.5\% of positions covered by only one read.
+between 0.5 to 1.5\% of positions covered by a single read (Supplemental Figure S46).
 Therefore, the risk of falsely declaring a \textit{k}-mer as absent from
 our dataset was low, and in any case much lower than typical error rates
 involved in calling and genoyping SVs \shortcite<e.g.>[]{kosugi2019, ebler2022}.
-The robustness of \textit{k}-mer presence/absence to sequencing depth is also
-demonstrated by \shortciteA{gaurav2022}.
+The robustness to low sequencing depth of GWAS analyses based on \textit{k}-mer
+presence/absence was also demonstrated by \shortciteA{gaurav2022}.
 
 The complexity of analyzing the results of \emph{k}-mer-based GWAS is another
 limitation of this approach. Although the method developed by

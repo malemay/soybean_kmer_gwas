@@ -44,6 +44,6 @@ kmer_one <- unlist(mclapply(stats_files, one_proportion, mc.cores = 10))
 png("figures/seqdepth.png", width = 6, height = 6, units = "in", res = 300)
 plot(average_cov, kmer_one, main = "",
      xlab = "Mean sequencing depth of sample",
-     ylab = "Fraction of genome covered by one read")
+     ylab = "Fraction of genome covered by a single read")
 dev.off()
 

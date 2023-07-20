@@ -672,6 +672,38 @@ a clear limitation to this GWAS given our relatively small sample size.
 \end{landscape}
 \clearpage
 
+% A table with the number of k-mers foundd by each analysis
+\begin{table}
+	\centering
+	\caption[Number of k-mers per GWAS analysis]{Number of significant \textit{k}-mers identified per GWAS analysis}
+	\label{kmer_count_table}
+
+	\begin{threeparttable}\footnotesize
+
+			\csvreader[head to column names,
+			tabular = lrrr@{\hskip 3pt}l,
+			table head = \toprule GWAS analysis\tnote{a} & Raw\tnote{b} & Filtered\tnote{c} & At known loci & (\%)\tnote{d} \\ \midrule,
+			table foot=\bottomrule,
+			before reading={\catcode`\#=12},
+			after reading={\catcode`\#=6},
+			/csv/separator=semicolon]%
+			{../tables/kmer_count_table.csv}{}{\gwas & \raw & \filtered & \nsignals & (\percent)}
+
+
+				\begin{tablenotes}
+				\item[a] GWAS numbers refer to numbers in tables \ref{FLOWER.COLOR_gwas_table}
+					to \ref{MATURITY.GROUP_gwas_table}.
+				\item[b] Number of significant \textit{k}-mers in raw GWAS output.
+				\item[c] Number of significant \textit{k}-mers after filtering for
+					mapping quality, minimum count and redundancy.
+				\item[d] Number of \textit{k}-mers overlapping known loci and
+					percentage relative to number of filtered \textit{k}-mers.
+				\end{tablenotes}
+
+	\end{threeparttable}
+\end{table}
+
+\clearpage
 
 % Supplemental figures
 \section*{Supplemental figures}
