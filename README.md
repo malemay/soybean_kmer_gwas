@@ -144,5 +144,7 @@ sequence of the analyses performed as part of this work.
 
 ## Citation
 
-The reference to this software will be updated shortly.
+If you use this software, plase cite our publication:
+
+Lemay, M.-A., de Ronne, M., Bélanger, R., & Belzile, F. (2023). k-mer-based GWAS enhances the discovery of causal variants and candidate genes in soybean. *The Plant Genome*, 16, e20374. [doi:10.1002/tpg2.20374](https://doi.org/10.1002/tpg2.20374)
 
